@@ -392,7 +392,7 @@ var oBtn = document.createElement("input");
 	xpathRes.snapshotItem(0).appendChild(naempic);
 	gospic.addEventListener("click", PostMsg1, false);
 	naempic.addEventListener("click", PostMsg2, false);
-	xpathRes = xpath('//img[@src = "http://img.ereality.ru//map/obj/1076.png"]');
+	xpathRes = xpath('//img[contains(@src,"http://img.ereality.ru//estates/info_icon")]');
 	if ((xpathRes.snapshotLength>0) && (xpathRes.snapshotItem(0).parentNode.href.search("/estate_info.php") != -1) )
 	{
 		xpathRes.snapshotItem(0).parentNode.appendChild(bodestate);
