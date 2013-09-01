@@ -338,16 +338,12 @@ xpathRes.snapshotItem(0).removeChild(xpathRes.snapshotItem(0).lastChild);
 else if (location.href.search("http://www.ereality.ru/core") != -1 )
 {
 
- text =
-     "<div style='position: fixed; " +
-     "top: 27px; left: 240px; " +
-     "name='opts' id='opts'>"+
-     "<a href='http://www.ereality.ru/exit.php'>Exit</a>"+
-     "</div>";
- 
- var opts = document.createElement("div");
- opts.innerHTML = text;
- document.body.insertBefore(opts, document.body.firstChild);
+ var exitlink = document.createElement('A');
+	exitlink.href = 'http://www.ereality.ru/exit.php';
+	exitlink.innerHTML ="[X]";
+	if (document.getElementById("td_nick2")!=null ) {
+	document.getElementById("td_nick2").insertBefore(exitlink, document.getElementById("td_nick2").firstChild);
+	}
  
  envpic = document.getElementById("td_dyn").nextElementSibling.nextElementSibling.firstChild;
  envpic.addEventListener("click", EnvTab, false);
@@ -438,6 +434,7 @@ var xpathRes = xpath("/html/body/div[3]/div[7]/div/div");
 	var naempic = document.createElement('img');	
 	naempic.src = 'data:image/gif;base64,R0lGODlhDwAMAMQVAJl5I7ycQHqJm7iYO9e+bJ18I66NMJh3H1ZedUFGVnxiGsbS5KCuwau202JLDezUisquV9zFf7CVTNa+awAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABUALAAAAAAPAAwAAAVbYJWMVVlGk1lSbFIh1fNEqFqx8DTJdKoiggZBx6uVEAkBo6HbORwTiM9QWDAUzSdAInUcDArFwFcBlLgTr2EQCDRsErQ6wFjCIZAI4FCx2lVcYSYLhG+AEjYqIQA7';
 	try {
+	xpathRes.snapshotItem(0).insertAdjacentHTML("beforeEnd", "<p></p>");
 	if (myoptions.info) {xpathRes.snapshotItem(0).appendChild(oBtn);}
 	if (myoptions.faceshop) {xpathRes.snapshotItem(0).appendChild(bod);}
 	if (myoptions.efimerka) {xpathRes.snapshotItem(0).appendChild(efimerka);}
