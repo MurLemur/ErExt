@@ -6,6 +6,12 @@
     "main.js"
   ], 
   "homepage_url": "http://forum.ereality.ru/topic175057/page1.html", 
-  "version": "1.0.1", 
-  "name": "EReality Extension"
+  "version": "1.0.2", 
+  "name": "EReality Extension",
+  "browser_button": {
+		"caption": "Open options page", 
+		"icon": "icons/button.png", 
+		"tooltipText": "Open options page"
+	}, 
+  "options_page": "options.html"
 }

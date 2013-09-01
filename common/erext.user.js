@@ -16,6 +16,22 @@
 // @all-frames  true
 // ==/UserScript==
 
+var myoptions = {
+	"faceshop":true,
+	"efimerka":true,
+	"info":true,
+	"zk":true,
+	"naemniki":true,
+	"bodestate":true,
+	"sidzoku":true,
+	"okcount":true,
+	"cemetry":true,
+	"numfight":true,
+	"numcapcha":true,
+	"kbdinst":true,
+	"chatsectors":true
+}
+
 function xpath(query, object) {
 	if(!object) var object = document;
 	return object.evaluate(query, object, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
@@ -66,6 +82,7 @@ GM_xmlhttpRequest = function(params) {
         }
 });
 }
+
 Array.prototype.shuffle = function( b )
 {
  var i = this.length, j, t;
@@ -237,7 +254,7 @@ function lotereya() {
 	}
 }
 function mynum(code) {
-	if (document.getElementById("div_battle").style.display!="none")	
+	if ((myoptions.numfight)&&(document.getElementById("div_battle").style.display!="none"))
 		{
 			switch (code) 
 			{
@@ -253,9 +270,25 @@ function mynum(code) {
 				case 105: {document.getElementById("block_pl3").click();break;}
 			}
 		}
+	if ((myoptions.numcapcha)&&(top.frames.main.document.getElementById("CaptchaButtons")!=null))
+		{	
+			switch (code) 
+			{
+				case  96: {top.frames.main.document.getElementById("cat_4").click();break;} //0
+				case  97: {top.frames.main.document.getElementById("cat_0").click();break;} //1
+				case  98: {top.frames.main.document.getElementById("cat_1").click();break;} //2
+				case  99: {top.frames.main.document.getElementById("cat_2").click();break;} //3
+				case 100: {top.frames.main.document.getElementById("cat_5").click();break;} //4
+				case 101: {top.frames.main.document.getElementById("cat_8").click();break;} //5
+				case 102: {top.frames.main.document.getElementById("cat_6").click();break;} //6
+				case 103: {top.frames.main.document.getElementById("cat_9").click();break;} //7
+				case 104: {top.frames.main.document.getElementById("cat_7").click();break;} //8
+				case 105: {top.frames.main.document.getElementById("cat_3").click();break;} //9
+			}
+		}	
 }
 function instkbd(code) {
-	if (top.frames.main.document.getElementById("div_inst_top")!=null)
+	if ((myoptions.kbdinst)&&(top.frames.main.document.getElementById("div_inst_top")!=null))
 		{	
 			switch (code) 
 			{
@@ -278,6 +311,19 @@ function pfunction(){
 	+ ")()";
  document.body.appendChild(scr);
 }
+
+//================================================================Begin
+
+kango.invokeAsync('kango.storage.getItem',"options",function(value) {
+if (value!=null) {
+		for (nameprop in myoptions) {
+	 	if (value[nameprop]!=false) {value[nameprop]=true;}	
+		myoptions[nameprop]=value[nameprop];
+    	}
+}
+
+//=====================================================================
+
 if (location.href.search("page=sostav") != -1 )
 {
 var xpathRes = xpath("/html/body/table/tbody/tr[2]/td/table/tbody/tr");
@@ -294,7 +340,7 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
 
  text =
      "<div style='position: fixed; " +
-     "top: 30px; left: 240px; " +
+     "top: 27px; left: 240px; " +
      "name='opts' id='opts'>"+
      "<a href='http://www.ereality.ru/exit.php'>Exit</a>"+
      "</div>";
@@ -311,12 +357,18 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
 	document.getElementById("a_users_loc").href='javascript: users.load(); document.getElementById("a_users_loc").focus();';
 	document.getElementById("span_mode5").firstChild.href='javascript: fdemands.load(5); document.getElementById("span_mode5").firstChild.focus();';
  }
- var loc_user = document.getElementById("div_users");
- var calcpic = document.createElement('img');	
- calcpic.src = 'data:image/gif;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAUG/8QAIxAAAgICAQQCAwAAAAAAAAAAAQMCBAURABITIUEUURUiMf/EABQBAQAAAAAAAAAAAAAAAAAAAAT/xAAYEQADAQEAAAAAAAAAAAAAAAAAAQIhMf/aAAwDAQACEQMRAD8A1uYbaxWOoW6uOxjaRQo2Jzp9xiyYjcj+w6hxEwyWMlcEcXNRbVlWs0a/akNvgJb8n0deD975PzKvyteiid59dCFLDKrMXZPVOMQCJERGxsfziPkNNSdaVgvE21gpKca9MV9LoSkdyj9D2fXjjqedCytP/9k=';
- loc_user.insertBefore(calcpic, loc_user.firstChild);
- loc_user.firstChild.addEventListener("click", userscount, false);
- window.setTimeout( pfunction , 100);
+
+ if (myoptions.okcount) {
+ 	var loc_user = document.getElementById("div_users");
+ 	var calcpic = document.createElement('img');	
+ 	calcpic.src = 'data:image/gif;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAUG/8QAIxAAAgICAQQCAwAAAAAAAAAAAQMCBAURABITIUEUURUiMf/EABQBAQAAAAAAAAAAAAAAAAAAAAT/xAAYEQADAQEAAAAAAAAAAAAAAAAAAQIhMf/aAAwDAQACEQMRAD8A1uYbaxWOoW6uOxjaRQo2Jzp9xiyYjcj+w6hxEwyWMlcEcXNRbVlWs0a/akNvgJb8n0deD975PzKvyteiid59dCFLDKrMXZPVOMQCJERGxsfziPkNNSdaVgvE21gpKca9MV9LoSkdyj9D2fXjjqedCytP/9k=';
+ 	loc_user.insertBefore(calcpic, loc_user.firstChild);
+ 	loc_user.firstChild.addEventListener("click", userscount, false);
+ };
+ if (myoptions.chatsectors) {
+ 	window.setTimeout( pfunction , 100);
+ }
+
  document.onkeyup = function (e) {
 	        e = e || window.event;
 			//alert(e.keyCode);
@@ -352,7 +404,8 @@ var name=xpath("/html/body/div[3]/div[6]/div/strong").snapshotItem(0).innerHTML;
 
 
 var xpathRes = xpath("/html/body/div[3]/div[7]/div/div");
-var oBtn = document.createElement("input");
+
+	var oBtn = document.createElement("input");
 	oBtn.type = "button";
 	oBtn.value = "info";
 	oBtn.addEventListener("click", PostMsg, false);
@@ -385,18 +438,19 @@ var oBtn = document.createElement("input");
 	var naempic = document.createElement('img');	
 	naempic.src = 'data:image/gif;base64,R0lGODlhDwAMAMQVAJl5I7ycQHqJm7iYO9e+bJ18I66NMJh3H1ZedUFGVnxiGsbS5KCuwau202JLDezUisquV9zFf7CVTNa+awAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABUALAAAAAAPAAwAAAVbYJWMVVlGk1lSbFIh1fNEqFqx8DTJdKoiggZBx6uVEAkBo6HbORwTiM9QWDAUzSdAInUcDArFwFcBlLgTr2EQCDRsErQ6wFjCIZAI4FCx2lVcYSYLhG+AEjYqIQA7';
 	try {
-	xpathRes.snapshotItem(0).appendChild(oBtn);
-	xpathRes.snapshotItem(0).appendChild(bod);
-	xpathRes.snapshotItem(0).appendChild(efimerka);
-	xpathRes.snapshotItem(0).appendChild(gospic);
-	xpathRes.snapshotItem(0).appendChild(naempic);
-	gospic.addEventListener("click", PostMsg1, false);
-	naempic.addEventListener("click", PostMsg2, false);
+	if (myoptions.info) {xpathRes.snapshotItem(0).appendChild(oBtn);}
+	if (myoptions.faceshop) {xpathRes.snapshotItem(0).appendChild(bod);}
+	if (myoptions.efimerka) {xpathRes.snapshotItem(0).appendChild(efimerka);}
+	if (myoptions.zk) {xpathRes.snapshotItem(0).appendChild(gospic);
+	gospic.addEventListener("click", PostMsg1, false);}
+	if (myoptions.naemniki) {xpathRes.snapshotItem(0).appendChild(naempic);
+	naempic.addEventListener("click", PostMsg2, false);}
+	
 	xpathRes = xpath('//img[contains(@src,"http://img.ereality.ru//estates/info_icon")]');
 	if ((xpathRes.snapshotLength>0) && (xpathRes.snapshotItem(0).parentNode.href.search("/estate_info.php") != -1) )
 	{
-		xpathRes.snapshotItem(0).parentNode.appendChild(bodestate);
-		xpathRes.snapshotItem(0).parentNode.appendChild(sidzokuestate);
+		if (myoptions.bodestate) {xpathRes.snapshotItem(0).parentNode.appendChild(bodestate);}
+		if (myoptions.sidzoku) {xpathRes.snapshotItem(0).parentNode.appendChild(sidzokuestate);}
 	}
 	document.getElementById("blood2").addEventListener("click", PostMsg4, false);
 	} catch(e) {
@@ -476,3 +530,6 @@ xpathRes.snapshotItem(0).click();
 	xpath("/html/body/div/div[4]/div/div/table/tbody/tr/td/table").snapshotItem(0).appendChild(lotButton);
 	lotButton.addEventListener("click", lotereya, false); 
  }
+
+//=========================end.
+ });
