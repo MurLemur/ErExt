@@ -8,7 +8,7 @@
 // @include 	http://www.ereality.ru/log*
 // @include 	http://*.com/efimerka/
 // @include 	http://yo-bod.com/faceshop/
-// @include     http://www.news.ereality.ru/index.php?do=static&page=sostav&id=*
+// @include     http://www.news.ereality.ru/*sostav&id=*
 // @include     http://cc.erclans.ru/viewpage.php?page_id=45*
 // @include		http://www.ereality.ru/map.php*
 // @include     http://sidzoku.ru/landlord/
@@ -231,11 +231,11 @@ function EnvTab(){
 }
 function userscount() {
 	document.getElementById("chat_msg").value = "";
-	var fraki = "Igna:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/2.gif"]').snapshotLength+
-	" Raanor:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/3.gif"]').snapshotLength+
-	" Tarba:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/4.gif"]').snapshotLength+
-	" Vitara:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/5.gif"]').snapshotLength+
-	" Drim:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/6.gif"]').snapshotLength;
+	var fraki = "Игнесс:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/2.gif"]').snapshotLength+
+	" Раанор:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/3.gif"]').snapshotLength+
+	" Тарбис:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/4.gif"]').snapshotLength+
+	" Витара:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/5.gif"]').snapshotLength+
+	" Дримнир:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/6.gif"]').snapshotLength;
 	document.getElementById("chat_msg").value = fraki;
 }
 function mymain() {
@@ -347,6 +347,9 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
 	if (document.getElementById("td_nick2")!=null ) {
 	document.getElementById("td_nick2").insertBefore(exitlink, document.getElementById("td_nick2").firstChild);
 	}
+	document.getElementById("span_location").onclick= function(){
+		document.getElementById('chat_msg').value=document.getElementById('span_location').innerHTML+' Людей: '+document.getElementById('span_location_count').innerHTML;
+	};	
  
  envpic = document.getElementById("td_dyn").nextElementSibling.nextElementSibling.firstChild;
  envpic.addEventListener("click", EnvTab, false);
