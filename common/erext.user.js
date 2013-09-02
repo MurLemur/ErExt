@@ -32,6 +32,19 @@ var myoptions = {
 	"chatsectors":true
 }
 
+//================================================================Begin
+
+kango.invokeAsync('kango.storage.getItem',"options",function(value) {
+if (value!=null) {
+		for (nameprop in myoptions) {
+	 	if (value[nameprop]!=false) {value[nameprop]=true;}	
+		myoptions[nameprop]=value[nameprop];
+    	}
+}
+
+//=====================================================================
+
+
 function xpath(query, object) {
 	if(!object) var object = document;
 	return object.evaluate(query, object, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
@@ -312,17 +325,7 @@ function pfunction(){
  document.body.appendChild(scr);
 }
 
-//================================================================Begin
 
-kango.invokeAsync('kango.storage.getItem',"options",function(value) {
-if (value!=null) {
-		for (nameprop in myoptions) {
-	 	if (value[nameprop]!=false) {value[nameprop]=true;}	
-		myoptions[nameprop]=value[nameprop];
-    	}
-}
-
-//=====================================================================
 
 if (location.href.search("page=sostav") != -1 )
 {
