@@ -1,5 +1,8 @@
 {
-  "content_scripts": ["erext.user.js"], 
+  "content_scripts": [
+	  "erext.user.js",
+	  "ereality_info.js"
+  ],
   "description": "Extension for EReality.ru", 
   "creator": "MurLemur", 
   "background_scripts": [
