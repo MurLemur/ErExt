@@ -1,20 +1,20 @@
 {
-  "content_scripts": [
-	  "erext.user.js",
-	  "ereality_info.js"
-  ],
-  "description": "Extension for EReality.ru", 
-  "creator": "MurLemur", 
-  "background_scripts": [
-    "main.js"
-  ], 
-  "homepage_url": "http://forum.ereality.ru/topic175057/page1.html", 
-  "version": "1.0.2", 
-  "name": "EReality Extension",
-  "browser_button": {
-		"caption": "Open options page", 
-		"icon": "icons/button.png", 
+	"content_scripts": [
+		"erext.user.js",
+		"ereality_info.js"
+	],
+	"description": "Extension for EReality.ru",
+	"creator": "MurLemur",
+	"background_scripts": [
+		"main.js"
+	],
+	"homepage_url": "http://forum.ereality.ru/topic175057/page1.html",
+	"version": "1.0.2",
+	"name": "EReality Extension",
+	"browser_button": {
+		"caption": "Open options page",
+		"icon": "icons/button.png",
 		"tooltipText": "Open options page"
-	}, 
-  "options_page": "options.html"
+	},
+	"options_page": "options.html"
 }

@@ -41,14 +41,20 @@ var plugins = (function (){
 	var plugins = [];
 
 	function init () {
-		plugins = [
-			{name: 'info', func: richInfo},
-			{name: 'clan_info', func: clanInfo}
-		];
+		plugins = {
+			'info': { func: richInfo },
+			'clan_info': { func: clanInfo },
+			'zk': { func: heroStats }
+		};
 
 		return this;
 	}
 
+	/**
+	 * Отображает дополнительную информацию о персонаже.
+	 * Вызывается нажатием на кнопку "info" в информации о персонаже.
+	 * Использует сервис http://sp.erclans.ru/evgeska_prof.php?calc=heroesinfo
+	 */
 	function richInfo () {
 		var infoButton = document.createElement("input");
 		infoButton.type = "button";
@@ -59,6 +65,8 @@ var plugins = (function (){
 		var name = xpath("/html/body/div[3]/div[6]/div/strong").snapshotItem(0).innerHTML;
 
 		infoButton.addEventListener("click", function () {
+			infoButton.remove();
+
 			kango.xhr.send({
 				method: 'post',
 				url: 'http://sp.erclans.ru/evgeska_prof.php?calc=heroesinfo',
@@ -87,12 +95,15 @@ var plugins = (function (){
 							"http://sp.erclans.ru/evgeska/images/"
 						)
 					);
-					infoButton.remove();
 				}
 			});
 		}, false);
 	}
 
+	/**
+	 * Добавляет к значкам клана в информации о персонаже
+	 * дополнительную ссылку на страницу с информацией о клане.
+	 */
 	function clanInfo () {
 		for(var i = 0; i < document.images.length; ++i) {
 			if (document.images[i].src.indexOf('http://img.ereality.ru/clan/') == 0) {
@@ -107,14 +118,56 @@ var plugins = (function (){
 		}
 	}
 
+	/**
+	 * Отображает динамику рейтинга персонажа.
+	 * Использует сервис http://gosov.net/pers_info.html.
+	 * Вызывается по нажатию на значок BoD в информации персонажа.
+	 */
+	function heroStats () {
+		var name = xpath("/html/body/div[3]/div[6]/div/strong").snapshotItem(0).innerHTML;
+		var gospic = document.createElement('img');
+		gospic.src = 'http://img.ereality.ru/clan/191.gif';
+
+		xpath("/html/body/div[3]/div[7]/div/div").snapshotItem(0).appendChild(gospic);
+		gospic.addEventListener("click", function() {
+			gospic.remove();
+			kango.xhr.send(
+				{
+					method: "POST",
+					url: "http://gosov.net/ajax/pers_info.ajax.php",
+					params: {'sort_item': '', 'sort_type': '', 'page': '', 'pers': CP1251urlencode(name)}
+				},
+				function (data) {
+					kango.console.log(data);
+					var response = data.response,
+						mystr = response.substring(response.lastIndexOf('<table'),response.lastIndexOf('</span></td>')),
+						mestovstavki = xpath('//*[@id="content"]'),
+						oFont = document.createElement("font");
+
+					oFont.size = "-3";
+					mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
+					oFont.insertAdjacentHTML(
+						"afterBegin",
+						mystr.replace(
+							new RegExp("/templates/GoldenClub/images",'g'),
+							"http://gosov.net/templates/GoldenClub/images"
+						)
+					);
+				}
+			);
+		}, false);
+	}
+
 	function load (pluginsList) {
-		for (var i = 0, c = plugins.length; i < c; i++) {
-			if (pluginsList[plugins[i].name]) {
-				plugins[i].func();
+		plugins['clan_info'].func(); //perm enabled
+
+		for (plugin in plugins) {
+			if (plugins.hasOwnProperty(plugin)) {
+				if (pluginsList[plugin]) {
+					plugins[plugin].func();
+				}
 			}
 		}
-
-		plugins['clan_info'].func(); //perm enabled
 	}
 
 	return {init: init, load: load};
