@@ -1,33 +1,35 @@
 ﻿// ==UserScript==
-// @name        ErExt
-// @include     http://www.ereality.ru/core*
-// @include 	http://ratings.ereality.ru/clans*
-// @include 	http://freedom.erclans.ru/analiz*
-// @include 	http://www.ereality.ru/log*
-// @include 	http://*.com/efimerka/
-// @include 	http://yo-bod.com/faceshop/
-// @include     http://www.news.ereality.ru/*sostav&id=*
-// @include     http://cc.erclans.ru/viewpage.php?page_id=45*
-// @include		http://www.ereality.ru/map.php*
-// @include     http://sidzoku.ru/landlord/
-// @include     http://www.ereality.ru/instance.php
-// @all-frames  true
+// @name	ErExt
+// @include	http://www.ereality.ru/core*
+// @include	http://ratings.ereality.ru/clans*
+// @include	http://freedom.erclans.ru/analiz*
+// @include	http://www.ereality.ru/log*
+// @include	http://*.com/efimerka/
+// @include	http://yo-bod.com/faceshop/
+// @include	http://www.news.ereality.ru/*sostav&id=*
+// @include	http://cc.erclans.ru/viewpage.php?page_id=45*
+// @include	http://www.ereality.ru/map.php*
+// @include	http://sidzoku.ru/landlord/
+// @include	http://www.ereality.ru/instance.php
+// @require	js/options.js
+// @require	js/tools.js
+// @all-frames	true
 // ==/UserScript==
 
 var myoptions = {
-	"faceshop":true,
-	"efimerka":true,
-	"info":true,
-	"zk":true,
-	"naemniki":true,
-	"bodestate":true,
-	"sidzoku":true,
-	"okcount":true,
-	"cemetry":true,
-	"numfight":true,
-	"numcapcha":true,
-	"kbdinst":true,
-	"chatsectors":true
+	"faceshop": true,
+	"efimerka": true,
+	"info": true,
+	"zk": true,
+	"naemniki": true,
+	"bodestate": true,
+	"sidzoku": true,
+	"okcount": true,
+	"cemetry": true,
+	"numfight": true,
+	"numcapcha": true,
+	"kbdinst": true,
+	"chatsectors": true
 };
 
 //================================================================Begin
@@ -108,73 +110,6 @@ kango.invokeAsync('kango.storage.getItem',"options", function(value) {
 		}
 		return this;
 	};
-
-	/**
-	 * Отображает динамику рейтинга персонажа.
-	 * Использует сервис http://gosov.net/pers_info.html.
-	 * Вызывается по нажатию на значок BoD в информации персонажа.
-	 */
-	function PostMsg1() {
-		GM_xmlhttpRequest({
-			method: "POST",
-			url: "http://gosov.net/ajax/pers_info.ajax.php",
-			data: {'sort_item': '', 'sort_type': '', 'page': '', 'pers': CP1251urlencode(name)},
-			headers: {
-				"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-				"Accept-Encoding": "gzip, deflate",
-				"Accept-Language": "ru-ru,ru;q=0.8,en-us;q=0.5,en;q=0.3",
-				"Content-Type": "application/x-www-form-urlencoded;",
-				"Referer": "http://gosov.net/pers_info.html"
-			},
-			onload: function(response) {
-		 		var mystr = response.substring(response.lastIndexOf('<table'),response.lastIndexOf('</span></td>')),
-					mestovstavki = xpath('//*[@id="content"]'),
-		 			oFont = document.createElement("font");
-		 		oFont.size = "-3";
-		 		mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
-		 		oFont.insertAdjacentHTML(
-					"afterBegin",
-					mystr.replace(
-						new RegExp("/templates/GoldenClub/images",'g'),
-						"http://gosov.net/templates/GoldenClub/images"
-					)
-				);
-		 		gospic.parentNode.removeChild(gospic);
-			}
-		});
-	}
-
-	/**
-	 * Отображает количество оставшихся действий до получения новых ступеней ангела дома, полемарха и т.п.
-	 * Использует сервис http://naims.tk/services/?do=steps_of_player.
-	 * Вызывается по клику на значок клана "Наемники" в информации персонажа.
-	 */
-	function PostMsg2() {
-		GM_xmlhttpRequest({
-			method: "GET",
-			url: "http://naims.tk/services/?do=steps_of_player&p_name="+CP1251urlencode(name),
-			headers: {
-				"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-				"Accept-Encoding": "gzip, deflate",
-				"Accept-Language": "ru-ru,ru;q=0.8,en-us;q=0.5,en;q=0.3",
-				 "Content-Type": "application/x-www-form-urlencoded;",
-				 "Referer": "http://naims.tk/services/?do=steps_of_player"
-	  		},
-			overrideMimeType:    "text/html;charset=windows-1251",
-			onload: function(response) {
-		 		var mystr = response.substring(
-						response.indexOf('<div class="d_right">') + 21,
-						response.indexOf('<div class="top_g_left">') - 6
-					),
-					mestovstavki = xpath('//*[@id="content"]'),
-					oFont = document.createElement("font");
-		  		oFont.size = "-3";
-		  		mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
-		  		oFont.insertAdjacentHTML("afterBegin", mystr);
-		  		naempic.parentNode.removeChild(naempic);
-			}
-		});
-	}
 
 	/**
 	 * Отображает время старта ОД.
@@ -434,8 +369,7 @@ kango.invokeAsync('kango.storage.getItem',"options", function(value) {
 		bodestatepic.src = 'http://yo-bod.com/library/modules/estate/search.png';
 		bodestate.appendChild(bodestatepic);
 
-		var naempic = document.createElement('img');
-		naempic.src = 'data:image/gif;base64,R0lGODlhDwAMAMQVAJl5I7ycQHqJm7iYO9e+bJ18I66NMJh3H1ZedUFGVnxiGsbS5KCuwau202JLDezUisquV9zFf7CVTNa+awAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABUALAAAAAAPAAwAAAVbYJWMVVlGk1lSbFIh1fNEqFqx8DTJdKoiggZBx6uVEAkBo6HbORwTiM9QWDAUzSdAInUcDArFwFcBlLgTr2EQCDRsErQ6wFjCIZAI4FCx2lVcYSYLhG+AEjYqIQA7';
+
 		try {
 			xpathRes.snapshotItem(0).insertAdjacentHTML("beforeEnd", "<p></p>");
 			if (myoptions.faceshop) {
@@ -443,13 +377,6 @@ kango.invokeAsync('kango.storage.getItem',"options", function(value) {
 			}
 			if (myoptions.efimerka) {
 				xpathRes.snapshotItem(0).appendChild(efimerka);
-			}
-			if (myoptions.zk) {
-
-			}
-			if (myoptions.naemniki) {
-				xpathRes.snapshotItem(0).appendChild(naempic);
-				naempic.addEventListener("click", PostMsg2, false);
 			}
 
 			xpathRes = xpath('//img[contains(@src,"http://img.ereality.ru//estates/info_icon")]');

@@ -34,6 +34,6 @@ function setprop(){kango.invokeAsync('kango.storage.setItem',"options",myoptions
 KangoAPI.onReady(function() {
 	getprop();
 	for (nprop in myoptions){
-	$('#'+nprop).click(function (event) {myoptions[this.id]=$('#'+this.id).prop("checked");setprop();});	
+		$('#'+nprop).click(function (event) {myoptions[this.id]=$('#'+this.id).prop("checked");setprop();});
 	}
 });
