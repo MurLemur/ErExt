@@ -7,20 +7,17 @@
 // ==/UserScript==
 
 var plugins = (function (){
-	var plugins = [];
-
-	function init () {
-		plugins = {
+	var plugins = {
 			'info': { func: richInfo },
 			'clan_info': { func: clanInfo },
 			'zk': { func: heroStats },
 			'naemniki': { func: stepsOfPlayer },
 			'bodestate': { func: estateBod },
-			'sidzoku': { func: estateSidzoku }
+			'sidzoku': { func: estateSidzoku },
+			'dragon_time': { func: dragonTime },
+			'faceshop' : { func: faceshopBod },
+			'efimerka' : { func: efimerkaOhe }
 		};
-
-		return this;
-	}
 
 	/**
 	 * Отображает дополнительную информацию о персонаже.
@@ -35,6 +32,7 @@ var plugins = (function (){
 		xpathRes.snapshotItem(0).insertAdjacentHTML("beforeEnd", "<p></p>");
 		xpathRes.snapshotItem(0).appendChild(infoButton);
 		var name = tools.xpath("/html/body/div[3]/div[6]/div/strong").snapshotItem(0).innerHTML;
+
 
 		infoButton.addEventListener("click", function () {
 			infoButton.remove();
@@ -164,7 +162,8 @@ var plugins = (function (){
 	}
 
 	/**
-	 *
+	 * Отображение ссылки на анализатор поместья BoD
+	 * Отображается левее значка поместья в информации персонажа.
 	 */
 	function estateBod () {
 		var linkElement = document.createElement('a'),
@@ -184,7 +183,8 @@ var plugins = (function (){
 	}
 
 	/**
-	 *
+	 * Отображение ссылки на анализатор поместья Sidzoku
+	 * Отображается левее значка поместья в информации персонажа.
 	 */
 	function estateSidzoku () {
 		var linkElement = document.createElement('a'),
@@ -203,9 +203,14 @@ var plugins = (function (){
 		xpathRes.snapshotItem(0).parentNode.appendChild(linkElement);
 	}
 
+	/**
+	 * Отображает время старта ОД.
+	 * Использует API ГР (+100 к карме).
+	 * Вызывается по клику на колбу с кровью в информации персонажа.
+	 */
 	function dragonTime () {
-
-		document.getElementById("blood2").addEventListener("click", onClick, false);
+		var element = document.getElementById("blood2");
+		element.addEventListener("click", onClick, false);
 
 		function onClick () {
 			kango.xhr.send(
@@ -219,16 +224,44 @@ var plugins = (function (){
 							new RegExp("time",'g'),
 							"Врата на Остров Драконов на этой неделе открываются в "
 						),
-						mestovstavki = xpath('//*[@id="content"]'),
+						mestovstavki = tools.xpath('//*[@id="content"]'),
 						oFont = document.createElement("font");
 
 					oFont.size = "-3";
 					mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
 					oFont.insertAdjacentHTML("afterBegin", mystr);
-					document.getElementById("blood2").removeEventListener("click", onClick, false);
+					element.removeEventListener("click", onClick, false);
 				}
 			);
 		}
+	}
+
+	function faceshopBod () {
+		var name = tools.xpath("/html/body/div[3]/div[6]/div/strong").snapshotItem(0).innerHTML,
+			element = tools.xpath("/html/body/div[3]/div[7]/div/div").snapshotItem(0),
+			linkElement = document.createElement('a'),
+			imageElement = document.createElement('img');
+
+		linkElement.href = 'http://yo-bod.com/faceshop/';
+		linkElement.target = '_blank';
+		imageElement.src = 'data:image/gif;base64,R0lGODlhDwAMAOYAAAAAAP///40AAGwAAFcAAE0AAEUAAD8AAD0AACsAACQAACIAACAAABYAAA8AAAoAAAkAAAUAAAIAAKEBAV4EBJMHB9IMDGwGBk0GBrQSEmcNDeUeHscgIGEQEIwZGcEjI14REVURERgFBXsfH8c0NC4NDWIeHstDQzMREetPT4YuLudRUVMdHZk2No4yMmUkJKY9PdhRUU0dHYw2NqpCQr5LS1MhIZE7O5tAQO1nZ4A7O/d2dr5fXyYTE/d+fs9ra/6GhsxsbLZhYclsbNBxcfeIiOmDg7xqaoBISNZ6eveOjteCgueMjNuGhvOYmPadnYpbW/+rq/+vr76CgtSWlmNHR/u2tuuqqqt8fPm3t/i7u/3AwNCenv/ExPzDw//Ly/3Kyr2Xl/fJyf/R0dKurt26uuXCwv/b2//d3fvZ2d7AwPXZ2f/j4//l5f/n5/Pd3f///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAHAALAAAAAAPAAwAQAeLgHCCg3BZQGeEghsLDyRocF5BHTJJiWIWNFhGOSAAFyljiXBaGQwNCRAHMWyEVkgiCj0oM0dHXIlXFS4FGCMDJ2BCE2+iaVMCNWRLPl+JTDAaLC0hABQrbYlKRFBVJRImBGGETh4RL1RlZl1SUYlFNw4LOEM2CDoqBj+EWztwajwfmjxxA4fDGjiBAAA7';
+		linkElement.appendChild(imageElement);
+		element.insertAdjacentHTML("beforeEnd", "<p></p>");  //todo: решить вопрос с блоками, от которых зависит поведение нескольких фич
+		element.appendChild(linkElement);
+	}
+
+	function efimerkaOhe () {
+		var name = tools.xpath("/html/body/div[3]/div[6]/div/strong").snapshotItem(0).innerHTML,
+			element = tools.xpath("/html/body/div[3]/div[7]/div/div").snapshotItem(0),
+			linkElement = document.createElement('a'),
+			imageElement = document.createElement('img');
+
+		linkElement.href = 'http://охэ.com/efimerka/';
+		linkElement.target = '_blank';
+		imageElement.src = 'data:image/gif;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAD///8AAP//AP8A/wAAAP8A//8AAAD/AAD/AAAAAAAAAINLBwCETAgApWQVAKJoIgCtcy0AtHkwALh+NgDQkEIA1JRGAMaRUADKlVMA0p1bAMWTVgDgqGUAwZNaAMycYQDQp3UA5MObAOTMrwDn2cgAik4AAH1GAAB1QQAAjlABAIZLAQCzZgIAo10CAIlPAwCSVAYAiVAIAKdjCwCZWgsAiVEKAI1UDACUWA0Aj1YPAJtfEwC5dBkAlFwUAJthFwDmkSUAomcdANCGJwCbZB8A6ZgwAK92LgDMjDoA1ZM+AKZyMQCpdTQAwog9ALuFPgC2gDwAuoVCAOmrWQC+ikkAs4VKANijXgC7jlIAwJdhAMSaZQC5lWgA4rmEANGtfgDZtYUA2reJAM+vhQDoxZYA48CTANK2kgDbv5sA1ryaAOfh2QDXqmwA1cWvAOnk2wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHB1EMLCsxFgcHBwcHBwcHBw4gJSU5RUA6BwcHBwcHBw8gKSoXU09DNzQHBwcHBxktJSknTE0nJSohRgcHBwcSPyArIz07ICspCTYHBwcHOEsvHRxKTicdKCszBwcHBy5JUkITFRhRRAooMwcHBwcNLE5QQSQlOlMUHQ4HBwcHTyAkCyspKysbFB5IBwcHBwcRICUoKwg1GiI8BwcHBwcHBxEfKCgmPgw8BwcHBwcHBwcHTxAyMDZHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHB///AAD//wAA+B8AAPAPAADgBwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAA4AcAAPAPAAD4HwAA//8AAP//AAA=';
+		linkElement.appendChild(imageElement);
+		element.insertAdjacentHTML("beforeEnd", "<p></p>");
+		element.appendChild(linkElement);
 	}
 
 	function load (pluginsList) {
@@ -241,8 +274,8 @@ var plugins = (function (){
 		}
 	}
 
-	return {init: init, load: load};
-})().init();
+	return {load: load};
+})();
 
 options.load(function(options){
 	plugins.load(options);

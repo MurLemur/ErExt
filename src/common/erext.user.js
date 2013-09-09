@@ -112,37 +112,6 @@ kango.invokeAsync('kango.storage.getItem',"options", function(value) {
 	};
 
 	/**
-	 * Отображает время старта ОД.
-	 * Использует API ГР (+100 к карме).
-	 * Вызывается по клику на колбу с кровью в информации персонажа.
-	 */
-	function PostMsg4() {
-		GM_xmlhttpRequest({
-			method: "GET",
-			url: "http://api.ereality.ru/dragons_schedule.txt",
-			headers: {
-				"Accept":	"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-				"Accept-Encoding":	"gzip, deflate",
-				"Accept-Language":	"ru-ru,ru;q=0.8,en-us;q=0.5,en;q=0.3",
-				"Content-Type": "application/x-www-form-urlencoded;",
-				"Referer": "http://ereality.ru"
-			},
-			onload: function(response){
-				var mystr = response.replace(
-						new RegExp("time",'g'),
-						"Врата на Остров Драконов на этой неделе открываются в "
-					),
-					mestovstavki = xpath('//*[@id="content"]'),
-					oFont = document.createElement("font");
-				oFont.size = "-3";
-				mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
-				oFont.insertAdjacentHTML("afterBegin", mystr);
-				document.getElementById("blood2").removeEventListener("click", PostMsg4, false);
-			}
-		});
-	}
-
-	/**
 	 * Загружает персонажа в эфимерку (того из чьей информации выполнен переход на переодевалку)
 	 */
 	function efim(){
@@ -356,19 +325,6 @@ kango.invokeAsync('kango.storage.getItem',"options", function(value) {
 		bod.target = '_blank';
 		bodpic.src = 'data:image/gif;base64,R0lGODlhDwAMAOYAAAAAAP///40AAGwAAFcAAE0AAEUAAD8AAD0AACsAACQAACIAACAAABYAAA8AAAoAAAkAAAUAAAIAAKEBAV4EBJMHB9IMDGwGBk0GBrQSEmcNDeUeHscgIGEQEIwZGcEjI14REVURERgFBXsfH8c0NC4NDWIeHstDQzMREetPT4YuLudRUVMdHZk2No4yMmUkJKY9PdhRUU0dHYw2NqpCQr5LS1MhIZE7O5tAQO1nZ4A7O/d2dr5fXyYTE/d+fs9ra/6GhsxsbLZhYclsbNBxcfeIiOmDg7xqaoBISNZ6eveOjteCgueMjNuGhvOYmPadnYpbW/+rq/+vr76CgtSWlmNHR/u2tuuqqqt8fPm3t/i7u/3AwNCenv/ExPzDw//Ly/3Kyr2Xl/fJyf/R0dKurt26uuXCwv/b2//d3fvZ2d7AwPXZ2f/j4//l5f/n5/Pd3f///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAHAALAAAAAAPAAwAQAeLgHCCg3BZQGeEghsLDyRocF5BHTJJiWIWNFhGOSAAFyljiXBaGQwNCRAHMWyEVkgiCj0oM0dHXIlXFS4FGCMDJ2BCE2+iaVMCNWRLPl+JTDAaLC0hABQrbYlKRFBVJRImBGGETh4RL1RlZl1SUYlFNw4LOEM2CDoqBj+EWztwajwfmjxxA4fDGjiBAAA7';
 		bod.appendChild(bodpic);
-		var sidzokuestate = document.createElement('a');
-		var sidzokuestatepic = document.createElement('img');
-		sidzokuestate.href = 'http://sidzoku.ru/landlord/#'+name;
-		sidzokuestate.target = '_blank';
-		sidzokuestatepic.src = 'http://img.ereality.ru/clan/73.gif';
-		sidzokuestate.appendChild(sidzokuestatepic);
-		var bodestate = document.createElement('a');
-		var bodestatepic = document.createElement('img');
-		bodestate.href = 'http://yo-bod.com/library/modules/estate/?name='+CP1251urlencode(name);
-		bodestate.target = '_blank';
-		bodestatepic.src = 'http://yo-bod.com/library/modules/estate/search.png';
-		bodestate.appendChild(bodestatepic);
-
 
 		try {
 			xpathRes.snapshotItem(0).insertAdjacentHTML("beforeEnd", "<p></p>");
@@ -378,17 +334,6 @@ kango.invokeAsync('kango.storage.getItem',"options", function(value) {
 			if (myoptions.efimerka) {
 				xpathRes.snapshotItem(0).appendChild(efimerka);
 			}
-
-			xpathRes = xpath('//img[contains(@src,"http://img.ereality.ru//estates/info_icon")]');
-			if (xpathRes.snapshotLength > 0  && xpathRes.snapshotItem(0).parentNode.href.search("/estate_info.php") != -1 ) {
-				if (myoptions.bodestate) {
-					xpathRes.snapshotItem(0).parentNode.appendChild(bodestate);
-				}
-				if (myoptions.sidzoku) {
-					xpathRes.snapshotItem(0).parentNode.appendChild(sidzokuestate);
-				}
-			}
-			document.getElementById("blood2").addEventListener("click", PostMsg4, false);
 		} catch(e) {}
 	}
 	else if (location.href.search("http://ratings.ereality.ru/clans") != -1) {

@@ -21,12 +21,16 @@ var options = (function() {
 	function load (callback) {
 		kango.invokeAsync('kango.storage.getItem', 'options', function (data) {
 			for (var i = 0, c = optionNames.length; i < c; i++) {
-				options[optionNames[i]] = typeof data[optionNames[i]] != "undefined" ? data[optionNames[i]] : false;
+				options[optionNames[i]] = typeof data[optionNames[i]] != "undefined" ? data[optionNames[i]] : true;
 			}
 
 			callback(options);
 		});
 	}
 
-	return {load: load};
+	function isEnabled (name) {
+		return options[name];
+	}
+
+	return {load: load, isEnabled: isEnabled};
 })();
