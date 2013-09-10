@@ -1,7 +1,8 @@
 {
 	"content_scripts": [
 		"erext.user.js",
-		"script/info.js"
+		"content/info.js",
+		"content/core.js"
 	],
 	"description": "Extension for EReality.ru",
 	"creator": "MurLemur",

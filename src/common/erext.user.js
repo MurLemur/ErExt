@@ -227,23 +227,6 @@ kango.invokeAsync('kango.storage.getItem',"options", function(value) {
 		}
 	}
 
-	function pfunction(){
-		var scr= document.createElement("script");
-		scr.text = "(" +
-			(function(){
-				var xgdh=chat.formatSmilies;
-				chat.formatSmilies = function(){
-					arguments[0] = arguments[0].replace(
-						/(\d{1,3})[: \.\-](\d{1,3})/ig,
-						"<a href=\"javascript:(function(){if(typeof main._showSec!='undefined')main._showSec($1,$2);})();\">$&</a>"
-					);
-					return xgdh.apply(chat, arguments);
-				};
-			}).toString() +
-			")()";
-		document.body.appendChild(scr);
-	}
-
 	var xpathRes;
 	if (location.href.search("page=sostav") != -1 ) {
 		xpathRes = xpath("/html/body/table/tbody/tr[2]/td/table/tbody/tr");
@@ -287,10 +270,6 @@ kango.invokeAsync('kango.storage.getItem',"options", function(value) {
 			loc_user.firstChild.addEventListener("click", userscount, false);
 		}
 
-		if (myoptions.chatsectors) {
-			window.setTimeout( pfunction , 100);
-		}
-
 		document.onkeyup = function (e) {
 			e = e || window.event;
 			//alert(e.keyCode);
@@ -307,34 +286,6 @@ kango.invokeAsync('kango.storage.getItem',"options", function(value) {
 			return false;
 		}
 
-	}
-	else if (location.href.search("http://www.ereality.ru/info") != -1 || location.href.search("http://www.ereality.ru/~") != -1) {
-
-
-		var name = xpath("/html/body/div[3]/div[6]/div/strong").snapshotItem(0).innerHTML;
-		xpathRes = xpath("/html/body/div[3]/div[7]/div/div");
-		var efimerka = document.createElement('a');
-		var efimerkapic = document.createElement('img');
-		efimerka.href = 'http://охэ.com/efimerka/';
-		efimerka.target = '_blank';
-		efimerkapic.src = 'data:image/gif;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAD///8AAP//AP8A/wAAAP8A//8AAAD/AAD/AAAAAAAAAINLBwCETAgApWQVAKJoIgCtcy0AtHkwALh+NgDQkEIA1JRGAMaRUADKlVMA0p1bAMWTVgDgqGUAwZNaAMycYQDQp3UA5MObAOTMrwDn2cgAik4AAH1GAAB1QQAAjlABAIZLAQCzZgIAo10CAIlPAwCSVAYAiVAIAKdjCwCZWgsAiVEKAI1UDACUWA0Aj1YPAJtfEwC5dBkAlFwUAJthFwDmkSUAomcdANCGJwCbZB8A6ZgwAK92LgDMjDoA1ZM+AKZyMQCpdTQAwog9ALuFPgC2gDwAuoVCAOmrWQC+ikkAs4VKANijXgC7jlIAwJdhAMSaZQC5lWgA4rmEANGtfgDZtYUA2reJAM+vhQDoxZYA48CTANK2kgDbv5sA1ryaAOfh2QDXqmwA1cWvAOnk2wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHB1EMLCsxFgcHBwcHBwcHBw4gJSU5RUA6BwcHBwcHBw8gKSoXU09DNzQHBwcHBxktJSknTE0nJSohRgcHBwcSPyArIz07ICspCTYHBwcHOEsvHRxKTicdKCszBwcHBy5JUkITFRhRRAooMwcHBwcNLE5QQSQlOlMUHQ4HBwcHTyAkCyspKysbFB5IBwcHBwcRICUoKwg1GiI8BwcHBwcHBxEfKCgmPgw8BwcHBwcHBwcHTxAyMDZHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHB///AAD//wAA+B8AAPAPAADgBwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAA4AcAAPAPAAD4HwAA//8AAP//AAA=';
-		efimerka.appendChild(efimerkapic);
-		var bod = document.createElement('a');
-		var bodpic = document.createElement('img');
-		bod.href = 'http://yo-bod.com/faceshop/';
-		bod.target = '_blank';
-		bodpic.src = 'data:image/gif;base64,R0lGODlhDwAMAOYAAAAAAP///40AAGwAAFcAAE0AAEUAAD8AAD0AACsAACQAACIAACAAABYAAA8AAAoAAAkAAAUAAAIAAKEBAV4EBJMHB9IMDGwGBk0GBrQSEmcNDeUeHscgIGEQEIwZGcEjI14REVURERgFBXsfH8c0NC4NDWIeHstDQzMREetPT4YuLudRUVMdHZk2No4yMmUkJKY9PdhRUU0dHYw2NqpCQr5LS1MhIZE7O5tAQO1nZ4A7O/d2dr5fXyYTE/d+fs9ra/6GhsxsbLZhYclsbNBxcfeIiOmDg7xqaoBISNZ6eveOjteCgueMjNuGhvOYmPadnYpbW/+rq/+vr76CgtSWlmNHR/u2tuuqqqt8fPm3t/i7u/3AwNCenv/ExPzDw//Ly/3Kyr2Xl/fJyf/R0dKurt26uuXCwv/b2//d3fvZ2d7AwPXZ2f/j4//l5f/n5/Pd3f///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAHAALAAAAAAPAAwAQAeLgHCCg3BZQGeEghsLDyRocF5BHTJJiWIWNFhGOSAAFyljiXBaGQwNCRAHMWyEVkgiCj0oM0dHXIlXFS4FGCMDJ2BCE2+iaVMCNWRLPl+JTDAaLC0hABQrbYlKRFBVJRImBGGETh4RL1RlZl1SUYlFNw4LOEM2CDoqBj+EWztwajwfmjxxA4fDGjiBAAA7';
-		bod.appendChild(bodpic);
-
-		try {
-			xpathRes.snapshotItem(0).insertAdjacentHTML("beforeEnd", "<p></p>");
-			if (myoptions.faceshop) {
-				xpathRes.snapshotItem(0).appendChild(bod);
-			}
-			if (myoptions.efimerka) {
-				xpathRes.snapshotItem(0).appendChild(efimerka);
-			}
-		} catch(e) {}
 	}
 	else if (location.href.search("http://ratings.ereality.ru/clans") != -1) {
 		for(i = 0; i<document.images.length; ++i) {

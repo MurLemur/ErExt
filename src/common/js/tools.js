@@ -33,6 +33,12 @@ var tools = (function(){
 		};
 	})();
 
-	return {xpath: xpath, cp1251urlencode: CP1251urlencode}
+	function pushJs (callback) {
+		var scriptElement = document.createElement("script");
+		scriptElement.text = '(' + callback.toString() + ')();';
+		document.body.appendChild(scriptElement);
+	}
+
+	return {xpath: xpath, cp1251urlencode: CP1251urlencode, pushJs: pushJs}
 })();
 
