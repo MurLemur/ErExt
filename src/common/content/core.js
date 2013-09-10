@@ -15,10 +15,8 @@ options.load(function(options){
 });
 
 function chatMapSearch () {
-	kango.console.log('loaded');
 	setTimeout(function() {
 		tools.pushJs(function() {
-			console.log('pushed');
 			if (typeof core.__showSector == 'function') {
 				return
 			}
