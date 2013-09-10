@@ -29,7 +29,12 @@ var myoptions = {
 	"numfight":true,
 	"numcapcha":true,
 	"kbdinst":true,
-	"chatsectors":true
+	"chatsectors":true,
+	"clan_info":true,
+	"dragon_time":true,
+	"location_info":true,
+	"block_cmenu":true,
+	"lotereya":true
 }
 
 //================================================================Begin
@@ -109,7 +114,9 @@ Array.prototype.shuffle = function( b )
 
  return this;
 };
- function PostMsg() {
+
+function PostMsg() {
+oBtn.removeEventListener("click", PostMsg, false);
 GM_xmlhttpRequest({
   method: "POST",
   url: "http://sp.erclans.ru/evgeska_prof.php?calc=heroesinfo",
@@ -136,6 +143,7 @@ GM_xmlhttpRequest({
 return;
 }
 function PostMsg1() {
+gospic.removeEventListener("click", PostMsg1, false);
 GM_xmlhttpRequest({
   method: "POST",
   url: "http://gosov.net/ajax/pers_info.ajax.php",
@@ -163,6 +171,7 @@ return;
 }
 
 function PostMsg2() {
+naempic.removeEventListener("click", PostMsg2, false);
 GM_xmlhttpRequest({
   method: "GET",
   url: "http://naims.tk/services/?do=steps_of_player&p_name="+CP1251urlencode(name),
@@ -183,7 +192,6 @@ GM_xmlhttpRequest({
 		  mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
 		  oFont.insertAdjacentHTML("afterBegin", mystr);
 		  naempic.parentNode.removeChild(naempic);
-		
  }
   });
 
@@ -191,6 +199,7 @@ return;
 }
 
 function PostMsg4() {
+document.getElementById("blood2").removeEventListener("click", PostMsg4, false);
 GM_xmlhttpRequest({
   method: "GET",
   url: "http://api.ereality.ru/dragons_schedule.txt",
@@ -208,7 +217,6 @@ GM_xmlhttpRequest({
 		  oFont.size = "-3";
 		  mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
 		  oFont.insertAdjacentHTML("afterBegin", mystr);
-		  document.getElementById("blood2").removeEventListener("click", PostMsg4, false);
  }
   });
 return;
@@ -234,7 +242,7 @@ function userscount() {
 	var fraki = "Игнесс:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/2.gif"]').snapshotLength+
 	" Раанор:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/3.gif"]').snapshotLength+
 	" Тарбис:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/4.gif"]').snapshotLength+
-	" Витара:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/5.gif"]').snapshotLength+
+	" Витарра:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/5.gif"]').snapshotLength+
 	" Дримнир:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/6.gif"]').snapshotLength;
 	document.getElementById("chat_msg").value = fraki;
 }
@@ -316,13 +324,71 @@ function instkbd(code) {
 }
 function pfunction(){
 
- var scr= document.createElement("script");
- scr.text= "(" +
+var scr= document.createElement("script");
+ scr.text="";
+ if (myoptions.chatsectors) {
+ scr.text= scr.text + "(" +
     (function(){var xgdh=chat.formatSmilies;
-	chat.formatSmilies=function(){arguments[0]=arguments[0].replace(/(\d{1,3})[: \.\-](\d{1,3})/ig,"<a href=\"javascript:(function(){if(typeof main._showSec!='undefined')main._showSec($1,$2);})();\">$&</a>");
-	return xgdh.apply(chat, arguments);};}).toString()
+	chat.formatSmilies=function(){if (arguments[0].search("опыта")==-1) {
+		if (arguments[0].search("Ауры")!=-1) {
+			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
+			}
+		else {
+			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+			}
+		}
+	return xgdh.apply(chat, arguments);
+	};
+	
+	chat.myshowSec = function (xcord,ycord){
+		var sectorX = top.frames.main.document.getElementById("searchX");
+		if (sectorX!=null) {
+			sectorY = top.frames.main.document.getElementById("searchY");
+		}
+		else {
+			sectorX = top.frames.main.document.getElementById("sx2");
+			sectorY = top.frames.main.document.getElementById("sy2");
+		}
+	sectorX.value=xcord;
+	sectorY.value=ycord;
+	if( window.KeyEvent ) {// Для FF
+		var o = document.createEvent('KeyEvents');
+		o.initKeyEvent( 'keyup', true, true, window, false, false, false, false, 13, 0 );
+		}
+	else {// Для остальных браузеров
+		var o = document.createEvent('UIEvents');
+		o.initUIEvent( 'keyup', true, true, window, 1 );
+		  o.keyCode = 13; // Указываем дополнительный параметр, так как initUIEvent его не принимает
+		}	
+	sectorY.dispatchEvent(o);
+	}
+	}).toString()
+	+ ")();";
+	}
+	if (myoptions.block_cmenu) {
+	scr.text= scr.text+ "(" +
+	(function(){
+	function menufunc(){
+		pic = document.getElementById("picmenu");
+		if (pic.src=='data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAAsTAAALEwEAmpwYAAADG2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjaY2BgnuDo4uTKJMDAUFBUUuQe5BgZERmlwH6egY2BmYGBgYGBITG5uMAxIMCHgYGBIS8/L5UBFTAyMHy7xsDIwMDAcFnX0cXJlYE0wJpcUFTCwMBwgIGBwSgltTiZgYHhCwMDQ3p5SUEJAwNjDAMDg0hSdkEJAwNjAQMDg0h2SJAzAwNjCwMDE09JakUJAwMDg3N+QWVRZnpGiYKhpaWlgmNKflKqQnBlcUlqbrGCZ15yflFBflFiSWoKAwMD1A4GBgYGXpf8EgX3xMw8BUNTVQYqg4jIKAUICxE+CDEESC4tKoMHJQODAIMWgx9DJcMqhgeM0oxRjPMYnzIZMjUwXWLWYG5kvstiwzKPlZk1m/UqmxPbJnYV9pkcAhydnKyczVzMXG3c3NwTeaR4lvIa8x7iC+Z7xl8tICSwWtBN8JFQo7Ci8GGRdFFe0a1iceKc4lslUiSFJY9KVUjrSj+RmSMbKicod1a+R8FHkVfxgtIU5SgVJZXXqlvVGtX9NGQ13mru05qonapjrSuk+0rviP58gxrDKCNLY0nj3yb3TA+brTDvt6iwTLTysbawUbUVsWOx+2r/3OG24wWnY857Xba6rndb6b7UY5HnQq8F3gt9Fvsu81vlvz5ga+DeoGPB50NuhT4L+xLBFCkYpRRtHOMWGxWXF9+SMDtxc9LZ5OepTGly6TYZUZlVWbOy9+Tcy2PKVy/wKSwuml18uORtmUS5S0Vh5byqs9V/a/Xq4usnNRxr/N1s0JLeOq/teodgp3dXe/fhXoY++/66Cfsm/p/sOKV16onpvDOCZ86a9WiO1tySefsWcC0MW7R48celDssmLH+40nhV6+qba3XXNa2/udFgU8fmB1uttk3d/mGn765Vezj2pu87fkD9YOeh10f8jm4+Ln6i9uST095ntpyTPd9+4dOluMunrlpcW3ZD9Gbrra930u/evO/z4MAj08ernyo+m/lC8GXXa+Y3dW9/vi/98OlTwed3X/O+vfuR//PD7+I/3/5V/f8PAC4MHYugPAkxAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAGWSURBVHjaLNG9S9RhAMDxz/P73Yt35suhUCpRYh5YIDVY0RQSJ9Ig9E+01FBQY9HSEEZLS0t/grlE0qRLiBFNCb2QUqJSinZontfdPQ31HT/rN0z736Crrcm2QWorySsvrfzjMA35eP3wVjxZMqHptSqr+SfhmUPSCoX4KN4f6qZgVN4XBce7dyd1hXmNtCLeaN47b1y7df0Orbjkouj7hbAVFhPD9Ttlo/Z9UpdI/fHZvlFl9btOJY2pYv+IYMminIxExhtLghHFvsZU0hzvUVK1rFMqKy+ry7Kqkh7NK5kwUJS3qaFo25poR0HDL52KQn9GaIlyEqm6F+iQ05JFUwxJXN9V06ukJqekJKempFdNlfUku7BlQ7sxGQei6EDGmHabfsouJOlsc/udfWUTBqRSAyaU/fZWYzudTStb+dyP8R0nDBg25LSzjtkzZ1XnwziTVnhfOLp27qtUQYe8fR/N+ab0PD5QD9MIR8Lt6s3D3i7t2FOV3+p8Gh/Hvf83gyg507xWu9zsI91om09nWh+CiL8DAM2AjYmLhPsSAAAAAElFTkSuQmCC') {
+			pic.src = 'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAACB0RVh0U29mdHdhcmUATWFjcm9tZWRpYSBGaXJld29ya3MgTVi7kSokAAAAFnRFWHRDcmVhdGlvbiBUaW1lADExLzA1LzA33bqJ2wAAAq1JREFUeJxlk09oVFcUxn/3vskkqZoJGRMXTgQpCga0qZkUChEtFjFg6giuVDAgbaQroV2WGgUXXQiudJlVyDJpKRVKwYR0YXVqtNrUP1SSOMYRJpjJjJn3Zubc08Uzk4n94HDh8N1zzvcdjlFV6rHn75P7oqbhkqc26WET4oTAlTOBq6QDV774oufmX/V8U1+ge/bUuGdsaiHI8kYKCAKAh2UzzcS1hYqrTix8cvPEhgLfZq41TRXuPctVlxNz5cVawVZvCwDLUqjl4rKFZolmtr9t23X78zHfAvy2cmes/nOq9RAAM12jzOwZBbeeW/IKFE0p8W9TdgyA5OyZ3v2zp5V0j5Lu0ZHcT6qqyvTHugZ+3quqqiPZH2u8rVMHte3WgV7ru/KVhSBb6zwYHwhnXaqsO1UNfRrc9gWpyAEAilGfipErttk0dr15p/Fs/BgAFx7+AMBceZG51VDWhRdXQ07HAJQcQUQwFe0yyUdnNO3/A4D2pEPzfvmU/CafWCwGr8vkq0Vi29tY7p4Mnf/1I4g3sDkXISJOeB8GAx945KUIbQDRMLeGkgNA1GGrTl56WAAmC3+GY3YeXyfbMNbkTebuvts/iJOX3qavdh4VdR8GVJgrLzIYH+Dotj7y/gqPK/M02UbOt5/kWuc3oZEz3zEvWaz1UHF/mN3p48mqyt3n5hUAFzu+ZLhz6H+yAIYfX+fSkxvQ3kAkr4iTXqOq7LjTP76Kn1rywm0ctN0Mdw5xaGtvbezhJ9eZyqWhJYLFoL5MuP4HJ4yqcnj6XNPTSOZZ0ZQSyw2rYbvAwYqEL0CjhRYPG4CuSkbnS7v066f+hmNq//2zcZymilGfICKo0ZphxgdbEAQ34fofbDymesSm+/YiellFk1p1CVGHIBkxLu2Mfu+O3H9Yz/8PLFlkbIqvT3MAAAAASUVORK5CYII=';
+			window.oncontextmenu = function(){return false};
+		} 
+   else {
+    pic.src = 'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAAsTAAALEwEAmpwYAAADG2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjaY2BgnuDo4uTKJMDAUFBUUuQe5BgZERmlwH6egY2BmYGBgYGBITG5uMAxIMCHgYGBIS8/L5UBFTAyMHy7xsDIwMDAcFnX0cXJlYE0wJpcUFTCwMBwgIGBwSgltTiZgYHhCwMDQ3p5SUEJAwNjDAMDg0hSdkEJAwNjAQMDg0h2SJAzAwNjCwMDE09JakUJAwMDg3N+QWVRZnpGiYKhpaWlgmNKflKqQnBlcUlqbrGCZ15yflFBflFiSWoKAwMD1A4GBgYGXpf8EgX3xMw8BUNTVQYqg4jIKAUICxE+CDEESC4tKoMHJQODAIMWgx9DJcMqhgeM0oxRjPMYnzIZMjUwXWLWYG5kvstiwzKPlZk1m/UqmxPbJnYV9pkcAhydnKyczVzMXG3c3NwTeaR4lvIa8x7iC+Z7xl8tICSwWtBN8JFQo7Ci8GGRdFFe0a1iceKc4lslUiSFJY9KVUjrSj+RmSMbKicod1a+R8FHkVfxgtIU5SgVJZXXqlvVGtX9NGQ13mru05qonapjrSuk+0rviP58gxrDKCNLY0nj3yb3TA+brTDvt6iwTLTysbawUbUVsWOx+2r/3OG24wWnY857Xba6rndb6b7UY5HnQq8F3gt9Fvsu81vlvz5ga+DeoGPB50NuhT4L+xLBFCkYpRRtHOMWGxWXF9+SMDtxc9LZ5OepTGly6TYZUZlVWbOy9+Tcy2PKVy/wKSwuml18uORtmUS5S0Vh5byqs9V/a/Xq4usnNRxr/N1s0JLeOq/teodgp3dXe/fhXoY++/66Cfsm/p/sOKV16onpvDOCZ86a9WiO1tySefsWcC0MW7R48celDssmLH+40nhV6+qba3XXNa2/udFgU8fmB1uttk3d/mGn765Vezj2pu87fkD9YOeh10f8jm4+Ln6i9uST095ntpyTPd9+4dOluMunrlpcW3ZD9Gbrra930u/evO/z4MAj08ernyo+m/lC8GXXa+Y3dW9/vi/98OlTwed3X/O+vfuR//PD7+I/3/5V/f8PAC4MHYugPAkxAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAGWSURBVHjaLNG9S9RhAMDxz/P73Yt35suhUCpRYh5YIDVY0RQSJ9Ig9E+01FBQY9HSEEZLS0t/grlE0qRLiBFNCb2QUqJSinZontfdPQ31HT/rN0z736Crrcm2QWorySsvrfzjMA35eP3wVjxZMqHptSqr+SfhmUPSCoX4KN4f6qZgVN4XBce7dyd1hXmNtCLeaN47b1y7df0Orbjkouj7hbAVFhPD9Ttlo/Z9UpdI/fHZvlFl9btOJY2pYv+IYMminIxExhtLghHFvsZU0hzvUVK1rFMqKy+ry7Kqkh7NK5kwUJS3qaFo25poR0HDL52KQn9GaIlyEqm6F+iQ05JFUwxJXN9V06ukJqekJKempFdNlfUku7BlQ7sxGQei6EDGmHabfsouJOlsc/udfWUTBqRSAyaU/fZWYzudTStb+dyP8R0nDBg25LSzjtkzZ1XnwziTVnhfOLp27qtUQYe8fR/N+ab0PD5QD9MIR8Lt6s3D3i7t2FOV3+p8Gh/Hvf83gyg507xWu9zsI91om09nWh+CiL8DAM2AjYmLhPsSAAAAAElFTkSuQmCC';
+	window.oncontextmenu = function(){return true};
+   }
+   
+	}
+	var loc_us = document.getElementById("div_users");
+	loc_us.firstChild.nextSibling.insertAdjacentHTML("afterEnd",'<img id = "picmenu"  src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAAsTAAALEwEAmpwYAAADG2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjaY2BgnuDo4uTKJMDAUFBUUuQe5BgZERmlwH6egY2BmYGBgYGBITG5uMAxIMCHgYGBIS8/L5UBFTAyMHy7xsDIwMDAcFnX0cXJlYE0wJpcUFTCwMBwgIGBwSgltTiZgYHhCwMDQ3p5SUEJAwNjDAMDg0hSdkEJAwNjAQMDg0h2SJAzAwNjCwMDE09JakUJAwMDg3N+QWVRZnpGiYKhpaWlgmNKflKqQnBlcUlqbrGCZ15yflFBflFiSWoKAwMD1A4GBgYGXpf8EgX3xMw8BUNTVQYqg4jIKAUICxE+CDEESC4tKoMHJQODAIMWgx9DJcMqhgeM0oxRjPMYnzIZMjUwXWLWYG5kvstiwzKPlZk1m/UqmxPbJnYV9pkcAhydnKyczVzMXG3c3NwTeaR4lvIa8x7iC+Z7xl8tICSwWtBN8JFQo7Ci8GGRdFFe0a1iceKc4lslUiSFJY9KVUjrSj+RmSMbKicod1a+R8FHkVfxgtIU5SgVJZXXqlvVGtX9NGQ13mru05qonapjrSuk+0rviP58gxrDKCNLY0nj3yb3TA+brTDvt6iwTLTysbawUbUVsWOx+2r/3OG24wWnY857Xba6rndb6b7UY5HnQq8F3gt9Fvsu81vlvz5ga+DeoGPB50NuhT4L+xLBFCkYpRRtHOMWGxWXF9+SMDtxc9LZ5OepTGly6TYZUZlVWbOy9+Tcy2PKVy/wKSwuml18uORtmUS5S0Vh5byqs9V/a/Xq4usnNRxr/N1s0JLeOq/teodgp3dXe/fhXoY++/66Cfsm/p/sOKV16onpvDOCZ86a9WiO1tySefsWcC0MW7R48celDssmLH+40nhV6+qba3XXNa2/udFgU8fmB1uttk3d/mGn765Vezj2pu87fkD9YOeh10f8jm4+Ln6i9uST095ntpyTPd9+4dOluMunrlpcW3ZD9Gbrra930u/evO/z4MAj08ernyo+m/lC8GXXa+Y3dW9/vi/98OlTwed3X/O+vfuR//PD7+I/3/5V/f8PAC4MHYugPAkxAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAGWSURBVHjaLNG9S9RhAMDxz/P73Yt35suhUCpRYh5YIDVY0RQSJ9Ig9E+01FBQY9HSEEZLS0t/grlE0qRLiBFNCb2QUqJSinZontfdPQ31HT/rN0z736Crrcm2QWorySsvrfzjMA35eP3wVjxZMqHptSqr+SfhmUPSCoX4KN4f6qZgVN4XBce7dyd1hXmNtCLeaN47b1y7df0Orbjkouj7hbAVFhPD9Ttlo/Z9UpdI/fHZvlFl9btOJY2pYv+IYMminIxExhtLghHFvsZU0hzvUVK1rFMqKy+ry7Kqkh7NK5kwUJS3qaFo25poR0HDL52KQn9GaIlyEqm6F+iQ05JFUwxJXN9V06ukJqekJKempFdNlfUku7BlQ7sxGQei6EDGmHabfsouJOlsc/udfWUTBqRSAyaU/fZWYzudTStb+dyP8R0nDBg25LSzjtkzZ1XnwziTVnhfOLp27qtUQYe8fR/N+ab0PD5QD9MIR8Lt6s3D3i7t2FOV3+p8Gh/Hvf83gyg507xWu9zsI91om09nWh+CiL8DAM2AjYmLhPsSAAAAAElFTkSuQmCC" > ');
+	loc_us.firstChild.nextSibling.nextSibling.addEventListener("click", menufunc, false);
+	}).toString()
 	+ ")()";
+	}
+ if (scr!="") { 	
  document.body.appendChild(scr);
+ }
 }
 
 
@@ -347,9 +413,11 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
 	if (document.getElementById("td_nick2")!=null ) {
 	document.getElementById("td_nick2").insertBefore(exitlink, document.getElementById("td_nick2").firstChild);
 	}
+	if (myoptions.location_info) {
 	document.getElementById("span_location").onclick= function(){
 		document.getElementById('chat_msg').value=document.getElementById('span_location').innerHTML+' Людей: '+document.getElementById('span_location_count').innerHTML;
 	};	
+	}
  
  envpic = document.getElementById("td_dyn").nextElementSibling.nextElementSibling.firstChild;
  envpic.addEventListener("click", EnvTab, false);
@@ -367,9 +435,8 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
  	loc_user.insertBefore(calcpic, loc_user.firstChild);
  	loc_user.firstChild.addEventListener("click", userscount, false);
  };
- if (myoptions.chatsectors) {
- 	window.setTimeout( pfunction , 100);
- }
+ window.setTimeout( pfunction , 100);
+ 
 
  document.onkeyup = function (e) {
 	        e = e || window.event;
@@ -389,7 +456,9 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
  
 }
 else if ((location.href.search("http://www.ereality.ru/info") != -1) || (location.href.search("http://www.ereality.ru/~") != -1))
-{ for(i=0; i<document.images.length; ++i) 
+{
+if (myoptions.clan_info) {
+ for(i=0; i<document.images.length; ++i) 
 {if (document.images[i].src.indexOf('http://img.ereality.ru/clan/') == 0) 
 	{    var id = document.images[i].src.replace("http://img.ereality.ru/clan/","").replace(".gif","");
 	var clanlink = document.createElement('A');
@@ -399,6 +468,7 @@ else if ((location.href.search("http://www.ereality.ru/info") != -1) || (locatio
 	document.images[i].parentNode.insertBefore(clanlink,document.images[i]);
 	i++;
 	}
+}
 }
 
 var name=xpath("/html/body/div[3]/div[6]/div/strong").snapshotItem(0).innerHTML;	
@@ -455,12 +525,13 @@ var xpathRes = xpath("/html/body/div[3]/div[7]/div/div");
 		if (myoptions.bodestate) {xpathRes.snapshotItem(0).parentNode.appendChild(bodestate);}
 		if (myoptions.sidzoku) {xpathRes.snapshotItem(0).parentNode.appendChild(sidzokuestate);}
 	}
-	document.getElementById("blood2").addEventListener("click", PostMsg4, false);
+	if (myoptions.dragon_time) {document.getElementById("blood2").addEventListener("click", PostMsg4, false);}
 	} catch(e) {
 	}
 }
 else if (location.href.search("http://ratings.ereality.ru/clans") != -1) 
 {
+if (myoptions.clan_info) {
 for(i=0; i<document.images.length; ++i) 
 {if (document.images[i].src.indexOf('http://img.ereality.ru/clan/') == 0) 
 	{    var id = document.images[i].src.replace("http://img.ereality.ru/clan/","").replace(".gif","");
@@ -471,6 +542,7 @@ for(i=0; i<document.images.length; ++i)
 	document.images[i].parentNode.insertBefore(clanlink,document.images[i]);
 	i++;
 	}
+}
 }
 }
 else if (location.href.search("http://yo-bod.com/faceshop/") != -1) 
@@ -499,7 +571,7 @@ if ((document.referrer.search("http://www.ereality.ru/info") != -1) || (document
  window.onload = setTimeout( efim , 5000);
 }
 }
-else if (location.href.search("http://www.ereality.ru/log") != -1)
+else if ((location.href.search("http://www.ereality.ru/log") != -1)&&(location.href.search("http://www.ereality.ru/login") == -1))
 {
 var link = document.createElement('A');
 	link.href = 'http://freedom.erclans.ru/analiz/'+location.href.replace("http://www.ereality.ru/log/","");
@@ -528,10 +600,12 @@ xpathRes.snapshotItem(0).click();
 }
  else if ((location.href.search("http://www.ereality.ru/map.php") != -1) && (location.href.search("action=fill") != -1)) 
  {
+ if (myoptions.lotereya) {
  var lotButton = document.createElement('img');	
 	 lotButton.src = 'data:image/gif;base64,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';
 	xpath("/html/body/div/div[4]/div/div/table/tbody/tr/td/table").snapshotItem(0).appendChild(lotButton);
 	lotButton.addEventListener("click", lotereya, false); 
+    }
  }
 
 //=========================end.
