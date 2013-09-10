@@ -11,6 +11,7 @@
 // @include     http://www.news.ereality.ru/*sostav&id=*
 // @include     http://cc.erclans.ru/viewpage.php?page_id=45*
 // @include		http://www.ereality.ru/map.php*
+// @include		http://www.ereality.ru/move*
 // @include     http://sidzoku.ru/landlord/
 // @include     http://www.ereality.ru/instance.php
 // @all-frames  true
@@ -329,14 +330,15 @@ var scr= document.createElement("script");
  if (myoptions.chatsectors) {
  scr.text= scr.text + "(" +
     (function(){var xgdh=chat.formatSmilies;
-	chat.formatSmilies=function(){if (arguments[0].search("опыта")==-1) {
-		if (arguments[0].search("Ауры")!=-1) {
-			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
-			}
-		else {
+	chat.formatSmilies=function(){
+		if ((arguments[0].search("опыта")==-1)||(arguments[0].search("Вы подобрали")==-1)) {
+			if ((arguments[0].search("Ауры")!=-1)||(arguments[0].search("ептикон")!=-1)||(arguments[0].search("за убийство")!=-1)||(arguments[0].search("Людей:")!=-1)) {
+				arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
+				}
+			else {
 			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
 			}
-		}
+	}
 	return xgdh.apply(chat, arguments);
 	};
 	
@@ -606,6 +608,17 @@ xpathRes.snapshotItem(0).click();
 	xpath("/html/body/div/div[4]/div/div/table/tbody/tr/td/table").snapshotItem(0).appendChild(lotButton);
 	lotButton.addEventListener("click", lotereya, false); 
     }
+ }
+  else if ((location.href.search("http://www.ereality.ru/move") != -1)&&(myoptions.chatsectors)) 
+ {  window.setTimeout( function(){
+     var clearlink = document.createElement('A');
+	clearlink.href = 'javascript:window.parent.chat.myshowSec("","")';
+	clearlink.innerHTML ="[X]";
+	if ((document.getElementById("searchY")!=null)&&(document.getElementById("searchY").value!=""))
+	{document.getElementById("searchY").parentNode.appendChild(clearlink);}
+	else if ((document.getElementById("sy2")!=null)&&(document.getElementById("sy2").value!=""))
+	{document.getElementById("sy2").parentNode.appendChild(clearlink);}
+ } , 0);
  }
 
 //=========================end.
