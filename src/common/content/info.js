@@ -219,6 +219,7 @@ function dragonTime () {
 	element.addEventListener("click", onClick, false);
 
 	function onClick () {
+		element.removeEventListener("click", onClick, false);
 		kango.xhr.send(
 			{
 				method: "GET",
@@ -236,7 +237,7 @@ function dragonTime () {
 				oFont.size = "-3";
 				mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
 				oFont.insertAdjacentHTML("afterBegin", mystr);
-				element.removeEventListener("click", onClick, false);
+
 			}
 		);
 	}

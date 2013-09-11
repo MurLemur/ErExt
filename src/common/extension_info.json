@@ -2,7 +2,9 @@
 	"content_scripts": [
 		"erext.user.js",
 		"content/info.js",
-		"content/core.js"
+		"content/core.js",
+		"content/efimerka.js",
+		"content/faceshop.js"
 	],
 	"description": "Extension for EReality.ru",
 	"creator": "MurLemur",
