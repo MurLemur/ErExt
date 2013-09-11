@@ -331,7 +331,7 @@ var scr= document.createElement("script");
  scr.text= scr.text + "(" +
     (function(){var xgdh=chat.formatSmilies;
 	chat.formatSmilies=function(){
-		if ((arguments[0].search("опыта")==-1)||(arguments[0].search("Вы подобрали")==-1)) {
+		if ((arguments[0].search("опыта")==-1)&&(arguments[0].search("Вы подобрали")==-1)) {
 			if ((arguments[0].search("Ауры")!=-1)||(arguments[0].search("ептикон")!=-1)||(arguments[0].search("за убийство")!=-1)||(arguments[0].search("Людей:")!=-1)) {
 				arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
 				}
