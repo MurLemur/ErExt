@@ -19,23 +19,12 @@ options.load(function(options){
  * Загружает персонажа в эфимерку (того из чьей информации выполнен переход на переодевалку)
  */
 function loadHeroInfoByReferrer () {
-	if (/http:\/\/www.ereality.ru\/((info\d+)|(~.+))/.test(document.referrer)) {
-		tools.pushJs(function(){
-			setTimeout(loadHero, 1000);
+	if (/http:\/\/www\.ereality\.ru\/((info\d+)|(~.+))/.test(document.referrer)) {
+		var heroId = document.referrer.match(/^http:\/\/www\.ereality\.ru\/~?(.+)/);
 
-
-			function loadHero () {
-				if (!initialized_q) {
-					setTimeout(loadHero, 1000);
-				}
-
-				var heroId = document.referrer.match(/^http:\/\/www\.ereality\.ru\/~?(.+)/);
-
-				if (heroId) {
-					$('#getsetid').val(heroId[1]);
-					clickload();
-				}
-			}
-		});
+		if (heroId) {
+			selectdiv(8)
+			$('#getsetid').val(heroId[1]);
+		}
 	}
 }
