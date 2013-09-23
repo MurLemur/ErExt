@@ -19,16 +19,8 @@ options.load(function(options){
  * Загружает персонажа в переодевалку BoD (того из чьей информации выполнен переход на переодевалку)
  */
 function loadHeroInfoByReferrer () {
-	var heroId = document.referrer.match(/^http:\/\/www\.ereality\.ru\/~?(.+)/);
-
-	if (heroId) {
-		document.getElementById("one_getsetid").setAttribute(
-			'value',
-			heroId[1]
-		);
+	if ((document.referrer.search("http://www.ereality.ru/info") != -1) || (document.referrer.search("http://www.ereality.ru/~") != -1)) {
+		document.getElementById("one_getsetid").setAttribute('value',document.referrer.replace("http://www.ereality.ru/~","").replace("http://www.ereality.ru/",""));
 		tools.xpath("/html/body/div[7]/div[22]/table/tbody/tr[3]/td/input[2]").snapshotItem(0).click();
-	} else {
-		kango.console.log('ErExt load: false');
-		kango.console.log('Referrer: ' + document.referrer);
 	}
 }

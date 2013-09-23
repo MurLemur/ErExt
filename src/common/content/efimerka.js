@@ -19,12 +19,13 @@ options.load(function(options){
  * Загружает персонажа в эфимерку (того из чьей информации выполнен переход на переодевалку)
  */
 function loadHeroInfoByReferrer () {
-	if (/http:\/\/www\.ereality\.ru\/((info\d+)|(~.+))/.test(document.referrer)) {
-		var heroId = document.referrer.match(/^http:\/\/www\.ereality\.ru\/~?(.+)/);
-
-		if (heroId) {
-			selectdiv(8)
-			$('#getsetid').val(heroId[1]);
-		}
+	if ((document.referrer.search("http://www.ereality.ru/info") != -1) || (document.referrer.search("http://www.ereality.ru/~") != -1))
+	{
+		tools.xpath('//*[@id="sdiv_img8"]').snapshotItem(0).click();
+		window.onload = setTimeout(function(){
+			document.getElementById("getsetid").setAttribute('value', document.referrer.replace("http://www.ereality.ru/~","").replace("http://www.ereality.ru/",""));
+			var xpathRes1 = tools.xpath("/html/body/table/tbody/tr/td[4]/div/div[4]/table/tbody/tr[6]/td/form/input[2]");
+			xpathRes1.snapshotItem(0).click();
+		}, 5000);
 	}
 }

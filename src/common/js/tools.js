@@ -39,6 +39,10 @@ var tools = (function(){
 		document.body.appendChild(scriptElement);
 	}
 
-	return {xpath: xpath, cp1251urlencode: CP1251urlencode, pushJs: pushJs}
+	return {
+		xpath: xpath,
+		cp1251urlencode: CP1251urlencode,
+		pushJs: pushJs
+	};
 })();
 
