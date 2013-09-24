@@ -11,7 +11,12 @@
 	"numfight":true,
 	"numcapcha":true,
 	"kbdinst":true,
-	"chatsectors":true
+	"chatsectors":true,
+	"clan_info":true,
+	"dragon_time":true,
+	"location_info":true,
+	"block_cmenu":true,
+	"lotereya":true
 }
 
 function getprop(){
