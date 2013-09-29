@@ -1,42 +1,20 @@
 ﻿// ==UserScript==
-// @name        ErExt
+// @name        ErExt_main
 // @include     http://www.ereality.ru/core*
-// @include     http://www.ereality.ru/~*
 // @include 	http://ratings.ereality.ru/clans*
-// @include     http://www.ereality.ru/info*
 // @include 	http://freedom.erclans.ru/analiz*
 // @include 	http://www.ereality.ru/log*
 // @include 	http://*.com/efimerka/
 // @include 	http://yo-bod.com/faceshop/
 // @include     http://www.news.ereality.ru/*sostav&id=*
-// @include     http://cc.erclans.ru/viewpage.php?page_id=45*
+// @include     http://cc.erclans.ru/*page_id=45*
 // @include		http://www.ereality.ru/map.php*
 // @include		http://www.ereality.ru/move*
 // @include     http://sidzoku.ru/landlord/
-// @include     http://www.ereality.ru/instance.php
+// @include     http://www.ereality.ru/instance*
+// @require     tools.js
 // @all-frames  true
 // ==/UserScript==
-
-var myoptions = {
-	"faceshop":true,
-	"efimerka":true,
-	"info":true,
-	"zk":true,
-	"naemniki":true,
-	"bodestate":true,
-	"sidzoku":true,
-	"okcount":true,
-	"cemetry":true,
-	"numfight":true,
-	"numcapcha":true,
-	"kbdinst":true,
-	"chatsectors":true,
-	"clan_info":true,
-	"dragon_time":true,
-	"location_info":true,
-	"block_cmenu":true,
-	"lotereya":true
-}
 
 //================================================================Begin
 
@@ -49,58 +27,6 @@ if (value!=null) {
 }
 
 //=====================================================================
-
-
-function xpath(query, object) {
-	if(!object) var object = document;
-	return object.evaluate(query, object, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
-}
-var trans=[];
-var snart=[];
-for(var i=0x410;i<=0x44F;i++)
-{
-trans[i]=i-0x350;
-snart[i-0x350] = i;
-}
-trans[0x401]= 0xA8;
-trans[0x451]= 0xB8;
-snart[0xA8] = 0x401;
-snart[0xB8] = 0x451;
-CP1251urlencode = function(str)
-{
-var ret=[];
-for(var i=0;i<str.length;i++)
-{
-var n=str.charCodeAt(i);
-if(typeof trans[n]!='undefined')
-n = trans[n];
-if (n <= 0xFF)
-ret.push(n);
-}
-
-return escape(String.fromCharCode.apply(null,ret));
-}
-GM_xmlhttpRequest = function(params) {
-  
-  var details = {
-        method: params.method,
-        url: params.url,
-        async: true,
-        params: params.data,
-        headers: params.headers,
-        contentType: 'text',
-		mimeType: params.overrideMimeType
-};
-  kango.xhr.send(details, function(data) {
-        if (data.status == 200 && data.response != null) {
-                var text = data.response;
-				params.onload(text);
-        }
-        else { 
-                 kango.console.log('something went wrong');
-        }
-});
-}
 
 Array.prototype.shuffle = function( b )
 {
@@ -116,118 +42,7 @@ Array.prototype.shuffle = function( b )
  return this;
 };
 
-function PostMsg() {
-oBtn.removeEventListener("click", PostMsg, false);
-GM_xmlhttpRequest({
-  method: "POST",
-  url: "http://sp.erclans.ru/evgeska_prof.php?calc=heroesinfo",
-  data: {'prof':CP1251urlencode(name),'submit':'просмотреть'},
-   headers: {
-	"Accept":	"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-	"Accept-Encoding":	"gzip, deflate",
-	"Accept-Language":	"ru-ru,ru;q=0.8,en-us;q=0.5,en;q=0.3",
-     "Content-Type": "application/x-www-form-urlencoded;",
-	 "Referer": "http://sp.erclans.ru/evgeska_prof.php?calc=heroesinfo"
-	  },
-   overrideMimeType:    "text/html;charset=windows-1251",
- onload: function(response)
- {  
-		var mystr = response.substring(response.indexOf('<table width="95%" border="1" bgcolor="D7D7D7">'),response.lastIndexOf('<br><br><div align="center">'));	
-		var mestovstavki = xpath('//*[@id="content"]');
-		var oFont = document.createElement("font");
-		oFont.size = "-3";
-		mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
-		oFont.insertAdjacentHTML("afterBegin", mystr.replace(new RegExp("evgeska/images/",'g'),"http://sp.erclans.ru/evgeska/images/"));
-		oBtn.parentNode.removeChild(oBtn);
- }
-  });
-return;
-}
-function PostMsg1() {
-gospic.removeEventListener("click", PostMsg1, false);
-GM_xmlhttpRequest({
-  method: "POST",
-  url: "http://gosov.net/ajax/pers_info.ajax.php",
-   data: {'sort_item':'','sort_type':'','page':'','pers':CP1251urlencode(name)},
-   headers: {
-	"Accept":	"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-	"Accept-Encoding":	"gzip, deflate",
-	"Accept-Language":	"ru-ru,ru;q=0.8,en-us;q=0.5,en;q=0.3",
-     "Content-Type": "application/x-www-form-urlencoded;",
-	 "Referer": "http://gosov.net/pers_info.html"
-	  },
- onload: function(response)
- {  
-		 var mystr = response.substring(response.lastIndexOf('<table'),response.lastIndexOf('</span></td>'));	
-		 var mestovstavki = xpath('//*[@id="content"]');
-		 var oFont = document.createElement("font");
-		 oFont.size = "-3";
-		 mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
-		 oFont.insertAdjacentHTML("afterBegin", mystr.replace(new RegExp("/templates/GoldenClub/images",'g'),"http://gosov.net/templates/GoldenClub/images"));
-		 gospic.parentNode.removeChild(gospic);
- }
-  });
 
-return;
-}
-
-function PostMsg2() {
-naempic.removeEventListener("click", PostMsg2, false);
-GM_xmlhttpRequest({
-  method: "GET",
-  url: "http://naims.tk/services/?do=steps_of_player&p_name="+CP1251urlencode(name),
-   headers: {
-	"Accept":	"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-	"Accept-Encoding":	"gzip, deflate",
-	"Accept-Language":	"ru-ru,ru;q=0.8,en-us;q=0.5,en;q=0.3",
-     "Content-Type": "application/x-www-form-urlencoded;",
-	 "Referer": "http://naims.tk/services/?do=steps_of_player"
-	  },
-   overrideMimeType:    "text/html;charset=windows-1251",
- onload: function(response)
- {  
-		 var mystr = response.substring(response.indexOf('<div class="d_right">')+21,response.indexOf('<div class="top_g_left">')-6);	
-		  var mestovstavki = xpath('//*[@id="content"]');
-		  var oFont = document.createElement("font");
-		  oFont.size = "-3";
-		  mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
-		  oFont.insertAdjacentHTML("afterBegin", mystr);
-		  naempic.parentNode.removeChild(naempic);
- }
-  });
-
-return;
-}
-
-function PostMsg4() {
-document.getElementById("blood2").removeEventListener("click", PostMsg4, false);
-GM_xmlhttpRequest({
-  method: "GET",
-  url: "http://api.ereality.ru/dragons_schedule.txt",
-   headers: {
-	"Accept":	"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-	"Accept-Encoding":	"gzip, deflate",
-	"Accept-Language":	"ru-ru,ru;q=0.8,en-us;q=0.5,en;q=0.3",
-     "Content-Type": "application/x-www-form-urlencoded;",
-	 "Referer": "http://ereality.ru"
-	  },
- onload: function(response)
- {      var mystr = response.replace(new RegExp("time",'g'),"Врата на Остров Драконов на этой неделе открываются в ");	
-		  var mestovstavki = xpath('//*[@id="content"]');
-		  var oFont = document.createElement("font");
-		  oFont.size = "-3";
-		  mestovstavki.snapshotItem(0).parentNode.insertBefore(oFont,mestovstavki.snapshotItem(0));
-		  oFont.insertAdjacentHTML("afterBegin", mystr);
- }
-  });
-return;
-}   
-
-function efim(){
-    document.getElementById("getsetid").setAttribute('value',document.referrer.replace("http://www.ereality.ru/~","").replace("http://www.ereality.ru/",""));
-	var xpathRes1 = xpath("/html/body/table/tbody/tr/td[4]/div/div[4]/table/tbody/tr[6]/td/form/input[2]");
-	xpathRes1.snapshotItem(0).click(); 
-}
 function EnvTab(){
 	 var env = document.createElement('a');	
 	 env.href = 'http://cc.erclans.ru/viewpage.php?page_id=45'+'#'+document.getElementById("chat_msg").value;
@@ -397,7 +212,7 @@ var scr= document.createElement("script");
 }
 
 
-
+if (myoptions.unpaused) {
 if (location.href.search("page=sostav") != -1 )
 {
 var xpathRes = xpath("/html/body/table/tbody/tr[2]/td/table/tbody/tr");
@@ -460,80 +275,7 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
 	    }
  
 }
-else if ((location.href.search("http://www.ereality.ru/info") != -1) || (location.href.search("http://www.ereality.ru/~") != -1))
-{
-if (myoptions.clan_info) {
- for(i=0; i<document.images.length; ++i) 
-{if (document.images[i].src.indexOf('http://img.ereality.ru/clan/') == 0) 
-	{    var id = document.images[i].src.replace("http://img.ereality.ru/clan/","").replace(".gif","");
-	var clanlink = document.createElement('A');
-	clanlink.href = 'http://www.news.ereality.ru/index.php?do=static&page=sostav&id='+id;
-	clanlink.target = '_blank'
-	clanlink.innerHTML = '<img src="http://img.ereality.ru/inf.gif"</img>';
-	document.images[i].parentNode.insertBefore(clanlink,document.images[i]);
-	i++;
-	}
-}
-}
 
-var name=xpath("/html/body/div[3]/div[6]/div/strong").snapshotItem(0).innerHTML;	
-
-
-
-var xpathRes = xpath("/html/body/div[3]/div[7]/div/div");
-
-	var oBtn = document.createElement("input");
-	oBtn.type = "button";
-	oBtn.value = "info";
-	oBtn.addEventListener("click", PostMsg, false);
-	var efimerka = document.createElement('a');	
-	var efimerkapic = document.createElement('img');	
-	efimerka.href = 'http://охэ.com/efimerka/';
-	efimerka.target = '_blank';
-	efimerkapic.src = 'data:image/gif;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAD///8AAP//AP8A/wAAAP8A//8AAAD/AAD/AAAAAAAAAINLBwCETAgApWQVAKJoIgCtcy0AtHkwALh+NgDQkEIA1JRGAMaRUADKlVMA0p1bAMWTVgDgqGUAwZNaAMycYQDQp3UA5MObAOTMrwDn2cgAik4AAH1GAAB1QQAAjlABAIZLAQCzZgIAo10CAIlPAwCSVAYAiVAIAKdjCwCZWgsAiVEKAI1UDACUWA0Aj1YPAJtfEwC5dBkAlFwUAJthFwDmkSUAomcdANCGJwCbZB8A6ZgwAK92LgDMjDoA1ZM+AKZyMQCpdTQAwog9ALuFPgC2gDwAuoVCAOmrWQC+ikkAs4VKANijXgC7jlIAwJdhAMSaZQC5lWgA4rmEANGtfgDZtYUA2reJAM+vhQDoxZYA48CTANK2kgDbv5sA1ryaAOfh2QDXqmwA1cWvAOnk2wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHB1EMLCsxFgcHBwcHBwcHBw4gJSU5RUA6BwcHBwcHBw8gKSoXU09DNzQHBwcHBxktJSknTE0nJSohRgcHBwcSPyArIz07ICspCTYHBwcHOEsvHRxKTicdKCszBwcHBy5JUkITFRhRRAooMwcHBwcNLE5QQSQlOlMUHQ4HBwcHTyAkCyspKysbFB5IBwcHBwcRICUoKwg1GiI8BwcHBwcHBxEfKCgmPgw8BwcHBwcHBwcHTxAyMDZHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHB///AAD//wAA+B8AAPAPAADgBwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAA4AcAAPAPAAD4HwAA//8AAP//AAA=';
-	efimerka.appendChild(efimerkapic);
-	var bod = document.createElement('a');	
-	var bodpic = document.createElement('img');	
-	bod.href = 'http://yo-bod.com/faceshop/';
-	bod.target = '_blank';
-	bodpic.src = 'data:image/gif;base64,R0lGODlhDwAMAOYAAAAAAP///40AAGwAAFcAAE0AAEUAAD8AAD0AACsAACQAACIAACAAABYAAA8AAAoAAAkAAAUAAAIAAKEBAV4EBJMHB9IMDGwGBk0GBrQSEmcNDeUeHscgIGEQEIwZGcEjI14REVURERgFBXsfH8c0NC4NDWIeHstDQzMREetPT4YuLudRUVMdHZk2No4yMmUkJKY9PdhRUU0dHYw2NqpCQr5LS1MhIZE7O5tAQO1nZ4A7O/d2dr5fXyYTE/d+fs9ra/6GhsxsbLZhYclsbNBxcfeIiOmDg7xqaoBISNZ6eveOjteCgueMjNuGhvOYmPadnYpbW/+rq/+vr76CgtSWlmNHR/u2tuuqqqt8fPm3t/i7u/3AwNCenv/ExPzDw//Ly/3Kyr2Xl/fJyf/R0dKurt26uuXCwv/b2//d3fvZ2d7AwPXZ2f/j4//l5f/n5/Pd3f///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAHAALAAAAAAPAAwAQAeLgHCCg3BZQGeEghsLDyRocF5BHTJJiWIWNFhGOSAAFyljiXBaGQwNCRAHMWyEVkgiCj0oM0dHXIlXFS4FGCMDJ2BCE2+iaVMCNWRLPl+JTDAaLC0hABQrbYlKRFBVJRImBGGETh4RL1RlZl1SUYlFNw4LOEM2CDoqBj+EWztwajwfmjxxA4fDGjiBAAA7';
-	bod.appendChild(bodpic);
-	var sidzokuestate = document.createElement('a');	
-	var sidzokuestatepic = document.createElement('img');	
-	sidzokuestate.href = 'http://sidzoku.ru/landlord/#'+name;
-	sidzokuestate.target = '_blank';
-	sidzokuestatepic.src = 'http://img.ereality.ru/clan/73.gif';
-	sidzokuestate.appendChild(sidzokuestatepic);
-	var bodestate = document.createElement('a');	
-	var bodestatepic = document.createElement('img');	
-	bodestate.href = 'http://yo-bod.com/library/modules/estate/?name='+CP1251urlencode(name);
-	bodestate.target = '_blank';
-	bodestatepic.src = 'http://yo-bod.com/library/modules/estate/search.png';
-	bodestate.appendChild(bodestatepic);
-	var gospic = document.createElement('img');	
-	gospic.src = 'data:image/gif;base64,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';
-	var naempic = document.createElement('img');	
-	naempic.src = 'data:image/gif;base64,R0lGODlhDwAMAMQVAJl5I7ycQHqJm7iYO9e+bJ18I66NMJh3H1ZedUFGVnxiGsbS5KCuwau202JLDezUisquV9zFf7CVTNa+awAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABUALAAAAAAPAAwAAAVbYJWMVVlGk1lSbFIh1fNEqFqx8DTJdKoiggZBx6uVEAkBo6HbORwTiM9QWDAUzSdAInUcDArFwFcBlLgTr2EQCDRsErQ6wFjCIZAI4FCx2lVcYSYLhG+AEjYqIQA7';
-	try {
-	xpathRes.snapshotItem(0).insertAdjacentHTML("beforeEnd", "<p></p>");
-	if (myoptions.info) {xpathRes.snapshotItem(0).appendChild(oBtn);}
-	if (myoptions.faceshop) {xpathRes.snapshotItem(0).appendChild(bod);}
-	if (myoptions.efimerka) {xpathRes.snapshotItem(0).appendChild(efimerka);}
-	if (myoptions.zk) {xpathRes.snapshotItem(0).appendChild(gospic);
-	gospic.addEventListener("click", PostMsg1, false);}
-	if (myoptions.naemniki) {xpathRes.snapshotItem(0).appendChild(naempic);
-	naempic.addEventListener("click", PostMsg2, false);}
-	
-	xpathRes = xpath('//img[contains(@src,"http://img.ereality.ru//estates/info_icon")]');
-	if ((xpathRes.snapshotLength>0) && (xpathRes.snapshotItem(0).parentNode.href.search("/estate_info.php") != -1) )
-	{
-		if (myoptions.bodestate) {xpathRes.snapshotItem(0).parentNode.appendChild(bodestate);}
-		if (myoptions.sidzoku) {xpathRes.snapshotItem(0).parentNode.appendChild(sidzokuestate);}
-	}
-	if (myoptions.dragon_time) {document.getElementById("blood2").addEventListener("click", PostMsg4, false);}
-	} catch(e) {
-	}
-}
 else if (location.href.search("http://ratings.ereality.ru/clans") != -1) 
 {
 if (myoptions.clan_info) {
@@ -623,6 +365,16 @@ xpathRes.snapshotItem(0).click();
 	{document.getElementById("sy2").parentNode.appendChild(clearlink);}
  } , 0);
  }
-
+else if (location.href.search("http://www.ereality.ru/instance") != -1) 
+  {
+  document.onkeyup = function (e) {
+	        e = e || window.event;
+			if (((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)) {
+	            instkbd(e.keyCode);
+	        }
+	        return false;
+	    }
+  }
+  }
 //=========================end.
  });

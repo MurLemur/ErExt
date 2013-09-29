@@ -1,9 +1,11 @@
 ﻿var myoptions = {
 	"faceshop":true,
 	"efimerka":true,
+	"unpaused":true,
 	"info":true,
 	"zk":true,
 	"naemniki":true,
+	"glamurstupki":true,
 	"bodestate":true,
 	"sidzoku":true,
 	"okcount":true,

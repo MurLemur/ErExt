@@ -1,0 +1,72 @@
+var myoptions = {
+  "faceshop":true,
+  "efimerka":true,
+  "unpaused":true,
+  "info":true,
+  "zk":true,
+  "naemniki":true,
+  "glamurstupki":true,
+  "bodestate":true,
+  "sidzoku":true,
+  "okcount":true,
+  "cemetry":true,
+  "numfight":true,
+  "numcapcha":true,
+  "kbdinst":true,
+  "chatsectors":true,
+  "clan_info":true,
+  "dragon_time":true,
+  "location_info":true,
+  "block_cmenu":true,
+  "lotereya":true
+}
+
+
+
+KangoAPI.onReady(function() {
+kango.invokeAsync('kango.storage.getItem',"options",function(value) {
+if (value!=null) {
+    for (nameprop in myoptions) {
+    if (value[nameprop]!=false) {value[nameprop]=true;} 
+    myoptions[nameprop]=value[nameprop];
+      }
+}
+
+  if (myoptions.unpaused) {$('#pause').show();$('#unpause').hide();kango.ui.browserButton.setIcon('icons/button.png'); }
+  else {$('#unpause').show();$('#pause').hide();kango.ui.browserButton.setIcon('icons/buttong.png');}
+  $('#options').click(function (event) {kango.ui.optionsPage.open();window.close();});
+  $('#pause').click(function (event) {
+    $(this).hide();
+    $(this).unbind("click");
+    $('#unpause').show();
+    myoptions["unpaused"]=false;
+    kango.invokeAsync('kango.storage.setItem',"options",myoptions);
+    kango.ui.browserButton.setIcon('icons/buttong.png');
+    kango.browser.tabs.getAll(function(tabs) {
+             for(var i = 0; i < tabs.length; i++){
+              if (tabs[i].getUrl().search("http://www.ereality.ru") != -1)
+                tabs[i].navigate(tabs[i].getUrl());
+              }  
+          });
+    KangoAPI.closeWindow();
+  });
+  $('#unpause').click(function (event) {
+    $(this).hide();
+    $(this).unbind("click");
+    $('#pause').show();
+    myoptions["unpaused"]=true;
+    kango.invokeAsync('kango.storage.setItem',"options",myoptions);
+    kango.ui.browserButton.setIcon('icons/button.png');
+    kango.browser.tabs.getAll(function(tabs) {
+             for(var i = 0; i < tabs.length; i++){
+              if (tabs[i].getUrl().search("http://www.ereality.ru") != -1)
+                tabs[i].navigate(tabs[i].getUrl());
+              }  
+          });
+    KangoAPI.closeWindow();
+
+  });
+  });
+
+//=========================end.
+ });

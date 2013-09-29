@@ -1,5 +1,5 @@
 {
-  "content_scripts": ["erext.user.js"], 
+  "content_scripts": ["content.main.js","content.info.js"], 
   "description": "Extension for EReality.ru", 
   "creator": "MurLemur", 
   "background_scripts": [
@@ -9,9 +9,14 @@
   "version": "1.0.3", 
   "name": "EReality Extension",
   "browser_button": {
-		"caption": "Open options page", 
+		"caption": "Open menu", 
 		"icon": "icons/button.png", 
-		"tooltipText": "Open options page"
+		"tooltipText": "Open menu",
+		"popup": {
+            "url": "button/popup.html",
+			       "width": 260,
+             "height": 100
+	     }
 	}, 
   "options_page": "options.html"
 }
