@@ -264,6 +264,9 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
 	        if (e.keyCode === 13) {
 	            mymain();
 	        }
+	        if ((e.keyCode === 27)&&(myoptions.esc_move)) {
+	            top.frames.main.document.getElementById("mapCancelMoving").click();
+	        }
 			if (((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)) {
 	            instkbd(e.keyCode);
 	        }
@@ -355,7 +358,15 @@ xpathRes.snapshotItem(0).click();
     }
  }
   else if ((location.href.search("http://www.ereality.ru/move") != -1)&&(myoptions.chatsectors)) 
- {  window.setTimeout( function(){
+ { 
+ 	 document.onkeyup = function (e) {
+	        e = e || window.event;
+			if ((e.keyCode === 27)&&(myoptions.esc_move)) {
+	            top.frames.main.document.getElementById("mapCancelMoving").click();
+	        }
+	        return false;
+	 }
+    window.setTimeout( function(){
      var clearlink = document.createElement('A');
 	clearlink.href = 'javascript:window.parent.chat.myshowSec("","")';
 	clearlink.innerHTML ="[X]";

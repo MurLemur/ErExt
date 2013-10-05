@@ -18,6 +18,8 @@ var myoptions = {
   "dragon_time":true,
   "location_info":true,
   "block_cmenu":true,
+  "tab_refresh":true,
+  "esc_move":true,
   "lotereya":true
 }
 
@@ -34,6 +36,7 @@ if (value!=null) {
 
   if (myoptions.unpaused) {$('#pause').show();$('#unpause').hide();kango.ui.browserButton.setIcon('icons/button.png'); }
   else {$('#unpause').show();$('#pause').hide();kango.ui.browserButton.setIcon('icons/buttong.png');}
+  $("#titletext span").click(function() { kango.browser.tabs.create({url:kango.getExtensionInfo().homepage_url}); });
   $('#options').click(function (event) {kango.ui.optionsPage.open();window.close();});
   $('#pause').click(function (event) {
     $(this).hide();
@@ -42,13 +45,15 @@ if (value!=null) {
     myoptions["unpaused"]=false;
     kango.invokeAsync('kango.storage.setItem',"options",myoptions);
     kango.ui.browserButton.setIcon('icons/buttong.png');
-    kango.browser.tabs.getAll(function(tabs) {
+    if (myoptions.tab_refresh) {
+     kango.browser.tabs.getAll(function(tabs) {
              for(var i = 0; i < tabs.length; i++){
-              if (tabs[i].getUrl().search("http://www.ereality.ru") != -1)
-                tabs[i].navigate(tabs[i].getUrl());
+                if (tabs[i].getUrl().search("http://www.ereality.ru") != -1)
+                 tabs[i].navigate(tabs[i].getUrl());
               }  
           });
-    KangoAPI.closeWindow();
+     }
+     KangoAPI.closeWindow();
   });
   $('#unpause').click(function (event) {
     $(this).hide();
@@ -57,12 +62,14 @@ if (value!=null) {
     myoptions["unpaused"]=true;
     kango.invokeAsync('kango.storage.setItem',"options",myoptions);
     kango.ui.browserButton.setIcon('icons/button.png');
-    kango.browser.tabs.getAll(function(tabs) {
+    if (myoptions.tab_refresh) {
+          kango.browser.tabs.getAll(function(tabs) {
              for(var i = 0; i < tabs.length; i++){
               if (tabs[i].getUrl().search("http://www.ereality.ru") != -1)
                 tabs[i].navigate(tabs[i].getUrl());
               }  
           });
+     }
     KangoAPI.closeWindow();
 
   });

@@ -18,6 +18,8 @@
 	"dragon_time":true,
 	"location_info":true,
 	"block_cmenu":true,
+	"tab_refresh":true,
+	"esc_move":true,
 	"lotereya":true
 }
 
