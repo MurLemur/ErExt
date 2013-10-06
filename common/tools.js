@@ -20,6 +20,7 @@ var myoptions = {
 	"block_cmenu":true,
 	"tab_refresh":true,
 	"esc_move":true,
+	"sound_elitka":true,
 	"lotereya":true
 }
 

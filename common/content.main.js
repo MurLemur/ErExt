@@ -185,6 +185,21 @@ var scr= document.createElement("script");
 	}).toString()
 	+ ")();";
 	}
+
+	if (myoptions.sound_elitka) {
+	 scr.text= scr.text + "(" +
+   	 (function(){
+   	 	var xgdh=chat.formatSmilies;
+   	 	chat.formatSmilies=function(){
+   	 		if (arguments[0].search("Вас вызвали на арену Элитных Турниров! Есть")!=-1) core.playSound("SOUND_PRIVMES");
+    		return xgdh.apply(chat, arguments);
+    	}
+	}).toString()
+	+ ")();";
+	}
+	
+
+
 	if (myoptions.block_cmenu) {
 	scr.text= scr.text+ "(" +
 	(function(){
