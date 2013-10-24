@@ -167,7 +167,9 @@ GM_xmlhttpRequest({
 	 "Referer": "http://ereality.ru"
 	  },
  onload: function(response)
- {      var mystr = response.replace(new RegExp("time",'g'),"Врата на Остров Драконов на этой неделе открываются в ");	
+ {        var mystr = response.replace(new RegExp("time",'g'),"<b>Врата на Остров Драконов на этой неделе открываются :</b>  ");	
+		  mystr = mystr.replace("dayName|","").replace("Saturday|","Суббота:").replace("Sunday|","Воскресенье:").replace("Monday|","Понедельник:").replace("Tuesday|","Вторник:");
+	      mystr = mystr.replace("Wednesday|","Среда:").replace("Thursday|","Четверг:").replace("Friday|","Пятница:").replace("Saturday|","Суббота:").replace("Sunday|","Воскресенье:");	
 		  var mestovstavki = xpath('//*[@id="content"]');
 		  var oFont = document.createElement("font");
 		  oFont.size = "-3";

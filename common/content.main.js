@@ -43,16 +43,7 @@ Array.prototype.shuffle = function( b )
 };
 
 
-function EnvTab(){
-	 var env = document.createElement('a');	
-	 env.href = 'http://cc.erclans.ru/viewpage.php?page_id=45'+'#'+document.getElementById("chat_msg").value;
-	 env.target = '_blank';
-	 env.id = "Open";
-	 env.style.display='none';
-	 document.body.insertBefore(env, document.body.firstChild);
-	 document.getElementById('Open').click();
-	 document.getElementById("chat_msg").value = "";
-}
+
 function userscount() {
 	document.getElementById("chat_msg").value = "";
 	var fraki = "Игнесс:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/2.gif"]').snapshotLength+
@@ -64,8 +55,8 @@ function userscount() {
 }
 function mymain() {
 	if (document.getElementById("npcname").innerHTML=="Ворота Кладбища")	
-		{
-			document.getElementById("dialog").firstChild.firstChild.nextElementSibling.nextElementSibling.click();
+		if (document.getElementById("chat_msg").value=="") {
+				document.getElementById("dialog").firstChild.firstChild.nextElementSibling.nextElementSibling.click();
 		}
 }
 function lotereya() {
@@ -133,8 +124,25 @@ function instkbd(code) {
 				case  38: {top.frames.main.document.getElementById("inst-forward").click();break;}
 				case  39: {top.frames.main.document.getElementById("inst-right").click();break;}
 				case  40: {top.frames.main.document.getElementById("inst-backward").click();break;}
+				case  65: {top.frames.main.document.getElementById("inst-left").click();break;}   // a
+				case  87: {top.frames.main.document.getElementById("inst-forward").click();break;} // w
+				case  68: {top.frames.main.document.getElementById("inst-right").click();break;}  // d
+				case  83: {top.frames.main.document.getElementById("inst-backward").click();break;} // s
+				case  88: {top.frames.main.document.getElementById("inst-backward").click();break;} // x
 				//case 13: {top.frames.main.document.getElementById("inst-center").click();break;}
 				// case 13: {top.frames.main.document.getElementById("map_monsters").firstChild.firstChild.onclick();break;}
+			}
+		}
+}
+function undergroundkbd(code) {
+	if (top.frames.main.document.getElementById("underground")!=null)
+		{	
+			switch (code) 
+			{
+				case  81: {top.frames.main.document.getElementById("s8").click();break;}   // q
+				case  69: {top.frames.main.document.getElementById("s2").click();break;} // e
+				case  90: {top.frames.main.document.getElementById("s6").click();break;}  // z
+				case  67: {top.frames.main.document.getElementById("s4").click();break;} // c
 			}
 		}
 }
@@ -219,8 +227,37 @@ var scr= document.createElement("script");
 	loc_us.firstChild.nextSibling.insertAdjacentHTML("afterEnd",'<img id = "picmenu"  src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAACXBIWXMAAAsTAAALEwEAmpwYAAADG2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjaY2BgnuDo4uTKJMDAUFBUUuQe5BgZERmlwH6egY2BmYGBgYGBITG5uMAxIMCHgYGBIS8/L5UBFTAyMHy7xsDIwMDAcFnX0cXJlYE0wJpcUFTCwMBwgIGBwSgltTiZgYHhCwMDQ3p5SUEJAwNjDAMDg0hSdkEJAwNjAQMDg0h2SJAzAwNjCwMDE09JakUJAwMDg3N+QWVRZnpGiYKhpaWlgmNKflKqQnBlcUlqbrGCZ15yflFBflFiSWoKAwMD1A4GBgYGXpf8EgX3xMw8BUNTVQYqg4jIKAUICxE+CDEESC4tKoMHJQODAIMWgx9DJcMqhgeM0oxRjPMYnzIZMjUwXWLWYG5kvstiwzKPlZk1m/UqmxPbJnYV9pkcAhydnKyczVzMXG3c3NwTeaR4lvIa8x7iC+Z7xl8tICSwWtBN8JFQo7Ci8GGRdFFe0a1iceKc4lslUiSFJY9KVUjrSj+RmSMbKicod1a+R8FHkVfxgtIU5SgVJZXXqlvVGtX9NGQ13mru05qonapjrSuk+0rviP58gxrDKCNLY0nj3yb3TA+brTDvt6iwTLTysbawUbUVsWOx+2r/3OG24wWnY857Xba6rndb6b7UY5HnQq8F3gt9Fvsu81vlvz5ga+DeoGPB50NuhT4L+xLBFCkYpRRtHOMWGxWXF9+SMDtxc9LZ5OepTGly6TYZUZlVWbOy9+Tcy2PKVy/wKSwuml18uORtmUS5S0Vh5byqs9V/a/Xq4usnNRxr/N1s0JLeOq/teodgp3dXe/fhXoY++/66Cfsm/p/sOKV16onpvDOCZ86a9WiO1tySefsWcC0MW7R48celDssmLH+40nhV6+qba3XXNa2/udFgU8fmB1uttk3d/mGn765Vezj2pu87fkD9YOeh10f8jm4+Ln6i9uST095ntpyTPd9+4dOluMunrlpcW3ZD9Gbrra930u/evO/z4MAj08ernyo+m/lC8GXXa+Y3dW9/vi/98OlTwed3X/O+vfuR//PD7+I/3/5V/f8PAC4MHYugPAkxAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAGWSURBVHjaLNG9S9RhAMDxz/P73Yt35suhUCpRYh5YIDVY0RQSJ9Ig9E+01FBQY9HSEEZLS0t/grlE0qRLiBFNCb2QUqJSinZontfdPQ31HT/rN0z736Crrcm2QWorySsvrfzjMA35eP3wVjxZMqHptSqr+SfhmUPSCoX4KN4f6qZgVN4XBce7dyd1hXmNtCLeaN47b1y7df0Orbjkouj7hbAVFhPD9Ttlo/Z9UpdI/fHZvlFl9btOJY2pYv+IYMminIxExhtLghHFvsZU0hzvUVK1rFMqKy+ry7Kqkh7NK5kwUJS3qaFo25poR0HDL52KQn9GaIlyEqm6F+iQ05JFUwxJXN9V06ukJqekJKempFdNlfUku7BlQ7sxGQei6EDGmHabfsouJOlsc/udfWUTBqRSAyaU/fZWYzudTStb+dyP8R0nDBg25LSzjtkzZ1XnwziTVnhfOLp27qtUQYe8fR/N+ab0PD5QD9MIR8Lt6s3D3i7t2FOV3+p8Gh/Hvf83gyg507xWu9zsI91om09nWh+CiL8DAM2AjYmLhPsSAAAAAElFTkSuQmCC" > ');
 	loc_us.firstChild.nextSibling.nextSibling.addEventListener("click", menufunc, false);
 	}).toString()
-	+ ")()";
+	+ ")();";
 	}
+
+		scr.text= scr.text+ "(" +
+	(function(){
+
+	 function EnvTab(){
+ 	  if  (document.getElementById("chat_msg").value == "" ) {
+ 	  	$.post("http://www.ereality.ru/ajax/global_event/",'<request action="showNextGlobalEvents" />',function (response) {
+ 	   	  	 var gEvent = response.getElementsByTagName("msg")[0].textContent;
+ 	  		 window.chat.msgSystem('Смотритель',gEvent)	
+ 	  	});
+	 }
+	  else { 
+		var env = document.createElement('a');	
+		env.href = 'http://cc.erclans.ru/viewpage.php?page_id=45'+'#'+document.getElementById("chat_msg").value;
+		env.target = '_blank';
+		env.id = "Open";
+		env.style.display='none';
+		document.body.insertBefore(env, document.body.firstChild);
+		document.getElementById('Open').click();
+		document.getElementById("chat_msg").value = "";
+	 }
+	}	
+	envpic = document.getElementById("td_dyn").nextElementSibling.nextElementSibling.firstChild;
+	envpic.addEventListener("click", EnvTab, false);
+
+	}).toString()
+	+ ")();";
+
+
  if (scr!="") { 	
  document.body.appendChild(scr);
  }
@@ -242,9 +279,13 @@ xpathRes.snapshotItem(0).removeChild(xpathRes.snapshotItem(0).lastChild);
 else if (location.href.search("http://www.ereality.ru/core") != -1 )
 {
 
- var exitlink = document.createElement('A');
-	exitlink.href = 'http://www.ereality.ru/exit.php';
-	exitlink.innerHTML ="[X]";
+	//if (myoptions.fastex) {
+ 		var exitlink = document.createElement('A');
+		exitlink.href = 'http://www.ereality.ru/exit.php';
+		exitlink.innerHTML ="[X]";
+		exitlink.addEventListener("focus", function(){this.blur();}, false);
+	//}
+
 	if (document.getElementById("td_nick2")!=null ) {
 	document.getElementById("td_nick2").insertBefore(exitlink, document.getElementById("td_nick2").firstChild);
 	}
@@ -254,8 +295,6 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
 	};	
 	}
  
- envpic = document.getElementById("td_dyn").nextElementSibling.nextElementSibling.firstChild;
- envpic.addEventListener("click", EnvTab, false);
  if (kango.browser.getName()!="firefox") 
  {
 	document.getElementById("span_sort").previousElementSibling.href='javascript: users.load(); document.getElementById("a_users_loc").focus();';
@@ -282,11 +321,14 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
 	        if ((e.keyCode === 27)&&(myoptions.esc_move)) {
 	            top.frames.main.document.getElementById("mapCancelMoving").click();
 	        }
-			if (((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)) {
+			if (((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)||(e.keyCode === 65)||(e.keyCode === 68)||(e.keyCode === 83)||(e.keyCode === 87)||(e.keyCode === 88)) {
 	            instkbd(e.keyCode);
 	        }
 			 if ((e.keyCode > 95) && (e.keyCode < 106)) {
 	            mynum(e.keyCode);
+	        }
+	        if (((e.keyCode === 81) || (e.keyCode === 69) || (e.keyCode === 90) || (e.keyCode === 67))&&(myoptions.kbdunderground)) {
+	            undergroundkbd(e.keyCode);
 	        }
 	        // Отменяем действие браузера
 	        return false;
@@ -401,6 +443,20 @@ else if (location.href.search("http://www.ereality.ru/instance") != -1)
 	        return false;
 	    }
   }
+ else if ((location.href.search("http://www.ereality.ru/map.php") != -1) && (location.href.search("mode=altar") != -1))
+  {
+	xpathRes = xpath('//a[contains(@href,"/map.php?mode=altar")]');
+	if (xpathRes.snapshotLength>0) {xpathRes.snapshotItem(0).focus();} 
   }
+      else if (location.href.search("http://www.ereality.ru/map.php") != -1) 
+  {
+	 document.onkeyup = function (e) {
+	        e = e || window.event;
+			 if ((e.keyCode === 81) || (e.keyCode === 69) || (e.keyCode === 90) || (e.keyCode === 67)) {undergroundkbd(e.keyCode); }
+	        // Отменяем действие браузера
+	        return false;
+	    }
+  } 
 //=========================end.
+}
  });

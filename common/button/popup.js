@@ -21,6 +21,8 @@ var myoptions = {
   "tab_refresh":true,
   "esc_move":true,
   "sound_elitka":true,
+  "fastex":true,
+  "kbdunderground":true,
   "lotereya":true
 }
 
