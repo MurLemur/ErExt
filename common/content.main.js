@@ -321,13 +321,13 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
 	        if ((e.keyCode === 27)&&(myoptions.esc_move)) {
 	            top.frames.main.document.getElementById("mapCancelMoving").click();
 	        }
-			if (((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)||(e.keyCode === 65)||(e.keyCode === 68)||(e.keyCode === 83)||(e.keyCode === 87)||(e.keyCode === 88)) {
+			if ((((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)||(e.keyCode === 65)||(e.keyCode === 68)||(e.keyCode === 83)||(e.keyCode === 87)||(e.keyCode === 88))&&(document.getElementById("chat_msg").value=="") {
 	            instkbd(e.keyCode);
 	        }
 			 if ((e.keyCode > 95) && (e.keyCode < 106)) {
 	            mynum(e.keyCode);
 	        }
-	        if (((e.keyCode === 81) || (e.keyCode === 69) || (e.keyCode === 90) || (e.keyCode === 67))&&(myoptions.kbdunderground)) {
+	        if (((e.keyCode === 81) || (e.keyCode === 69) || (e.keyCode === 90) || (e.keyCode === 67))&&(myoptions.kbdunderground)&&(document.getElementById("chat_msg").value=="") {
 	            undergroundkbd(e.keyCode);
 	        }
 	        // Отменяем действие браузера
