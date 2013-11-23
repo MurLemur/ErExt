@@ -1,12 +1,12 @@
 {
-  "content_scripts": ["content.main.js","content.info.js"], 
+  "content_scripts": ["content.main.js","content.info.js","content.estate.js","content.core.js","content.move.js"], 
   "description": "Extension for EReality.ru", 
-  "creator": "MurLemur", 
+  "creator": "MurLemur",
   "background_scripts": [
     "main.js"
   ], 
-  "homepage_url": "http://forum.ereality.ru/topic175057/page1.html", 
-  "version": "1.0.5", 
+  "homepage_url": "http://forum.ereality.ru/topic176876/page1.html", 
+  "version": "1.0.6", 
   "name": "EReality Extension",
   "browser_button": {
 		"caption": "Open menu", 

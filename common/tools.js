@@ -23,7 +23,12 @@ var myoptions = {
 	"sound_elitka":true,
 	"fastex":true,
 	"kbdunderground":true,
-	"lotereya":true
+	"lotereya":true,
+	"estatenamelink":true,
+	"forumgoto":true,
+	"aliensmy":true,
+	"sound_fishing":true,
+	"questsectors":true
 }
 
 
