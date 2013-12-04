@@ -20,6 +20,19 @@ if (myoptions.unpaused) {
  var scr= document.createElement("script");
  scr.text= "(" +
  (function(){var zzz=Estates.parseDialog;
+	Estates.hideDialog=function(){
+		$("#estateDialog").hide();
+		$("#estateDialogBackground").hide();
+		if ($("#mydialoglink").length) {$("#mydialoglink").show();}
+		else {
+			document.getElementById("estateNameButton").parentNode.innerHTML = ''+document.getElementById("estateNameButton").parentNode.innerHTML + '<a id="mydialoglink" href="javascript: Estates.UnhideDialog();">[+]<a>';
+		}
+		};
+	Estates.UnhideDialog=function(){
+		$("#estateDialogBackground").show();
+		$("#estateDialog").show();
+		$("#mydialoglink").hide();
+		};	
  	Estates.parseDialog=function(){
 	var mdialog = zzz(arguments[0]);
 	if (mdialog.type=="fightattackclose") {
@@ -27,6 +40,9 @@ if (myoptions.unpaused) {
 	 var mname = mdialog.text.substring(39,nn);
 	 mlink = "<a href='http://www.ereality.ru/~"+mname+"' target='_blank'><b>"+mname+"</b></a>"
 	 mdialog.text=mdialog.text.replace("<b>"+mname+"</b>",mlink);
+	}
+	if (mdialog.type=="fightfind") {
+	 mdialog.title = '<a href="javascript: Estates.hideDialog();">[X]<a><b>АТАКОВАТЬ!</b>';
 	}
 	return mdialog;}
  }).toString()

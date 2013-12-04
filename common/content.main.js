@@ -149,31 +149,9 @@ function undergroundkbd(code) {
 
 
 if (myoptions.unpaused) {
-if (location.href.search("page=sostav") != -1 )
-{
-var xpathRes = xpath("/html/body/table/tbody/tr[2]/td/table/tbody/tr");
-xpathRes.snapshotItem(0).removeChild(xpathRes.snapshotItem(0).firstChild);
-xpathRes.snapshotItem(0).removeChild(xpathRes.snapshotItem(0).firstChild);
-xpathRes.snapshotItem(0).removeChild(xpathRes.snapshotItem(0).lastChild);
-xpathRes.snapshotItem(0).removeChild(xpathRes.snapshotItem(0).lastChild);
-var xpathRes = xpath("/html/body/table/tbody");
-xpathRes.snapshotItem(0).removeChild(xpathRes.snapshotItem(0).firstChild);
-xpathRes.snapshotItem(0).removeChild(xpathRes.snapshotItem(0).lastChild);
-}
-else if (location.href.search("http://www.ereality.ru/core") != -1 )
+if (location.href.search("http://www.ereality.ru/core") != -1 )
 {
 
-	if (myoptions.fastex) {
- 		var exitlink = document.createElement('A');
-		exitlink.href = 'http://www.ereality.ru/exit.php';
-		exitlink.innerHTML ="[X]";
-		exitlink.addEventListener("focus", function(){this.blur();}, false);
-		if (document.getElementById("td_nick2")!=null ) {
-	document.getElementById("td_nick2").insertBefore(exitlink, document.getElementById("td_nick2").firstChild);
-	}
-
-	
-	}
 	if (myoptions.location_info) {
 	document.getElementById("span_location").onclick= function(){
 		document.getElementById('chat_msg').value=document.getElementById('span_location').innerHTML+' Людей: '+document.getElementById('span_location_count').innerHTML;
@@ -219,22 +197,6 @@ else if (location.href.search("http://www.ereality.ru/core") != -1 )
  
 }
 
-else if (location.href.search("http://ratings.ereality.ru/clans") != -1) 
-{
-if (myoptions.clan_info) {
-for(i=0; i<document.images.length; ++i) 
-{if (document.images[i].src.indexOf('http://img.ereality.ru/clan/') == 0) 
-	{    var id = document.images[i].src.replace("http://img.ereality.ru/clan/","").replace(".gif","");
-	var clanlink = document.createElement('A');
-	clanlink.href = 'http://www.news.ereality.ru/index.php?do=static&page=sostav&id='+id;
-	clanlink.target = '_blank'
-	clanlink.innerHTML = '<img src="http://img.ereality.ru/inf.gif"</img>';
-	document.images[i].parentNode.insertBefore(clanlink,document.images[i]);
-	i++;
-	}
-}
-}
-}
 else if (location.href.search("http://yo-bod.com/faceshop/") != -1) 
 {
 if ((document.referrer.search("http://www.ereality.ru/info") != -1) || (document.referrer.search("http://www.ereality.ru/~") != -1))
@@ -302,7 +264,7 @@ xpathRes.snapshotItem(0).click();
  	 document.onkeyup = function (e) {
 	        e = e || window.event;
 			if ((e.keyCode === 27)&&(myoptions.esc_move)) {
-	            top.frames.main.document.getElementById("mapCancelMoving").click();
+	            top.frames.main.document.getElementById("movementCancel").click();
 	        }
 	        return false;
 	 }

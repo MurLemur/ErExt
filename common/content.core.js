@@ -65,6 +65,25 @@ var scr= document.createElement("script");
 	+ ")();";
 	}
 
+if (myoptions.fastex) {
+scr.text= scr.text+ "(" +
+	(function(){
+	var zxzx5=templates.render;
+	templates.render=function(){
+	var myrezult=zxzx5.apply(templates,arguments);
+	return myrezult.replace('<span class="NickName"><center>','<span class="NickName"><center><a href="http://www.ereality.ru/exit.php">[X]</a>');
+	}
+	var exitlink = document.createElement('A');
+	exitlink.href = 'http://www.ereality.ru/exit.php';
+	exitlink.innerHTML ="[X]";
+	exitlink.addEventListener("focus", function(){this.blur();}, false);
+	if (document.getElementsByClassName("NickInfo")[0]!=null ) {
+	document.getElementsByClassName("NickInfo")[0].parentNode.insertBefore(exitlink, document.getElementsByClassName("NickInfo")[0].parentNode.firstChild);
+	}
+	}).toString()
+	+ ")();"; 
+}
+
 	if (myoptions.sound_elitka) {
 	 scr.text= scr.text + "(" +
    	 (function(){

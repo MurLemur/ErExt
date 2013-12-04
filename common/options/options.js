@@ -14,7 +14,6 @@
 	"numcapcha":true,
 	"kbdinst":true,
 	"chatsectors":true,
-	"clan_info":true,
 	"dragon_time":true,
 	"location_info":true,
 	"block_cmenu":true,
