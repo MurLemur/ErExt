@@ -41,9 +41,9 @@ if (myoptions.unpaused) {
 	 mlink = "<a href='http://www.ereality.ru/~"+mname+"' target='_blank'><b>"+mname+"</b></a>"
 	 mdialog.text=mdialog.text.replace("<b>"+mname+"</b>",mlink);
 	}
-	if (mdialog.type=="fightfind") {
-	 mdialog.title = '<a href="javascript: Estates.hideDialog();">[X]<a><b>АТАКОВАТЬ!</b>';
-	}
+	//if (mdialog.type=="fightfind") {
+	 mdialog.title = mdialog.title+'<a href="javascript: Estates.hideDialog();">[X]<a>';
+	//}
 	return mdialog;}
  }).toString()
 	+ ")();";

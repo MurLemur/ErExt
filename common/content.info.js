@@ -192,6 +192,7 @@ function mydragons(){
 }
 
 
+
 if ((myoptions.unpaused)&&((location.href.search("http://www.ereality.ru/info") != -1) || (location.href.search("http://www.ereality.ru/~") != -1)))
 {
 
@@ -252,7 +253,8 @@ var xpathRes = xpath("/html/body/div[3]/div[7]/div/div");
 	naempic.addEventListener("click", PostMsg2, false);}
 	if (myoptions.glamurstupki) {xpathRes.snapshotItem(0).appendChild(glamurpic);
 	glamurpic.addEventListener("click", PostMsgGlamurStupki, false);}
-	
+	elem = document.getElementsByClassName("slotsInfoNew")[0];
+	elem.parentNode.insertBefore(document.createElement('br'),elem.nextSibling);
 	xpathRes = xpath('//img[contains(@src,"http://img.ereality.ru//estates/info_icon")]');
 	if ((xpathRes.snapshotLength>0) && (xpathRes.snapshotItem(0).parentNode.href.search("/estate_info.php") != -1) )
 		{

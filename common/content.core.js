@@ -5,6 +5,20 @@
 // @all-frames  true
 // ==/UserScript==
 
+var soundoptions = {
+	"sound_elitka":"nosound",
+	"sound_event":"nosound",
+	"sound_kt":"nosound",
+	"sound_fishing":"nosound"
+}
+kango.invokeAsync('kango.storage.getItem',"soptions",function(value) {
+if (value!=null) {
+		for (nameprop in soundoptions) {
+		soundoptions[nameprop]=value[nameprop];
+    	}
+
+ }
+});
 //================================================================Begin
 
 kango.invokeAsync('kango.storage.getItem',"options",function(value) {
@@ -71,10 +85,13 @@ scr.text= scr.text+ "(" +
 	var zxzx5=templates.render;
 	templates.render=function(){
 	var myrezult=zxzx5.apply(templates,arguments);
-	return myrezult.replace('<span class="NickName"><center>','<span class="NickName"><center><a href="http://www.ereality.ru/exit.php">[X]</a>');
+	//if (myrezult.search(user.name)>0) {//alert();
+	return myrezult.replace('<span class="NickName"><center>','<span class="NickName"><center><a href="http://www.ereality.ru/exit.php" onfocus="this.blur();">[X]</a>');
+	//}else {return myrezult}
 	}
 	var exitlink = document.createElement('A');
 	exitlink.href = 'http://www.ereality.ru/exit.php';
+	exitlink.onfocus = 'this.blur();';
 	exitlink.innerHTML ="[X]";
 	exitlink.addEventListener("focus", function(){this.blur();}, false);
 	if (document.getElementsByClassName("NickInfo")[0]!=null ) {
@@ -84,29 +101,57 @@ scr.text= scr.text+ "(" +
 	+ ")();"; 
 }
 
-	if (myoptions.sound_elitka) {
+	if (soundoptions.sound_elitka!="nosound") {
 	 scr.text= scr.text + "(" +
    	 (function(){
    	 	var xgdh=chat.formatSmilies;
    	 	chat.formatSmilies=function(){
-   	 		if (arguments[0].search("Вас вызвали на арену Элитных Турниров! Есть")!=-1) core.playSound("SOUND_PRIVMES");
+   	 		if (arguments[0].search("Вас вызвали на арену Элитных Турниров! Есть")!=-1) core.playSwfSound("sound_elitka");
     		return xgdh.apply(chat, arguments);
     	}
 	}).toString()
 	+ ")();";
+	scr.text=scr.text.replace("sound_elitka",soundoptions.sound_elitka);
 	}
 	
 
-	if (myoptions.sound_fishing) {
+	if (soundoptions.sound_fishing!="nosound") {
 	 scr.text= scr.text + "(" +
    	 (function(){
    	 	var xgdh=chat.formatSmilies;
    	 	chat.formatSmilies=function(){
-   	 		if (arguments[0].search("У вас закончилась приманка!")!=-1) core.playSound("SOUND_PRIVMES");
+   	 		if (arguments[0].search("У вас закончилась приманка!")!=-1) core.playSwfSound("sound_fishing");
     		return xgdh.apply(chat, arguments);
     	}
 	}).toString()
 	+ ")();";
+	scr.text=scr.text.replace("sound_fishing",soundoptions.sound_fishing);
+	}
+
+	if (soundoptions.sound_event!="nosound") {
+	 scr.text= scr.text + "(" +
+   	 (function(){
+   	 	var xgdh=chat.formatSmilies;
+   	 	chat.formatSmilies=function(){
+   	 		if (arguments[0].search("Началось случайное событие <b>")!=-1) core.playSwfSound("sound_event");
+    		return xgdh.apply(chat, arguments);
+    	}
+	}).toString()
+	+ ")();";
+	scr.text=scr.text.replace("sound_event",soundoptions.sound_event);
+	}
+
+	if (soundoptions.sound_kt!="nosound") {
+	 scr.text= scr.text + "(" +
+   	 (function(){
+   	 	var xgdh=chat.formatSmilies;
+   	 	chat.formatSmilies=function(){
+   	 		if (arguments[0].search("Сражаются: <img width=")!=-1) core.playSwfSound("sound_kt");
+    		return xgdh.apply(chat, arguments);
+    	}
+	}).toString()
+	+ ")();";
+	scr.text=scr.text.replace("sound_kt",soundoptions.sound_kt);
 	}
 
 //Подправляем ссыллки на форум, что-бы было с автологином, при чтении Личных Сообщений
@@ -194,7 +239,7 @@ scr.text= scr.text+ "(" +
 	var res = arguments[0].getElementsByTagName("quest");
 	for(i=0; i<res.length; ++i) 
 	{
-		res[i].textContent =res[i].textContent.replace(/(\d{1,3})[:](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+		res[i].textContent =res[i].textContent.replace(/(\d{1,3})[:\-](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
 	}
 	zxzx4.apply(questDiary,arguments);
 	return ;
@@ -202,6 +247,34 @@ scr.text= scr.text+ "(" +
 	}).toString()
 	+ ")();"; 
 }
+
+//При не пустой строке чата не завершать бой энтером , поидее )
+		if (myoptions.keyenter) {
+		scr.text= scr.text+ "(" +
+	(function(){
+	var zxzx6=core.onKeyDown;
+	core.onKeyDown=function(event){
+	event=(window.event||event);
+	if ((event.keyCode==13)&&(battle.bstatus==0)&&((document.getElementById("chat_msg").value != "" ))) { return}
+	else
+		{var myrezult=zxzx6.apply(core,arguments);
+	     return myrezult}
+	}
+	var zxzx7=core.onKeyUp;
+	core.onKeyUp=function(event){
+	event=(window.event||event);
+	if ((event.keyCode==13)&&(battle.bstatus==0)&&((document.getElementById("chat_msg").value != "" ))) { return}
+	else
+		{var myrezult=zxzx7.apply(core,arguments);
+	     return myrezult}
+	}
+	$(document).unbind('keydown').unbind('keyup');
+	$(document).keydown(core.onKeyDown).keyup(core.onKeyUp);
+	}).toString()
+	+ ")();"; 
+}
+
+
 
  if (scr!="") { 	
  document.body.appendChild(scr);
@@ -217,3 +290,5 @@ scr.text= scr.text+ "(" +
  //=========================end.
 }
  });
+
+

@@ -15,7 +15,7 @@
 <body>
 
 <header>
-	<h1>Настройки дополнения для игры "Грани Реальности"  (дата последнего обновления 25.11.2013)    <a href="http://www.ereality.ru" title="www.ereality.ru">www.ereality.ru</a></h1> 
+	<h1>Настройки дополнения для игры "Грани Реальности"  (дата последнего обновления 14.01.2014)    <a href="http://www.ereality.ru" title="www.ereality.ru">www.ereality.ru</a></h1> 
 	
 </header>
 
@@ -23,7 +23,8 @@
     <ul>
         <li><a href="#tab1">Клановые сервисы</a></li>
         <li><a href="#tab2">Дополнительные возможности</a></li>
-        <li><a href="#tab3">Немного описания</a></li>
+        <li><a href="#tab3">Звуковые оповещения</a></li>
+        <li><a href="#tab4">Немного описания</a></li>
      </ul>
 </nav>
       
@@ -60,18 +61,25 @@
     <p><input type="checkbox" id="lotereya" /><label for="lotereya">Возможность заполнения лотереи случайным образом по кнопке</label></p>
     <p><input type="checkbox" id="esc_move" /><label for="esc_move">Возможность кнопкой ESC отменять маршрут (ОВЛ,ОПП)</label></p>
     <p><input type="checkbox" id="tab_refresh" /><label for="tab_refresh">При отключении/включении плагина автоматически обновлять табы с гранями</label>
-    <p><input type="checkbox" id="sound_elitka" /><label for="sound_elitka">Звуковое оповещение при вызове на бой элитного турнира</label>
-    <p><input type="checkbox" id="sound_fishing" /><label for="sound_fishing">Звуковое оповещение когда закончится приманка</label>   
-    </p>
     <p><input type="checkbox" id="kbdunderground" /><label for="kbdunderground">Возможность передвиджения в шахте кнопками QEZC на клавиатуре</label></p>
-    <p><input type="checkbox" id="estatenamelink" /><label for="estatenamelink">Кликабельные ники игроков в поместье(логи и случайные нападения)</label>
-    <p><input type="checkbox" id="forumgoto" /><label for="forumgoto">Ссылки на форум из чата игры и личных сообщений при отображении корректируются так, что бы при переходе по ним автоматом логиниться и заходить в тему.</label>
-    <p><input type="checkbox" id="questsectors" /><label for="questsectors">Кликабельные сектора в «Дневнике квестов»</label>
-    <p><input type="checkbox" id="aliensmy" /><label for="aliensmy">Интерфейс голосования на альенах по ЛеМурски</label>
+    <p><input type="checkbox" id="estatenamelink" /><label for="estatenamelink">Кликабельные ники игроков в поместье(логи и случайные нападения)</label></p>
+    <p><input type="checkbox" id="forumgoto" /><label for="forumgoto">Ссылки на форум из чата игры и личных сообщений при отображении корректируются так, что бы при переходе по ним автоматом логиниться и заходить в тему.</label></p>
+    <p><input type="checkbox" id="questsectors" /><label for="questsectors">Кликабельные сектора в «Дневнике квестов»</label></p>
+    <p><input type="checkbox" id="aliensmy" /><label for="aliensmy">Интерфейс голосования на альенах по ЛеМурски</label></p>
+    <p><input type="checkbox" id="clnick" /><label for="clnick">Кликабельные ники на поляне кудесников и в кузнице</label></p>
+    <p><input type="checkbox" id="keyenter" /><label for="keyenter">При не пустой строке чата не завершать бой энтером</label></p>
+
 
 </section>
 
 <section class="tab" id="tab3">
+     <p>Звуковое оповещение при вызове на бой элитного турнира:<select id = "sound_elitka"></select></p> 
+     <p>Звуковое оповещение когда закончится приманка:<select id = "sound_fishing"></select></p>
+     <p>Звуковое оповещение когда начинается глобальное событие:<select id = "sound_event"></select></p>
+     <p>Звуковое оповещение когда начинается Клановый Турнир:<select id = "sound_kt"></select></p> 
+</section>
+
+<section class="tab" id="tab4">
     <p> Я конечно не надеюсь разбогатеть, но позитив - мотивирует: <b>Z320789171248</b> это мой вебмани.</p>
     <p><img src="options/koketkin.jpg"></p>
 </section>

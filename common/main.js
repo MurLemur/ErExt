@@ -28,10 +28,12 @@ var extension = new MyExtension();
         kango.xhr.send(details, function(data) {
                 if (data.status == 200 && data.response != null) {
                         var text = data.response;
-                        if (+text>6)  {kango.ui.browserButton.setIcon('icons/grumpy.png'); }}  // типо проверки на новую версию
-                else { // something went wrong
+                        if (+text>7)  {
+                        kango.ui.browserButton.setIcon('icons/grumpy.png');
+                        }}  // типо проверки на новую версию
+               else { // something went wrong
                         kango.console.log('something went wrong');
-                }
+                      }
         });
 
  

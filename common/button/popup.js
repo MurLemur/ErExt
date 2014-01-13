@@ -19,14 +19,14 @@ var myoptions = {
   "block_cmenu":true,
   "tab_refresh":true,
   "esc_move":true,
-  "sound_elitka":true,
   "fastex":true,
   "kbdunderground":true,
   "lotereya":true,
   "estatenamelink":true,
   "forumgoto":true,
   "aliensmy":true,
-  "sound_fishing":true,
+  "clnick":true,
+  "keyenter":true,
   "questsectors":true
 }
 

@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        ErExt_main
 // @include     http://www.ereality.ru/core*
 // @include 	http://ratings.ereality.ru/clans*
@@ -62,7 +62,12 @@ function mymain() {
 	if (document.getElementById("npcname").innerHTML=="Ворота Кладбища")	
 		if (top.document.getElementById("chat_msg").value=="") {
 				top.document.getElementById("dialog").firstChild.firstChild.nextElementSibling.nextElementSibling.click();
-		}
+		}	
+
+	if (document.getElementById("npcname").innerHTML=="Священная раковина")	
+		if (top.document.getElementById("chat_msg").value=="") {
+				top.document.getElementById("dialog").firstChild.firstChild.nextElementSibling.nextElementSibling.click();
+		}	
 }
 function lotereya() {
 	if (document.getElementById("ImgField15")!=null)	
@@ -134,8 +139,12 @@ function instkbd(code) {
 				case  68: {top.frames.main.document.getElementById("inst-right").click();break;}  // d
 				case  83: {top.frames.main.document.getElementById("inst-backward").click();break;} // s
 				case  88: {top.frames.main.document.getElementById("inst-backward").click();break;} // x
-				//case 13: {top.frames.main.document.getElementById("inst-center").click();break;}
-				// case 13: {top.frames.main.document.getElementById("map_monsters").firstChild.firstChild.onclick();break;}
+				case 13: {
+					if (top.main.document.getElementById("map_monsters").getElementsByTagName("a").length>0) {
+					top.main.document.getElementById("map_monsters").getElementsByTagName("a")[0].click();}break;}
+				case 32: {
+					if (top.main.document.getElementById("map_monsters").getElementsByTagName("a").length>0) {
+					top.main.document.getElementById("map_monsters").getElementsByTagName("a")[0].click();}break;}
 			}
 		}
 }
@@ -180,14 +189,14 @@ if (location.href.search("http://www.ereality.ru/core") != -1 )
 
  document.onkeyup = function (e) {
 	        e = e || window.event;
-			//alert(e.keyCode);
-	        if (e.keyCode === 13) {
-	            mymain();
+		//	alert(e.keyCode);
+	        if ((e.keyCode === 13)&&(myoptions.cemetry)) { 
+	           mymain();
 	        }
 	        if ((e.keyCode === 27)&&(myoptions.esc_move)) {
 	            top.frames.main.document.getElementById("mapCancelMoving").click();
 	        }
-			if ((((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)||(e.keyCode === 65)||(e.keyCode === 68)||(e.keyCode === 83)||(e.keyCode === 87)||(e.keyCode === 88))&&(top.document.getElementById("chat_msg").value=="")) {
+			if ((((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)||(e.keyCode === 32)||(e.keyCode === 65)||(e.keyCode === 68)||(e.keyCode === 83)||(e.keyCode === 87)||(e.keyCode === 88))&&(top.document.getElementById("chat_msg").value=="")) {
 	            instkbd(e.keyCode);
 	        }
 			 if ((e.keyCode > 95) && (e.keyCode < 106)) {
@@ -199,7 +208,7 @@ if (location.href.search("http://www.ereality.ru/core") != -1 )
 	        // Отменяем действие браузера
 	        return false;
 	    }
- 
+
 }
 
 else if (location.href.search("http://yo-bod.com/faceshop/") != -1) 
@@ -274,7 +283,7 @@ xpathRes.snapshotItem(0).click();
 	        return false;
 	 }
     window.setTimeout( function(){
-     var clearlink = document.createElement('A');
+    var clearlink = document.createElement('A');
 	clearlink.href = 'javascript:window.parent.chat.myshowSec("","")';
 	clearlink.innerHTML ="[X]";
 	if ((document.getElementById("searchY")!=null)&&(document.getElementById("searchY").value!=""))
@@ -287,19 +296,36 @@ else if (location.href.search("http://www.ereality.ru/instance") != -1)
   {
   document.onkeyup = function (e) {
 	        e = e || window.event;
-			if ((((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)||(e.keyCode === 65)||(e.keyCode === 68)||(e.keyCode === 83)||(e.keyCode === 87)||(e.keyCode === 88))&&(top.document.getElementById("chat_msg").value=="")) {
+			if ((((e.keyCode > 36) && (e.keyCode < 41))||(e.keyCode === 13)||(e.keyCode === 32)||(e.keyCode === 65)||(e.keyCode === 68)||(e.keyCode === 83)||(e.keyCode === 87)||(e.keyCode === 88))&&(top.document.getElementById("chat_msg").value=="")) {
 	            instkbd(e.keyCode);
 	        }
 	        return false;
 	    }
-  }
+  }  
  else if ((location.href.search("http://www.ereality.ru/map.php") != -1) && (location.href.search("mode=altar") != -1))
   {
 	xpathRes = xpath('//a[contains(@href,"/map.php?mode=altar")]');
 	if (xpathRes.snapshotLength>0) {xpathRes.snapshotItem(0).focus();} 
   }
-      else if (location.href.search("http://www.ereality.ru/map.php") != -1) 
-  {
+ else if (location.href.search("http://www.ereality.ru/map.php") != -1) 
+  {	if (location.href.search("action=demands") != -1)
+	  {
+		xpathRes = xpath('//a[contains(@href,"/map.php?action=demands")]');
+		if (xpathRes.snapshotLength>0) {xpathRes.snapshotItem(0).focus();} 
+  	   }
+  if (myoptions.clnick) {   
+ 	div = document.getElementById("div_bhtml"); // Кликабельные ники
+		if (div!=undefined)
+		{   xpathRes = xpath('//div[@id="div_bhtml"]//img[@src="http://img.ereality.ru/inf.gif"]');
+			if (xpathRes.snapshotLength>0) {
+				for(i=0; i<xpathRes.snapshotLength; i++) {
+				 el=xpathRes.snapshotItem(i).parentNode.previousSibling.previousSibling;
+				 glink = "<a href='#' onclick='if (this.firstChild.innerHTML==undefined) {top.chat.msg(this.innerHTML)} else {top.chat.msg(this.firstChild.innerHTML)}'>"+el.innerHTML+"</a>";
+         		 el.innerHTML=el.innerHTML.replace(el.innerHTML,glink);	
+				}
+			}
+	}	
+  }
 	 document.onkeyup = function (e) {
 	        e = e || window.event;
 			 if (((e.keyCode === 81) || (e.keyCode === 69) || (e.keyCode === 90) || (e.keyCode === 67))&&(top.document.getElementById("chat_msg").value=="")) {undergroundkbd(e.keyCode); }
