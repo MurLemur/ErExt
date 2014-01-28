@@ -27,6 +27,7 @@ var myoptions = {
 	"aliensmy":true,
 	"clnick":true,
 	"keyenter":true,
+	"keyalt":true,
 	"questsectors":true
 }
 

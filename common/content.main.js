@@ -54,11 +54,6 @@ function userscount() {
 	document.getElementById("chat_msg").value = fraki;
 }
 function mymain() {
-	if ((top.main.document.getElementById("npc107")!=undefined)&&(document.getElementById("div_battle").style.display=="none")) {
-		if (top.document.getElementById("chat_msg").value=="") {
-				top.main.document.getElementById("npc107").click();
-		}
-	}
 	if (document.getElementById("npcname").innerHTML=="Ворота Кладбища")	
 		if (top.document.getElementById("chat_msg").value=="") {
 				top.document.getElementById("dialog").firstChild.firstChild.nextElementSibling.nextElementSibling.click();
