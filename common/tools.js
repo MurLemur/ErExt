@@ -27,9 +27,21 @@ var myoptions = {
 	"aliensmy":true,
 	"clnick":true,
 	"keyenter":true,
-	"questsectors":true
+	"questsectors":true,
+	"userlistactiveitems": true
 }
 
+function mergeOptions(options, defaultOptions) {
+	if (options === null) {
+		return defaultOptions;
+	}
+
+	for (key in options) {
+		defaultOptions[key] = options[key];
+	}
+	
+	return defaultOptions;
+}
 
 function xpath(query, object) {
 	if(!object) var object = document;
@@ -38,26 +50,27 @@ function xpath(query, object) {
 
 var trans=[];
 var snart=[];
-for(var i=0x410;i<=0x44F;i++)
-{
-trans[i]=i-0x350;
-snart[i-0x350] = i;
+for (var i = 0x410; i <= 0x44F; i++) {
+	trans[i] = i - 0x350;
+	snart[i-0x350] = i;
 }
 trans[0x401]= 0xA8;
 trans[0x451]= 0xB8;
 snart[0xA8] = 0x401;
 snart[0xB8] = 0x451;
-CP1251urlencode = function(str)
-{
-var ret=[];
-for(var i=0;i<str.length;i++)
-{
-var n=str.charCodeAt(i);
-if(typeof trans[n]!='undefined')
-n = trans[n];
-if (n <= 0xFF)
-ret.push(n);
-}
 
-return escape(String.fromCharCode.apply(null,ret));
+CP1251urlencode = function(str) {
+	var ret=[];
+	for(var i=0;i<str.length;i++) {
+		var n=str.charCodeAt(i);
+		if(typeof trans[n]!='undefined') {
+			n = trans[n];
+		}
+		
+		if (n <= 0xFF) {
+			ret.push(n);
+		}
+	}
+
+	return escape(String.fromCharCode.apply(null,ret));
 }
