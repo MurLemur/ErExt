@@ -4,6 +4,14 @@ var popupClass = function(popupCss) {
 	this.positionDeltaX = 10;
 	this.positionDeltaY = 5;
 
+	this.positionX = 0;
+	this.positionY = 0;
+	
+	this.outWidth = 0;
+	this.outHeigth = 0;
+	
+	this.window = $(window);
+	
 	$('body').prepend(this.mainHolder);
 }
 
@@ -21,21 +29,21 @@ popupClass.prototype = {
 		return this;
 	},	
 	move: function(x, y) {
-		var positionX = x + this.positionDeltaX;
-		var positionY = y + this.positionDeltaY;
+		this.positionX = x + this.positionDeltaX;
+		this.positionY = y + this.positionDeltaY;
 		
-		var outWidth = positionX + this.popupWidth - document.body.scrollWidth;
-		var outHeigth = positionY + this.popupHeight - document.body.scrollHeight;
+		this.outWidth = this.positionX + this.popupWidth - this.window.width();
+		this.outHeigth = this.positionY + this.popupHeight - this.window.height();
 		
-		if (outWidth > 0) { 
-			positionX = x - this.positionDeltaX - this.popupWidth;
+		if (this.outWidth > 0) { 
+			this.positionX = x - this.positionDeltaX - this.popupWidth;
 		}
 		
-		if (outHeigth > 0) {
-			positionY = y - this.positionDeltaY - this.popupHeight;
+		if (this.outHeigth > 0) {
+			this.positionY = y - this.positionDeltaY - this.popupHeight;
 		} 
 		
-		this.mainHolder.css({"margin-left": positionX + "px", "margin-top": positionY + "px"});
+		this.mainHolder.css({"margin-left": this.positionX + "px", "margin-top": this.positionY + "px"});
 		return this;
 	} 
 }
