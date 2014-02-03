@@ -17,8 +17,17 @@ userActiveItems.prototype = {
 				if (!self. checkResponse) {
 					return;
 				}
+				
+				var items;
+				
+				try {
+					items = $.parseJSON(data.response);
+				}
+				catch(e) {
+					items = {};
+				}
 			
-				tab.dispatchMessage(self.messagingEnum.usersListActiveItemsContent, {items: $.parseJSON(data.response), hash: hash});
+				tab.dispatchMessage(self.messagingEnum.usersListActiveItemsContent, {items: items, hash: hash});
 			});
 		});
 	},

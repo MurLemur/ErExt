@@ -3,7 +3,7 @@
   "description": "Extension for EReality.ru", 
   "creator": "MurLemur",
   "background_scripts": [ 
-    "jquery.js",
+    "tools/jquery.js",
     "main.js", 
 	"user/active-items.js",
 	"tools/messaging-enum.js",

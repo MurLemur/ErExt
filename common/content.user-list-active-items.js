@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name     ErExt_Users_List_Active_Items
 // @include http://www.ereality.ru/core/*
-// @require jquery.js
+// @require tools/jquery.js
 // @require css/popup-css.js
 // @require css/items-builder-css.js
 // @require user/items-builder.js
