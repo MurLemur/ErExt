@@ -1,9 +1,13 @@
 {
-  "content_scripts": ["content.main.js","content.info.js","content.estate.js","content.core.js","content.move.js"], 
+  "content_scripts": ["content.main.js","content.info.js","content.estate.js","content.core.js","content.move.js", "content.user-list-active-items.js"], 
   "description": "Extension for EReality.ru", 
   "creator": "MurLemur",
-  "background_scripts": [
-    "main.js"
+  "background_scripts": [ 
+    "tools/jquery.js",
+    "main.js", 
+	"user/active-items.js",
+	"tools/messaging-enum.js",
+    "user/background.user-active-items.js" 
   ], 
   "homepage_url": "http://forum.ereality.ru/topic176876/page1.html", 
   "version": "1.0.7", 

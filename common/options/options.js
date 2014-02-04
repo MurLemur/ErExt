@@ -27,7 +27,8 @@
 	"aliensmy":true,
 	"clnick":true,
 	"keyenter":true,
-	"questsectors":true
+	"questsectors":true,
+	"userlistactiveitems": true
 }
 
 var soundoptions = {
