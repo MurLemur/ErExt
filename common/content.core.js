@@ -274,6 +274,36 @@ scr.text= scr.text+ "(" +
 	+ ")();"; 
 }
 
+if (myoptions.keyalt) {
+		scr.text= scr.text+ "(" +
+	(function(){
+		var zxzx8=core.onKeyUp;
+	core.onKeyUp=function(event){
+	event=(window.event||event);
+	 if (event.altKey) {
+		 	var HSets =[]; 
+			 for(prop in heroPanel.heroSets) if (heroPanel.heroSets.hasOwnProperty(prop)) {
+  				HSets.push(prop);
+			 }	
+			//alert(HSets[0]); 
+		 	if ((event.keyCode==49)&&(HSets[0]!=undefined)) {inventory.actionUpSet({"setId":HSets[0]})} //1
+		 	if ((event.keyCode==50)&&(HSets[1]!=undefined)) {inventory.actionUpSet({"setId":HSets[1]})} //2
+		 	if ((event.keyCode==51)&&(HSets[2]!=undefined)) {inventory.actionUpSet({"setId":HSets[2]})} //3
+		 	if ((event.keyCode==52)&&(HSets[3]!=undefined)) {inventory.actionUpSet({"setId":HSets[3]})} //4
+		 	if ((event.keyCode==53)&&(HSets[4]!=undefined)) {inventory.actionUpSet({"setId":HSets[4]})}	//5
+		 	if (event.keyCode==81)  {if (questDiary.closed) questDiary.show(); else questDiary.close()  }    //q	
+		 	if (event.keyCode==87) {if (($("#messengerForm").length==0)||($("#messengerForm")[0].style.display=="none")) messenger.ShowForm(); else $("#messengerCloseButton").click() }	//w	
+		 	if (event.keyCode==82) {if (main.$("b:contains(Книга призыва монстров)").length==0) {core.modeSwitch('map');frames['main'].location='/summon_book.php';} else core.trigger('move')}	//r	
+		 	if (event.keyCode==69) {if (($("span:contains(Контакты)").length==0)||($("span:contains(Контакты)")[0].parentNode.parentNode.style.display!="block")) core.mod('contacts','open'); else  $("span:contains(Контакты)")[0].nextElementSibling.click()} //e
+
+		 }	
+		 var myrezult=zxzx8.apply(core,arguments);
+	     return myrezult}
+	     $(document).unbind('keyup');
+		 $(document).keyup(core.onKeyUp);
+	 }).toString()
+	+ ")();"; 
+}
 
 
  if (scr!="") { 	
