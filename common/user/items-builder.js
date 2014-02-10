@@ -1,20 +1,20 @@
-var itemsBuilder = function(builderCss) {
+var itemsBuilderClass = function(builderCss) {
 	this.builderCss = builderCss;
-}
-
-itemsBuilder.prototype = {
-	imgStore: "http://img.ereality.ru/34x-/w/",
-	build: function(items) {
-		if (items.length == 0) {
-			return null;
-		}
+	this.imgStore = "http://img.ereality.ru/34x-/w/";
+	this.itemsHolder = $("<table></table>");
 	
-		var self = this;
+	var self = this;
 	
-		var itemsHolder = $("<table></table>");
+	this.build = function(items) {
+		this.itemsHolder.children().remove();
 		
 		var tr = $("<tr></tr>");
-		itemsHolder.append(tr);
+		this.itemsHolder.append(tr);
+		
+		if (items.length == 0) {
+			tr.append(this.buildEmptyItems());
+			return this.itemsHolder;
+		}		
 		
 		$.each(items, function(index) {
 			var item = self.buildItem(this);
@@ -25,9 +25,14 @@ itemsBuilder.prototype = {
 			tr.append(td);
 		});
 		
-		return itemsHolder;
-	},
-	buildItem: function(item) {
+		return this.itemsHolder;
+	};
+	
+	this.buildEmptyItems = function() {
+		return $("<td><img src=\"" + kango.io.getResourceUrl("res/no_items.gif") + "\"></td>");
+	};
+	
+	this.buildItem = function(item) {
 		var img  = $('<img src="' + this.imgStore + item.w_image + '"/>').css(this.builderCss.img);
 		var imgDiv = $('<div></div>').css(this.builderCss.imgDiv).append(img);
 		
@@ -35,7 +40,7 @@ itemsBuilder.prototype = {
 		
 		return {img: imgDiv, text: textDiv};
 
-	}
+	};
 }
 
-var itemsBuilder = new itemsBuilder(itemsBuilderCss);
+var itemsBuilder = new itemsBuilderClass(itemsBuilderCss);
