@@ -1,5 +1,12 @@
 {
-  "content_scripts": ["content.main.js","content.info.js","content.estate.js","content.core.js","content.move.js", "content.user-list-active-items.js"], 
+  "content_scripts": [
+	"content.main.js", 
+	"content.info.js", 
+	"content.estate.js",
+	"content.core.js", 
+	"content.move.js", 
+	"content.common.js"
+  ], 
   "description": "Extension for EReality.ru", 
   "creator": "MurLemur",
   "background_scripts": [ 
@@ -18,8 +25,8 @@
 		"tooltipText": "Open menu",
 		"popup": {
             "url": "button/popup.html",
-			       "width": 260,
-             "height": 100
+            "width": 260,
+            "height": 100
 	     }
 	}, 
   "options_page": "options.html"

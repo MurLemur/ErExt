@@ -1,37 +1,36 @@
 var userActiveItems = function(dataUrl, messagingEnum) {
 	this.dataUrl = dataUrl;
 	this.messagingEnum = messagingEnum;
-}
 
-userActiveItems.prototype = {
-	requestId: 0,
-	successStatus: 200,
-	getItems : function(userName, hash) {
-		var self = this;
-		
+	this.requestId = 0;
+	this.successStatus = 200;
+	this.items;
+	
+	var self = this;
+
+	this.getItems = function(userName, hash) {
 		kango.browser.tabs.getCurrent(function(tab) {
 			var requestId = self.requestId + 1;
 			self.requestId = requestId;
 
 			kango.xhr.send(self.prepareRequestParams(userName), function(data) {
-				if (!self. checkResponse) {
+				if (!self.checkResponse(data, requestId)) {
 					return;
 				}
 				
-				var items;
-				
 				try {
-					items = $.parseJSON(data.response);
+					self.items = $.parseJSON(data.response);
 				}
 				catch(e) {
-					items = {};
+					self.items = {};
 				}
 			
-				tab.dispatchMessage(self.messagingEnum.usersListActiveItemsContent, {items: items, hash: hash});
+				tab.dispatchMessage(self.messagingEnum.usersListActiveItemsContent, {items: self.items, hash: hash});
 			});
 		});
-	},
-	prepareRequestParams: function(userName) {
+	};
+	
+	this.prepareRequestParams = function(userName) {
 		return {
 			url: this.dataUrl,
 			method: 'GET',
@@ -41,8 +40,9 @@ userActiveItems.prototype = {
 			async: true,
 			contentType: 'text'
 		};	
-	},
-	checkResponse: function(data, requestId) {
+	};
+	
+	this.checkResponse = function(data, requestId) {
 		return data.status == this.successStatus && data.response != null && requestId == this.requestId;
 	}
 }

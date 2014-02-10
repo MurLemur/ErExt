@@ -44,15 +44,6 @@ Array.prototype.shuffle = function( b )
 
 
 
-function userscount() {
-	document.getElementById("chat_msg").value = "";
-	var fraki = "Игнесс:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/2.gif"]').snapshotLength+
-	" Раанор:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/3.gif"]').snapshotLength+
-	" Тарбис:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/4.gif"]').snapshotLength+
-	" Витарра:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/5.gif"]').snapshotLength+
-	" Дримнир:"+xpath('//div/div/div/img[@src = "http://img.ereality.ru/a/6.gif"]').snapshotLength;
-	document.getElementById("chat_msg").value = fraki;
-}
 function mymain() {
 //	if ((top.main.document.getElementById("npc107")!=undefined)&&(document.getElementById("div_battle").style.display=="none")) {
 //		if (top.document.getElementById("chat_msg").value=="") {
@@ -177,14 +168,6 @@ if (location.href.search("http://www.ereality.ru/core") != -1 )
 	document.getElementById("a_users_loc").href='javascript: users.load(); document.getElementById("a_users_loc").focus();';
 	document.getElementById("span_mode5").firstChild.href='javascript: fdemands.load(5); document.getElementById("span_mode5").firstChild.focus();';
  }
-
- if (myoptions.okcount) {
- 	var loc_user = document.getElementById("div_users");
- 	var calcpic = document.createElement('img');	
- 	calcpic.src = 'data:image/gif;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCAAQABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAUG/8QAIxAAAgICAQQCAwAAAAAAAAAAAQMCBAURABITIUEUURUiMf/EABQBAQAAAAAAAAAAAAAAAAAAAAT/xAAYEQADAQEAAAAAAAAAAAAAAAAAAQIhMf/aAAwDAQACEQMRAD8A1uYbaxWOoW6uOxjaRQo2Jzp9xiyYjcj+w6hxEwyWMlcEcXNRbVlWs0a/akNvgJb8n0deD975PzKvyteiid59dCFLDKrMXZPVOMQCJERGxsfziPkNNSdaVgvE21gpKca9MV9LoSkdyj9D2fXjjqedCytP/9k=';
- 	loc_user.insertBefore(calcpic, loc_user.firstChild);
- 	loc_user.firstChild.addEventListener("click", userscount, false);
- };
 
  document.onkeyup = function (e) {
 	        e = e || window.event;
