@@ -289,7 +289,7 @@ else if (location.href.search("http://www.ereality.ru/instance") != -1)
 	xpathRes = xpath('//a[contains(@href,"/map.php?mode=altar")]');
 	if (xpathRes.snapshotLength>0) {xpathRes.snapshotItem(0).focus();} 
   }
- else if (location.href.search("http://www.ereality.ru/map.php") != -1) 
+ else if ((location.href.search("http://www.ereality.ru/map.php") != -1) && (location.href.search("rating") == -1))  // Исключая рейтинги на арене,там свой обработчик ников
   {	if (location.href.search("action=demands") != -1)
 	  {
 		xpathRes = xpath('//a[contains(@href,"/map.php?action=demands")]');

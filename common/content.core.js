@@ -252,6 +252,8 @@ scr.text= scr.text+ "(" +
 	+ ")();"; 
 }
 
+
+// Хоткеи ALT+12345QWE
 if (myoptions.keyalt) {
 		scr.text= scr.text+ "(" +
 	(function(){

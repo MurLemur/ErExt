@@ -108,7 +108,7 @@ var factionCounterClass = function(usersCommonSelector, usersHolderSelector, pop
 		var chatMsg = "";	
 		
 		$.each(self.factionMembers, function(key) {
-			chatMsg += self.factions[key] + ":" + self.factionMembers[key] + "; ";
+			chatMsg += self.factions[key] + ":" + self.factionMembers[key] + " ";
 		});
 		
 		$(this.chatMsgSelector).val(chatMsg);

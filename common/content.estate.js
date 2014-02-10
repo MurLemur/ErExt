@@ -39,7 +39,7 @@ if (myoptions.unpaused) {
 	 var nn = mdialog.text.indexOf('</b><br /><br />Базовый шанс:');
 	 var mname = mdialog.text.substring(39,nn);
 	 mlink = "<a href='http://www.ereality.ru/~"+mname+"' target='_blank'><b>"+mname+"</b></a>"
-	 mdialog.text=mdialog.text.replace("<b>"+mname+"</b>",mlink);
+	 mdialog.text=mdialog.text.split("<b>"+mname+"</b>").join(mlink);
 	}
 	//if (mdialog.type=="fightfind") {
 	 mdialog.title = mdialog.title+'<a href="javascript: Estates.hideDialog();">[X]<a>';
@@ -57,7 +57,7 @@ if (myoptions.unpaused) {
 	{
 	 var mname = res[i].innerHTML;
 	 mlink = "<a href='http://www.ereality.ru/~"+mname+"' target='_blank'><b>"+mname+"</b></a>"
-	 res[i].parentNode.innerHTML=res[i].parentNode.innerHTML.replace("<b>"+mname+"</b>",mlink);
+   	 res[i].parentNode.innerHTML=res[i].parentNode.innerHTML.split("<b>"+mname+"</b>").join(mlink);
 	} 
 	return;}
 	 }).toString()
