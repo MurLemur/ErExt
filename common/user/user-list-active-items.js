@@ -35,7 +35,7 @@ var usersListActiveItemsClass = function(usersHolderSelector, userItemSelector, 
 			
 			kango.dispatchMessage(self.messagingEnum.userItemsBackground, {userName: self.userName, hash: self.responseHash});
 			
-			self.popup.hide().move(event.clientX, event.client, self.popupMarginX, self.popupMarginY);
+			self.popup.showPreloader().move(event.clientX, event.client, self.popupMarginX, self.popupMarginY);
 		}).delegate(this.userItemSelector, "mouseout", function(event) {
 			if (self.responseHash === null) {
 				return;
