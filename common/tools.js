@@ -32,6 +32,29 @@ var myoptions = {
 	"userlistactiveitems": true
 }
 
+var soundOptions = {
+	"sound_elitka": {
+		sound: "nosound",
+		detect: "Вас вызвали на арену Элитных Турниров! Есть"
+	},
+	"sound_event": {
+		sound: "nosound",
+		detect: "Началось случайное событие <b>"
+	},
+	"sound_kt": {
+		sound: "nosound",
+		detect: "Сражаются: <img width="
+	},
+	"sound_fishing": {
+		sound: "nosound",
+		detect: "У вас закончилась приманка!"
+	},
+	"sound_tool_broken": {
+		sound: "nosound",
+		detect: "текущая прочность инструмента: <b>0</b>"
+	}
+}
+
 function mergeOptions(options, defaultOptions) {
 	if (options === null) {
 		return defaultOptions;

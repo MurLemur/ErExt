@@ -1,75 +1,48 @@
-﻿var myoptions = {
-	"faceshop":true,
-	"efimerka":true,
-	"unpaused":true,
-	"info":true,
-	"zk":true,
-	"naemniki":true,
-	"glamurstupki":true,
-	"bodestate":true,
-	"sidzoku":true,
-	"okcount":true,
-	"cemetry":true,
-	"numfight":true,
-	"numcapcha":true,
-	"kbdinst":true,
-	"chatsectors":true,
-	"dragon_time":true,
-	"location_info":true,
-	"block_cmenu":true,
-	"tab_refresh":true,
-	"esc_move":true,
-	"fastex":true,
-	"kbdunderground":true,
-	"lotereya":true,
-	"estatenamelink":true,
-	"forumgoto":true,
-	"aliensmy":true,
-	"clnick":true,
-	"keyenter":true,
-	"keyalt":true,
-	"questsectors":true,
-	"userlistactiveitems": true
+﻿var extensionOptionsClass = function(soundSelectOptions) {
+	this.soundSelectOptions = soundSelectOptions;
+	var self = this;
+	
+	this.init = function() {
+		this.loadExtentionOption("options", myoptions, function() {
+			self.prepareOptionButtons();
+		});
+		this.loadExtentionOption("soptions", soundOptions, function() {
+			self.prepareSoundOptionsButtons(this.soundSelectOptions);
+		});	
+	};
+	
+	this.saveOptions = function(optionKey, optionValue) {
+		kango.invokeAsync('kango.storage.setItem', optionKey, optionValue);
+	}
+	
+	this.prepareOptionButtons = function() {
+		$.each(myoptions, function(key) {
+			$('#' + key).prop("checked", myoptions[key]).on("click", function() {
+				myoptions[this.id] = $(this).prop("checked");
+				self.saveOptions("options", myoptions);
+			});
+		});		
+	};
+	
+	this.prepareSoundOptionsButtons = function() {
+		$.each(soundOptions, function(key) {
+			$('#' + key).html(self.soundSelectOptions).val(soundOptions[key].sound).on("click", function() {
+				soundOptions[this.id].sound = $(this).val();
+				self.saveOptions("soptions", soundOptions);
+			});
+		});	
+	};
+	
+	this.loadExtentionOption = function(optionKey, defaultOptions, callback) { 
+		kango.invokeAsync('kango.storage.getItem', optionKey, function(value) { 
+			defaultOptions = mergeOptions(value, defaultOptions);
+			callback();
+		});		
+	}
 }
-
-var soundoptions = {
-	"sound_elitka":"nosound",
-	"sound_event":"nosound",
-	"sound_kt":"nosound",
-	"sound_fishing":"nosound"
-}
-
-function getprop(){
-	kango.invokeAsync('kango.storage.getItem',"options",function(value) {
-		if (value==null) {
-			for (nameprop in myoptions) $('#'+nameprop).prop("checked",myoptions[nameprop]);
-		}
-		else {
-			for (nameprop in myoptions) {
-			 	if (value[nameprop]!=false) {value[nameprop]=true;}	
-				myoptions[nameprop]=value[nameprop];
-				$('#'+nameprop).prop("checked",myoptions[nameprop]);	
-	    	}
-		}
-	});
-	kango.invokeAsync('kango.storage.getItem',"soptions",function(value) {
-		if (value==null) {
-			for (nameprop in soundoptions) $('#'+nameprop).prop("value",soundoptions[nameprop]);
-		}
-		else {
-			for (nameprop in soundoptions) {
-				soundoptions[nameprop]=value[nameprop];
-				$('#'+nameprop).prop("value",soundoptions[nameprop]);	
-	    	}
-		}
-	});
-}
-
-function setprop(){kango.invokeAsync('kango.storage.setItem',"options",myoptions);}
-function setprop1(){kango.invokeAsync('kango.storage.setItem',"soptions",soundoptions);}
 
 KangoAPI.onReady(function() {
-	var htmlopt= '<option value="nosound">Отключено</option>'+
+	var htmlopt = '<option value="nosound">Отключено</option>'+
       '<option value="sound1">Звук  1</option>'+
       '<option value="sound2">Звук  2</option>'+
       '<option value="sound3">Звук  3</option>'+
@@ -84,14 +57,7 @@ KangoAPI.onReady(function() {
       '<option value="trade">Звук 12</option>'+
       '<option value="wood">Звук 13</option>'+
       '<option value="work">Звук 14</option>';
-	getprop();
-	for (nprop in myoptions){
-	$('#'+nprop).click(function (event) {myoptions[this.id]=$('#'+this.id).prop("checked");setprop();});	
-	}
-	for (mprop in soundoptions){
-	$('#'+mprop).html(htmlopt);	
-	$('#'+mprop).change(function (event) {soundoptions[this.id]=$('#'+this.id).prop("value");setprop1();});	
-	}
-
+	  
+	new extensionOptionsClass(htmlopt).init();
 });
 

@@ -5,30 +5,17 @@
 // @all-frames  true
 // ==/UserScript==
 
-var soundoptions = {
-	"sound_elitka":"nosound",
-	"sound_event":"nosound",
-	"sound_kt":"nosound",
-	"sound_fishing":"nosound"
-}
-kango.invokeAsync('kango.storage.getItem',"soptions",function(value) {
-if (value!=null) {
-		for (nameprop in soundoptions) {
-		soundoptions[nameprop]=value[nameprop];
-    	}
-
- }
+kango.invokeAsync('kango.storage.getItem',"soptions", function(value) {
+	soundOptions = mergeOptions(value, soundOptions);
 });
 //================================================================Begin
 
 kango.invokeAsync('kango.storage.getItem',"options",function(value) {
-if (value!=null) {
-		for (nameprop in myoptions) {
-	 	if (value[nameprop]!=false) {value[nameprop]=true;}	
-		myoptions[nameprop]=value[nameprop];
-    	}
-}
-if (myoptions.unpaused) {
+	myoptions = mergeOptions(value, myoptions);
+
+	if (!myoptions.unpaused) {
+		return;
+	}
 //=====================================================================  
 
 function pfunction(){
@@ -100,85 +87,62 @@ scr.text= scr.text+ "(" +
 	}).toString()
 	+ ")();"; 
 }
-
-	if (soundoptions.sound_elitka!="nosound") {
-	 scr.text= scr.text + "(" +
-   	 (function(){
-   	 	var xgdh=chat.formatSmilies;
-   	 	chat.formatSmilies=function(){
-   	 		if (arguments[0].search("Вас вызвали на арену Элитных Турниров! Есть")!=-1) core.playSwfSound("sound_elitka");
-    		return xgdh.apply(chat, arguments);
-    	}
-	}).toString()
-	+ ")();";
-	scr.text=scr.text.replace("sound_elitka",soundoptions.sound_elitka);
-	}
 	
+	var formatSmilesString = (function() {	
+		var soundOptions = soundOptionsReplace;
+		var erExtOptions = optionsReplace;
+		var oldFormatSmiles = chat.formatSmilies;
+		
+		function detectForSound(string, detect, sound) {
+			if (sound == "nosound") {
+				return false;
+			}
 
-	if (soundoptions.sound_fishing!="nosound") {
-	 scr.text= scr.text + "(" +
-   	 (function(){
-   	 	var xgdh=chat.formatSmilies;
-   	 	chat.formatSmilies=function(){
-   	 		if (arguments[0].search("У вас закончилась приманка!")!=-1) core.playSwfSound("sound_fishing");
-    		return xgdh.apply(chat, arguments);
-    	}
-	}).toString()
-	+ ")();";
-	scr.text=scr.text.replace("sound_fishing",soundoptions.sound_fishing);
-	}
-
-	if (soundoptions.sound_event!="nosound") {
-	 scr.text= scr.text + "(" +
-   	 (function(){
-   	 	var xgdh=chat.formatSmilies;
-   	 	chat.formatSmilies=function(){
-   	 		if (arguments[0].search("Началось случайное событие <b>")!=-1) core.playSwfSound("sound_event");
-    		return xgdh.apply(chat, arguments);
-    	}
-	}).toString()
-	+ ")();";
-	scr.text=scr.text.replace("sound_event",soundoptions.sound_event);
-	}
-
-	if (soundoptions.sound_kt!="nosound") {
-	 scr.text= scr.text + "(" +
-   	 (function(){
-   	 	var xgdh=chat.formatSmilies;
-   	 	chat.formatSmilies=function(){
-   	 		if (arguments[0].search("Сражаются: <img width=")!=-1) core.playSwfSound("sound_kt");
-    		return xgdh.apply(chat, arguments);
-    	}
-	}).toString()
-	+ ")();";
-	scr.text=scr.text.replace("sound_kt",soundoptions.sound_kt);
-	}
-
-//Подправляем ссыллки на форум, что-бы было с автологином, при чтении Личных Сообщений
-	if (myoptions.forumgoto) {
-	 scr.text= scr.text + "(" +
-   	 (function(){
-   	 	var xgdh=chat.formatSmilies;
-   	 	chat.formatSmilies=function(){
-   	 		arguments[0]=arguments[0].replace(new RegExp("http://forum.ereality.ru",'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
-    		return xgdh.apply(chat, arguments);
-    	}
-	}).toString()
-	+ ")();";
-
+			if (string.toLowerCase().search(detect.toLowerCase()) != -1) {
+				core.playSwfSound(sound);
+				
+				return true;
+			}
 			
- 	scr.text= scr.text+ "(" +
-	(function(){
-	var zxzx2=messenger.PrintMessage;
-	messenger.PrintMessage=function(){
-	arguments[0]['text']=arguments[0]['text'].replace(new RegExp("http://forum.ereality.ru",'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
-	arguments[0]['caption']=arguments[0]['caption'].replace(new RegExp("http://forum.ereality.ru",'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
-	return zxzx2.apply(messenger, arguments);
-	}
-	}).toString()
-	+ ")();"; 
+			return false;
+		}; 
+		
+		//Подправляем ссыллки на форум, что-бы было с автологином,
+		function modifyForumLink(string) {
+			return string.replace(new RegExp("http://forum.ereality.ru",'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
+		};
+		
+		chat.formatSmilies = function(_text, max_smilies) {
+			$.each(soundOptions, function(key) {
+				if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+					return;
+				}
+			});
+			
+			if (erExtOptions.forumgoto) {
+				_text = modifyForumLink(_text);
+			}
+			
+			return oldFormatSmiles.apply(chat, [_text, max_smilies])
+		}; 
+		
+		if (erExtOptions.forumgoto) {
+			var oldPrintMessage = messenger.PrintMessage;
+			
+			messenger.PrintMessage = function (Message, PrintReply, isClanOrAlign) { 
+				Message['text'] = modifyForumLink(Message['text']);
+				Message['caption'] = modifyForumLink(Message['caption']);
+				
+				oldPrintMessage.apply(messenger, [Message, PrintReply, isClanOrAlign]);
+			}
+		}
+	}).toString();
+	
+	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(soundOptions) + ')')
+		.replace("optionsReplace", '(' + JSON.stringify(myoptions) + ')');	
+	
+	scr.text += "(" + formatSmilesString + ")();"; 
 
-	}
 
 		scr.text= scr.text+ "(" +
 	(function(){
@@ -298,7 +262,7 @@ if (myoptions.keyalt) {
  }	
 
  //=========================end.
-}
+
  });
 
 
