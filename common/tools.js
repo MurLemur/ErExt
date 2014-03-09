@@ -4,7 +4,6 @@ var myoptions = {
 	"unpaused":true,
 	"info":true,
 	"zk":true,
-	"naemniki":true,
 	"glamurstupki":true,
 	"bodestate":true,
 	"sidzoku":true,
@@ -52,6 +51,14 @@ var soundOptions = {
 	"sound_tool_broken": {
 		sound: "nosound",
 		detect: "текущая прочность инструмента: <b>0</b>"
+	},
+	"sound_rnd_event": {
+		sound: "nosound",
+		detect: ""
+	},
+	"sound_zavod": {
+		sound: "nosound",
+		detect: ""
 	}
 }
 

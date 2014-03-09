@@ -21,7 +21,13 @@ if (myoptions.unpaused) {
  scr.text= "(" +
  (function(){var zzz=Estates.parseDialog;
 	Estates.hideDialog=function(){
-		$("#estateDialog").hide();
+		if (Estates.dialog.type=="selection") {
+			$("#estateDialogSelection").hide();
+			$("#estateDialogBackgroundLight").hide();
+		}
+		else { 
+			$("#estateDialog").hide();
+		}
 		$("#estateDialogBackground").hide();
 		if ($("#mydialoglink").length) {$("#mydialoglink").show();}
 		else {
@@ -29,8 +35,15 @@ if (myoptions.unpaused) {
 		}
 		};
 	Estates.UnhideDialog=function(){
-		$("#estateDialogBackground").show();
-		$("#estateDialog").show();
+		if (Estates.dialog.type=="selection") {
+				$("#estateDialogBackgroundLight").show();
+				$("#estateDialogSelection").show();
+		}
+		else { 
+			$("#estateDialogBackground").show();
+			$("#estateDialog").show();
+		}
+
 		$("#mydialoglink").hide();
 		};	
  	Estates.parseDialog=function(){
@@ -43,6 +56,7 @@ if (myoptions.unpaused) {
 	}
 	//if (mdialog.type=="fightfind") {
 	 mdialog.title = mdialog.title+'<a href="javascript: Estates.hideDialog();">[X]<a>';
+	 if ((mdialog.type=="selection")&&($("#estateSelectionCard1")[0].previousElementSibling.innerHTML.search("[X]")<0)) {$("#estateSelectionCard1")[0].previousElementSibling.innerHTML+= '<a href="javascript: Estates.hideDialog();">[X]<a>';}
 	//}
 	return mdialog;}
  }).toString()

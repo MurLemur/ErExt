@@ -22,25 +22,11 @@ function pfunction(){
 
 var scr= document.createElement("script");
  scr.text="";
- if (myoptions.chatsectors) {
- scr.text= scr.text + "(" +
-    (function(){var xgdh=chat.formatSmilies;
-	chat.formatSmilies=function(){
-			if ((arguments[0].search("опыта")==-1)&&(arguments[0].search("Вы подобрали")==-1)) {
-			if ((arguments[0].search("Ауры")!=-1)||(arguments[0].search("ептикон")!=-1)||(arguments[0].search("за убийство")!=-1)||(arguments[0].search("Людей:")!=-1)) {
-				arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
-				}
-			else if (arguments[0].search(" сер.")!=-1) 	{
-			     arguments[0]=arguments[0].replace(/(\d{1,3})[: \-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
-					}
-			else {		
-			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
-			}
-	}
-	return xgdh.apply(chat, arguments);
-	};
-	
-	chat.myshowSec = function (xcord,ycord){
+
+ if ((myoptions.questsectors)||(myoptions.chatsectors)) {
+	scr.text +=  "(" +
+	(function(){
+		chat.myshowSec = function (xcord,ycord){
 		var sectorX = top.frames.main.document.getElementById("searchX");
 		if (sectorX!=null) {
 			sectorY = top.frames.main.document.getElementById("searchY");
@@ -62,6 +48,28 @@ var scr= document.createElement("script");
 		}	
 	sectorY.dispatchEvent(o);
 	}
+	}).toString()
+	+ ")();"; 
+}
+
+ if (myoptions.chatsectors) {
+ scr.text= scr.text + "(" +
+    (function(){var xgdh=chat.formatSmilies;
+	chat.formatSmilies=function(){
+			if ((arguments[0].search("опыта")==-1)&&(arguments[0].search("Вы подобрали")==-1)) {
+			if ((arguments[0].search("Ауры")!=-1)||(arguments[0].search("ептикон")!=-1)||(arguments[0].search("за убийство")!=-1)||(arguments[0].search("Людей:")!=-1)) {
+				arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
+				}
+			else if (arguments[0].search(" сер.")!=-1) 	{
+			     arguments[0]=arguments[0].replace(/(\d{1,3})[: \-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+					}
+			else {		
+			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+			}
+	}
+	return xgdh.apply(chat, arguments);
+	};
+	
 	}).toString()
 	+ ")();";
 	}
@@ -94,7 +102,7 @@ scr.text= scr.text+ "(" +
 		var oldFormatSmiles = chat.formatSmilies;
 		
 		function detectForSound(string, detect, sound) {
-			if (sound == "nosound") {
+			if ((sound == "nosound")||(detect == "")) {
 				return false;
 			}
 
@@ -144,10 +152,39 @@ scr.text= scr.text+ "(" +
 	scr.text += "(" + formatSmilesString + ")();"; 
 
 
+
+	//Случайные события
+	if (soundOptions["sound_rnd_event"].sound!="nosound") {
+	scr.text= scr.text+ "(" +
+	(function(){
+	var zxx1=quests.StartReaction;
+	quests.StartReaction=function(xmldoc) {
+		zxx1.apply(quests,arguments);
+		var kartinki = " spring.png purse.png snake.png goblins.png scarecrow.png trap.png woodcutter.png double_the_fall.png meditation.png cache.png driada_npc.png derevo.png ax.png evil_fish.png krokod_npc.png worms.png goldfish.png big_fish.png shoe.png";
+		if (kartinki.search($("npc_image",xmldoc).text())>0) core.playSwfSound("_sound_rnd_event");
+		return; 
+	}
+	}).toString().replace("_sound_rnd_event",soundOptions["sound_rnd_event"].sound)
+	+ ")();"; 
+    }
+    
+    //Оповещение при началебоя на Заводе
+	if (soundOptions["sound_zavod"].sound!="nosound") {
+	scr.text= scr.text+ "(" +
+	(function(){
+	var zxzx1=battle.buildPlayersTable;
+	battle.buildPlayersTable=function(){
+	zxzx1.apply(battle);
+	if ((users.oSpanLocation[0].text.search("Цех ")==0)&&(battle.round =="1")) {core.playSwfSound("_sound_zavod");}
+	return; }
+	}).toString().replace("_sound_zavod",soundOptions["sound_zavod"].sound) 
+	+ ")();"; 
+    }
+
 		scr.text= scr.text+ "(" +
 	(function(){
 
-	 function EnvTab(){
+	 function EnvTab(){// Инфа о глобальных событиях
  	  if  (document.getElementById("chat_msg").value == "" ) {
  	  	$.post("http://www.ereality.ru/ajax/global_event/",'<request action="showNextGlobalEvents" />',function (response) {
  	   	  	 var gEvent = response.getElementsByTagName("msg")[0].textContent;
