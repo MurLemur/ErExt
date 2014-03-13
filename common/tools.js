@@ -28,6 +28,7 @@ var myoptions = {
 	"keyenter":true,
 	"keyalt":true,
 	"questsectors":true,
+	"dropsectors":true,
 	"userlistactiveitems": true
 }
 

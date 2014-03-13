@@ -227,6 +227,20 @@ scr.text= scr.text+ "(" +
 	+ ")();"; 
 }
 
+	//При дропе вещей из монстров приписывать сектор
+	if (myoptions.dropsectors) {
+	scr.text= scr.text+ "(" +
+	(function(){
+	var zxzx3=chat.msgSystem;
+ 	chat.msgSystem=function(){
+	if (arguments[1].search("a_drop")!=-1) arguments[1] += "  "+users.oSpanLocation[0].text;
+	zxzx3.apply(chat,arguments);
+	return ;
+	}
+	}).toString()
+	+ ")();"; 
+}
+
 //При не пустой строке чата не завершать бой энтером , поидее )
 		if (myoptions.keyenter) {
 		scr.text= scr.text+ "(" +
