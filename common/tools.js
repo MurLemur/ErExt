@@ -52,7 +52,20 @@ var soundOptions = {
 	"sound_tool_broken": {
 		sound: "nosound",
 		detect: "текущая прочность инструмента: <b>0</b>"
-	}
+	},
+	"sound_drop": {
+		sound: "nosound",
+		detect: "Из `.+` выпало: <b>.+</b>"
+	},	
+	"sound_user_injury" : {
+		sound: "nosound",
+		detect: "Персонаж .+ травмирован"	
+	},
+	"sound_random_event": {
+		sound: "nosound",
+		detect: ""
+	} 
+	
 }
 
 function mergeOptions(options, defaultOptions) {

@@ -24,46 +24,54 @@ var scr= document.createElement("script");
  scr.text="";
  if (myoptions.chatsectors) {
  scr.text= scr.text + "(" +
-    (function(){var xgdh=chat.formatSmilies;
-	chat.formatSmilies=function(){
-			if ((arguments[0].search("опыта")==-1)&&(arguments[0].search("Вы подобрали")==-1)) {
-			if ((arguments[0].search("Ауры")!=-1)||(arguments[0].search("ептикон")!=-1)||(arguments[0].search("за убийство")!=-1)||(arguments[0].search("Людей:")!=-1)) {
-				arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
-				}
-			else if (arguments[0].search(" сер.")!=-1) 	{
-			     arguments[0]=arguments[0].replace(/(\d{1,3})[: \-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+    (function() {
+		var xgdh=chat.formatSmilies;
+		chat.formatSmilies = function() {
+			if ((arguments[0].search("опыта") != -1) || (arguments[0].search("Вы подобрали") != -1)) {
+				return xgdh.apply(chat, arguments);
+			}
+			
+			if ((arguments[0].search("Ауры")!= -1) || (arguments[0].search("ептикон")!=-1 ) || (arguments[0].search("за убийство")!= -1) || (arguments[0].search("Людей:")!=-1)) {
+				arguments[0] = arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
+			}
+			else if (arguments[0].search(" сер.") !=-1) {
+				 arguments[0] = arguments[0].replace(/(\d{1,3})[: \-\/](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
 					}
 			else {		
-			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+				arguments[0] = arguments[0].replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
 			}
-	}
-	return xgdh.apply(chat, arguments);
-	};
+			
+			
+			return xgdh.apply(chat, arguments);
+		};
 	
-	chat.myshowSec = function (xcord,ycord){
-		var sectorX = top.frames.main.document.getElementById("searchX");
-		if (sectorX!=null) {
-			sectorY = top.frames.main.document.getElementById("searchY");
+		chat.myshowSec = function (xcord, ycord) {
+			console.log($(top.frames.main.document, '#searchX'));
+			var sectorX = top.frames.main.document.getElementById("searchX");
+			if (sectorX != null) {
+				sectorY = top.frames.main.document.getElementById("searchY");
+			}
+			else {
+				sectorX = top.frames.main.document.getElementById("sx2");
+				sectorY = top.frames.main.document.getElementById("sy2");
+			}
+			
+			sectorX.value = xcord;
+			sectorY.value = ycord;
+			
+			if (window.KeyEvent) {// Для FF
+				var o = document.createEvent('KeyEvents');
+				o.initKeyEvent( 'keyup', true, true, window, false, false, false, false, 13, 0 );
+			}
+			else {// Для остальных браузеров
+				var o = document.createEvent('UIEvents');
+				o.initUIEvent( 'keyup', true, true, window, 1 );
+				o.keyCode = 13; // Указываем дополнительный параметр, так как initUIEvent его не принимает
+			}	
+			sectorY.dispatchEvent(o);
 		}
-		else {
-			sectorX = top.frames.main.document.getElementById("sx2");
-			sectorY = top.frames.main.document.getElementById("sy2");
-		}
-	sectorX.value=xcord;
-	sectorY.value=ycord;
-	if( window.KeyEvent ) {// Для FF
-		var o = document.createEvent('KeyEvents');
-		o.initKeyEvent( 'keyup', true, true, window, false, false, false, false, 13, 0 );
-		}
-	else {// Для остальных браузеров
-		var o = document.createEvent('UIEvents');
-		o.initUIEvent( 'keyup', true, true, window, 1 );
-		  o.keyCode = 13; // Указываем дополнительный параметр, так как initUIEvent его не принимает
-		}	
-	sectorY.dispatchEvent(o);
-	}
 	}).toString()
-	+ ")();";
+		+ ")();";
 	}
 
 if (myoptions.fastex) {
@@ -91,14 +99,13 @@ scr.text= scr.text+ "(" +
 	var formatSmilesString = (function() {	
 		var soundOptions = soundOptionsReplace;
 		var erExtOptions = optionsReplace;
-		var oldFormatSmiles = chat.formatSmilies;
 		
 		function detectForSound(string, detect, sound) {
-			if (sound == "nosound") {
+			if (detect == '' || sound == "nosound") {
 				return false;
 			}
 
-			if (string.toLowerCase().search(detect.toLowerCase()) != -1) {
+			if (string.toLowerCase().search(new RegExp(detect.toLowerCase()), 'g') != -1) {
 				core.playSwfSound(sound);
 				
 				return true;
@@ -112,19 +119,78 @@ scr.text= scr.text+ "(" +
 			return string.replace(new RegExp("http://forum.ereality.ru",'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
 		};
 		
-		chat.formatSmilies = function(_text, max_smilies) {
-			$.each(soundOptions, function(key) {
-				if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
-					return;
-				}
-			});
+		function modifyDropSector(string) {
+			var sector = $("#span_location").text()
+
+			if (string.search(new RegExp('Из `.+` выпало: <b>.+</b>', 'g')) != -1) {
+				string += ' ' + sector;
+			}
+			
+			return string;
+		}
+		
+		var oldchatHTML = chat.html;
+		var keeperName = 'Смотритель';
+		
+		if (soundOptions["sound_random_event"].sound != "nosound") {
+			var oldStartReaction = quests.StartReaction;
+			quests.StartReaction = function(xmldoc){
+				oldStartReaction.apply(quests, arguments);
+				
+				var image = $("npc_image",xmldoc).text();
+				var images = [
+					'spring.png',
+					'snake.png',
+					'purse.png',
+					'goblins.png',
+					'scarecrow.png',
+					'trap.png',
+					'woodcutter.png',
+					'double_the_fall.png',
+					'meditation.png',
+					//'dispetch.png',
+					'cache.png',
+					'driada_npc.png',
+					'derevo.png',
+					'ax.png',
+					'evil_fish.png',
+					'krokod_npc.png',
+					'worms.png',
+					'goldfish.png',
+					'big_fish.png',
+					'shoe.png'					
+				];
+				
+				$.each(images, function() {
+					if (this == image) {
+						core.playSwfSound(soundOptions["sound_random_event"].sound);
+						return;
+					}
+				});
+			}
+		}
+		
+		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
+			console.log(arguments);
+			
+			if (_nick == keeperName) {
+				$.each(soundOptions, function(key) {
+					if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+						return;
+					}
+				});
+			}
 			
 			if (erExtOptions.forumgoto) {
 				_text = modifyForumLink(_text);
+			}	
+			
+			if (_nick == keeperName) {
+				_text = modifyDropSector(_text);
 			}
 			
-			return oldFormatSmiles.apply(chat, [_text, max_smilies])
-		}; 
+			oldchatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
+		}
 		
 		if (erExtOptions.forumgoto) {
 			var oldPrintMessage = messenger.PrintMessage;
@@ -135,7 +201,7 @@ scr.text= scr.text+ "(" +
 				
 				oldPrintMessage.apply(messenger, [Message, PrintReply, isClanOrAlign]);
 			}
-		}
+		}		
 	}).toString();
 	
 	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(soundOptions) + ')')
@@ -248,7 +314,6 @@ if (myoptions.keyalt) {
 	 }).toString()
 	+ ")();"; 
 }
-
 
  if (scr!="") { 	
  document.body.appendChild(scr);
