@@ -4,7 +4,6 @@ var myoptions = {
 	"unpaused":true,
 	"info":true,
 	"zk":true,
-	"naemniki":true,
 	"glamurstupki":true,
 	"bodestate":true,
 	"sidzoku":true,
@@ -29,6 +28,7 @@ var myoptions = {
 	"keyenter":true,
 	"keyalt":true,
 	"questsectors":true,
+	"dropsectors":true,
 	"userlistactiveitems": true
 }
 
@@ -62,6 +62,10 @@ var soundOptions = {
 		detect: "Персонаж .+ травмирован"	
 	},
 	"sound_random_event": {
+		sound: "nosound",
+		detect: ""
+	},
+	"sound_zavod": {
 		sound: "nosound",
 		detect: ""
 	} 
