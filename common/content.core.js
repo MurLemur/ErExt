@@ -177,8 +177,6 @@ scr.text= scr.text+ "(" +
 		}
 		
 		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
-			console.log(arguments);
-			
 			if (_nick == keeperName) {
 				$.each(soundOptions, function(key) {
 					if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
