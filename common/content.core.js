@@ -58,13 +58,13 @@ var scr= document.createElement("script");
 	chat.formatSmilies=function(){
 			if ((arguments[0].search("опыта")==-1)&&(arguments[0].search("Вы подобрали")==-1)) {
 			if ((arguments[0].search("Ауры")!=-1)||(arguments[0].search("ептикон")!=-1)||(arguments[0].search("за убийство")!=-1)||(arguments[0].search("Людей:")!=-1)) {
-				arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
+				arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
 				}
 			else if (arguments[0].search(" сер.")!=-1) 	{
-			     arguments[0]=arguments[0].replace(/(\d{1,3})[: \-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+			     arguments[0]=arguments[0].replace(/(\d{1,3})[: \-\/](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
 					}
 			else {		
-			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
 			}
 	}
 	return xgdh.apply(chat, arguments);
@@ -99,14 +99,13 @@ scr.text= scr.text+ "(" +
 	var formatSmilesString = (function() {	
 		var soundOptions = soundOptionsReplace;
 		var erExtOptions = optionsReplace;
-		var oldFormatSmiles = chat.formatSmilies;
 		
 		function detectForSound(string, detect, sound) {
 			if ((sound == "nosound")||(detect == "")) {
 				return false;
 			}
 
-			if (string.toLowerCase().search(detect.toLowerCase()) != -1) {
+			if (string.toLowerCase().search(new RegExp(detect.toLowerCase()), 'g') != -1) {
 				core.playSwfSound(sound);
 				
 				return true;
@@ -120,19 +119,82 @@ scr.text= scr.text+ "(" +
 			return string.replace(new RegExp("http://forum.ereality.ru",'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
 		};
 		
-		chat.formatSmilies = function(_text, max_smilies) {
-			$.each(soundOptions, function(key) {
-				if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+		//При дропе вещей из монстров приписывать сектор
+		function modifyDropSector(string) {
+			var sector = users.oSpanLocation.text()
+
+			if (string.search(new RegExp('Из `.+` выпало: <b>.+</b>', 'g')) != -1) {
+				string += ' ' + sector;
+			}
+			
+			return string;
+		}
+		
+		var oldChatHTML = chat.html;
+		var keeperName = 'Смотритель';
+		
+		if (soundOptions["sound_random_event"].sound != "nosound") {
+			var oldStartReaction = quests.StartReaction;
+			
+			var randomEventsDetectImages = [
+				'spring.png',
+				'snake.png',
+				'purse.png',
+				'goblins.png',
+				'scarecrow.png',
+				'trap.png',
+				'woodcutter.png',
+				'double_the_fall.png',
+				'meditation.png',
+				'cache.png',
+				'driada_npc.png',
+				'derevo.png',
+				'ax.png',
+				'evil_fish.png',
+				'krokod_npc.png',
+				'worms.png',
+				'goldfish.png',
+				'big_fish.png',
+				'shoe.png'					
+			];		
+			
+			quests.StartReaction = function(xmldoc) {
+				oldStartReaction.apply(quests, [xmldoc]);
+
+				if ($("actions", xmldoc).text() != '') {
 					return;
 				}
-			});
+				
+				var image = $("npc_image", xmldoc).text();
+				
+				$.each(randomEventsDetectImages, function() {
+					if (this == image) {
+						core.playSwfSound(soundOptions["sound_random_event"].sound);
+						return;
+					}
+				});
+			}
+		}
+		
+		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
+			if (_nick == keeperName) {
+				$.each(soundOptions, function(key) {
+					if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+						return;
+					}
+				});
+			}
 			
 			if (erExtOptions.forumgoto) {
 				_text = modifyForumLink(_text);
+			}	
+			
+			if (erExtOptions.dropsectors && _nick == keeperName) {
+				_text = modifyDropSector(_text);
 			}
 			
-			return oldFormatSmiles.apply(chat, [_text, max_smilies])
-		}; 
+			oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
+		}
 		
 		if (erExtOptions.forumgoto) {
 			var oldPrintMessage = messenger.PrintMessage;
@@ -143,32 +205,15 @@ scr.text= scr.text+ "(" +
 				
 				oldPrintMessage.apply(messenger, [Message, PrintReply, isClanOrAlign]);
 			}
-		}
+		}		
 	}).toString();
 	
 	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(soundOptions) + ')')
 		.replace("optionsReplace", '(' + JSON.stringify(myoptions) + ')');	
 	
 	scr.text += "(" + formatSmilesString + ")();"; 
-
-
-
-	//Случайные события
-	if (soundOptions["sound_rnd_event"].sound!="nosound") {
-	scr.text= scr.text+ "(" +
-	(function(){
-	var zxx1=quests.StartReaction;
-	quests.StartReaction=function(xmldoc) {
-		zxx1.apply(quests,arguments);
-		var kartinki = " spring.png purse.png snake.png goblins.png scarecrow.png trap.png woodcutter.png double_the_fall.png meditation.png cache.png driada_npc.png derevo.png ax.png evil_fish.png krokod_npc.png worms.png goldfish.png big_fish.png shoe.png";
-		if (kartinki.search($("npc_image",xmldoc).text())>0) core.playSwfSound("_sound_rnd_event");
-		return; 
-	}
-	}).toString().replace("_sound_rnd_event",soundOptions["sound_rnd_event"].sound)
-	+ ")();"; 
-    }
     
-    //Оповещение при началебоя на Заводе
+    //Оповещение при начале боя на Заводе
 	if (soundOptions["sound_zavod"].sound!="nosound") {
 	scr.text= scr.text+ "(" +
 	(function(){
@@ -227,19 +272,6 @@ scr.text= scr.text+ "(" +
 	+ ")();"; 
 }
 
-	//При дропе вещей из монстров приписывать сектор
-	if (myoptions.dropsectors) {
-	scr.text= scr.text+ "(" +
-	(function(){
-	var zxzx3=chat.msgSystem;
- 	chat.msgSystem=function(){
-	if (arguments[1].search("a_drop")!=-1) arguments[1] += "  "+users.oSpanLocation[0].text;
-	zxzx3.apply(chat,arguments);
-	return ;
-	}
-	}).toString()
-	+ ")();"; 
-}
 
 //При не пустой строке чата не завершать бой энтером , поидее )
 		if (myoptions.keyenter) {
@@ -299,7 +331,6 @@ if (myoptions.keyalt) {
 	 }).toString()
 	+ ")();"; 
 }
-
 
  if (scr!="") { 	
  document.body.appendChild(scr);
