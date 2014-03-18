@@ -130,8 +130,29 @@ scr.text= scr.text+ "(" +
 			return string;
 		}
 		
+		function filterBrokenItemNotifications(_text) {
+			if (_text.search('Вещи в критическом состоянии:') == -1) {
+				return false;
+			}
+
+			if (_text == brokenItems.text && new Date().getTime() - brokenItems.time < brokenItems.messageDelay) {
+				return true;
+			}
+			
+			brokenItems.time = new Date().getTime();
+			brokenItems.text = _text;
+			
+			return false;
+		}
+		
 		var oldChatHTML = chat.html;
+		var oldPrintMessage = messenger.PrintMessage;
 		var keeperName = 'Смотритель';
+		var brokenItems = {
+			time: 0,
+			text: '',
+			messageDelay: 5 * 60 * 1000 // 5 minutes
+		};
 		
 		if (soundOptions["sound_random_event"].sound != "nosound") {
 			var oldStartReaction = quests.StartReaction;
@@ -177,7 +198,12 @@ scr.text= scr.text+ "(" +
 		}
 		
 		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
-			if (_nick == keeperName) {
+			console.log(arguments);
+			if (_nick == keeperName && _t == CHAT_FLAG_PRIVATE) {
+				if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
+					return;
+				}
+			
 				$.each(soundOptions, function(key) {
 					if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
 						return;
@@ -196,16 +222,14 @@ scr.text= scr.text+ "(" +
 			oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
 		}
 		
-		if (erExtOptions.forumgoto) {
-			var oldPrintMessage = messenger.PrintMessage;
-			
+		if (erExtOptions.forumgoto) {			
 			messenger.PrintMessage = function (Message, PrintReply, isClanOrAlign) { 
 				Message['text'] = modifyForumLink(Message['text']);
 				Message['caption'] = modifyForumLink(Message['caption']);
 				
 				oldPrintMessage.apply(messenger, [Message, PrintReply, isClanOrAlign]);
 			}
-		}		
+		}	
 	}).toString();
 	
 	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(soundOptions) + ')')
