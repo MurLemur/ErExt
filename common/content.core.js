@@ -198,7 +198,7 @@ scr.text= scr.text+ "(" +
 		}
 		
 		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
-			console.log(arguments);
+			//console.log(arguments);
 			if (_nick == keeperName && _t == CHAT_FLAG_PRIVATE) {
 				if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
 					return;
