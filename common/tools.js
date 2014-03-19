@@ -29,7 +29,8 @@ var myoptions = {
 	"keyalt":true,
 	"questsectors":true,
 	"dropsectors":true,
-	"userlistactiveitems": true
+	"userlistactiveitems": true,
+	"damaged_items_notification_filter": true
 }
 
 var soundOptions = {
@@ -68,7 +69,11 @@ var soundOptions = {
 	"sound_zavod": {
 		sound: "nosound",
 		detect: ""
-	} 
+	},
+	"sound_item_broken": {
+		sound: "nosound",
+		detect: "Вещи сломались"
+	}
 	
 }
 
