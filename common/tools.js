@@ -30,7 +30,8 @@ var myoptions = {
 	"questsectors":true,
 	"dropsectors":true,
 	"userlistactiveitems": true,
-	"damaged_items_notification_filter": true
+	"damaged_items_notification_filter": true,
+	"clickable_nicks_on_clan_tournament": true
 }
 
 var soundOptions = {

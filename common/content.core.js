@@ -145,6 +145,17 @@ scr.text= scr.text+ "(" +
 			return false;
 		}
 		
+		function modifyClanTournamentMessage(_text) {			
+			$.each(clanTournament, function() {
+				var regEx = new RegExp(this.detect, 'g')
+				if (_text.search(regEx) > -1) {				
+					_text = _text.replace(regEx, this.replace);
+				}
+			});
+			
+			return _text;
+		}
+		
 		var oldChatHTML = chat.html;
 		var oldPrintMessage = messenger.PrintMessage;
 		var keeperName = 'Смотритель';
@@ -153,6 +164,17 @@ scr.text= scr.text+ "(" +
 			text: '',
 			messageDelay: 5 * 60 * 1000 // 5 minutes
 		};
+		
+		
+		var clanTournament = [
+			{detect: "<b>(.+)</b> взял флаг на секторе <b>(.+)</b>!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> взял флаг на секторе <b>$2</b>!"},
+			{detect: "На <b>(.+)</b> напали на  <b>(.+)</b>!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> напали на  <b>$2</b>!"},
+			{detect: "<b>(.+)</b> доставил флаг!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> доставил флаг!"},
+			{detect: "<b>(.+)</b> попал в яму на секторе <b>(.+)</b>!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> попал в яму на секторе <b>$2</b>!"},
+			{detect: "<b>(.+)</b> покинул яму!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> покинул яму!"},
+			{detect: "<b>(.+)</b> покинул остров!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> покинул остров!"},
+			
+		]
 		
 		if (soundOptions["sound_random_event"].sound != "nosound") {
 			var oldStartReaction = quests.StartReaction;
@@ -199,16 +221,24 @@ scr.text= scr.text+ "(" +
 		
 		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
 			//console.log(arguments);
-			if (_nick == keeperName && _t == CHAT_FLAG_PRIVATE) {
-				if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
-					return;
+			if (_nick == keeperName) {				
+				if (_t == CHAT_FLAG_BATTLELOG) {
+					if (erExtOptions.clickable_nicks_on_clan_tournament) {
+						_text = modifyClanTournamentMessage(_text);
+					}
 				}
 			
-				$.each(soundOptions, function(key) {
-					if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+				if (_t == CHAT_FLAG_PRIVATE) {
+					if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
 						return;
 					}
-				});
+				
+					$.each(soundOptions, function(key) {
+						if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+							return;
+						}
+					});
+				}
 			}
 			
 			if (erExtOptions.forumgoto) {
@@ -218,7 +248,6 @@ scr.text= scr.text+ "(" +
 			if (erExtOptions.dropsectors && _nick == keeperName) {
 				_text = modifyDropSector(_text);
 			}
-			
 			oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
 		}
 		
