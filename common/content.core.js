@@ -249,10 +249,6 @@ var scr= document.createElement("script");
 				if (templateId != "main/header.template-HealthBlock") {
 					return renderedTamplate;
 				}
-				
-				if (typeof battle.fight_end !== 'undefined' && !battle.fight_end) {
-					return renderedTamplate;
-				}
 
 				return renderedTamplate.replace('<span class="NickName"><center>', '<span class="NickName"><center>' + exitLink[0].outerHTML);
 			}
