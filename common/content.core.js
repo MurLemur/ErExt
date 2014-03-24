@@ -94,10 +94,8 @@ var scr= document.createElement("script");
 		
 		//При дропе вещей из монстров приписывать сектор
 		function modifyDropSector(string) {
-			var sector = users.oSpanLocation.text()
-
 			if (string.search(new RegExp('Из `.+` выпало: <b>.+</b>', 'g')) != -1) {
-				string += ' ' + sector;
+				string += ' ' + modifySectors(users.oSpanLocation.text());
 			}
 			
 			return string;
