@@ -52,54 +52,27 @@ var scr= document.createElement("script");
 	+ ")();"; 
 }
 
- if (myoptions.chatsectors) {
- scr.text= scr.text + "(" +
-    (function(){var xgdh=chat.formatSmilies;
-	chat.formatSmilies=function(){
-			if ((arguments[0].search("опыта")==-1)&&(arguments[0].search("Вы подобрали")==-1)) {
-			if ((arguments[0].search("Ауры")!=-1)||(arguments[0].search("ептикон")!=-1)||(arguments[0].search("за убийство")!=-1)||(arguments[0].search("Людей:")!=-1)) {
-				arguments[0]=arguments[0].replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
-				}
-			else if (arguments[0].search(" сер.")!=-1) 	{
-			     arguments[0]=arguments[0].replace(/(\d{1,3})[: \-\/](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
-					}
-			else {		
-			arguments[0]=arguments[0].replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
-			}
-	}
-	return xgdh.apply(chat, arguments);
-	};
-	
-	}).toString()
-	+ ")();";
-	}
-
-if (myoptions.fastex) {
-scr.text= scr.text+ "(" +
-	(function(){
-	var zxzx5=templates.render;
-	templates.render=function(){
-	var myrezult=zxzx5.apply(templates,arguments);
-	//if (myrezult.search(user.name)>0) {//alert();
-	return myrezult.replace('<span class="NickName"><center>','<span class="NickName"><center><a href="http://www.ereality.ru/exit.php" onfocus="this.blur();">[X]</a>');
-	//}else {return myrezult}
-	}
-	var exitlink = document.createElement('A');
-	exitlink.href = 'http://www.ereality.ru/exit.php';
-	exitlink.onfocus = 'this.blur();';
-	exitlink.innerHTML ="[X]";
-	exitlink.addEventListener("focus", function(){this.blur();}, false);
-	if (document.getElementsByClassName("NickInfo")[0]!=null ) {
-	document.getElementsByClassName("NickInfo")[0].parentNode.insertBefore(exitlink, document.getElementsByClassName("NickInfo")[0].parentNode.firstChild);
-	}
-	}).toString()
-	+ ")();"; 
-}
-	
 	var formatSmilesString = (function() {	
 		var soundOptions = soundOptionsReplace;
 		var erExtOptions = optionsReplace;
 		
+		// @TODO refactor it
+		function modifySectors(_text) {
+			if ((_text.search("опыта")==-1)&&(_text.search("Вы подобрали")==-1)) {
+				if ((_text.search("Ауры")!=-1)||(_text.search("ептикон")!=-1)||(_text.search("за убийство")!=-1)||(_text.search("Людей:")!=-1)) {
+					_text=_text.replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
+					}
+				else if (_text.search(" сер.")!=-1) 	{
+					 _text=_text.replace(/(\d{1,3})[: \-\/](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+						}
+				else {		
+					_text=_text.replace(/(\d{1,3})[: \.\-\/](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>");
+				}			
+			}
+			
+			return _text;
+		};
+	
 		function detectForSound(string, detect, sound) {
 			if ((sound == "nosound")||(detect == "")) {
 				return false;
@@ -116,7 +89,7 @@ scr.text= scr.text+ "(" +
 		
 		//Подправляем ссыллки на форум, что-бы было с автологином,
 		function modifyForumLink(string) {
-			return string.replace(new RegExp("http://forum.ereality.ru",'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
+			return string.replace(new RegExp("http://forum.ereality.ru", 'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
 		};
 		
 		//При дропе вещей из монстров приписывать сектор
@@ -145,6 +118,17 @@ scr.text= scr.text+ "(" +
 			return false;
 		}
 		
+		function modifyClanTournamentMessage(_text) {			
+			$.each(clanTournament, function() {
+				var regEx = new RegExp(this.detect, 'g')
+				if (_text.search(regEx) > -1) {				
+					_text = _text.replace(regEx, this.replace);
+				}
+			});
+			
+			return _text;
+		}
+		
 		var oldChatHTML = chat.html;
 		var oldPrintMessage = messenger.PrintMessage;
 		var keeperName = 'Смотритель';
@@ -153,6 +137,17 @@ scr.text= scr.text+ "(" +
 			text: '',
 			messageDelay: 5 * 60 * 1000 // 5 minutes
 		};
+		
+		
+		var clanTournament = [
+			{detect: "<b>(.+)</b> взял флаг на секторе <b>(.+)</b>!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> взял флаг на секторе <b>$2</b>! "},
+			{detect: "На <b>(.+)</b> напали на  <b>(.+)</b>!", replace: "На <b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> напали на  <b>$2</b>!"},
+			{detect: "<b>(.+)</b> доставил флаг!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> доставил флаг!"},
+			{detect: "<b>(.+)</b> попал в яму на секторе <b>(.+)</b>!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> попал в яму на секторе <b>$2</b>!"},
+			{detect: "<b>(.+)</b> покинул яму!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> покинул яму!"},
+			{detect: "<b>(.+)</b> покинул остров!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"2:$1\">$1</span></b> покинул остров!"},
+			
+		]
 		
 		if (soundOptions["sound_random_event"].sound != "nosound") {
 			var oldStartReaction = quests.StartReaction;
@@ -198,17 +193,28 @@ scr.text= scr.text+ "(" +
 		}
 		
 		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
-			//console.log(arguments);
-			if (_nick == keeperName && _t == CHAT_FLAG_PRIVATE) {
-				if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
-					return;
+			if (erExtOptions.chatsectors) {
+				_text = modifySectors(_text);
+			}
+			
+			if (_nick == keeperName) {				
+				if (_t == CHAT_FLAG_BATTLELOG) {
+					if (erExtOptions.clickable_nicks_on_clan_tournament) {
+						_text = modifyClanTournamentMessage(_text);
+					}
 				}
 			
-				$.each(soundOptions, function(key) {
-					if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+				if (_t == CHAT_FLAG_PRIVATE) {
+					if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
 						return;
 					}
-				});
+				
+					$.each(soundOptions, function(key) {
+						if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+							return;
+						}
+					});
+				}
 			}
 			
 			if (erExtOptions.forumgoto) {
@@ -230,6 +236,27 @@ scr.text= scr.text+ "(" +
 				oldPrintMessage.apply(messenger, [Message, PrintReply, isClanOrAlign]);
 			}
 		}	
+		
+		if (erExtOptions.fastex) {
+			var oldTemplatesRender = templates.render;
+			var exitLink = $("<a title=\"Выход из игры\" href=\"http://www.ereality.ru/exit.php\" onfocus=\"this.blur();\">[X]</a>");
+			
+			$(".NickName center").prepend(exitLink);
+			
+			templates.render = function(templateId, data, onRender) { 
+				var renderedTamplate = oldTemplatesRender.apply(templates, [templateId, data, onRender]);
+
+				if (templateId != "main/header.template-HealthBlock") {
+					return renderedTamplate;
+				}
+				
+				if (typeof battle.fight_end !== 'undefined' && !battle.fight_end) {
+					return renderedTamplate;
+				}
+
+				return renderedTamplate.replace('<span class="NickName"><center>', '<span class="NickName"><center>' + exitLink[0].outerHTML);
+			}
+		}
 	}).toString();
 	
 	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(soundOptions) + ')')
