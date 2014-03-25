@@ -302,8 +302,10 @@ else if (location.href.search("http://www.ereality.ru/instance") != -1)
 			if (xpathRes.snapshotLength>0) {
 				for(i=0; i<xpathRes.snapshotLength; i++) {
 				 el=xpathRes.snapshotItem(i).parentNode.previousSibling.previousSibling;
-				 glink = "<a href='#' onclick='if (this.firstChild.innerHTML==undefined) {top.chat.msg(this.innerHTML)} else {top.chat.msg(this.firstChild.innerHTML)}'>"+el.innerHTML+"</a>";
-         		 el.innerHTML=el.innerHTML.replace(el.innerHTML,glink);	
+				 if (el!=undefined) {
+					 glink = "<a href='#' onclick='if (this.firstChild.innerHTML==undefined) {top.chat.msg(this.innerHTML)} else {top.chat.msg(this.firstChild.innerHTML)}'>"+el.innerHTML+"</a>";
+    	     		 el.innerHTML=el.innerHTML.replace(el.innerHTML,glink);	
+        	 		}
 				}
 			}
 	}	

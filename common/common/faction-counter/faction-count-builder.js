@@ -15,7 +15,7 @@ var factionContBuilderClass = function(factionContBuilderCss, factionCounterCss)
 		this.bindListeners();		
 	},
 	this.buildLink = function() {
-		this.openLink = $("<a title=\"Количество фракционеров в локиции\"></a>").css(self.css.openLink);
+		this.openLink = $("<a title=\"Количество фракционеров в локации\"></a>").css(self.css.openLink);
 		
 		return this.openLink.append($("<img src=\"" + self.css.openLinkImg + "\">"));
 	},
