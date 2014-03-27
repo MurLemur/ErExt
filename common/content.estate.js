@@ -82,12 +82,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 				}
 				return;
 			}
-			
+
 		}).toString() + ")();";
 
 		document.body.appendChild(scr);
 
 
 	//=========================end.
-	}
+	
 });

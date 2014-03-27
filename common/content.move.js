@@ -72,5 +72,4 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		}
 
 //=========================end.
-	}
 });
