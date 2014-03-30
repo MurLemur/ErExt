@@ -27,6 +27,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 				$.post("http://www.ereality.ru/ajax/stock/", '<root type="5" uid="' + id + '" price="' + price + '" stype="0" stime="' + ltime + '" bprice="0" whole="0"></root>', stock_processXML);
 			}
 
+			
 
 			top.core.addbuttons = function() {
 				myprice = $("#myprice");

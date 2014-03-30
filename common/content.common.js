@@ -17,6 +17,9 @@
 //
 // @require css/context-blocker-css.js
 // @require common/context-blocker/context-blocker.js
+//
+// @require css/trace-map-css.js
+// @require common/trace-map/trace-map.js
 // ==/UserScript==
 
 
@@ -46,6 +49,13 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		var contextBlocker = new contextBlockerClass(contextBlockerCss);
 		contextBlocker.init();
 	}
+
+	// init trace map
+	if (myoptions.map_trace) {
+		var traceMap = new traceMapClass(traceCss);
+		traceMap.init();
+	}
+
 });
 
 
