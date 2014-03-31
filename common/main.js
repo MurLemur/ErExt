@@ -23,7 +23,11 @@ try {
   } else {
     kango.ui.browserButton.setIcon('icons/buttong.png');
   }
-} catch (e) {}
+} catch (e) {
+  var opt = {
+    "startup_update_notification": "true"
+  }
+}
 
 // Проверка наличия новой версии
 var details = {
@@ -37,10 +41,18 @@ kango.xhr.send(details, function(data) {
     var text = data.response;
     if (+text > 7) {
       kango.ui.browserButton.setIcon('icons/grumpy.png');
+      if (opt.startup_update_notification != false) {
+        try {
+          Notification.permission = "granted";
+          var n = new Notification("Ereality Extension", {
+            "body": "На форуме выложена новая версия плагина!",
+            "icon": kango.io.getResourceUrl("icons/icon48.png")
+          });
+        } catch (e) {}
+      }
     }
   } // типо проверки на новую версию
   else { // something went wrong
     kango.console.log('something went wrong');
   }
 });
- 

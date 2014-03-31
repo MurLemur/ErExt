@@ -33,7 +33,8 @@ var myoptions = {
 	"damaged_items_notification_filter": true,
 	"clickable_nicks_on_clan_tournament": true,
 	"stockmy":true,
-	"map_trace":true
+	"map_trace":true,
+	"startup_update_notification":true
 }
 
 var soundOptions = {
