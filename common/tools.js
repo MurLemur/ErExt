@@ -28,7 +28,6 @@ var myoptions = {
 	"keyenter":true,
 	"keyalt":true,
 	"questsectors":true,
-	"dropsectors":true,
 	"userlistactiveitems": true,
 	"damaged_items_notification_filter": true,
 	"clickable_nicks_on_clan_tournament": true,
@@ -58,10 +57,6 @@ var soundOptions = {
 		sound: "nosound",
 		detect: "текущая прочность инструмента: <b>0</b>"
 	},
-	"sound_drop": {
-		sound: "nosound",
-		detect: "Из `.+` выпало: <b>.+</b>"
-	},	
 	"sound_user_injury" : {
 		sound: "nosound",
 		detect: "Персонаж .+ травмирован"	

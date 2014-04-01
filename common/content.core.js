@@ -92,14 +92,6 @@ var scr= document.createElement("script");
 			return string.replace(new RegExp("http://forum.ereality.ru", 'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
 		};
 		
-		//При дропе вещей из монстров приписывать сектор
-		function modifyDropSector(string) {
-			if (string.search(new RegExp('Из `.+` выпало: <b>.+</b>', 'g')) != -1) {
-				string += ' ' + modifySectors(users.oSpanLocation.text());
-			}
-			
-			return string;
-		}
 		
 		function filterBrokenItemNotifications(_text) {
 			if (_text.search('Вещи в критическом состоянии:') == -1) {
@@ -218,10 +210,6 @@ var scr= document.createElement("script");
 			if (erExtOptions.forumgoto) {
 				_text = modifyForumLink(_text);
 			}	
-			
-			if (erExtOptions.dropsectors && _nick == keeperName) {
-				_text = modifyDropSector(_text);
-			}
 			
 			oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
 		}
@@ -383,14 +371,20 @@ if (myoptions.keyalt) {
 				(function() {
 					var chest = {};
 					chest.sector = []; // двумерный массив прошедших секторов
+					chest.sectoraliens = [];
+					$("#span_mode5").children().on("click", function() {
+						if (chest.sectoraliens.length > 0) chest.sectoraliens = [];
+					})
+
 					// поиск в массиве
-					chest.search = function(s) {
-						if (chest.sector.indexOf) { // если метод существует
-							return chest.sector.indexOf(s);
+					chest.search = function(s, mas) {
+						if (mas.indexOf) { // если метод существует
+							return mas.indexOf(s);
 						}
 
-						for (var i = 0; i < chest.sector.length; i++) {
-							if (chest.sector[i] === s) return i;
+
+						for (var i = 0; i < mas.length; i++) {
+							if (mas[i] === s) return i;
 						}
 
 						return -1;
@@ -416,8 +410,12 @@ if (myoptions.keyalt) {
 								zIndex: '3'
 							});
 
+							if (user.place2 == 8)
+								var cur_mas = chest.sector;
+							else if ((user.place2 > 19) && (user.place2 < 100))
+								var cur_mas = chest.sectoraliens;
 							for (i = 0; i < main.map.length; i++) {
-								if (chest.search(main.map[i][0] + ':' + main.map[i][1]) != -1)
+								if (chest.search(main.map[i][0] + ':' + main.map[i][1], cur_mas) != -1)
 									overlay.append('<div class="point activ" style="position:absolute; ' + chest.getSectorPosition(main.map[i][0], main.map[i][1]) + '"><span>' + main.map[i][0] + ':' + main.map[i][1] + '</span></div>');
 							}
 
@@ -441,21 +439,28 @@ if (myoptions.keyalt) {
 
 					chest.map_trace_handler = function() {
 						// если сектора нет в массиве и map определена (main.map работает на ОК, альенах и КТ вроде бы, так что может еще какую то проверку не знаю)
-						if (chest.search(main.sector) == -1 && main.map)
-							chest.sector.push(main.sector);
+
+						if (user.place2 == 8)
+							var current_mas = chest.sector;
+						else if ((user.place2 > 19) && (user.place2 < 100))
+							var current_mas = chest.sectoraliens;
+						else return;
+
+						if (chest.search(main.sector, current_mas) == -1 && main.map)
+							current_mas.push(main.sector);
 						chest.init();
 					}
 
 					$("img[src*=footprint]").on('click', function() {
-						setTimeout(
-							function() {
-								if ($("img[src*=footprint_on]").length == 1) {
-									// привязываем событие
-									$('#main').on('load.chest', chest.map_trace_handler);
-								} else {
-									$('#main').off('load.chest', chest.map_trace_handler);
-								}
-							}, 100);
+							setTimeout(
+								function() {
+									if ($("img[src*=footprint_on]").length == 1) {
+										// привязываем событие
+										$('#main').on('load.chest', chest.map_trace_handler);
+									} else {
+										$('#main').off('load.chest', chest.map_trace_handler);
+									}
+								}, 100);
 
 					})
 			}).toString().replace("sec_red.png",kango.io.getResourceUrl("res/sec_red.png"))  + ")();";
