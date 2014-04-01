@@ -9,6 +9,9 @@
 		this.loadExtentionOption("soptions", soundOptions, function() {
 			self.prepareSoundOptionsButtons(this.soundSelectOptions);
 		});	
+		this.loadExtentionOption("systemOptions", systemOptions, function() {
+			self.prepareSystemOptions();
+		});
 	};
 	
 	this.saveOptions = function(optionKey, optionValue) {
@@ -22,6 +25,15 @@
 				self.saveOptions("options", myoptions);
 			});
 		});		
+	};
+	
+	this.prepareSystemOptions = function() {
+		$.each(systemOptions, function(key) {
+			$('#' + key).val(systemOptions[key]).keyup(function() {
+				systemOptions[key] = $(this).val();
+				self.saveOptions("systemOptions", systemOptions);				
+			});
+		});
 	};
 	
 	this.prepareSoundOptionsButtons = function() {

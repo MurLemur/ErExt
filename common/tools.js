@@ -31,7 +31,11 @@ var myoptions = {
 	"dropsectors":true,
 	"userlistactiveitems": true,
 	"damaged_items_notification_filter": true,
-	"clickable_nicks_on_clan_tournament": true
+	"clickable_nicks_on_clan_tournament": true	
+}
+
+var systemOptions = {
+	"background_scripts_host": "188.226.128.79"
 }
 
 var soundOptions = {

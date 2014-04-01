@@ -37,8 +37,14 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	
 	// init user list active items
 	if (mergedOptions.userlistactiveitems) {
-		var usersListActiveItems = new usersListActiveItemsClass("#div_users", "a[class=b]", messagingEnum, popup);
-		usersListActiveItems.init();
+		kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
+			var mergedSystemOptions = mergeOptions(options, systemOptions);
+		
+			kango.dispatchMessage(messagingEnum.userActiveItemsStart, {host: mergedSystemOptions.background_scripts_host});
+			
+			var usersListActiveItems = new usersListActiveItemsClass("#div_users", "a[class=b]", messagingEnum, popup);
+			usersListActiveItems.init();
+		});
 	}	
 	
 	// init block context menu
