@@ -51,10 +51,14 @@ var scr= document.createElement("script");
 	}).toString()
 	+ ")();"; 
 }
-
+	var erExtImages = {
+		globalEventImage: kango.io.getResourceUrl("/res/global.jpg")	
+	};
+	
 	var formatSmilesString = (function() {	
 		var soundOptions = soundOptionsReplace;
 		var erExtOptions = optionsReplace;
+		var erExtImages = erExtImagesReplace;
 		
 		// @TODO refactor it
 		function modifySectors(_text) {
@@ -239,10 +243,27 @@ var scr= document.createElement("script");
 				return renderedTamplate.replace('<span class="NickName"><center>', '<span class="NickName"><center>' + exitLink[0].outerHTML);
 			}
 		}
+		
+		// Инфа о глобальных событиях
+		if (erExtOptions.global_info) {			
+			var globalTd = $("<td></td>").css({width: "20px"})
+				.on("click", function() {
+					$.post("http://www.ereality.ru/ajax/global_event/", '<request action="showNextGlobalEvents" />', function (response) {
+						window.chat.msgSystem(keeperName, $("msg", response).text())	
+					});
+				});
+
+			var globalImg = $("<img>").attr("src", erExtImages.globalEventImage).css({cursor: "pointer", width: "20px", height: "30px"});
+			var globalLink = $("<a href=\"#\" title=\"Глобальные события\"></a>");
+			
+			globalTd.append(globalLink.append(globalImg));
+			
+			$("#td_dyn").after(globalTd);
+		}
 	}).toString();
 	
 	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(soundOptions) + ')')
-		.replace("optionsReplace", '(' + JSON.stringify(myoptions) + ')');	
+		.replace("optionsReplace", '(' + JSON.stringify(myoptions) + ')').replace("erExtImagesReplace", '(' + JSON.stringify(erExtImages) + ')');	
 	
 	scr.text += "(" + formatSmilesString + ")();"; 
     
@@ -262,14 +283,13 @@ var scr= document.createElement("script");
 		scr.text= scr.text+ "(" +
 	(function(){
 
-	 function EnvTab(){// Инфа о глобальных событиях
- 	  if  (document.getElementById("chat_msg").value == "" ) {
- 	  	$.post("http://www.ereality.ru/ajax/global_event/",'<request action="showNextGlobalEvents" />',function (response) {
- 	   	  	 var gEvent = response.getElementsByTagName("msg")[0].textContent;
- 	  		 window.chat.msgSystem('Смотритель',gEvent)	
- 	  	});
-	 }
-	  else { 
+	 function EnvTab(){
+		var chatValue = document.getElementById("chat_msg").value;
+		
+		if (chatValue.length == 0) {
+			return;
+		} 
+	 
 		var env = document.createElement('a');	
 		env.href = 'http://cc.erclans.ru/viewpage.php?page_id=45'+'#'+document.getElementById("chat_msg").value;
 		env.target = '_blank';
@@ -278,10 +298,9 @@ var scr= document.createElement("script");
 		document.body.insertBefore(env, document.body.firstChild);
 		document.getElementById('Open').click();
 		document.getElementById("chat_msg").value = "";
-	 }
+	 
 	}	
-	envpic = document.getElementById("td_dyn").nextElementSibling.nextElementSibling.firstChild;
-	envpic.addEventListener("click", EnvTab, false);
+	$("img[src$='ch1_13.jpg']").on("click", EnvTab);
 
 	}).toString()
 	+ ")();";

@@ -33,7 +33,8 @@ var myoptions = {
 	"clickable_nicks_on_clan_tournament": true,
 	"stockmy":true,
 	"map_trace":true,
-	"startup_update_notification":true
+	"startup_update_notification":true,
+	"global_info": true
 }
 
 var systemOptions = {
