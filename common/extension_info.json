@@ -4,7 +4,8 @@
 	"content.info.js", 
 	"content.estate.js",
 	"content.core.js", 
-	"content.move.js", 
+	"content.move.js",
+	"content.trade.js",	
 	"content.common.js"
   ], 
   "description": "Extension for EReality.ru", 
@@ -28,6 +29,9 @@
             "width": 260,
             "height": 100
 	     }
-	}, 
+	},
+    "permissions": {
+        "notifications": true
+    },	
   "options_page": "options.html"
 }

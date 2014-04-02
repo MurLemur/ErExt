@@ -17,7 +17,15 @@
 	this.saveOptions = function(optionKey, optionValue) {
 		kango.invokeAsync('kango.storage.setItem', optionKey, optionValue);
 	}
-	
+
+	this.prepareSystemOptions = function() {
+		$.each(systemOptions, function(key) {
+			$('#' + key).val(systemOptions[key]).keyup(function() {
+				systemOptions[key] = $(this).val();
+				self.saveOptions("systemOptions", systemOptions);
+			});
+		});
+	};
 	this.prepareOptionButtons = function() {
 		$.each(myoptions, function(key) {
 			$('#' + key).prop("checked", myoptions[key]).on("click", function() {
@@ -51,6 +59,7 @@
 			callback();
 		});		
 	}
+
 }
 
 KangoAPI.onReady(function() {

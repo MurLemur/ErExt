@@ -28,15 +28,17 @@ var myoptions = {
 	"keyenter":true,
 	"keyalt":true,
 	"questsectors":true,
-	"dropsectors":true,
 	"userlistactiveitems": true,
 	"damaged_items_notification_filter": true,
-	"clickable_nicks_on_clan_tournament": true	
+	"clickable_nicks_on_clan_tournament": true,
+	"stockmy":true,
+	"map_trace":true,
+	"startup_update_notification":true
 }
 
 var systemOptions = {
-	"background_scripts_host": "188.226.128.79"
-}
+	"background_scripts_host": "188.226.128.79/"
+ }
 
 var soundOptions = {
 	"sound_elitka": {
@@ -59,10 +61,6 @@ var soundOptions = {
 		sound: "nosound",
 		detect: "текущая прочность инструмента: <b>0</b>"
 	},
-	"sound_drop": {
-		sound: "nosound",
-		detect: "Из `.+` выпало: <b>.+</b>"
-	},	
 	"sound_user_injury" : {
 		sound: "nosound",
 		detect: "Персонаж .+ травмирован"	

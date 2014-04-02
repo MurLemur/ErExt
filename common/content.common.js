@@ -17,6 +17,9 @@
 //
 // @require css/context-blocker-css.js
 // @require common/context-blocker/context-blocker.js
+//
+// @require css/trace-map-css.js
+// @require common/trace-map/trace-map.js
 // ==/UserScript==
 
 
@@ -39,11 +42,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	if (mergedOptions.userlistactiveitems) {
 		kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
 			var mergedSystemOptions = mergeOptions(options, systemOptions);
-		
-			kango.dispatchMessage(messagingEnum.userActiveItemsStart, {host: mergedSystemOptions.background_scripts_host});
-			
+			kango.dispatchMessage(messagingEnum.userActiveItemsStart, {
+				host: mergedSystemOptions.background_scripts_host
+			});
 			var usersListActiveItems = new usersListActiveItemsClass("#div_users", "a[class=b]", messagingEnum, popup);
 			usersListActiveItems.init();
+
 		});
 	}	
 	
@@ -52,6 +56,13 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		var contextBlocker = new contextBlockerClass(contextBlockerCss);
 		contextBlocker.init();
 	}
+
+	// init trace map
+	if (myoptions.map_trace) {
+		var traceMap = new traceMapClass(traceCss);
+		traceMap.init();
+	}
+
 });
 
 

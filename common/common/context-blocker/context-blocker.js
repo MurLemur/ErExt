@@ -8,7 +8,7 @@ var contextBlockerClass = function(css) {
 			self.blockContext($(this));
 		});
 	
-		return $("<a title=\"Блокирока контекстного меню\"></a>").append(img).css(this.css.link);
+		return $("<a title=\"Блокировка контекстного меню\"></a>").append(img).css(this.css.link);
 	};
 	
 	this.blockContext = function(blockImg) {
