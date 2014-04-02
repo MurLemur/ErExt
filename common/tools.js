@@ -37,7 +37,7 @@ var myoptions = {
 }
 
 var systemOptions = {
-	"background_scripts_host": "188.226.128.79/"
+	"background_scripts_host": "cron.un-limits.ru/er"
  }
 
 var soundOptions = {
