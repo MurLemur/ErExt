@@ -36,6 +36,10 @@ var myoptions = {
 	"startup_update_notification":true
 }
 
+var systemOptions = {
+	"background_scripts_host": "188.226.128.79/"
+ }
+
 var soundOptions = {
 	"sound_elitka": {
 		sound: "nosound",
