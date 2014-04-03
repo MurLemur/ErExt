@@ -35,6 +35,15 @@
 		});		
 	};
 	
+	this.prepareSystemOptions = function() {
+		$.each(systemOptions, function(key) {
+			$('#' + key).val(systemOptions[key]).keyup(function() {
+				systemOptions[key] = $(this).val();
+				self.saveOptions("systemOptions", systemOptions);				
+			});
+		});
+	};
+	
 	this.prepareSoundOptionsButtons = function() {
 		$.each(soundOptions, function(key) {
 			$('#' + key).html(self.soundSelectOptions).val(soundOptions[key].sound).on("click", function() {
