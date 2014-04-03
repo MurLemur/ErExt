@@ -52,7 +52,7 @@ var scr= document.createElement("script");
 	+ ")();"; 
 }
 	var erExtImages = {
-		globalEventImage: kango.io.getResourceUrl("/res/global.jpg")	
+		globalEventImage: kango.io.getResourceUrl("res/global.jpg")	
 	};
 	
 	var formatSmilesString = (function() {	
