@@ -20,6 +20,8 @@
 //
 // @require css/trace-map-css.js
 // @require common/trace-map/trace-map.js
+//
+// @require common/services/corpses.js
 // ==/UserScript==
 
 
@@ -62,7 +64,9 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		var traceMap = new traceMapClass(traceCss);
 		traceMap.init();
 	}
-
+	
+	var corpsesService = new corpsesServiceClass($("#chat_msg"));
+	corpsesService.init();
 });
 
 
