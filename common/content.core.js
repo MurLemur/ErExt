@@ -260,51 +260,25 @@ var scr= document.createElement("script");
 			
 			$("#td_dyn").after(globalTd);
 		}
+		
+		if (soundOptions["sound_zavod"].sound != "nosound") {
+			var oldBuildPlayersTable = battle.buildPlayersTable;
+			
+			battle.buildPlayersTable = function() {
+				oldBuildPlayersTable.apply(battle);
+				
+				if (users.oSpanLocation.text().search("Цех ") == 0 && battle.round == "1") {
+					core.playSwfSound(soundOptions["sound_zavod"].sound);
+				}
+			}
+		}
+		
 	}).toString();
 	
 	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(soundOptions) + ')')
 		.replace("optionsReplace", '(' + JSON.stringify(myoptions) + ')').replace("erExtImagesReplace", '(' + JSON.stringify(erExtImages) + ')');	
 	
 	scr.text += "(" + formatSmilesString + ")();"; 
-    
-    //Оповещение при начале боя на Заводе
-	if (soundOptions["sound_zavod"].sound!="nosound") {
-	scr.text= scr.text+ "(" +
-	(function(){
-	var zxzx1=battle.buildPlayersTable;
-	battle.buildPlayersTable=function(){
-	zxzx1.apply(battle);
-	if ((users.oSpanLocation[0].text.search("Цех ")==0)&&(battle.round =="1")) {core.playSwfSound("_sound_zavod");}
-	return; }
-	}).toString().replace("_sound_zavod",soundOptions["sound_zavod"].sound) 
-	+ ")();"; 
-    }
-
-		scr.text= scr.text+ "(" +
-	(function(){
-
-	 function EnvTab(){
-		var chatValue = document.getElementById("chat_msg").value;
-		
-		if (chatValue.length == 0) {
-			return;
-		} 
-	 
-		var env = document.createElement('a');	
-		env.href = 'http://cc.erclans.ru/viewpage.php?page_id=45'+'#'+document.getElementById("chat_msg").value;
-		env.target = '_blank';
-		env.id = "Open";
-		env.style.display='none';
-		document.body.insertBefore(env, document.body.firstChild);
-		document.getElementById('Open').click();
-		document.getElementById("chat_msg").value = "";
-	 
-	}	
-	$("img[src$='ch1_13.jpg']").on("click", EnvTab);
-
-	}).toString()
-	+ ")();";
-
 
 	//Добавляем кликабельность секторов в Дневнике Квестов
 		if (myoptions.questsectors) {
