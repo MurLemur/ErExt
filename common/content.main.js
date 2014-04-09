@@ -151,6 +151,11 @@ function undergroundkbd(code) {
 		}
 }
 
+function efim(){ 
+    document.getElementById("getsetid").setAttribute('value',document.referrer.replace("http://www.ereality.ru/~","").replace("http://www.ereality.ru/",""));
+	var xpathRes1 = xpath("/html/body/table/tbody/tr/td[4]/div/div[4]/table/tbody/tr[6]/td/form/input[2]");
+	xpathRes1.snapshotItem(0).click(); 
+}
 
 if (myoptions.unpaused) {
 if (location.href.search("http://www.ereality.ru/core") != -1 )
