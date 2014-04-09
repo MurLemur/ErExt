@@ -8,7 +8,7 @@ var corpsesServiceClass = function (chatMsg) {
 		if (self.chatMsg.val().length == 0) {
 			return;
 		} 
-	 
+		
 		self.corpseServiceLink.attr("href", 'http://cc.erclans.ru/viewpage.php?page_id=45#' + self.chatMsg.val());
 		self.corpseServiceLink[0].click();
 		
@@ -16,6 +16,8 @@ var corpsesServiceClass = function (chatMsg) {
 	};
 	
 	this.init = function() {
+		self.corpseServiceLink.hide();
+		$("body").append(self.corpseServiceLink);
 		$("img[src$='ch1_13.jpg']").on("click", self.processClick);
 	};
 }
