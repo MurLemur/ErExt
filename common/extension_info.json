@@ -13,9 +13,9 @@
   "background_scripts": [ 
     "tools/jquery.js",
     "main.js", 
-	"user/active-items.js",
+	"user/active-items/active-items.js",
 	"tools/messaging-enum.js",
-    "user/background.user-active-items.js" 
+    "user/active-items/background.user-active-items.js" 
   ], 
   "homepage_url": "http://forum.ereality.ru/topic176876/page1.html", 
   "version": "1.0.8", 
