@@ -14,7 +14,9 @@ var glamsUserAnalyzerClass = function(divHolder, buttonsStyle, serviseSender, us
 		
 		self.divHolder.append(self.glamLink);	
 	}
-	this.processClick = function() {	
+	this.processClick = function() {
+		self.glamLink.off("click");
+	
 		self.serviseSender.send({
 			method: "GET",
 			url: "http://xn--80abg0adccjst1af.xn--p1ai/~" + (self.userName) + '&no-base=true',
