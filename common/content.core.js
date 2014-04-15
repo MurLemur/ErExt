@@ -263,11 +263,19 @@ var scr= document.createElement("script");
 		
 		if (soundOptions["sound_zavod"].sound != "nosound") {
 			var oldBuildPlayersTable = battle.buildPlayersTable;
+			var oldBattleLoad = battle.load;
+			
+			battle.load = function() {
+				oldBattleLoad.apply(battle);
+				
+				battle.FirstFactorySound = true;
+			}
 			
 			battle.buildPlayersTable = function() {
 				oldBuildPlayersTable.apply(battle);
 				
-				if (users.oSpanLocation.text().search("Цех ") == 0 && battle.round == "1") {
+				if (users.oSpanLocation.text().search("Цех ") == 0 && battle.FirstFactorySound) {
+					battle.FirstFactorySound = false;
 					core.playSwfSound(soundOptions["sound_zavod"].sound);
 				}
 			}
