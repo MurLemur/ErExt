@@ -15,11 +15,11 @@ var serviceButtonBuilderClass = function(configOptions, userName, serviceRequest
 		}
 			
 		if (self.configOptions.faceshop) {		
-			new yobodsDressRoomClass(self.divHolder, self.infoButtonsCss).init();
+			new yobodsDressRoomClass(self.divHolder, self.infoButtonsCss, self.userName).init();
 		}
 			
 		if (self.configOptions.efimerka) {
-			new efimerkaClass(self.divHolder, self.infoButtonsCss).init();
+			new efimerkaClass(self.divHolder, self.infoButtonsCss, self.userName).init();
 		}
 		
 		if (self.configOptions.zk) {
