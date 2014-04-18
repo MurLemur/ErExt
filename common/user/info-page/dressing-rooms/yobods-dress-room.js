@@ -1,7 +1,7 @@
-var yobodsDressRoomClass = function(holder, buttonStyle) {
+var yobodsDressRoomClass = function(holder, buttonStyle, userName) {
 	this.holder = holder;
 	this.buttonStyle = buttonStyle;
-	this.bodLink = $("<a target=\"_blank\" href=\"http://yo-bod.com/faceshop/\" title=\"Переодевалка от Blade of Darkness\"></a>");
+	this.bodLink = $("<a target=\"_blank\" href=\"http://yo-bod.com/faceshop/#" + userName + "\" title=\"Переодевалка от Blade of Darkness\"></a>");
 	this.bodImg = $("<img src=\"" + kango.io.getResourceUrl("res/yo-bods.gif") + "\">");
 		
 	var self = this;

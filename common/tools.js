@@ -34,7 +34,8 @@ var myoptions = {
 	"stockmy":true,
 	"map_trace":true,
 	"startup_update_notification":true,
-	"global_info": true
+	"global_info": true,
+	"trade_buy_full_lot": true
 }
 
 var systemOptions = {
