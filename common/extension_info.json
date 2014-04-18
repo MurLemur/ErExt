@@ -4,9 +4,13 @@
 	"content.info.js", 
 	"content.estate.js",
 	"content.core.js", 
-	"content.move.js",
-	"content.trade.js",	
-	"content.common.js"
+	"content.move.js",		
+	"content.common.js",
+	"contents/services/content.sidzoku.js",
+	"contents/services/content.yo-bods.js",
+	"contents/services/content.efimerka.js",
+	"contents/trade/content.trade-sell.js",
+	"contents/trade/content.trade-buy.js"
   ], 
   "description": "Extension for EReality.ru", 
   "creator": "MurLemur",

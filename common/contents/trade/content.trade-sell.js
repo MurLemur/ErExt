@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        trade
+// @name        trade-sell
 // @include     http://www.ereality.ru/map*n=useritems*
 // @require     tools.js
 // @all-frames  true
