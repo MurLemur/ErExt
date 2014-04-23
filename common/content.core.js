@@ -339,14 +339,18 @@ if (myoptions.keyalt) {
 		scr.text= scr.text+ "(" +
 	(function(){
 		var zxzx8=core.onKeyUp;
+		var HSets = []; // Список сохраненных комплектов
+		$.post("http://www.ereality.ru/ajax/json.php",
+				'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}}}',
+				function(response) {
+						for(prop in response.response.sets) if (response.response.sets.hasOwnProperty(prop)) {
+							HSets.push(prop);
+						 }	
+				},
+				"json");
 	core.onKeyUp=function(event){
-	event=(window.event||event);
-	 if (event.altKey) {
-		 	var HSets =[]; 
-			 for(prop in heroPanel.heroSets) if (heroPanel.heroSets.hasOwnProperty(prop)) {
-  				HSets.push(prop);
-			 }	
-			//alert(HSets[0]); 
+			event = (window.event || event);
+			if (event.altKey) {
 		 	if ((event.keyCode==49)&&(HSets[0]!=undefined)) {inventory.actionUpSet({"setId":HSets[0]})} //1
 		 	if ((event.keyCode==50)&&(HSets[1]!=undefined)) {inventory.actionUpSet({"setId":HSets[1]})} //2
 		 	if ((event.keyCode==51)&&(HSets[2]!=undefined)) {inventory.actionUpSet({"setId":HSets[2]})} //3

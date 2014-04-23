@@ -46,6 +46,8 @@ function mymain() {
 //		if (top.document.getElementById("chat_msg").value=="") {
 //				top.main.document.getElementById("npc107").click();
 //	}
+	if (document.getElementById("div_battle").style.display!="none") return;
+	if ((top.frames.document.getElementById("messengerForm")!=undefined)&&(top.frames.document.getElementById("messengerForm").style.display!="none")) return;
 	if (document.getElementById("npcname").innerHTML=="Ворота Кладбища")	
 		if (top.document.getElementById("chat_msg").value=="") {
 				top.document.getElementById("dialog").firstChild.firstChild.nextElementSibling.nextElementSibling.click();
@@ -79,8 +81,9 @@ function lotereya() {
 	}
 }
 function mynum(code) {
-	if ((myoptions.numfight)&&(document.getElementById("div_battle").style.display!="none"))
-		{
+	if ((myoptions.numfight)&&(top.frames.document.getElementById("div_battle").style.display!="none"))
+		{	
+
 			switch (code) 
 			{
 				case  96: {document.getElementById("block_pl4").click();break;}
@@ -115,6 +118,8 @@ function mynum(code) {
 function instkbd(code) {
 	if ((myoptions.kbdinst)&&(top.frames.main.document.getElementById("div_inst_top")!=null))
 		{	
+			if (top.frames.document.getElementById("div_battle").style.display!="none") return;
+			if ((top.frames.document.getElementById("messengerForm")!=undefined)&&(top.frames.document.getElementById("messengerForm").style.display!="none")) return;
 			switch (code) 
 			{
 				case  37: {top.frames.main.document.getElementById("inst-left").click();break;}
@@ -138,6 +143,8 @@ function instkbd(code) {
 function undergroundkbd(code) {
 	if (top.frames.main.document.getElementById("underground")!=null)
 		{	
+			if (top.frames.document.getElementById("div_battle").style.display!="none") return;
+			if ((top.frames.document.getElementById("messengerForm")!=undefined)&&(top.frames.document.getElementById("messengerForm").style.display!="none")) return;
 			switch (code) 
 			{
 				case  81: {top.frames.main.document.getElementById("s8").click();break;}   // q

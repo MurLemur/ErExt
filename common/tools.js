@@ -1,6 +1,7 @@
 var myoptions = {
 	"faceshop":true,
 	"efimerka":true,
+	"armory":true,
 	"unpaused":true,
 	"info":true,
 	"zk":true,
@@ -78,6 +79,10 @@ var soundOptions = {
 	"sound_item_broken": {
 		sound: "nosound",
 		detect: "Вещи сломались"
+	},
+		"sound_caving": {
+		sound: "nosound",
+		detect: "Сейсмопредупреждение"
 	}
 	
 }

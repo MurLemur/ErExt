@@ -21,6 +21,10 @@ var serviceButtonBuilderClass = function(configOptions, userName, serviceRequest
 		if (self.configOptions.efimerka) {
 			new efimerkaClass(self.divHolder, self.infoButtonsCss, self.userName).init();
 		}
+
+		if (self.configOptions.armory) {
+			new sidzokuDressRoomClass(self.divHolder, self.infoButtonsCss, self.userName).init();
+		}
 		
 		if (self.configOptions.zk) {
 			new gosesUserRatingsClass(self.divHolder, self.infoButtonsCss, self.serviceRequestSender, self.userName).init();

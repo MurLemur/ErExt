@@ -12,6 +12,7 @@
 //
 // @require		user/info-page/dressing-rooms/yobods-dress-room.js
 // @require 	user/info-page/dressing-rooms/efirs-dress-room.js
+// @require 	user/info-page/dressing-rooms/sidzoku-dress-room.js
 // @require 	user/info-page/user-analizer/sheer-user-analyzer.js
 // @require 	user/info-page/user-analizer/glam-user-analyzer.js
 // @require 	user/info-page/ratings/goses-user-ratings.js
