@@ -36,7 +36,8 @@ var myoptions = {
 	"map_trace":true,
 	"startup_update_notification":true,
 	"global_info": true,
-	"trade_buy_full_lot": true
+	"trade_buy_full_lot": true,
+	"contextmenus": true
 }
 
 var systemOptions = {
@@ -80,7 +81,7 @@ var soundOptions = {
 		sound: "nosound",
 		detect: "Вещи сломались"
 	},
-		"sound_caving": {
+	"sound_caving": {
 		sound: "nosound",
 		detect: "Сейсмопредупреждение"
 	}

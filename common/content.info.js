@@ -19,34 +19,42 @@
 // @require 	user/info-page/schedule/dragons-schedule.js
 //
 // @require 	user/info-page/builders/estates-builder.js
-// @require		user/info-page/builders/service-button-builder.js 
+// @require		user/info-page/builders/service-button-builder.js
+// @require		user/info-page/context-menus/info-context-menus.js 
+// @require		user/info-page/builders/context-menus-builder.js 
 // ==/UserScript==
 
 //================================================================Begin
 
 kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	var mergedOptions = mergeOptions(options, myoptions);
-	
+
 	// check if plug-in on pause
 	if (!mergedOptions.unpaused) {
 		return;
 	}
-	
-	var userName = $("#char_frm input[name=echar]").val();	
+
+	var userName = $("#char_frm input[name=echar]").val();
 	var serviceRequestSender = new serviceRequestSenderClass();
-	
+
 	// init service buttons
 	new serviceButtonBuilderClass(mergedOptions, userName, serviceRequestSender, infoButtonsCss).init();
-	
+
 	$(".slotsInfoNew").after($("<br />"));
-	
+
 	// init estates 
 	new estatesBuilderClass(mergedOptions, userName).init();
-	
-	// init dragon schedule
-	if (mergedOptions.dragon_time) {
-		$(document).ready(function() {
-			new dragonsScheduleClass(serviceRequestSender).init();
-		});
+
+	// init context menus
+	if (mergedOptions.contextmenus) {
+		new ContexMenusBuilderClass(ContextMenus).init();
 	}
- });
+	
+	$(document).ready(function() {
+		// init dragon schedule
+		if (mergedOptions.dragon_time) {
+			new dragonsScheduleClass(serviceRequestSender).init();
+		}
+
+	});
+});
