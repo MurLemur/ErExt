@@ -14,6 +14,36 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			return;
 		}
 //=====================================================================  
+// Добавление своих локаций на ОВЛ и ОПП 
+	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
+		var mergedSystemOptions = mergeOptions(options, systemOptions);
+		if (document.getElementsByClassName("SearchPlace").length > 0) {
+
+			var scr = document.createElement("script");
+			scr.text = "(" +
+				(function() {
+				options_loc = {
+					"1": "option_ovl",
+					"3": "option_opp"
+				}
+
+				str = options_loc[Map.heroMap];
+				location_mas = str.split(";");
+				for (var i = 0; i < location_mas.length; i++) {
+					if (location_mas[i].length > 5) {
+						loc = location_mas[i].split(")");
+						sectorId = loc[0].replace("(", "");
+						Map.locations[Map.heroMap][sectorId] = loc[1];
+						$('<option></option>').attr('value', sectorId).text(Map.locations[Map.heroMap][sectorId]).insertAfter($('option[value="0"]')[1]);
+					}
+				}
+			}).toString().replace("option_ovl", mergedSystemOptions.locatioons_ovl).replace("option_opp", mergedSystemOptions.locatioons_opp) + ")();";
+
+			document.body.appendChild(scr);
+		}
+
+	});
+
 
 		//Модернизация механизма изгонялок на альенах
 		if (myoptions.aliensmy) {

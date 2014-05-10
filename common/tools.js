@@ -41,7 +41,10 @@ var myoptions = {
 }
 
 var systemOptions = {
-	"background_scripts_host": "cron.un-limits.ru/er"
+	"background_scripts_host": "cron.un-limits.ru/er",
+	"trace_img_src": "",
+	"locatioons_ovl": "",
+	"locatioons_opp": ""
  }
 
 var soundOptions = {
