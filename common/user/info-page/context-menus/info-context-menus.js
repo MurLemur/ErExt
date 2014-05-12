@@ -142,7 +142,7 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/shaxta/"
 	},{
-		itemdescription: "Калькулятор",
+		itemdescription: "Карта шахт",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/services/mine.php"
 	},{
