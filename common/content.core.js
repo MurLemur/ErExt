@@ -271,7 +271,7 @@ var scr= document.createElement("script");
 			var oldBattleLoad = battle.load;
 			
 			battle.load = function() {
-				oldBattleLoad.apply(battle);
+				oldBattleLoad.apply(battle,arguments);
 				
 				battle.FirstFactorySound = true;
 			}
@@ -485,6 +485,16 @@ if (myoptions.keyalt) {
 						var current_mas = chest.sectoraliens;
 						var map_mas = main.map;
 						var newmap = false;
+						
+						//Следы для тиммейтов
+						var teammate_trace = false;
+						if (teammate_trace) 
+						$.each(main.placeHeroes, function(key, places) {
+							msector = places.x + ':' + places.y;
+							if (chest.search(msector, current_mas) == -1 && map_mas)
+								current_mas.push(msector);
+						});
+
 					} else return;
 					msector = main.px + ':' + main.py;
 						if (chest.search(msector, current_mas) == -1 && map_mas)
@@ -507,7 +517,9 @@ if (myoptions.keyalt) {
 			}).toString().replace("sec_red.png",trace_img_src)  + ")();";
 		}
 
-
+if (myoptions.teammate_trace) {
+	scr.text=scr.text.replace("teammate_trace = false","teammate_trace = true");
+}
 
 
  if (scr!="") { 	

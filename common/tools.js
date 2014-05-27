@@ -37,7 +37,8 @@ var myoptions = {
 	"startup_update_notification":true,
 	"global_info": true,
 	"trade_buy_full_lot": true,
-	"contextmenus": true
+	"contextmenus": true,
+	"teammate_trace": true	
 }
 
 var systemOptions = {
