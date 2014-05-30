@@ -204,7 +204,7 @@ var ContextMenus = [{
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
-		itemlink: " "
+		itemlink: "http://gosov.net/gajd_stroitelya.html"
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/111.gif",
