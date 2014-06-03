@@ -54,6 +54,8 @@
 
 var extensionOptionsExportClass = function() {
 	var self = this;
+	var exportLink = null;
+	
 	this.erExtOptions = [
 		{systemName: 'soptions', defaultName: "soundOptions"}, 
 		{systemName: 'options', defaultName: "myoptions"}, 
@@ -63,26 +65,30 @@ var extensionOptionsExportClass = function() {
 	this.init = function() {
 		self._initExportButton();
 		self._initImportButton();
+		self._initExportLink();
 	}
 	
 	this._initExportButton = function() {
 		$("#exportButton").on('click', function() {
-			tools.loadOptions(self.erExtOptions, self.exportToFile);		
+			tools.loadOptions(self.erExtOptions, self.exportToFile);
 		});
 	}
 	
-	this.exportToFile = function(options) {
+	this._initExportLink = function() {
+		self.exportLink = $('<a download="er-ext-config.txt">').css({display: "none"});
+		$('body').append(self.exportLink);
+	}
+	
+	this.exportToFile = function(options) { 
 		var optionsInJson = JSON.stringify(self.filterOptions(options));
 		self._initFileDownload(optionsInJson);
 	}
 	
-	this._initFileDownload = function(options) {
+	this._initFileDownload = function(options) { 
 		var hrefData = "data:text/plain;base64," + btoa(options);
-		var exportLink = $('<a download="er-ext-config.txt">').attr('href', hrefData).css({display: "none"});	
+		self.exportLink.attr('href', hrefData);			
 		
-		$('body').append(exportLink);
-		exportLink[0].click();
-		exportLink.remove();
+		self.exportLink[0].click();
 	}
 	
 
