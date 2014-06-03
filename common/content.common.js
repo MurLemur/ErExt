@@ -48,6 +48,8 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 			});
 			var usersListActiveItems = new usersListActiveItemsClass("#div_users", "a[class=b]", messagingEnum, popup);
 			usersListActiveItems.init();
+			var activeItemsInBattle = new usersListActiveItemsClass("#div_battle", "span[class*=bp]", messagingEnum, popup);
+			activeItemsInBattle.init();
 
 		});
 	}	

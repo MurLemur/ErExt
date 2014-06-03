@@ -142,7 +142,7 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/shaxta/"
 	},{
-		itemdescription: "Калькулятор",
+		itemdescription: "Карта шахт",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/services/mine.php"
 	},{
@@ -204,7 +204,7 @@ var ContextMenus = [{
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
-		itemlink: " "
+		itemlink: "http://gosov.net/gajd_stroitelya.html"
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/111.gif",
@@ -482,5 +482,58 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/111.gif",
 		itemlink: "http://un-limits.ru/gaidmod/klant.html"
 	}]
+},{
+	target: "\\\\/g\\\\/",
+	menuname: "m_g",
+	menuitems: [{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/73.gif",
+		itemlink: "http://sidzoku.ru/kladba/"
+	},{
+		itemdescription: "Гайд",
+		itemimg: "http://img.ereality.ru/clan/29.gif",
+		itemlink: "http://yo-bod.com/library/quests/nechist.php"
+	}, {
+		itemdescription: "Гайд",
+		itemimg: "http://img.ereality.ru/clan/191.gif",
+		itemlink: "http://gosov.net/istnech.html"
+	}]
+},{
+	target: "\\\\/c\\\\/",
+	menuname: "m_c",
+	menuitems: [{
+		itemdescription: "Гайд",
+		itemimg: "http://img.ereality.ru/clan/29.gif",
+		itemlink: "http://yo-bod.com/library/person/haos.php"
+	}, {
+		itemdescription: "Гайд",
+		itemimg: "http://img.ereality.ru/clan/111.gif",
+		itemlink: "http://un-limits.ru/inf/allstup.html#2"
+	}]
+},{
+	target: "\\\\/3\\\\/",
+	menuname: "m_3",
+	menuitems: [{
+		itemdescription: "Гайд",
+		itemimg: "http://img.ereality.ru/clan/29.gif",
+		itemlink: "http://yo-bod.com/library/person/shst.php"
+	}, {
+		itemdescription: "Гайд",
+		itemimg: "http://img.ereality.ru/clan/111.gif",
+		itemlink: "http://un-limits.ru/inf/allstup.html#1"
+	}]
+},{
+	target: "septrate",
+	menuname: "m_sept",
+	menuitems: [{
+		itemdescription: "Гайд",
+		itemimg: "http://img.ereality.ru/clan/29.gif",
+		itemlink: "http://yo-bod.com/library/modules/dp.php#kvest"
+	}, {
+		itemdescription: "Гайд",
+		itemimg: "http://img.ereality.ru/clan/111.gif",
+		itemlink: "http://un-limits.ru/inf/allstup.html#6"
+	}]
 }
+
 ]

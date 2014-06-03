@@ -1,5 +1,5 @@
 var usersListActiveItemsClass = function(usersHolderSelector, userItemSelector, messagingEnum, popup) {
-	this.usersHolder = $("#div_users");	
+	this.usersHolder = $(usersHolderSelector);	
 	this.userItemSelector = userItemSelector;
 	
 	this.messagingEnum = messagingEnum;

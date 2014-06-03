@@ -166,7 +166,7 @@ if (myoptions.unpaused) {
 		if (kango.browser.getName() != "firefox") {
 			document.getElementById("span_sort").previousElementSibling.href='javascript: users.load(); document.getElementById("a_users_loc").focus();';
 			document.getElementById("a_users_loc").href='javascript: users.load(); document.getElementById("a_users_loc").focus();';
-			document.getElementById("span_mode5").firstChild.href='javascript: fdemands.load(5); document.getElementById("span_mode5").firstChild.focus();';
+			document.getElementById("span_mode5").firstChild.nextSibling.href='javascript: fdemands.load(5); document.getElementById("span_mode5").firstChild.nextSibling.focus();';
 		}
 
 		document.onkeyup = function (e) {

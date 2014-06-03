@@ -17,6 +17,11 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 		return;
 	}
 //=====================================================================  
+var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
+	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
+		var mergedSystemOptions = mergeOptions(options, systemOptions);
+		if (mergedSystemOptions.trace_img_src!="") trace_img_src=mergedSystemOptions.trace_img_src;			
+	});
 
 function pfunction(){
 
@@ -266,7 +271,7 @@ var scr= document.createElement("script");
 			var oldBattleLoad = battle.load;
 			
 			battle.load = function() {
-				oldBattleLoad.apply(battle);
+				oldBattleLoad.apply(battle,arguments);
 				
 				battle.FirstFactorySound = true;
 			}
@@ -457,7 +462,12 @@ if (myoptions.keyalt) {
 					chest.map_trace_handler = function() {
 						// если сектора нет в массиве и map определена (main.map работает на ОК, альенах и КТ вроде бы, так что может еще какую то проверку не знаю)
 
-					if (user.place2 == 8) {
+					if (user.coldX!="0,0") {
+						var current_mas = chest.sectorODL;
+						var map_mas = main.map;
+						var newmap = false;}
+						//main.sector = main.Map.currentSector.x + ':' + main.Map.currentSector.y;	
+					else if (user.place2 == 8) {
 						var current_mas = chest.sectorOK;
 						var map_mas = main.map;
 						var newmap = false;
@@ -465,25 +475,30 @@ if (myoptions.keyalt) {
 						var current_mas = chest.sectorOVL;
 						var map_mas = main.Map.sectors;
 						var newmap = true;
-						main.sector = main.Map.currentSector.x + ':' + main.Map.currentSector.y;
+					//	main.sector = main.Map.currentSector.x + ':' + main.Map.currentSector.y;
 					} else if (user.place2 == 3) {
 						var current_mas = chest.sectorOPP;
 						var map_mas = main.Map.sectors;
 						var newmap = true;
-						main.sector = main.Map.currentSector.x + ':' + main.Map.currentSector.y;
-					} else if (user.place2 > 99) {
-						var current_mas = chest.sectorODL;
-						var map_mas = main.Map.sectors;
-						var newmap = true;
-						main.sector = main.Map.currentSector.x + ':' + main.Map.currentSector.y;
+					//	main.sector = main.Map.currentSector.x + ':' + main.Map.currentSector.y;
 					} else if ((user.place2 > 19) && (user.place2 < 100)) {
 						var current_mas = chest.sectoraliens;
 						var map_mas = main.map;
 						var newmap = false;
-					} else return;
+						
+						//Следы для тиммейтов
+						var teammate_trace = false;
+						if (teammate_trace) 
+						$.each(main.placeHeroes, function(key, places) {
+							msector = places.x + ':' + places.y;
+							if (chest.search(msector, current_mas) == -1 && map_mas)
+								current_mas.push(msector);
+						});
 
-						if (chest.search(main.sector, current_mas) == -1 && map_mas)
-							current_mas.push(main.sector);
+					} else return;
+					msector = main.px + ':' + main.py;
+						if (chest.search(msector, current_mas) == -1 && map_mas)
+							current_mas.push(msector);
 						chest.init(map_mas,current_mas,newmap);
 					}
 
@@ -499,10 +514,12 @@ if (myoptions.keyalt) {
 								}, 100);
 
 					})
-			}).toString().replace("sec_red.png",kango.io.getResourceUrl("res/sec_red.png"))  + ")();";
+			}).toString().replace("sec_red.png",trace_img_src)  + ")();";
 		}
 
-
+if (myoptions.teammate_trace) {
+	scr.text=scr.text.replace("teammate_trace = false","teammate_trace = true");
+}
 
 
  if (scr!="") { 	
