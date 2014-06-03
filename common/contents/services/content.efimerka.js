@@ -1,6 +1,5 @@
 // ==UserScript==
 // @name     ErExt_Efimerka
-// @include	 	http://www.ereality.ru/core/*
 // @require 	tools/jquery.js
 // @require 	tools.js
 // @include 	http://*.com/efimerka/
