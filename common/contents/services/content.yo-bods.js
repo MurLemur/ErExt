@@ -1,6 +1,5 @@
 // ==UserScript==
 // @name     ErExt_YoBodsService
-// @include	 	http://www.ereality.ru/core/*
 // @require 	tools/jquery.js
 // @require 	tools.js
 // @include 	http://yo-bod.com/faceshop/

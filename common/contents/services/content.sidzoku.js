@@ -1,6 +1,5 @@
 // ==UserScript==
 // @name     ErExt_SidzokuService
-// @include 	http://www.ereality.ru/core/*
 // @require 	tools/jquery.js
 // @require 	tools.js
 // @include     http://sidzoku.ru/landlord/
