@@ -26,7 +26,7 @@
 // ==/UserScript==
 
 kango.invokeAsync('kango.storage.getItem', "options", function(options) {
-	var mergedOptions = mergeOptions(options, myoptions);
+	var mergedOptions = mergeOptions(options, defaultConfig.myoptions);
 
 	// check if plug-in on pause
 	if (!mergedOptions.unpaused) {
@@ -42,7 +42,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	// init user list active items
 	if (mergedOptions.userlistactiveitems) {
 		kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
-			var mergedSystemOptions = mergeOptions(options, systemOptions);
+			var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
 			kango.dispatchMessage(messagingEnum.userActiveItemsStart, {
 				host: mergedSystemOptions.background_scripts_host
 			});

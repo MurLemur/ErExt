@@ -1,3 +1,6 @@
+/*
+remove if all is ok. 
+
 var myoptions = {
 	"faceshop":true,
 	"efimerka":true,
@@ -92,7 +95,7 @@ var soundOptions = {
 	
 }
 
-
+*/
 var defaultConfig = {
 	myoptions: {
 		"faceshop":true,

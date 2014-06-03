@@ -6,12 +6,12 @@
 // ==/UserScript==
 
 kango.invokeAsync('kango.storage.getItem',"soptions", function(value) {
-	soundOptions = mergeOptions(value, soundOptions);
+	defaultConfig.soundOptions = mergeOptions(value, defaultConfig.soundOptions);
 });
 //================================================================Begin
 
 kango.invokeAsync('kango.storage.getItem',"options",function(value) {
-	myoptions = mergeOptions(value, myoptions);
+	myoptions = mergeOptions(value, defaultConfig.myoptions);
 
 	if (!myoptions.unpaused) {
 		return;
@@ -19,7 +19,7 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 //=====================================================================  
 var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
-		var mergedSystemOptions = mergeOptions(options, systemOptions);
+		var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
 		if (mergedSystemOptions.trace_img_src!="") trace_img_src=mergedSystemOptions.trace_img_src;			
 	});
 
@@ -288,7 +288,7 @@ var scr= document.createElement("script");
 		
 	}).toString();
 	
-	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(soundOptions) + ')')
+	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfig.soundOptions) + ')')
 		.replace("optionsReplace", '(' + JSON.stringify(myoptions) + ')').replace("erExtImagesReplace", '(' + JSON.stringify(erExtImages) + ')');	
 	
 	scr.text += "(" + formatSmilesString + ")();"; 

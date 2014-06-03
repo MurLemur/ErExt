@@ -3,13 +3,13 @@
 	var self = this;
 	
 	this.init = function() {
-		this.loadExtentionOption("options", myoptions, function() {
+		this.loadExtentionOption("options", defaultConfig.myoptions, function() {
 			self.prepareOptionButtons();
 		});
-		this.loadExtentionOption("soptions", soundOptions, function() {
+		this.loadExtentionOption("soptions", defaultConfig.soundOptions, function() {
 			self.prepareSoundOptionsButtons(this.soundSelectOptions);
 		});	
-		this.loadExtentionOption("systemOptions", systemOptions, function() {
+		this.loadExtentionOption("systemOptions", defaultConfig.systemOptions, function() {
 			self.prepareSystemOptions();
 		});
 	};
@@ -19,36 +19,27 @@
 	}
 
 	this.prepareSystemOptions = function() {
-		$.each(systemOptions, function(key) {
-			$('#' + key).val(systemOptions[key]).keyup(function() {
-				systemOptions[key] = $(this).val();
-				self.saveOptions("systemOptions", systemOptions);
+		$.each(defaultConfig.systemOptions, function(key) {
+			$('#' + key).val(defaultConfig.systemOptions[key]).keyup(function() {
+				defaultConfig.systemOptions[key] = $(this).val();
+				self.saveOptions("systemOptions", defaultConfig.systemOptions);
 			});
 		});
 	};
 	this.prepareOptionButtons = function() {
-		$.each(myoptions, function(key) {
-			$('#' + key).prop("checked", myoptions[key]).on("click", function() {
-				myoptions[this.id] = $(this).prop("checked");
-				self.saveOptions("options", myoptions);
+		$.each(defaultConfig.myoptions, function(key) {
+			$('#' + key).prop("checked", defaultConfig.myoptions[key]).on("click", function() {
+				defaultConfig.myoptions[this.id] = $(this).prop("checked");
+				self.saveOptions("options", defaultConfig.myoptions);
 			});
 		});		
 	};
 	
-	this.prepareSystemOptions = function() {
-		$.each(systemOptions, function(key) {
-			$('#' + key).val(systemOptions[key]).keyup(function() {
-				systemOptions[key] = $(this).val();
-				self.saveOptions("systemOptions", systemOptions);				
-			});
-		});
-	};
-	
 	this.prepareSoundOptionsButtons = function() {
-		$.each(soundOptions, function(key) {
-			$('#' + key).html(self.soundSelectOptions).val(soundOptions[key].sound).on("click", function() {
-				soundOptions[this.id].sound = $(this).val();
-				self.saveOptions("soptions", soundOptions);
+		$.each(defaultConfig.soundOptions, function(key) {
+			$('#' + key).html(self.soundSelectOptions).val(defaultConfig.soundOptions[key].sound).on("click", function() {
+				defaultConfig.soundOptions[this.id].sound = $(this).val();
+				self.saveOptions("soptions", defaultConfig.soundOptions);
 			});
 		});	
 	};

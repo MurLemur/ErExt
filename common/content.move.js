@@ -8,7 +8,7 @@
 //================================================================Begin
 
 kango.invokeAsync('kango.storage.getItem', "options", function(value) {
-		myoptions = mergeOptions(value, myoptions);
+		myoptions = mergeOptions(value, defaultConfig.myoptions);
 
 		if (!myoptions.unpaused) {
 			return;
@@ -16,7 +16,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 //=====================================================================  
 // Добавление своих локаций на ОВЛ и ОПП 
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
-		var mergedSystemOptions = mergeOptions(options, systemOptions);
+		var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
 		if (document.getElementsByClassName("SearchPlace").length > 0) {
 
 			var scr = document.createElement("script");
