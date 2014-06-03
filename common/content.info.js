@@ -27,7 +27,7 @@
 //================================================================Begin
 
 kango.invokeAsync('kango.storage.getItem', "options", function(options) {
-	var mergedOptions = mergeOptions(options, myoptions);
+	var mergedOptions = mergeOptions(options, defaultConfig.myoptions);
 
 	// check if plug-in on pause
 	if (!mergedOptions.unpaused) {

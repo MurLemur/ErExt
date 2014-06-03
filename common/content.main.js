@@ -16,12 +16,11 @@
 //================================================================Begin
 
 kango.invokeAsync('kango.storage.getItem',"options",function(value) {
-if (value!=null) {
-		for (nameprop in myoptions) {
-	 	if (value[nameprop]!=false) {value[nameprop]=true;}	
-		myoptions[nameprop]=value[nameprop];
-    	}
-}
+	myoptions = mergeOptions(value, defaultConfig.myoptions);
+
+	if (!myoptions.unpaused) {
+		return;
+	}
 
 //=====================================================================
 

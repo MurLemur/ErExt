@@ -62,6 +62,6 @@ var popupClass = function(config) {
 
 KangoAPI.onReady(function() { 
 	kango.invokeAsync('kango.storage.getItem', "options", function(value) { 
-		new popupClass(mergeOptions(value, myoptions)).init();
+		new popupClass(mergeOptions(value, defaultConfig.myoptions)).init();
 	});
 });
