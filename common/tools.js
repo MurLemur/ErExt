@@ -244,8 +244,9 @@ var toolsClass = function() {
 	};
 	
 	this._loadOption = function(options, loadedOptions, callback) {
-		if (options.length > 0) {
-			var option = options.pop();
+		if (options.length > 0) {			
+			options = jQuery.extend(true, [], options);
+			option = options.pop();
 			kango.invokeAsync('kango.storage.getItem', option.systemName, function(extOptions) { 
 				loadedOptions[option.systemName] = mergeOptions(extOptions, defaultConfig[option.defaultName]);	
 				self._loadOption(options, loadedOptions, callback);			
