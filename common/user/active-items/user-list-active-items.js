@@ -11,6 +11,8 @@ var usersListActiveItemsClass = function(usersHolderSelector, userItemSelector, 
 	this.userName;
 	this.responseHash;
 	
+	this.preloaderImg = $('<img src=\"' + kango.io.getResourceUrl('res/popup_preloader.gif') + '\">');
+	
 	var self = this;
 	
 	this.init = function() {		
@@ -35,7 +37,7 @@ var usersListActiveItemsClass = function(usersHolderSelector, userItemSelector, 
 			
 			kango.dispatchMessage(self.messagingEnum.userItemsBackground, {userName: self.userName, hash: self.responseHash});
 			
-			self.popup.showPreloader().move(event.clientX, event.client, self.popupMarginX, self.popupMarginY);
+			self.popup.showPreloader(self.preloaderImg).move(event.clientX, event.client, self.popupMarginX, self.popupMarginY);
 		}).delegate(this.userItemSelector, "mouseout", function(event) {
 			if (self.responseHash === null) {
 				return;

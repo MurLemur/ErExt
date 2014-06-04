@@ -9,9 +9,7 @@ var popupClass = function(popupCss) {
 	
 	this.window = $(window);
 	
-	$('body').prepend(this.mainHolder);
-	
-	this.preloaderImg = $('<img src=\"' + kango.io.getResourceUrl('res/popup_preloader.gif') + '\">');
+	$('body').prepend(this.mainHolder);	
 	
 	this.show = function(popupBody) {
 		this.hide();
@@ -24,9 +22,9 @@ var popupClass = function(popupCss) {
 		return this;
 	};
 	
-	this.showPreloader = function() {
+	this.showPreloader = function(preloader) {
 		this.hide();
-		this.mainHolder.append(this.preloaderImg);
+		this.mainHolder.append(preloader);
 		
 		this.calculatePopupSize();
 		
@@ -64,5 +62,6 @@ var popupClass = function(popupCss) {
 		return this;
 	} 
 }
-	
+
 var popup = new popupClass(popupCss);
+

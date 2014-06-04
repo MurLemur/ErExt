@@ -52,9 +52,12 @@
 	}		
 }
 
-var extensionOptionsExportClass = function() {
+var extensionOptionsExportClass = function(popup) {
+	this.popup = popup;
+	this.exportLink = null;	
+	this.exportButton = $("#exportButton");
+	
 	var self = this;
-	var exportLink = null;
 	
 	this.erExtOptions = [
 		{systemName: 'soptions', defaultName: "soundOptions"}, 
@@ -66,10 +69,11 @@ var extensionOptionsExportClass = function() {
 		self._initExportButton();
 		self._initImportButton();
 		self._initExportLink();
+		console.log(popup);
 	}
 	
 	this._initExportButton = function() {
-		$("#exportButton").on('click', function() {
+		self.exportButton.on('click', function() {
 			tools.loadOptions(self.erExtOptions, self.exportToFile);
 		});
 	}
@@ -89,8 +93,7 @@ var extensionOptionsExportClass = function() {
 		self.exportLink.attr('href', hrefData);			
 		
 		self.exportLink[0].click();
-	}
-	
+	}	
 
 	this.filterOptions = function(options) {
 		$.each(options, function(key) { 
@@ -123,24 +126,38 @@ var extensionOptionsExportClass = function() {
 	this._initFileReader = function() {
 		var reader = new FileReader();
 		
+		reader.loadstart = function() {
+			self.popup.hide();
+		}
+		
 		reader.onload = function() {		
 			try {
 				var config = $.parseJSON(event.target.result);
 				self.importOptions(config);
+				self._makeImportNotifictation('Импорт настроек прошел успешно. <br/>Страница будет перезагружена через 5 секунд.');
+				
+				setTimeout(function() {
+					window.location.reload();
+				}, 5000);
 			}
 			catch(error) {
-				console.log('error');
+				self._makeImportNotifictation('Не удалось импортировать настройки. Возможно файл поврежден.');
 			}
 
 		}
 		
 		reader.onerror = function() {
-			console.log('error');
+			self._makeImportNotifictation('Не удалось считать файл.');
 		}
 		
 		return reader;
 	}
-
+	
+	this._makeImportNotifictation = function(text) {
+		var position = self.exportButton.position();
+		self.popup.show($('<div>' + text + '</div>')).move(position.left + self.exportButton.width(), position.top, 0, -1 * self.exportButton.height());
+	}
+	
 	this.importOptions = function(options) {
 		$.each(options, function(key) {				
 			if (typeof self.importFunctions[key] !== 'undefined') {
@@ -186,6 +203,8 @@ KangoAPI.onReady(function() {
       '<option value="wood">Звук 13</option>'+
       '<option value="work">Звук 14</option>';
 	  
+	var popup = new popupClass(popupCss);
+	
 	new extensionOptionsClass(htmlopt).init();
-	new extensionOptionsExportClass().init();
+	new extensionOptionsExportClass(popup).init();
 });
