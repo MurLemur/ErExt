@@ -52,8 +52,7 @@
 	}		
 }
 
-var extensionOptionsExportClass = function(popup) {
-	this.popup = popup;
+var extensionOptionsExportClass = function() {
 	this.exportLink = null;	
 	this.exportButton = $("#exportButton");
 	
@@ -69,7 +68,6 @@ var extensionOptionsExportClass = function(popup) {
 		self._initExportButton();
 		self._initImportButton();
 		self._initExportLink();
-		console.log(popup);
 	}
 	
 	this._initExportButton = function() {
@@ -89,7 +87,7 @@ var extensionOptionsExportClass = function(popup) {
 	}
 	
 	this._initFileDownload = function(options) { 
-		var hrefData = "data:text/plain;base64," + btoa(options);
+		var hrefData = "data:text/plain;base64," + btoa(escape(options));
 		self.exportLink.attr('href', hrefData);			
 		
 		self.exportLink[0].click();
@@ -126,36 +124,24 @@ var extensionOptionsExportClass = function(popup) {
 	this._initFileReader = function() {
 		var reader = new FileReader();
 		
-		reader.loadstart = function() {
-			self.popup.hide();
-		}
-		
-		reader.onload = function() {		
+		reader.onload = function(event) {		
 			try {
-				var config = $.parseJSON(event.target.result);
+				var config = $.parseJSON(unescape(event.target.result));
 				self.importOptions(config);
-				self._makeImportNotifictation('Импорт настроек прошел успешно. <br/>Страница будет перезагружена через 5 секунд.');
-				
-				setTimeout(function() {
-					window.location.reload();
-				}, 5000);
+				modalWindow.showr('Импорт настроек прошел успешно !');
 			}
 			catch(error) {
-				self._makeImportNotifictation('Не удалось импортировать настройки. Возможно файл поврежден.');
+				console.log(error);
+				modalWindow.show('Не удалось импортировать настройки. Возможно файл поврежден.');
 			}
 
 		}
 		
 		reader.onerror = function() {
-			self._makeImportNotifictation('Не удалось считать файл.');
+			modalWindow.show('Не удалось считать файл !');
 		}
 		
 		return reader;
-	}
-	
-	this._makeImportNotifictation = function(text) {
-		var position = self.exportButton.position();
-		self.popup.show($('<div>' + text + '</div>')).move(position.left + self.exportButton.width(), position.top, 0, -1 * self.exportButton.height());
 	}
 	
 	this.importOptions = function(options) {
@@ -185,6 +171,64 @@ var extensionOptionsExportClass = function(popup) {
 		}
 	}
 }
+var modalWindow = {
+    _block: null,
+    _win: null,
+       
+    initBlock: function() {
+        _block = document.getElementById('blockscreen'); 
+       
+        if (!_block) {
+            var parent = document.getElementsByTagName('body')[0]; 
+            var obj = parent.firstChild; 
+            _block = document.createElement('div'); 
+            _block.id = 'blockscreen'; 
+            parent.insertBefore(_block, obj); 
+            _block.onclick = function() { modalWindow.close(); } 
+        }
+        _block.style.display = 'inline';    
+    },
+    
+     initWin: function(html) {
+        _win = document.getElementById('modalwindow'); 
+        if (!_win) {
+            var parent = document.getElementsByTagName('body')[0];
+            var obj = parent.firstChild;
+            _win = document.createElement('div');
+            _win.id = 'modalwindow';
+             parent.insertBefore(_win, obj);
+        }
+            
+        _win.innerHTML = html; 
+         $('#modalwindow').show(); 
+    },
+     close: function() {
+        $('#blockscreen').hide(); 
+        $('#modalwindow').hide(); 
+    },
+     show: function(message) {
+     		
+       var html=  '<div id="modalwindow" class="confirm">'+
+                  '  <h1>'+message+'</h1>'+
+                  '  <p></p>'+
+                  '  <center><button id="bt_close">Закрыть</button></center>'+
+                  '  <p></p>'+
+                  '</div>';
+        modalWindow.initBlock();
+        modalWindow.initWin(html);
+        document.getElementById('bt_close').onclick = function() { modalWindow.close(); }  
+    },
+	showr: function(message) {
+		modalWindow.show(message);
+		$('#bt_close').on("click", function() {
+			window.location.reload();
+		});
+		$('#blockscreen').on("click", function() {
+			window.location.reload();
+		});
+
+	}
+}
 
 KangoAPI.onReady(function() {
 	var htmlopt = '<option value="nosound">Отключено</option>'+
@@ -203,8 +247,8 @@ KangoAPI.onReady(function() {
       '<option value="wood">Звук 13</option>'+
       '<option value="work">Звук 14</option>';
 	  
-	var popup = new popupClass(popupCss);
+	
 	
 	new extensionOptionsClass(htmlopt).init();
-	new extensionOptionsExportClass(popup).init();
+	new extensionOptionsExportClass().init();
 });

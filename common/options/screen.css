@@ -147,3 +147,65 @@ label.buttonclass .button {
 label.buttonclass:hover .button {
     background: green;
 }
+
+#blockscreen {
+    position: fixed;
+}
+#blockscreen {
+    background: rgba(0, 0, 0, .5);
+    opacity: 0.85;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+}
+
+.confirm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  min-width: 280px;
+  max-width: 500px;
+  height: auto;
+  background: #E2E2E2;
+  border-radius: 10px;
+  padding: 0;
+  margin: -140px 0 0 -250px;
+  border-top: 1px solid white;
+  animation: fade 1s ease 1 forwards;
+  border: 1px solid #aaa; 
+  background-color: #eeeeee; 
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+  z-index: 10000
+}
+.confirm h1 {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 1.5rem 1rem 0.5rem;
+}
+.confirm p {
+  text-align: center;
+  font-size: 1rem;
+  margin: 0 2rem 0.5rem;
+}
+.confirm button {
+  border-top: 1px solid #B4B4B4;
+  border-right: 1px solid #B4B4B4;
+  border-left: 1px solid #B4B4B4;
+  border-bottom: 1px solid #B4B4B4;
+  border-radius: 5px 5px 5px 5px;  
+  width: 40%;
+  line-height: 30px;
+  text-align: center;
+  background: #778899;
+  transition: background 0.2s;
+  border: 1px solid rgba(0,0,0,0.1);
+  color: #fff;
+  display: inline-block;  
+}
+.confirm button:focus,
+.confirm button:hover {
+    background: green;
+}
