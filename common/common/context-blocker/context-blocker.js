@@ -23,10 +23,14 @@ var contextBlockerClass = function(css) {
 			
 			window.oncontextmenu = function(){return false};
 		}
+		localStorage['blockStatus'] = self.blockStatus;
 	};
 	
 	this.init = function() {
 		$("#div_users a#span_sort").parent().prepend(this.buildLink());
+		if (localStorage['blockStatus']=='true') this.blockContext($("img[src*=block_cmenu]"));
+
+
 	}
 	
 }		

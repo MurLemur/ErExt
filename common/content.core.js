@@ -522,7 +522,7 @@ if (myoptions.teammate_trace) {
 }
 
 
- if (scr!="") { 	
+ if (scr.text!="") { 	
  document.body.appendChild(scr);
  }
 }

@@ -6,6 +6,7 @@
 	"content.core.js", 
 	"content.move.js",		
 	"content.common.js",
+  "contents/content.taverna.js",
 	"contents/services/content.sidzoku.js",
 	"contents/services/content.yo-bods.js",
 	"contents/services/content.efimerka.js",

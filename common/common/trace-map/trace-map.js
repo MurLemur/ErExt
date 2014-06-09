@@ -19,12 +19,13 @@ var traceMapClass = function(css) {
 			self.isEnable = true;
 			traceImg.attr("src", self.css.traceImgOn);
 		}
-
+		localStorage['isEnableTrace'] = self.isEnable;
 	}
 
 
 	this.init = function() {
 		$("#div_users a#span_sort").parent().prepend(this.buildLink());
+		if (localStorage['isEnableTrace']=='true') setTimeout(function() {$("img[src*=footprint]").click();},500);
 	}
 }
 			
