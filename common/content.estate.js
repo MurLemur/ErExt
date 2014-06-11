@@ -8,15 +8,22 @@
 //================================================================Begin
 
 kango.invokeAsync('kango.storage.getItem', "options", function(value) {
-		myoptions = mergeOptions(value, defaultConfig.myoptions);
+	myoptions = mergeOptions(value, defaultConfig.myoptions);
 
-		if (!myoptions.unpaused) {
-			return;
-		}
-//=====================================================================  
+	if (!myoptions.unpaused) {
+		return;
+	}
+	//=====================================================================  
 
-		var scr = document.createElement("script");
-		scr.text = "(" +
+	var scr = document.createElement("script");
+	scr.text = "";
+
+	var veto_administracii = true; // В надежде что когда то администрация разрешит сворачивать диалоги поместья
+
+	if (veto_administracii != true) {
+
+
+		scr.text = scr.text + "(" +
 			(function() {
 
 			var zzz = Estates.parseDialog;
@@ -66,28 +73,29 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			}
 
 		}).toString() + ")();";
+	}
 
-		scr.text = scr.text + "(" +
-			(function() {
+	scr.text = scr.text + "(" +
+		(function() {
 
-			var zzz = Estates.showAttackHistory;
+		var zzz = Estates.showAttackHistory;
 
-			Estates.showAttackHistory = function() {
-				zzz.apply(Estates);
-				res = document.getElementById("estateHistoryData").getElementsByTagName("b");
-				for (i = 0; i < res.length; ++i) {
-					var mname = res[i].innerHTML;
-					mlink = "<a href='http://www.ereality.ru/~" + mname + "' target='_blank'><b>" + mname + "</b></a>"
-					res[i].parentNode.innerHTML = res[i].parentNode.innerHTML.split("<b>" + mname + "</b>").join(mlink);
-				}
-				return;
+		Estates.showAttackHistory = function() {
+			zzz.apply(Estates);
+			res = document.getElementById("estateHistoryData").getElementsByTagName("b");
+			for (i = 0; i < res.length; ++i) {
+				var mname = res[i].innerHTML;
+				mlink = "<a href='http://www.ereality.ru/~" + mname + "' target='_blank'><b>" + mname + "</b></a>"
+				res[i].parentNode.innerHTML = res[i].parentNode.innerHTML.split("<b>" + mname + "</b>").join(mlink);
 			}
+			return;
+		}
 
-		}).toString() + ")();";
+	}).toString() + ")();";
 
-		document.body.appendChild(scr);
+	document.body.appendChild(scr);
 
 
 	//=========================end.
-	
+
 });
