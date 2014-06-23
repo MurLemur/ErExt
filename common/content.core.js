@@ -2,7 +2,7 @@
 // @name     ErExt_ModifyCoreFunc
 // @include     http://www.ereality.ru/core/*
 // @require     tools.js
-// @all-frames  true
+// @all-frames  false
 // ==/UserScript==
 
 kango.invokeAsync('kango.storage.getItem',"soptions", function(value) {
@@ -17,10 +17,13 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 		return;
 	}
 //=====================================================================  
+  	
+
 var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
 		var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
-		if (mergedSystemOptions.trace_img_src!="") trace_img_src=mergedSystemOptions.trace_img_src;			
+		if (mergedSystemOptions.trace_img_src!="") trace_img_src=mergedSystemOptions.trace_img_src;
+		window.setTimeout( pfunction , 100);			
 	});
 
 function pfunction(){
@@ -355,6 +358,16 @@ if (myoptions.keyalt) {
 				"json");
 	core.onKeyUp=function(event){
 			event = (window.event || event);
+			if ((event.keyCode == 112)&&(battle.bstatus==0)) {    // F11 
+						$.each(battle.items, function(num, val) {
+							if ((val.img == "draftroll.png") || (val.img == "summonscroll.jpg") || (val.img == "ejectroll.png")) battle.selectItem(battle.items[num].uid)
+						})
+			}
+			if ((event.keyCode == 113)&&(battle.bstatus==0)) {    // F11 
+						$.each(battle.items, function(num, val) {
+							if ((val.img == "draftroll.png") || (val.img == "summonscroll.jpg") || (val.img == "ejectroll.png")) battle.selectItem(battle.items[num].uid)
+						})
+			}
 			if (event.altKey) {
 		 	if ((event.keyCode==49)&&(HSets[0]!=undefined)) {inventory.actionUpSet({"setId":HSets[0]})} //1
 		 	if ((event.keyCode==50)&&(HSets[1]!=undefined)) {inventory.actionUpSet({"setId":HSets[1]})} //2
@@ -385,6 +398,7 @@ if (myoptions.keyalt) {
 					chest.sectorOVL = [];
 					chest.sectorOPP = [];
 					chest.sectorODL = [];
+					chest.sectorTO  = [];
 					$("#span_mode5").children().on("click", function() {
 						if (chest.sectoraliens.length > 0) chest.sectoraliens = [];
 						if (chest.sectorODL.length > 0) chest.sectorODL = [];
@@ -466,7 +480,6 @@ if (myoptions.keyalt) {
 						var current_mas = chest.sectorODL;
 						var map_mas = main.map;
 						var newmap = false;}
-						//main.sector = main.Map.currentSector.x + ':' + main.Map.currentSector.y;	
 					else if (user.place2 == 8) {
 						var current_mas = chest.sectorOK;
 						var map_mas = main.map;
@@ -475,12 +488,14 @@ if (myoptions.keyalt) {
 						var current_mas = chest.sectorOVL;
 						var map_mas = main.Map.sectors;
 						var newmap = true;
-					//	main.sector = main.Map.currentSector.x + ':' + main.Map.currentSector.y;
 					} else if (user.place2 == 3) {
 						var current_mas = chest.sectorOPP;
 						var map_mas = main.Map.sectors;
 						var newmap = true;
-					//	main.sector = main.Map.currentSector.x + ':' + main.Map.currentSector.y;
+					} else if (user.place2 == 14) {
+						var current_mas = chest.sectorTO;
+						var map_mas = main.Map.sectors;
+						var newmap = true;	
 					} else if ((user.place2 > 19) && (user.place2 < 100)) {
 						var current_mas = chest.sectoraliens;
 						var map_mas = main.map;
@@ -526,12 +541,6 @@ if (myoptions.teammate_trace) {
  document.body.appendChild(scr);
  }
 }
-
-
- if (location.href.search("http://www.ereality.ru/core") != -1 )
- {
- 	 window.setTimeout( pfunction , 100);
- }	
 
  //=========================end.
 

@@ -37,8 +37,10 @@
 	
 	this.prepareSoundOptionsButtons = function() {
 		$.each(defaultConfig.soundOptions, function(key) {
+			$('#' + key).parent().parent().append('<td><audio controls id="s_'+key+'" src="http://www.ereality.ru/mp3/'+defaultConfig.soundOptions[key].sound+'.mp3" type="audio/mp3" </audio></td>');
 			$('#' + key).html(self.soundSelectOptions).val(defaultConfig.soundOptions[key].sound).on("click", function() {
 				defaultConfig.soundOptions[this.id].sound = $(this).val();
+				$('#s_' + this.id).attr("src",'http://www.ereality.ru/mp3/'+$(this).val()+'.mp3');
 				self.saveOptions("soptions", defaultConfig.soundOptions);
 			});
 		});	
