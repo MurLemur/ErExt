@@ -33,6 +33,10 @@ var usersListActiveItemsClass = function(usersHolderSelector, userItemSelector, 
 			}
 
 			self.userName = $(this).text();
+			if (self.userName.search(/\./)>0) {
+				self.userName=$(this).attr("name");
+			}
+
 			self.responseHash = self.userName + Date.now() + Math.floor((Math.random() * 100) + 1);
 			
 			kango.dispatchMessage(self.messagingEnum.userItemsBackground, {userName: self.userName, hash: self.responseHash});

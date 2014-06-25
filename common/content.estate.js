@@ -18,7 +18,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	var scr = document.createElement("script");
 	scr.text = "";
 
-	var veto_administracii = true; // В надежде что когда то администрация разрешит сворачивать диалоги поместья
+	var veto_administracii = false; // В надежде что когда то администрация разрешит сворачивать диалоги поместья
 
 	if (veto_administracii != true) {
 

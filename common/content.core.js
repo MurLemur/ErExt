@@ -269,7 +269,7 @@ var scr= document.createElement("script");
 			$("#td_dyn").after(globalTd);
 		}
 		
-		if (soundOptions["sound_zavod"].sound != "nosound") {
+		if (erExtOptions.userlistactiveitems || soundOptions["sound_zavod"].sound != "nosound") {
 			var oldBuildPlayersTable = battle.buildPlayersTable;
 			var oldBattleLoad = battle.load;
 			
@@ -282,7 +282,13 @@ var scr= document.createElement("script");
 			battle.buildPlayersTable = function() {
 				oldBuildPlayersTable.apply(battle);
 				
-				if (users.oSpanLocation.text().search("Цех ") == 0 && battle.FirstFactorySound) {
+					if (erExtOptions.userlistactiveitems) {
+						$.each($("#div_battle span[class*=bp]"), function(num, val) {
+							val.setAttribute("name", battle.players[val.id.substr(1)].name);
+						})
+					}
+
+				if (soundOptions["sound_zavod"].sound != "nosound" && users.oSpanLocation.text().search("Цех ") == 0 && battle.FirstFactorySound) {
 					battle.FirstFactorySound = false;
 					core.playSwfSound(soundOptions["sound_zavod"].sound);
 				}
@@ -340,6 +346,7 @@ var scr= document.createElement("script");
 	}).toString()
 	+ ")();"; 
 }
+
 
 
 // Хоткеи ALT+12345QWE
