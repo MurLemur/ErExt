@@ -26,9 +26,9 @@
   "version": "1.0.9", 
   "name": "EReality Extension",
   "browser_button": {
-		"caption": "Open menu", 
+		"caption": "Открыть меню", 
 		"icon": "icons/button.png", 
-		"tooltipText": "Open menu",
+		"tooltipText": "Открыть меню",
 		"popup": {
             "url": "button/popup.html",
             "width": 260,

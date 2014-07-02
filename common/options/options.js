@@ -192,16 +192,8 @@ var modalWindow = {
     },
     
      initWin: function(html) {
-        _win = document.getElementById('modalwindow'); 
-        if (!_win) {
-            var parent = document.getElementsByTagName('body')[0];
-            var obj = parent.firstChild;
-            _win = document.createElement('div');
-            _win.id = 'modalwindow';
-             parent.insertBefore(_win, obj);
-        }
-            
-        _win.innerHTML = html; 
+         if ($('#modalwindow').length==0) $("body").append($("<div id=\"modalwindow\" class=\"confirm\">"+html+"</div>"));
+    	 else $('#modalwindow').html(html);
          $('#modalwindow').show(); 
     },
      close: function() {
@@ -210,12 +202,10 @@ var modalWindow = {
     },
      show: function(message) {
      		
-       var html=  '<div id="modalwindow" class="confirm">'+
-                  '  <h1>'+message+'</h1>'+
+       var html=  '  <h1>'+message+'</h1>'+
                   '  <p></p>'+
                   '  <center><button id="bt_close">Закрыть</button></center>'+
-                  '  <p></p>'+
-                  '</div>';
+                  '  <p></p>';
         modalWindow.initBlock();
         modalWindow.initWin(html);
         document.getElementById('bt_close').onclick = function() { modalWindow.close(); }  

@@ -30,8 +30,8 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			});
 		}).toString();
 	
-		var scr = document.createElement("script");
-		scr.text = "(" + tradeString + ")();";
-		document.body.appendChild(scr);
+		
+		script = "(" + tradeString + ")();";
+		inject_global(script);
 	}
 });

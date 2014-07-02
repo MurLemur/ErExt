@@ -24,19 +24,10 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 
 //=====================================================================
 
-Array.prototype.shuffle = function( b )
-{
- var i = this.length, j, t;
- while( i ) 
- {
-  j = Math.floor( ( i-- ) * Math.random() );
-  t = b && typeof this[i].shuffle!=='undefined' ? this[i].shuffle() : this[i];
-  this[i] = this[j];
-  this[j] = t;
- }
-
- return this;
-};
+shuffle = function(o){
+	for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	return o;
+}
 
 
 
@@ -65,7 +56,7 @@ function lotereya() {
 			if (xpathres.snapshotLength>0) {xpathres.snapshotItem(0).click();}
 		}
 		var arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
-		arr.shuffle();
+		arr = shuffle(arr);
 		for (var i=0; i<5; i++) {xpath('//img[@src = "http://img.ereality.ru/loto/'+arr[i]+'_a.png"]').snapshotItem(0).click();}
 	}
 	else if (document.getElementById("ImgField14")!=null)
@@ -75,7 +66,7 @@ function lotereya() {
 			if (xpathres.snapshotLength>0) {xpathres.snapshotItem(0).click();}
 		}
 		var arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
-		arr.shuffle();
+		arr = shuffle(arr);
 		for (var i=0; i<4; i++) {xpath('//img[@src = "http://img.ereality.ru/loto/'+arr[i]+'_a.png"]').snapshotItem(0).click();}
 	}
 }
@@ -270,8 +261,7 @@ if (myoptions.unpaused) {
 				for(i=0; i<xpathRes.snapshotLength; i++) {
 				 el=xpathRes.snapshotItem(i).parentNode.previousSibling.previousSibling;
 				 if (el!=undefined) {
-					 glink = "<a href='#' onclick='if (this.firstChild.innerHTML==undefined) {top.chat.msg(this.innerHTML)} else {top.chat.msg(this.firstChild.innerHTML)}'>"+el.innerHTML+"</a>";
-    	     		 el.innerHTML=el.innerHTML.replace(el.innerHTML,glink);	
+			   		el.setAttribute("onclick", "if (this.firstChild.innerHTML==undefined) {top.chat.msg(this.innerHTML)} else {top.chat.msg(this.firstChild.innerHTML)}");
         	 		}
 				}
 			}

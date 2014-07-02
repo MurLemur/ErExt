@@ -15,15 +15,14 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	}
 	//=====================================================================  
 
-	var scr = document.createElement("script");
-	scr.text = "";
+	script = "";
 
 	var veto_administracii = false; // В надежде что когда то администрация разрешит сворачивать диалоги поместья
 
 	if (veto_administracii != true) {
 
 
-		scr.text = scr.text + "(" +
+		script = script + "(" +
 			(function() {
 
 			var zzz = Estates.parseDialog;
@@ -39,7 +38,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 				if ($("#mydialoglink").length) {
 					$("#mydialoglink").show();
 				} else {
-					document.getElementById("estateNameButton").parentNode.innerHTML = '' + document.getElementById("estateNameButton").parentNode.innerHTML + '<a id="mydialoglink" href="javascript: Estates.UnhideDialog();">[+]<a>';
+					$("#estateNameButton").parent().append($("<a id=\"mydialoglink\" href=\"javascript: Estates.UnhideDialog();\">[+]</a>"));
 				}
 			};
 
@@ -63,37 +62,32 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 					mlink = "<a href='http://www.ereality.ru/~" + mname + "' target='_blank'><b>" + mname + "</b></a>"
 					mdialog.text = mdialog.text.split("<b>" + mname + "</b>").join(mlink);
 				}
-				//if (mdialog.type=="fightfind") {
 				mdialog.title = mdialog.title + '<a href="javascript: Estates.hideDialog();">[X]<a>';
 				if ((mdialog.type == "selection") && ($("#estateSelectionCard1")[0].previousElementSibling.innerHTML.search("[X]") < 0)) {
-					$("#estateSelectionCard1")[0].previousElementSibling.innerHTML += '<a href="javascript: Estates.hideDialog();">[X]<a>';
+					$("#estateSelectionCard1").prev().append($("<a href=\"javascript: Estates.hideDialog();\">[X]</a>"));
 				}
-				//}
 				return mdialog;
 			}
 
 		}).toString() + ")();";
 	}
 
-	scr.text = scr.text + "(" +
+	script = script + "(" +
 		(function() {
 
 		var zzz = Estates.showAttackHistory;
 
 		Estates.showAttackHistory = function() {
 			zzz.apply(Estates);
-			res = document.getElementById("estateHistoryData").getElementsByTagName("b");
-			for (i = 0; i < res.length; ++i) {
-				var mname = res[i].innerHTML;
-				mlink = "<a href='http://www.ereality.ru/~" + mname + "' target='_blank'><b>" + mname + "</b></a>"
-				res[i].parentNode.innerHTML = res[i].parentNode.innerHTML.split("<b>" + mname + "</b>").join(mlink);
-			}
+			$.each($("#estateHistoryData b"), function(num, val) {
+				$(val).append($("<a href='http://www.ereality.ru/~" + val.innerHTML + "' target='_blank'><img class=\"inf\"  src=\"http://img.ereality.ru/inf.gif\"></a>"));
+			})
 			return;
 		}
 
 	}).toString() + ")();";
 
-	document.body.appendChild(scr);
+	inject_global(script);
 
 
 	//=========================end.

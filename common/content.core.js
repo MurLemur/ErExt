@@ -23,16 +23,16 @@ var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
 		var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
 		if (mergedSystemOptions.trace_img_src!="") trace_img_src=mergedSystemOptions.trace_img_src;
-		window.setTimeout( pfunction , 100);			
+		window.setTimeout(function() { pfunction(); }, 100);			
 	});
 
 function pfunction(){
 
-var scr= document.createElement("script");
- scr.text="";
+
+ script="";
 
  if ((myoptions.questsectors)||(myoptions.chatsectors)) {
-	scr.text +=  "(" +
+	script +=  "(" +
 	(function(){
 		chat.myshowSec = function (xcord,ycord){
 		var sectorX = top.frames.main.document.getElementById("searchX");
@@ -300,11 +300,11 @@ var scr= document.createElement("script");
 	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfig.soundOptions) + ')')
 		.replace("optionsReplace", '(' + JSON.stringify(myoptions) + ')').replace("erExtImagesReplace", '(' + JSON.stringify(erExtImages) + ')');	
 	
-	scr.text += "(" + formatSmilesString + ")();"; 
+	script += "(" + formatSmilesString + ")();"; 
 
 	//Добавляем кликабельность секторов в Дневнике Квестов
 		if (myoptions.questsectors) {
-	scr.text= scr.text+ "(" +
+	script= script+ "(" +
 	(function(){
 	var zxzx4=questDiary.onRecvXML;
 	questDiary.onRecvXML=function(){
@@ -323,7 +323,7 @@ var scr= document.createElement("script");
 
 //При не пустой строке чата не завершать бой энтером , поидее )
 		if (myoptions.keyenter) {
-		scr.text= scr.text+ "(" +
+		script= script+ "(" +
 	(function(){
 	var zxzx6=core.onKeyDown;
 	core.onKeyDown=function(event){
@@ -351,7 +351,7 @@ var scr= document.createElement("script");
 
 // Хоткеи ALT+12345QWE
 if (myoptions.keyalt) {
-		scr.text= scr.text+ "(" +
+		script= script+ "(" +
 	(function(){
 		var zxzx8=core.onKeyUp;
 		var HSets = []; // Список сохраненных комплектов
@@ -397,7 +397,7 @@ if (myoptions.keyalt) {
 
 		// След
 		if (myoptions.map_trace) {
-			scr.text = scr.text + "(" +
+			script = script + "(" +
 				(function() {
 					var chest = {};
 					chest.sectorOK = []; // двумерный массив прошедших секторов OK
@@ -540,13 +540,10 @@ if (myoptions.keyalt) {
 		}
 
 if (myoptions.teammate_trace) {
-	scr.text=scr.text.replace("teammate_trace = false","teammate_trace = true");
+	script=script.replace("teammate_trace = false","teammate_trace = true");
 }
 
-
- if (scr.text!="") { 	
- document.body.appendChild(scr);
- }
+ inject_global(script); 
 }
 
  //=========================end.

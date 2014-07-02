@@ -22,10 +22,8 @@ var ContexMenusBuilderClass = function(ContextMenus) {
 				'</div>'
 		});
 
-		document.body.lastChild.insertAdjacentHTML("afterEnd", html);
-		var scr = document.createElement("script");
-		scr.text = script;
-		document.body.appendChild(scr);
+		$(document.body.lastChild).after($(html));
+		inject_global(script);
 
 	}
 }
