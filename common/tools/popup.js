@@ -34,7 +34,7 @@ var popupClass = function(popupCss) {
 	};
 		
 	this.hide = function() {
-		this.mainHolder.hide().children().remove();
+		this.mainHolder.hide().empty();
 		return this; 
 	};
 	

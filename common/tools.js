@@ -41,7 +41,8 @@ var defaultConfig = {
 		"trade_buy_full_lot": true,
 		"contextmenus": true,
 		"teammate_trace": true,
-		"taverna_fast_click": true
+		"taverna_fast_click": true,
+		"clickablePSmiles" : true
 	},
 	
 	systemOptions: {
@@ -92,7 +93,9 @@ var defaultConfig = {
 			sound: "nosound",
 			detect: "Сейсмопредупреждение"
 		}	
-	}
+	},
+	
+	estateVictims: {}
 }
 
 function mergeOptions(options, defaultOptions) {
