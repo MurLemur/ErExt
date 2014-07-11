@@ -128,6 +128,27 @@ var scr= document.createElement("script");
 			return _text;
 		}
 		
+		function modifyPrivateSmiles(_text) {
+			var pSmiles = {};
+			var matches = _text.match(new RegExp('"%PS%([0-9]+)', 'g'));
+			
+			if (matches == null) { 
+				return _text;
+			}
+			
+			$.each(matches, function() {
+				var smileID = this.substr(5);
+
+				if ($.inArray(parseInt(smileID), chat.psmile) > -1 && pSmiles[smileID] == null) {
+					pSmiles[smileID] = true;
+					
+					_text = _text.replace(new RegExp('<img src="%PS%' +  smileID + '.gif">', 'g') , '<img class="smile" src="%PS%' +  smileID + '.gif" name="sp' + smileID + '">');
+				}
+			});				
+
+			return _text;
+		}
+		
 		var oldChatHTML = chat.html;
 		var oldPrintMessage = messenger.PrintMessage;
 		var keeperName = 'Смотритель';
@@ -191,7 +212,12 @@ var scr= document.createElement("script");
 			}
 		}
 		
-		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
+		
+		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {			
+			if (erExtOptions.clickablePSmiles) {
+				_text = modifyPrivateSmiles(_text);
+			}
+			
 			if (erExtOptions.chatsectors) {
 				_text = modifySectors(_text);
 			}
