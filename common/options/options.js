@@ -37,8 +37,10 @@
 	
 	this.prepareSoundOptionsButtons = function() {
 		$.each(defaultConfig.soundOptions, function(key) {
+			$('#' + key).parent().parent().append('<td><audio controls id="s_'+key+'" src="http://www.ereality.ru/mp3/'+defaultConfig.soundOptions[key].sound+'.mp3" type="audio/mp3" </audio></td>');
 			$('#' + key).html(self.soundSelectOptions).val(defaultConfig.soundOptions[key].sound).on("click", function() {
 				defaultConfig.soundOptions[this.id].sound = $(this).val();
+				$('#s_' + this.id).attr("src",'http://www.ereality.ru/mp3/'+$(this).val()+'.mp3');
 				self.saveOptions("soptions", defaultConfig.soundOptions);
 			});
 		});	
@@ -190,16 +192,8 @@ var modalWindow = {
     },
     
      initWin: function(html) {
-        _win = document.getElementById('modalwindow'); 
-        if (!_win) {
-            var parent = document.getElementsByTagName('body')[0];
-            var obj = parent.firstChild;
-            _win = document.createElement('div');
-            _win.id = 'modalwindow';
-             parent.insertBefore(_win, obj);
-        }
-            
-        _win.innerHTML = html; 
+         if ($('#modalwindow').length==0) $("body").append($("<div id=\"modalwindow\" class=\"confirm\">"+html+"</div>"));
+    	 else $('#modalwindow').html(html);
          $('#modalwindow').show(); 
     },
      close: function() {
@@ -208,12 +202,10 @@ var modalWindow = {
     },
      show: function(message) {
      		
-       var html=  '<div id="modalwindow" class="confirm">'+
-                  '  <h1>'+message+'</h1>'+
+       var html=  '  <h1>'+message+'</h1>'+
                   '  <p></p>'+
                   '  <center><button id="bt_close">Закрыть</button></center>'+
-                  '  <p></p>'+
-                  '</div>';
+                  '  <p></p>';
         modalWindow.initBlock();
         modalWindow.initWin(html);
         document.getElementById('bt_close').onclick = function() { modalWindow.close(); }  

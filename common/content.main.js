@@ -2,7 +2,7 @@
 // @name        ErExt_main
 // @include     http://www.ereality.ru/core*
 // @include 	http://ratings.ereality.ru/clans*
-// @include 	http://freedom.erclans.ru/analiz*
+// @include 	http://freedom.erclan.ru/analiz*
 // @include 	http://www.ereality.ru/log*
 // @include     http://www.news.ereality.ru/*sostav&id=*
 // @include     http://cc.erclans.ru/*page_id=45*
@@ -24,19 +24,10 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 
 //=====================================================================
 
-Array.prototype.shuffle = function( b )
-{
- var i = this.length, j, t;
- while( i ) 
- {
-  j = Math.floor( ( i-- ) * Math.random() );
-  t = b && typeof this[i].shuffle!=='undefined' ? this[i].shuffle() : this[i];
-  this[i] = this[j];
-  this[j] = t;
- }
-
- return this;
-};
+shuffle = function(o){
+	for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	return o;
+}
 
 
 
@@ -65,7 +56,7 @@ function lotereya() {
 			if (xpathres.snapshotLength>0) {xpathres.snapshotItem(0).click();}
 		}
 		var arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
-		arr.shuffle();
+		arr = shuffle(arr);
 		for (var i=0; i<5; i++) {xpath('//img[@src = "http://img.ereality.ru/loto/'+arr[i]+'_a.png"]').snapshotItem(0).click();}
 	}
 	else if (document.getElementById("ImgField14")!=null)
@@ -75,7 +66,7 @@ function lotereya() {
 			if (xpathres.snapshotLength>0) {xpathres.snapshotItem(0).click();}
 		}
 		var arr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
-		arr.shuffle();
+		arr = shuffle(arr);
 		for (var i=0; i<4; i++) {xpath('//img[@src = "http://img.ereality.ru/loto/'+arr[i]+'_a.png"]').snapshotItem(0).click();}
 	}
 }
@@ -193,14 +184,14 @@ if (myoptions.unpaused) {
 	}
 	else if ((location.href.search("http://www.ereality.ru/log") != -1)&&(location.href.search("http://www.ereality.ru/login") == -1)) {
 		var link = document.createElement('A');
-		link.href = 'http://freedom.erclans.ru/analiz/'+location.href.replace("http://www.ereality.ru/log/","");
+		link.href = 'http://freedom.erclan.ru/analiz/'+location.href.replace("http://www.ereality.ru/log/","");
 		link.target = '_blank'
 		link.innerHTML = '<img src="data:image/gif;base64,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"</img>';
 		document.body.insertBefore(link, document.body.firstChild);
 	}
-	else if (location.href.search("http://freedom.erclans.ru/analiz/") != -1) {
+	else if (location.href.search("http://freedom.erclan.ru/analiz/") != -1) {
 		if (document.referrer.search("http://www.ereality.ru/log") != -1) {
-			document.getElementsByName("num_log")[0].setAttribute('value',location.href.replace("http://freedom.erclans.ru/analiz/",""));
+			document.getElementsByName("num_log")[0].setAttribute('value',location.href.replace("http://freedom.erclan.ru/analiz/",""));
 			var xpathRes = xpath("/html/body/center/form/table/tbody/tr[4]/td/input");
 			xpathRes.snapshotItem(0).click();
 		}
@@ -270,8 +261,7 @@ if (myoptions.unpaused) {
 				for(i=0; i<xpathRes.snapshotLength; i++) {
 				 el=xpathRes.snapshotItem(i).parentNode.previousSibling.previousSibling;
 				 if (el!=undefined) {
-					 glink = "<a href='#' onclick='if (this.firstChild.innerHTML==undefined) {top.chat.msg(this.innerHTML)} else {top.chat.msg(this.firstChild.innerHTML)}'>"+el.innerHTML+"</a>";
-    	     		 el.innerHTML=el.innerHTML.replace(el.innerHTML,glink);	
+			   		el.setAttribute("onclick", "if (this.firstChild.innerHTML==undefined) {top.chat.msg(this.innerHTML)} else {top.chat.msg(this.firstChild.innerHTML)}");
         	 		}
 				}
 			}

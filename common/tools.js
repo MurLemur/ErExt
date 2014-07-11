@@ -142,6 +142,13 @@ CP1251urlencode = function(str) {
 	return escape(String.fromCharCode.apply(null,ret));
 }
 
+function inject_global(script_src) {
+	var scr = document.createElement("script");
+	scr.text = script_src;
+	document.body.appendChild(scr);
+}
+
+function escapeHTML(str) str.replace(/[&"<>]/g, function (m) ({ "&": "&amp;", '"': "&quot;", "<": "&lt;", ">": "&gt;" })[m]);
 
 var toolsClass = function() {
 	var self = this;

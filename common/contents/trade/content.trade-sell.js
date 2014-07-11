@@ -18,8 +18,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	//Механизм быстрого выставления однотипных лотов для биржи
 	if (myoptions.stockmy) {
 
-		var scr = document.createElement("script");
-		scr.text = "(" +
+		script = "(" +
 			(function() {
 
 			//Выставление лота на биржу	
@@ -38,7 +37,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 						if ((myprice.length > 0) && (myprice.val() > 0)) {
 							mystime = $("#mystime");
-							elem.insertAdjacentHTML("afterEnd", '<input class="butt2" id="mbtn' + key + '" type="button" onclick="top.core.addlot(' + key + ',' + myprice.val() + ',' + mystime.val() + ')" value="Выставить по ' + myprice.val() + '">');
+							$(elem).after($("<input class=\"butt2\" id=\"mbtn" + key + "\" type=\"button\" onclick=\"top.core.addlot(" + key + "," + myprice.val() + "," + mystime.val() + ")\" value=\"Выставить по " + myprice.val() + "\">"));
 						}
 					});
 				} else {
@@ -90,13 +89,10 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 				'</tbody>' +
 				'</table>';
 
-
-			$("#cat")[0].insertAdjacentHTML("afterEnd", htmlelements);
-
-
+			$($("#cat")[0]).after($(htmlelements));
 
 		}).toString() + ")();";
-		document.body.appendChild(scr);
+		inject_global(script);
 	}
 
 //=========================end.

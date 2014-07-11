@@ -32,7 +32,6 @@ header{
 	overflow:hidden;
 	background:#e1e1e1;
 	background:-webkit-gradient(linear, left top, left bottom, from(#d1d1d1), to(#e1e1e1));
-	background:-moz-linear-gradient(top,  #d1d1d1,  #e1e1e1);
 	padding:0 5px;
 	}
 header h1{
@@ -76,7 +75,6 @@ nav li{
 	position:relative;
 	background:#ccc;
 	background:-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#aaa));
-	background:-moz-linear-gradient(top,  #ccc,  #aaa);
 	}
 nav li a, nav li a:visited, nav li a:hover{
 	list-style:none;
@@ -98,7 +96,6 @@ nav li a, nav li a:visited, nav li a:hover{
 nav li.selected{
 	background:#e1e1e1;
 	background:-webkit-gradient(linear, left top, left bottom, from(#e1e1e1), to(#d1d1d1));
-	background:-moz-linear-gradient(top,  #e1e1e1,  #d1d1d1);
 	}
 nav li.selected a{
 	-moz-box-shadow:none;

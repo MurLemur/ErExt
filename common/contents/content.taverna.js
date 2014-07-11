@@ -14,9 +14,8 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			return;
 		}
 		//===================================================================== 
-		var scr = document.createElement("script");
 		if (myoptions.taverna_fast_click) {
-		scr.text = "(" +
+		script = "(" +
 			(function() {
 
 			taverna.my_craft = function(idRecipe, count1, count2, count3, cid1, cid2, cid3) {
@@ -62,14 +61,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			old_getFishSoupHTML();
 			taverna.my_init();
 		}
-		window.setTimeout( taverna.my_init , 50);
+		window.setTimeout(function() { taverna.my_init()} , 50);
 
 		}).toString() + ")();";
 }
 
-	if (scr.text != "") {
-		document.body.appendChild(scr);
-	}
+	inject_global(script);
 	
 
 	//=========================end.
