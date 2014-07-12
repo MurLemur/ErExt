@@ -42,7 +42,8 @@ var defaultConfig = {
 		"contextmenus": true,
 		"teammate_trace": true,
 		"taverna_fast_click": true,
-		"clickablePSmiles" : true
+		"clickablePSmiles" : true,
+		'clickbaleNamesInGlobalEventReports' : true
 	},
 	
 	systemOptions: {
@@ -147,8 +148,6 @@ function inject_global(script_src) {
 	scr.text = script_src;
 	document.body.appendChild(scr);
 }
-
-function escapeHTML(str) str.replace(/[&"<>]/g, function (m) ({ "&": "&amp;", '"': "&quot;", "<": "&lt;", ">": "&gt;" })[m]);
 
 var toolsClass = function() {
 	var self = this;
