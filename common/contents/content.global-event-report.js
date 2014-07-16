@@ -8,7 +8,10 @@
 // ==/UserScript==
 		
 function controller(extOptions) {		
-
+	if (!extOptions.options.unpaused) {
+		return;
+	}
+	
 	// init clickable names
 	if (extOptions.options.clickbaleNamesInGlobalEventReports) {
 		var globalEventsClickableNames = new globalEventsClickableNamesClass("tr[class$='winner'] td:first-child");
@@ -19,4 +22,7 @@ function controller(extOptions) {
 var loadOptions = [
 	{systemName: 'options', defaultName: "myoptions"} 
 ];
-tools.loadOptions(loadOptions, controller);
+
+$(document).ready(function() {
+	tools.loadOptions(loadOptions, controller);
+});

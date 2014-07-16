@@ -1,6 +1,7 @@
-	var estateVictimsListViewerClass = function(estateVictimsList, popup) {
+	var estateVictimsListViewerClass = function(estateVictimsList, popup, css) {
 		this.estateVictimsList = estateVictimsList;
 		this.popup = popup;
+		this.css = css;
 		
 		this.isVisible = false;
 		
@@ -28,32 +29,26 @@
 		
 		this.initListeners = function() {
 			self.closeButton.on('click', function() {
-				self.closeButton.attr('src', kango.io.getResourceUrl("res/icon_close.gif"));
+				self.closeButton.attr('src', self.css.closeButtonImg);
 				self.hide();
 			}).hover(function() {
-				self.closeButton.attr('src', kango.io.getResourceUrl("res/icon_close_hover.gif"));
+				self.closeButton.attr('src', self.css.closeButtonHoverImg);
 			}, function() {
-				self.closeButton.attr('src', kango.io.getResourceUrl("res/icon_close.gif"));
+				self.closeButton.attr('src', self.css.closeButtonImg);
 			});		
 		
 			self.victimAddButton.on('click', function() {			
-				self.processAddVictimClick(self.victimNameInput.val())
+				self.processAddVictimClick(self.victimNameInput);
 			});
 		};
 		
 		this.buildTop = function() {
-			var victimsAmountHolder = $('<span></span>').css(
-				{'font-size': '12px',
-					'text-decoration': 'none',
-					'font-family': 'Verdana,Arial,sans-serif',
-					'color': '#000000',
-					'line-height': '14px',
-					'margin-right': '7px'});
+			var victimsAmountHolder = $('<span></span>').css(self.css.amountHolder);
 					
 			self.victimsAmount = $('<span></span>').html(self.estateVictimsList.getCurrentVictimsAmount());
 			
 			victimsAmountHolder.append(self.victimsAmount).append($('<span> из ' + self.estateVictimsList.getMaxVictimsAmount() + '</span>'));
-			self.closeButton = $('<img src="' + kango.io.getResourceUrl("res/icon_close.gif") + '"></img>');
+			self.closeButton = $('<img src="' + self.css.closeButtonImg + '"></img>').css(self.css.closeButton);
 			
 			var topTr = $('<tr></tr>');
 			var topTd = $('<td colspan=\"2\" align=\"right\"></td>')
@@ -71,7 +66,7 @@
 		
 		this.buildBottom = function() {
 			self.victimNameInput = $('<input type="text"></input>');
-			self.victimAddButton = $("<img title=\"Добавить\" src=\"" + kango.io.getResourceUrl("res/estate-victim-add-victim.png") + "\">");
+			self.victimAddButton = $("<img title=\"Добавить\" src=\"" + self.css.addVictimButtonImg + "\">");
 		
 			var bottomTr = $('<tr></tr>');
 			var leftTd = $('<td></td>').append(self.victimNameInput);
@@ -80,30 +75,34 @@
 			return bottomTr.append(leftTd).append(rightTd);
 		};
 		
-		this.processAddVictimClick = function(victimName) {
+		this.processAddVictimClick = function(victimNameInput) {
+			var victimName = victimNameInput.val();
 			if (self.estateVictimsList.addVictim(victimName)) {		
 				self.victimsHolder.append(
 					self.buildVictimListItem(victimName)
 				);
 				
 				self.victimsAmount.html(self.estateVictimsList.getCurrentVictimsAmount());
+				victimNameInput.val('');
 			}
+		};
+		
+		this.processDeleteVictimClick = function (victimName, button) {
+			self.estateVictimsList.removeVictim(victimName);
+			$(button).parent().parent().remove();	
+			
+			self.victimsAmount.html(self.estateVictimsList.getCurrentVictimsAmount());
 		};
 		
 		this.buildVictimListItem = function(victimName) {
 			var victimTr = $('<tr></tr>');
 			
-			var attackButton = $("<img title=\"Атаковать\" src=\"" + kango.io.getResourceUrl("res/estate-attack.jpg") + "\">").css({'margin-left': '5px'}).on('click', function() {
-				self.attackVictim(victimName);	
-				return false;
+			var attackButton = $("<img title=\"Атаковать\" src=\"" + self.css.attackButtonImg + "\">").css(self.css.attackButton).on('click', function() {
+				self.processAttackVictimClick(victimName);	
 			});
 			
-			var deleteButton = $("<img title=\"Удалить\" src=\"" + kango.io.getResourceUrl("res/estate-delete.png") + "\">").css({'margin-left': '5px'}).on('click', function() {  
-				self.estateVictimsList.removeVictim(victimName);
-				$(this).parent().parent().remove();	
-				
-				self.victimsAmount.html(self.estateVictimsList.getCurrentVictimsAmount());
-				return false;
+			var deleteButton = $("<img title=\"Удалить\" src=\"" + self.css.deleteButtonImg + "\">").css(self.css.deleteButton).on('click', function() {
+				self.processDeleteVictimClick(victimName, this);
 			});			
 						
 			var victimNameTd = $('<td><a href="http://yo-bod.com/library/modules/estate/?name=' + victimName + '" target="_blank">' + victimName + '</a></td>');
@@ -117,13 +116,13 @@
 			return victimTr;			
 		};
 		
-		this.show = function() {
+		this.show = function(positionX, positionY) {
 			$.each(self.estateVictimsList.getVictimsList(),  function(key) {
 				self.victimsHolder.append(self.buildVictimListItem(key));
 			});
 			
 			self.initListeners();
-			self.popup.show(self.mainHolder);
+			self.popup.show(self.mainHolder).move(positionX, positionY, 0, 0);;
 			
 			self.isVisible = true;
 		};
@@ -134,7 +133,7 @@
 			self.isVisible = false;
 		};
 		
-		this.attackVictim = function(victimName) {
+		this.processAttackVictimClick = function(victimName) {
 			var attackInput = $('#estateAttackHeroField');
 			
 			if (attackInput.length > 0) { 
@@ -145,12 +144,12 @@
 			}
 		};
 		
-		this.toggleShow = function() {
+		this.toggleShow = function(positionX, positionY) {
 			if (self.isVisible) {
 				self.hide();
 				return;
 			}		
 			
-			self.show(); 
+			self.show(positionX, positionY); 
 		};
 	}

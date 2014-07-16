@@ -63,7 +63,8 @@ var extensionOptionsExportClass = function() {
 	this.erExtOptions = [
 		{systemName: 'soptions', defaultName: "soundOptions"}, 
 		{systemName: 'options', defaultName: "myoptions"}, 
-		{systemName: 'systemOptions', defaultName: "systemOptions"}
+		{systemName: 'systemOptions', defaultName: "systemOptions"},
+		{systemName: 'estateVictims', defaultName: "estateVictims"}
 	];
 	
 	this.init = function() {

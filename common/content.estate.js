@@ -8,11 +8,16 @@
 //
 // @require estate/victims/estate-victims.js
 // @require estate/victims/estate-victims-list-viewer.js
+// @require estate/victims/estate-ui-builder.js
+// @require css/estate/estate-victims-list-viewer-css.js
+// @require css/estate/estate-ui-builder-css.js
+//
 // @all-frames  true
 // ==/UserScript==
 
 //================================================================Begin
 
+/*
 kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	myoptions = mergeOptions(value, defaultConfig.myoptions);
 
@@ -24,6 +29,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	var scr = document.createElement("script");
 	scr.text = "";
 
+	
 	var veto_administracii = true; // В надежде что когда то администрация разрешит сворачивать диалоги поместья
 
 	if (veto_administracii) {
@@ -63,20 +69,14 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 			Estates.parseDialog = function() {
 				var mdialog = zzz(arguments[0]); 
-				if (mdialog.type == "fightfind") {
-					mdialog.title += '<img id="erExtEsteteVictimList" class="estateTooltip" src="chrome-extension://kcfgljhnmifoajpdfgnhnhoecmaonmgl/res/estate-victim-list-small.png" title="Список жертв" style="vertical-align: middle; display: inline;">'
-					console.log(mdialog);
-				}
+
 				if (mdialog.type == "fightattackclose") {
 					var nn = mdialog.text.indexOf('</b><br /><br />Базовый шанс:');
 					var mname = mdialog.text.substring(39, nn);
 					mlink = "<a href='http://www.ereality.ru/~" + mname + "' target='_blank'><b>" + mname + "</b></a>"
-					mdialog.text = mdialog.text.split("<b>" + mname + "</b>").join(mlink);
-				
-
-					mdialog.title += '<img id="erExtEsteteVictimList" class="estateTooltip" src="chrome-extension://kcfgljhnmifoajpdfgnhnhoecmaonmgl/res/estate-victim-list-small.png" title="Список жертв" style="vertical-align: middle; display: inline;">';
-					mdialog.title += '<a href="javascript: Estates.hideDialog();">[X]<a>';
+					mdialog.text = mdialog.text.split("<b>" + mname + "</b>").join(mlink);					
 				}
+				mdialog.title += '<a href="javascript: Estates.hideDialog();">[X]<a>';
 				if ((mdialog.type == "selection") && ($("#estateSelectionCard1")[0].previousElementSibling.innerHTML.search("[X]") < 0)) {
 					$("#estateSelectionCard1")[0].previousElementSibling.innerHTML += '<a href="javascript: Estates.hideDialog();">[X]<a>';
 				}
@@ -86,53 +86,74 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 		}).toString() + ")();";
 	}
-
-	scr.text = scr.text + "(" +
-		(function() {
-
-		var zzz = Estates.showAttackHistory;
-
-		Estates.showAttackHistory = function() {
-			zzz.apply(Estates);
-			res = document.getElementById("estateHistoryData").getElementsByTagName("b");
-			for (i = 0; i < res.length; ++i) {
-				var mname = res[i].innerHTML;
-				mlink = "<a href='http://www.ereality.ru/~" + mname + "' target='_blank'><b>" + mname + "</b></a>"
-				res[i].parentNode.innerHTML = res[i].parentNode.innerHTML.split("<b>" + mname + "</b>").join(mlink);
-			}
-			return;
-		}
-
-	}).toString() + ")();";
+	
 
 	document.body.appendChild(scr);
-
-	$(document).ready(function() {	
-		kango.invokeAsync('kango.storage.getItem', "estatevictims", function(options) {
-			var estateVictims = new estateVictimsClass();
-			estateVictims.init(mergeOptions(options, defaultConfig.estateVictims));		
-			
-			var estateVictimsListViewer = new estateVictimsListViewerClass(estateVictims, popup);
-			estateVictimsListViewer.init();
-			
-			$('body').delegate('#erExtEsteteVictimList', 'click', function() {
-				estateVictimsListViewer.toggleShow();
-			});
-			
-			var listImg = $($("<img title=\"Список жертв\" class=\"estateTooltip\" src=\"" + kango.io.getResourceUrl("res/estate-victim-list.png") + "\">"))
-				.css({width:'27px', height:'25px', 'vertical-align': 'middle', display: 'inline'})
-				.on('click', function() {
-					estateVictimsListViewer.toggleShow();			
-				});
-		
-			var listDiv = $('<div style="z-index: 3; left: 158px; top: 11px; position: absolute; width: 100px; height: 23px;">' + 
-				'</div>').append(listImg);
-		
-			$('#estateTopBar').append(listDiv);
-		
-		});
-	});
-	
 	//=========================end.
+});
+*/
 
+function controller(extOptions) {	
+	var scr = document.createElement("script");
+	var imagesOptions = {
+		estateVictimListSmall: estateUiBuilderCss.listImgSmall
+	}
+
+	var scriptString = "(" + (function() {
+		var erExtOptions = optionsReplace;
+		var erExtImages = imagesReplace;
+		
+		var parseDialogOld = Estates.parseDialog;
+		var victimListImg = $('<img src="' + erExtImages.estateVictimListSmall + '" class="estateTooltip" title="Список жертв">').css({'vertical-align': 'middle', 'display': 'inline'});
+		
+		Estates.parseDialog = function() { 
+			var mdialog = parseDialogOld(arguments[0]); 			
+			
+			if (erExtOptions.options.estateVictims) {
+				if (mdialog.type == "fightfind" || mdialog.type == "fightattackclose") {
+					mdialog.title += victimListImg[0];
+				}
+			}
+			
+			return mdialog;
+		}
+		
+		var oldShowAttackHistory = Estates.showAttackHistory;
+		var estateHistoryHolder = $('#estateHistoryData');
+		Estates.showAttackHistory = function() {
+			oldShowAttackHistory.apply(Estates);
+			
+			estateHistoryHolder.find('b').each(function() {
+				var element = $(this);
+				var userName = element.text();
+				element.html("<a href='http://www.ereality.ru/~" + userName + "' target='_blank'><b>" + userName + "</b></a>");
+			});
+		}
+			
+	}).toString()
+		.replace("optionsReplace", '(' + JSON.stringify(extOptions) + ')')
+		.replace("imagesReplace", '(' + JSON.stringify(imagesOptions) + ')') + ")();";
+
+	inject_global(scriptString);
+	
+	// init estateVictims
+	if (extOptions.options.estateVictims) {
+		var estateVictims = new estateVictimsClass();
+		estateVictims.init(mergeOptions(extOptions.estateVictims, defaultConfig.estateVictims));		
+	
+		var estateVictimsListViewer = new estateVictimsListViewerClass(estateVictims, popup, estateVictimsListViewerCss);
+		estateVictimsListViewer.init();
+	
+		var estateUiBuilder = new estateUiBuilderClass(estateVictimsListViewer, estateUiBuilderCss, 'erExtEsteteVictimList', 'refreshEstate');
+		estateUiBuilder.init();
+	}
+}
+
+var loadOptions = [
+	{systemName: 'options', defaultName: "myoptions"},
+	{systemName: 'estateVictims', defaultName: "estateVictims"},
+];
+
+$(document).ready(function() {
+	tools.loadOptions(loadOptions, controller);
 });

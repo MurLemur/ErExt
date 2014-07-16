@@ -43,7 +43,8 @@ var defaultConfig = {
 		"teammate_trace": true,
 		"taverna_fast_click": true,
 		"clickablePSmiles" : true,
-		'clickbaleNamesInGlobalEventReports' : true
+		'clickbaleNamesInGlobalEventReports' : true,
+		'estateVictims': true
 	},
 	
 	systemOptions: {
@@ -94,8 +95,7 @@ var defaultConfig = {
 			sound: "nosound",
 			detect: "Сейсмопредупреждение"
 		}	
-	},
-	
+	},	
 	estateVictims: {}
 }
 
