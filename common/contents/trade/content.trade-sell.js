@@ -14,11 +14,14 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		return;
 	}
 //=====================================================================  
+	
+	var script="";
 
 	//Механизм быстрого выставления однотипных лотов для биржи
+
 	if (myoptions.stockmy) {
 
-		script = "(" +
+		script += "(" +
 			(function() {
 
 			//Выставление лота на биржу	
@@ -92,8 +95,21 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			$($("#cat")[0]).after($(htmlelements));
 
 		}).toString() + ")();";
-		inject_global(script);
 	}
+	if (myoptions.stock_sell_offline_find) {
 
+		script += " (" +
+			(function() {
+			$.each($("table[id^=tbl] td[colspan=4] b"), function(index, elem) {
+				name = elem.innerHTML;
+				if (name != "Сломано") {
+					link = '<a  title="Искать на бирже"  href="http://order.ereality.ru/viewpage.php?page_id=42&search=' + name +
+						'" target="_blank"><img style="display:inline"  src="http://order.ereality.ru/estate/search.png"></a>'
+					$(elem).after($(link));
+				}
+			});
+		}).toString() + ")();";
+	}
+		(script != "") && inject_global(script);
 //=========================end.
 });

@@ -42,6 +42,9 @@ var defaultConfig = {
 		"contextmenus": true,
 		"teammate_trace": true,
 		"taverna_fast_click": true,
+		"timer_taverna": true,
+		"timer_estate": true,
+		"stock_sell_offline_find": true,
 		"clickablePSmiles" : true,
 		'clickbaleNamesInGlobalEventReports' : true,
 		'estateVictims': true
@@ -84,6 +87,10 @@ var defaultConfig = {
 			detect: ""
 		},
 		"sound_zavod": {
+			sound: "nosound",
+			detect: ""
+		},
+		"sound_taverna": {
 			sound: "nosound",
 			detect: ""
 		},
@@ -148,6 +155,7 @@ function inject_global(script_src) {
 	scr.text = script_src;
 	document.body.appendChild(scr);
 }
+
 
 var toolsClass = function() {
 	var self = this;

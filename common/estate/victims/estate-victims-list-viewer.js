@@ -105,7 +105,7 @@
 				self.processDeleteVictimClick(victimName, this);
 			});			
 						
-			var victimNameTd = $('<td><a href="http://yo-bod.com/library/modules/estate/?name=' + victimName + '" target="_blank">' + victimName + '</a></td>');
+			var victimNameTd = $('<td><a href="http://order.ereality.ru/viewpage.php?page_id=43&name=' + victimName + '" target="_blank">' + victimName + '</a></td>');
 			var attackTd = $('<td></td>').append(attackButton);
 			var deleteTd = $('<td></td>').append(deleteButton);
 			
