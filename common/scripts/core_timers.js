@@ -40,7 +40,7 @@ core.mur_timer.init = function() {
 		"	</table>" +
 		"</div>";
 	var htmlcss = {
-		"background": "-moz-linear-gradient(center top , #fff, #bbb) repeat scroll 0 0 rgba(0, 0, 0, 0)",
+		"background": "MurTimerCss",
 		"border-radius": "6px",
 		"box-shadow": "0 3px 6px rgba(0, 0, 0, 0.45)",
 		"color": "#1e1e1e",

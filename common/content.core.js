@@ -410,6 +410,11 @@ if (myoptions.keyalt) {
 		if (myoptions.timer_taverna || myoptions.timer_estate) {
 			myoptions.timer_taverna && (script_timers = script_timers.replace("core.mur_timer.taverna = false", "core.mur_timer.taverna = true"));
 			myoptions.timer_estate && (script_timers = script_timers.replace("core.mur_timer.estate = false", "core.mur_timer.estate = true"));
+			if (kango.browser.getName() != "firefox") {
+				script_timers = script_timers.replace("MurTimerCss","-webkit-linear-gradient(top, #fff,#bbb)");
+			} else {
+				script_timers = script_timers.replace("MurTimerCss","-moz-linear-gradient(center top , #fff, #bbb) repeat scroll 0 0 rgba(0, 0, 0, 0)");
+			}
 			script += script_timers.replace(/sound_taverna/g,defaultConfig.soundOptions["sound_taverna"].sound);
 		}
 
