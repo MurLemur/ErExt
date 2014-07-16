@@ -44,7 +44,10 @@ var defaultConfig = {
 		"taverna_fast_click": true,
 		"timer_taverna": true,
 		"timer_estate": true,
-		"stock_sell_offline_find": true
+		"stock_sell_offline_find": true,
+		"clickablePSmiles" : true,
+		'clickbaleNamesInGlobalEventReports' : true,
+		'estateVictims': true
 	},
 	
 	systemOptions: {
@@ -99,7 +102,8 @@ var defaultConfig = {
 			sound: "nosound",
 			detect: "Сейсмопредупреждение"
 		}	
-	}
+	},	
+	estateVictims: {}
 }
 
 function mergeOptions(options, defaultOptions) {
@@ -151,6 +155,7 @@ function inject_global(script_src) {
 	scr.text = script_src;
 	document.body.appendChild(scr);
 }
+
 
 var toolsClass = function() {
 	var self = this;
