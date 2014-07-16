@@ -65,7 +65,20 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 		}).toString() + ")();";
 }
-
+	//Обновка инфы для таймера таверны
+	if (myoptions.timer_taverna) {
+		script= script+ "(" +
+	(function(){
+	var OldprocessResponse=taverna.processResponse;
+	taverna.processResponse=function(xml){
+		var myrezult=OldprocessResponse.apply(taverna,arguments);
+		top.core.mur_timer.taverna_update = true;
+	    return myrezult
+	}
+	
+	}).toString()
+	+ ")();"; 
+}
 	inject_global(script);
 	
 

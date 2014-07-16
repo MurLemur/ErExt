@@ -4,7 +4,7 @@ var bodsEstateClass = function() {
 	var self = this;
 	
 	this.init = function(userName, estateHolder) {		
-		self.bodEstateLink.attr("href", 'http://yo-bod.com/library/modules/estate/?name=' + CP1251urlencode(userName)).append(self.bodeEstateImg);
+		self.bodEstateLink.attr("href", 'http://order.ereality.ru/viewpage.php?page_id=43&name=' + CP1251urlencode(userName)).append(self.bodeEstateImg);
 		estateHolder.append(self.bodEstateLink);
 	}
 }

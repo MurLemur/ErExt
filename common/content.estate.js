@@ -86,6 +86,21 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		}
 
 	}).toString() + ")();";
+	
+	//Обновка инфы для таймера поместья
+	if (myoptions.timer_estate) {
+		script= script+ "(" +
+	(function(){
+	var OldprocessResponse=Estates.processResponse;
+	Estates.processResponse=function(xml){
+		var myrezult=OldprocessResponse.apply(Estates,arguments);
+		top.core.mur_timer.estate_getinfo();
+	    return myrezult
+	}
+	
+	}).toString()
+	+ ")();"; 
+}
 
 	inject_global(script);
 
