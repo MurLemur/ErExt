@@ -104,14 +104,16 @@ function controller(extOptions) {
 		var erExtImages = imagesReplace;
 		
 		var parseDialogOld = Estates.parseDialog;
-		var victimListImg = $('<img src="' + erExtImages.estateVictimListSmall + '" class="estateTooltip" title="Список жертв">').css({'vertical-align': 'middle', 'display': 'inline'});
+		var victimListImg = $('<img src="' + erExtImages.estateVictimListSmall + '" class="estateTooltip" title="Список жертв" id="erExtEsteteVictimList">')
+			.css({'vertical-align': 'middle', 'display': 'inline'})
+			.wrap('<p>');
 		
 		Estates.parseDialog = function() { 
 			var mdialog = parseDialogOld(arguments[0]); 			
 			
 			if (erExtOptions.options.estateVictims) {
-				if (mdialog.type == "fightfind" || mdialog.type == "fightattackclose") {
-					mdialog.title += victimListImg[0];
+				if (mdialog.type == "fightfind" || mdialog.type == "fightattackclose") { 
+					mdialog.title += victimListImg.parent().html();
 				}
 			}
 			
