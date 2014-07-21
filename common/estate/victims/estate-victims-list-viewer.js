@@ -6,9 +6,10 @@
 		this.isVisible = false;
 		
 		this.mainHolder = $('<table></table>');
-		this.victimsHolder = $('<table></table>');
+		this.victimsHolder = $('<table></table>').css(this.css.victimsHolder);
 		
 		this.victimNameInput = null;
+		this.victimCommentInput = null;
 		this.addButton = null;
 		this.closeButton = null;		
 		
@@ -38,7 +39,7 @@
 			});		
 		
 			self.victimAddButton.on('click', function() {			
-				self.processAddVictimClick(self.victimNameInput);
+				self.processAddVictimClick(self.victimNameInput, self.victimCommentInput);
 			});
 		};
 		
@@ -65,25 +66,29 @@
 		};
 		
 		this.buildBottom = function() {
-			self.victimNameInput = $('<input type="text"></input>');
+			self.victimNameInput = $('<input type="text" title="Имя жертвы"></input>').css(self.css.victimNameInput);
+			self.victimCommentInput = $('<input type="text" title="Комментарий"></input>').css(self.css.victimCommentInput);
+			
 			self.victimAddButton = $("<img title=\"Добавить\" src=\"" + self.css.addVictimButtonImg + "\">");
-		
+					
 			var bottomTr = $('<tr></tr>');
-			var leftTd = $('<td></td>').append(self.victimNameInput);
+			var leftTd = $('<td align="right"></td>').append(self.victimNameInput).append($('<br>')).append(self.victimCommentInput);
 			var rightTd = $('<td></td>').append(self.victimAddButton);
 			
 			return bottomTr.append(leftTd).append(rightTd);
 		};
 		
-		this.processAddVictimClick = function(victimNameInput) {
+		this.processAddVictimClick = function(victimNameInput, commentInput) {
 			var victimName = victimNameInput.val();
-			if (self.estateVictimsList.addVictim(victimName)) {		
+			var comment = commentInput.val();
+			if (self.estateVictimsList.addVictim(victimName, comment)) {		
 				self.victimsHolder.append(
-					self.buildVictimListItem(victimName)
+					self.buildVictimListItem(victimName, comment)
 				);
 				
 				self.victimsAmount.html(self.estateVictimsList.getCurrentVictimsAmount());
 				victimNameInput.val('');
+				commentInput.val('');
 			}
 		};
 		
@@ -94,7 +99,7 @@
 			self.victimsAmount.html(self.estateVictimsList.getCurrentVictimsAmount());
 		};
 		
-		this.buildVictimListItem = function(victimName) {
+		this.buildVictimListItem = function(victimName, comment) {
 			var victimTr = $('<tr></tr>');
 			
 			var attackButton = $("<img title=\"Атаковать\" src=\"" + self.css.attackButtonImg + "\">").css(self.css.attackButton).on('click', function() {
@@ -104,8 +109,11 @@
 			var deleteButton = $("<img title=\"Удалить\" src=\"" + self.css.deleteButtonImg + "\">").css(self.css.deleteButton).on('click', function() {
 				self.processDeleteVictimClick(victimName, this);
 			});			
-						
-			var victimNameTd = $('<td><a href="http://order.ereality.ru/viewpage.php?page_id=43&name=' + victimName + '" target="_blank">' + victimName + '</a></td>');
+			
+			var victimNameLink = $('<a href="http://order.ereality.ru/viewpage.php?page_id=43&name=' + victimName + '" target="_blank">' + victimName + '</a>').css(self.css.victimNameLink);
+			var victimCommentDiv = $('<div>' + comment + '</div>').css(self.css.victimCommentDiv);
+			
+			var victimNameTd = $('<td></td>').append(victimNameLink).append(victimCommentDiv);
 			var attackTd = $('<td></td>').append(attackButton);
 			var deleteTd = $('<td></td>').append(deleteButton);
 			
@@ -118,7 +126,7 @@
 		
 		this.show = function(positionX, positionY) {
 			$.each(self.estateVictimsList.getVictimsList(),  function(key) {
-				self.victimsHolder.append(self.buildVictimListItem(key));
+				self.victimsHolder.append(self.buildVictimListItem(key, this.comment));
 			});
 			
 			self.initListeners();
@@ -139,9 +147,7 @@
 			if (attackInput.length > 0) { 
 				$('#estateAttackHeroField').val(victimName);
 				$('#estateAnswer_0')[0].click();
-			} else {
-				console.log('нету карты');
-			}
+			} 
 		};
 		
 		this.toggleShow = function(positionX, positionY) {

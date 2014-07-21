@@ -1,10 +1,11 @@
 var estateVictimsClass = function() {	
 	this.victimsList = {};
 
-	this.maxVictimsAmount = 20;	
+	this.maxVictimsAmount = 50;	
 	this.currentVictimsAmount = 0;
 	
-	this.victimNameMaxLenth = 18;
+	this.victimNameMaxLength = 18;
+	this.commentMaxLength = 30;
 	var self = this;	
 	
 	this.init = function(victimsList) {
@@ -13,13 +14,17 @@ var estateVictimsClass = function() {
 		self.currentVictimsAmount = Object.keys(victimsList).length;
 	};
 	
-	this.addVictim = function(victimName) {
+	this.addVictim = function(victimName, comment) {
 		if (!self._isNameValid(victimName) || typeof self.victimsList[victimName] !== 'undefined' || self.currentVictimsAmount >= self.maxVictimsAmount) {
 			return false;
 		}
 		
+		if (comment.length > self.commentMaxLength) {
+			return false;
+		}
+		
 		self.currentVictimsAmount++;
-		self.victimsList[victimName] = 0;		
+		self.victimsList[victimName] = {'comment': comment};		
 	
 		kango.invokeAsync('kango.storage.setItem', 'estateVictims', self.victimsList);
 		
@@ -27,10 +32,10 @@ var estateVictimsClass = function() {
 	};
 	
 	this._isNameValid = function(victimName) {
-		return victimName.length > 0 && victimName.length <= self.victimNameMaxLenth;
+		return victimName.length > 0 && victimName.length <= self.victimNameMaxLength;
 	};
 	
-	this.removeVictim = function(victimName) {
+	this.removeVictim = function(victimName) { 
 		delete self.victimsList[victimName];
 		self.currentVictimsAmount--;
 		
