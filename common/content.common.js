@@ -69,6 +69,18 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	//init corpses service
 	var corpsesService = new corpsesServiceClass($("#chat_msg"));
 	corpsesService.init();
+
+	var htmlmenu = "" +
+		"<div id=\"m_mur_mapsmenu\" class=\"contextMenu\" style=\"visibility: hidden;position:absolute;\">" +
+		"  <ul class=\"textM\">" +
+		"    <li><a href=\"http://sidzoku.ru/maps/ovl/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОВЛ </a></li>" +
+		"    <li><a href=\"http://sidzoku.ru/maps/opp/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОПП </a></li>" +
+		"  </ul>" +
+		"</div>";
+	$(document.body.lastChild).after($(htmlmenu));
+	setTimeout(function() {
+		$("#a_users_loc").contextMenu("m_mur_mapsmenu", {});
+	}, 100);
 });
 
 
