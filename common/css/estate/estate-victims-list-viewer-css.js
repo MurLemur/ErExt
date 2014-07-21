@@ -1,10 +1,6 @@
 var estateVictimsListViewerCss = {
-	attackButton: {
-		'margin-left': '5px'
-	},
-	deleteButton: {
-		'margin-left': '5px'
-	},
+	attackButton: {'margin-left': '5px'},
+	deleteButton: {'margin-left': '5px'},
 	amountHolder: {
 		'font-size': '12px',
 		'text-decoration': 'none',
@@ -13,6 +9,11 @@ var estateVictimsListViewerCss = {
 		'line-height': '14px',
 		'margin-right': '7px'
 	},
+	victimsHolder: {'display': 'block',  'max-height': '350px', 'overflow-y': 'scroll'},
+	victimNameLink: {'font-size': '12px', 'font-weight': '700'},
+	victimCommentDiv: {'color': '#666666', 'font-size': '10px'},
+	victimNameInput: {'height': '10px', 'width': '140px'},
+	victimCommentInput: {'height': '10px', 'width': '140px'},
 	closeButton: {'display': 'inline'},
 	closeButtonImg: kango.io.getResourceUrl("res/icon_close.gif"),
 	closeButtonHoverImg: kango.io.getResourceUrl("res/icon_close_hover.gif"),
