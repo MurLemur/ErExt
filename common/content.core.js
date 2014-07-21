@@ -350,8 +350,8 @@ function pfunction(){
 
 
 //При не пустой строке чата не завершать бой энтером , поидее )
-		if (myoptions.keyenter) {
-		script= script+ "(" +
+	if (myoptions.keyenter) {
+		script+=  "(" +
 	(function(){
 	var zxzx6=core.onKeyDown;
 	core.onKeyDown=function(event){
@@ -375,7 +375,55 @@ function pfunction(){
 	+ ")();"; 
 }
 
+// ПКМ по локации вызывает меню с картами ОВЛ и ОПП
+		if (myoptions.menu_maps) {
+			script += "(" +
+				(function() {
+				var htmlmenu = "" +
+					"<div id=\"m_mur_mapsmenu\" class=\"contextMenu\" style=\"visibility: hidden;position:absolute;\">" +
+					"  <ul class=\"textM\">" +
+					"    <li><a href=\"http://sidzoku.ru/maps/ovl/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОВЛ </a></li>" +
+					"    <li><a href=\"http://sidzoku.ru/maps/opp/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОПП </a></li>" +
+					"  </ul>" +
+					"</div>";
+				$(document.body.lastChild).after($(htmlmenu));
+				$("#a_users_loc").contextMenu("m_mur_mapsmenu", {});
+			}).toString() + ")();";
+		}
 
+// Информация о бое (Ауры,Урон,Убийства)
+		if (myoptions.battleInfo) {
+			script += "(" +
+				(function() {
+				var Old_buildPlayersTable = battle.buildPlayersTable;
+
+				battle.buildPlayersTable = function() {
+					Old_buildPlayersTable.apply(battle);
+					if ($("#mur_battle_info").length == 0) {
+						var html = "" +
+							"<div  class=\"textS\" id=\"mur_battle_info\" style=\"color: #646464\"  align=\"center\">" +
+							" <strong><span id=\"mur_auras\"></span><span id=\"mur_dmg\"></span><span id=\"mur_kill\"></span></strong>" +
+							"</div>";
+						$(".fight_contr").append($(html));
+					}
+					if (battle.team > 1) {
+						var aura1 = battle.current_pvp_auras[1];
+						var aura2 = battle.current_pvp_auras[0];
+					} else {
+						var aura1 = battle.current_pvp_auras[0];
+						var aura2 = battle.current_pvp_auras[1];
+					}
+					if (battle.type == 4) {
+						$("#mur_auras").text("    Ауры: " + aura1 + "%  " + aura2 + "%  ");
+					} else {
+						$("#mur_auras").text("");
+					}
+					$("#mur_dmg").text("   Урон: " + $("#span_stat_dc").text() + "   ");
+					$("#mur_kill").text("   Убито: " + $("#span_stat_kc").text() + "   ");
+					return;
+				}
+			}).toString() + ")();";
+		}
 
 // Хоткеи ALT+12345QWE
 if (myoptions.keyalt) {

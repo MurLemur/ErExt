@@ -97,13 +97,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		}).toString() + ")();";
 	}
 	if (myoptions.stock_sell_offline_find) {
-
 		script += " (" +
 			(function() {
 			$.each($("table[id^=tbl] td[colspan=4] b"), function(index, elem) {
-				name = elem.innerHTML;
-				if (name != "Сломано") {
-					link = '<a  title="Искать на бирже"  href="http://order.ereality.ru/viewpage.php?page_id=42&search=' + name +
+				var item_name = elem.innerHTML;
+				if (item_name != "Сломано") {
+					link = '<a  title="Искать на бирже"  href="http://order.ereality.ru/viewpage.php?page_id=42&search=' + item_name +
 						'" target="_blank"><img style="display:inline"  src="http://order.ereality.ru/estate/search.png"></a>'
 					$(elem).after($(link));
 				}

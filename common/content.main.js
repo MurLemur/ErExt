@@ -43,7 +43,7 @@ function mymain() {
 				top.document.getElementById("dialog").firstChild.firstChild.nextElementSibling.nextElementSibling.click();
 		}	
 
-	if (document.getElementById("npcname").innerHTML=="Священная раковина")	
+	if (document.getElementById("npcname").innerHTML=="Священная раковина" || document.getElementById("npcname").innerHTML=="Лаборатория")	
 		if (top.document.getElementById("chat_msg").value=="") {
 				top.document.getElementById("dialog").firstChild.firstChild.nextElementSibling.nextElementSibling.click();
 		}	

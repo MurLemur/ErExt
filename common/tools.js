@@ -47,7 +47,9 @@ var defaultConfig = {
 		"stock_sell_offline_find": true,
 		"clickablePSmiles" : true,
 		'clickbaleNamesInGlobalEventReports' : true,
-		'estateVictims': true
+		'estateVictims': true,
+		'battleInfo': true,
+		'menu_maps': true
 	},
 	
 	systemOptions: {
