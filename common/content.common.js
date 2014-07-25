@@ -75,6 +75,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		"  <ul class=\"textM\">" +
 		"    <li><a href=\"http://sidzoku.ru/maps/ovl/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОВЛ </a></li>" +
 		"    <li><a href=\"http://sidzoku.ru/maps/opp/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОПП </a></li>" +
+		"    <li><a href=\"http://sidzoku.ru/maps/ok/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОК </a></li>" +
 		"  </ul>" +
 		"</div>";
 	$(document.body.lastChild).after($(htmlmenu));

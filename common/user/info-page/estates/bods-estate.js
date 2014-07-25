@@ -1,5 +1,5 @@
 var bodsEstateClass = function() {
-	this.bodEstateLink = $("<a title=\"Просмотр поместья от Blade of Darkness\" target=\"_blank\"></a>");
+	this.bodEstateLink = $("<a title=\"Просмотр поместья от СП\" target=\"_blank\"></a>");
 	this.bodeEstateImg = $("<img src=\"" + kango.io.getResourceUrl("res/yo-bods-search.png") + "\">");
 	var self = this;
 	

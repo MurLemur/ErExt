@@ -103,7 +103,7 @@ var script_map_trace = "(" +
 				var current_mas = chest.sectorTO;
 				var map_mas = main.Map.sectors;
 				var newmap = true;
-			} else if ((user.place2 > 19) && (user.place2 < 100)) {
+			} else if (((user.place2 > 19) && (user.place2 < 100))  || ((user.place2 > 199) && (user.place2 < 310))) {
 				var current_mas = chest.sectoraliens;
 				var map_mas = main.map;
 				var newmap = false;

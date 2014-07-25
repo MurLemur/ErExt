@@ -1,7 +1,7 @@
 
 var defaultConfig = {
 	myoptions: {
-		"faceshop":true,
+		"faceshop":false,
 		"efimerka":true,
 		"armory":true,
 		"unpaused":true,
@@ -40,10 +40,10 @@ var defaultConfig = {
 		"global_info": true,
 		"trade_buy_full_lot": true,
 		"contextmenus": true,
-		"teammate_trace": true,
+		"teammate_trace": false,
 		"taverna_fast_click": true,
-		"timer_taverna": true,
-		"timer_estate": true,
+		"timer_taverna": false,
+		"timer_estate": false,
 		"stock_sell_offline_find": true,
 		"clickablePSmiles" : true,
 		'clickbaleNamesInGlobalEventReports' : true,
@@ -53,7 +53,7 @@ var defaultConfig = {
 	},
 	
 	systemOptions: {
-		"background_scripts_host": "cron.un-limits.ru/er",
+		"background_scripts_host": "крон.жукодавы.рф/er",
 		"trace_img_src": "",
 		"locatioons_ovl": "",
 		"locatioons_opp": ""
