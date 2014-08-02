@@ -4,6 +4,7 @@
 // @require     tools.js
 // @require     scripts/core_map_trace.js
 // @require     scripts/core_timers.js
+// @require     scripts/core_battle_counter.js
 // @all-frames  false
 // ==/UserScript==
 
@@ -446,11 +447,12 @@ if (myoptions.keyalt) {
 							if ((val.img == "draftroll.png") || (val.img == "summonscroll.jpg") || (val.img == "ejectroll.png")) battle.selectItem(battle.items[num].uid)
 						})
 			}
-			if ((event.keyCode == 113)&&(battle.bstatus==0)) {    // F11 
+			if ((event.keyCode == 113)&&(battle.bstatus==0)) {    // F12 
 						$.each(battle.items, function(num, val) {
 							if ((val.img == "draftroll.png") || (val.img == "summonscroll.jpg") || (val.img == "ejectroll.png")) battle.selectItem(battle.items[num].uid)
 						})
 			}
+			if (event.keyCode == 27) core.trigger('move')
 			if (event.altKey) {
 		 	if ((event.keyCode==49)&&(HSets[0]!=undefined)) {inventory.actionUpSet({"setId":HSets[0]})} //1
 		 	if ((event.keyCode==50)&&(HSets[1]!=undefined)) {inventory.actionUpSet({"setId":HSets[1]})} //2
@@ -478,6 +480,11 @@ if (myoptions.keyalt) {
 
 		if (myoptions.teammate_trace) {
 			script = script.replace("teammate_trace = false", "teammate_trace = true");
+		}
+
+
+		if (myoptions.battleCounter) {
+			script += script_battle_counter;
 		}
 
 		// Таймеры таверны и поместья

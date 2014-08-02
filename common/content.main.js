@@ -262,6 +262,7 @@ if (myoptions.unpaused) {
 				 el=xpathRes.snapshotItem(i).parentNode.previousSibling.previousSibling;
 				 if (el!=undefined) {
 			   		el.setAttribute("onclick", "if (this.firstChild.innerHTML==undefined) {top.chat.msg(this.innerHTML)} else {top.chat.msg(this.firstChild.innerHTML)}");
+			   		el.setAttribute("style", "cursor:pointer");
         	 		}
 				}
 			}

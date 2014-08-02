@@ -12,6 +12,9 @@
 // @require common/faction-counter/faction-counter.js
 // @require common/faction-counter/faction-count-builder.js
 //
+// @require common/battle-counter/battle-counter.js
+// @require common/battle-counter/battle-count-builder.js
+//
 // @require css/items-builder-css.js
 // @require user/active-items/items-builder.js
 // @require user/active-items/user-list-active-items.js
@@ -37,6 +40,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	if (mergedOptions.okcount) {
 		var factionContBuilder = new factionContBuilderClass(factionContBuilderCss, factionCounterCss);
 		factionContBuilder.init();
+	}
+
+	// init battle count
+	if (mergedOptions.battleCounter) {
+		var battleCountBuilder = new battleCountBuilderClass(factionContBuilderCss, factionCounterCss);
+		battleCountBuilder.init();
 	}	
 	
 	// init user list active items

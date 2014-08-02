@@ -101,7 +101,7 @@ core.mur_timer.estate_getinfo = function() {
 				core.mur_timer.estate_timer.setTime(core.mur_timer.estate_time.getTime() - (5 - core.mur_timer.estate_cards) * (6 - core.mur_timer.estate_type) * 3600000);
 			}
 		}
-		if (core.mur_timer.estate_timer < (new Date())) $("#est").hide();
+		if (core.mur_timer.estate_timer < (new Date()) || (core.mur_timer.estate_cards>=5)) $("#est").hide();
 	}
 	$.post("/ajax/estates/", "<request action=\"get_estate\"></request>", xmlResponse);
 	core.mur_timer.estate_update = false;
@@ -136,7 +136,7 @@ core.mur_timer.main = function() {
 
 		$("#countm").text(core.mur_timer.estate_cards);
 		$("#est_timer").text(core.mur_timer.getMyTime(core.mur_timer.estate_timer));
-		if (core.mur_timer.estate_timer < (new Date())) {
+		if (core.mur_timer.estate_timer < (new Date()) || (core.mur_timer.estate_cards>=5)) {
 			core.mur_timer.estate_getinfo();
 		} else $("#est").show();
 	}

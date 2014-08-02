@@ -42,14 +42,15 @@ var defaultConfig = {
 		"contextmenus": true,
 		"teammate_trace": false,
 		"taverna_fast_click": true,
-		"timer_taverna": false,
-		"timer_estate": false,
+		"timer_taverna": true,
+		"timer_estate": true,
 		"stock_sell_offline_find": true,
 		"clickablePSmiles" : true,
 		'clickbaleNamesInGlobalEventReports' : true,
 		'estateVictims': true,
 		'battleInfo': true,
-		'menu_maps': true
+		'menu_maps': true,
+		'battleCounter': true
 	},
 	
 	systemOptions: {
