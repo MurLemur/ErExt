@@ -9,6 +9,8 @@ var popupClass = function(popupCss) {
 	
 	this.window = $(window);
 	
+	this.goOverBorder = false;
+	
 	$('body').prepend(this.mainHolder);	
 	
 	this.show = function(popupBody) {
@@ -50,17 +52,21 @@ var popupClass = function(popupCss) {
 		this.outWidth = this.positionX + this.popupWidth - this.window.width();
 		this.outHeigth = this.positionY + this.popupHeight - this.window.height();
 		
-		if (this.outWidth > 0) { 
+		if (this.outWidth > 0 && !self.goOverBorder) { 
 			this.positionX = x - positionMarginX - this.popupWidth;
 		}
 		
-		if (this.outHeigth > 0) {
+		if (this.outHeigth > 0 && !self.goOverBorder) {
 			this.positionY = y - positionMarginY - this.popupHeight;
 		} 
 		
 		this.mainHolder.css({"margin-left": this.positionX + "px", "margin-top": this.positionY + "px"});
 		return this;
-	} 
+	};
+	
+	this.setCanGoOverBorder = function(goOverBorder) {
+		self.goOverBorder = goOverBorder;
+	}
 }
 
 var popup = new popupClass(popupCss);

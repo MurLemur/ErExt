@@ -1,13 +1,18 @@
-	var estateVictimsListViewerClass = function(estateVictimsList, popup, css) {
+	var estateVictimsListViewerClass = function(estateVictimsList, popup, css, anchorID, systemOptions) {
 		this.estateVictimsList = estateVictimsList;
 		this.popup = popup;
 		this.css = css;
+		this.anchor = $('#' + anchorID);
 		
 		this.isVisible = false;
+		this.popupPositionX = 0; 
+		this.popupPositionY = 0; 
 		
 		this.mainHolder = $('<table></table>');
 		this.victimsHolder = $('<table></table>').css(this.css.victimsHolder);
+		this.globalHolder = $(document);
 		
+		this.dragNdropHolder = null;
 		this.victimNameInput = null;
 		this.victimCommentInput = null;
 		this.addButton = null;
@@ -15,17 +20,34 @@
 		
 		this.victimsAmount = null;
 		
+		this.inMove = false;
+		
 		var self = this;
 		
 		this.init = function() {
 			self.initForm();
-			self.initListeners();
+			self.popup.setCanGoOverBorder(true);
+			self.initPopupPosition();
 		}
 		
 		this.initForm = function() {
 			self.mainHolder.append(self.buildTop())
 				.append(self.buildMiddle())
 				.append(self.buildBottom());		
+		};
+		
+		this.initPopupPosition = function() {
+			if (systemOptions.estateVictims.popupPositionX != -1) {
+				self.popupPositionX = systemOptions.estateVictims.popupPositionX;
+				self.popupPositionY = systemOptions.estateVictims.popupPositionY;
+				
+				return;
+			}
+			
+			var position = self.anchor.offset();
+			
+			self.popupPositionX = position.left + self.anchor.width() + 10;
+			self.popupPositionY = position.top;
 		};
 		
 		this.initListeners = function() {
@@ -41,6 +63,8 @@
 			self.victimAddButton.on('click', function() {			
 				self.processAddVictimClick(self.victimNameInput, self.victimCommentInput);
 			});
+			
+			self.initDragNDrop(self.globalHolder, self.dragNdropHolder);
 		};
 		
 		this.buildTop = function() {
@@ -48,16 +72,25 @@
 					
 			self.victimsAmount = $('<span></span>').html(self.estateVictimsList.getCurrentVictimsAmount());
 			
-			victimsAmountHolder.append(self.victimsAmount).append($('<span> из ' + self.estateVictimsList.getMaxVictimsAmount() + '</span>'));
+			victimsAmountHolder.append($('<span>Жертв: </span>')).append(self.victimsAmount).append($('<span> из ' + self.estateVictimsList.getMaxVictimsAmount() + '</span>'));
 			self.closeButton = $('<img src="' + self.css.closeButtonImg + '"></img>').css(self.css.closeButton);
+
+			var topTr = $('<tr></tr>').css(self.css.topLine);
+			self.dragNdropHolder = topTr;			
 			
-			var topTr = $('<tr></tr>');
 			var topTd = $('<td colspan=\"2\" align=\"right\"></td>')
 				.append(victimsAmountHolder)
 				.append(self.closeButton);			
 
 			return topTr.append(topTd);
 		};
+		
+		this.savePopupPosition = function() {
+			systemOptions.estateVictims.popupPositionX = self.popupPositionX;
+			systemOptions.estateVictims.popupPositionY = self.popupPositionY;
+			
+			kango.invokeAsync('kango.storage.setItem', 'systemOptions', systemOptions);
+		};		
 		
 		this.buildMiddle = function() {
 			var bottomTd = $('<td colspan=\"2\" align="center"></td>').append(self.victimsHolder);
@@ -69,7 +102,7 @@
 			self.victimNameInput = $('<input type="text" title="Имя жертвы"></input>').css(self.css.victimNameInput);
 			self.victimCommentInput = $('<input type="text" title="Комментарий"></input>').css(self.css.victimCommentInput);
 			
-			self.victimAddButton = $("<img title=\"Добавить\" src=\"" + self.css.addVictimButtonImg + "\">");
+			self.victimAddButton = $("<img title=\"Добавить\" src=\"" + self.css.addVictimButtonImg + "\">").css(self.css.victimAddButton);
 					
 			var bottomTr = $('<tr></tr>');
 			var leftTd = $('<td align="right"></td>').append(self.victimNameInput).append($('<br>')).append(self.victimCommentInput);
@@ -90,6 +123,40 @@
 				victimNameInput.val('');
 				commentInput.val('');
 			}
+		};
+		
+		this.initDragNDrop = function(globalHolder, eventTarget) {
+			var xDelta = 0;
+			var yDelta = 0;
+			
+			globalHolder.on('mousemove', function(event) {				
+				if (!self.inMove) {
+					return;
+				}
+
+				self.popupPositionX = event.pageX + xDelta;
+				self.popupPositionY = event.pageY + yDelta;
+				
+				if (self.popupPositionY < 0) {
+					self.popupPositionY = 0;
+				}
+				
+				if (self.popupPositionY > 500) {
+					self.popupPositionY = 500;
+				}
+
+				self.popup.move(self.popupPositionX, self.popupPositionY, 0, 0);
+			}).on('mouseup', function() {
+				self.inMove = false;
+				self.savePopupPosition();
+			});
+			
+			eventTarget.on('mousedown', function() {
+				self.inMove = true;		
+				
+				xDelta = self.popupPositionX - event.pageX;
+				yDelta = self.popupPositionY - event.pageY;
+			});
 		};
 		
 		this.processDeleteVictimClick = function (victimName, button) {
@@ -124,13 +191,13 @@
 			return victimTr;			
 		};
 		
-		this.show = function(positionX, positionY) {
+		this.show = function() {
 			$.each(self.estateVictimsList.getVictimsList(),  function(key) {
 				self.victimsHolder.append(self.buildVictimListItem(key, this.comment));
 			});
-			
+
 			self.initListeners();
-			self.popup.show(self.mainHolder).move(positionX, positionY, 0, 0);;
+			self.popup.show(self.mainHolder).move(self.popupPositionX, self.popupPositionY, 0, 0);
 			
 			self.isVisible = true;
 		};
@@ -150,12 +217,20 @@
 			} 
 		};
 		
-		this.toggleShow = function(positionX, positionY) {
+		this.toggleShow = function() {
 			if (self.isVisible) {
 				self.hide();
 				return;
-			}		
+			}			
 			
-			self.show(positionX, positionY); 
+			self.show(); 
+		};
+		
+		this.getIsVisible = function() {
+			return self.isVisible;
+		};
+		
+		this.setVictimName = function(victimName) {
+			self.victimNameInput.val(victimName);
 		};
 	}
