@@ -57,7 +57,11 @@ var defaultConfig = {
 		"background_scripts_host": "крон.жукодавы.рф/er",
 		"trace_img_src": "",
 		"locatioons_ovl": "",
-		"locatioons_opp": ""
+		"locatioons_opp": "",
+		"estateVictims" : {
+			"popupPositionX" : -1,
+			"popupPositionY" : -1
+		}
 	},
 
 	soundOptions: {

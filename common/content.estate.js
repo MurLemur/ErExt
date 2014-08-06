@@ -115,7 +115,8 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 function controller(extOptions) {	
 	var imagesOptions = {
-		estateVictimListSmall: estateUiBuilderCss.listImgSmall
+		estateVictimListSmall: estateUiBuilderCss.listImgSmall,
+		estateVictimAddToListSmall: estateUiBuilderCss.addToListImgSmall
 	}
 
 	var scriptString = "(" + (function() {
@@ -127,13 +128,24 @@ function controller(extOptions) {
 			.css({'vertical-align': 'middle', 'display': 'inline'})
 			.wrap('<p>');
 		
+		var addToVictimListImg = $('<img src="' + erExtImages.estateVictimAddToListSmall + '" id="erExtEsteteAddToVictimList"  title="Добавить в список жертв">')
+			.css({'vertical-align': 'middle', 'display': 'inline'})
+			.wrap('<p>');
+			
 		Estates.parseDialog = function() { 
 			var mdialog = parseDialogOld(arguments[0]); 			
 			
 			if (erExtOptions.options.estateVictims) {
 				if (mdialog.type == "fightfind" || mdialog.type == "fightattackclose") { 
 					mdialog.title += victimListImg.parent().html();
+					
+					if (mdialog.type == "fightattackclose") {	
+						mdialog.text = mdialog.text.replace(new RegExp("Ваши генералы предлагают напасть на <b>(.+)</b> (<img.+>)"), "Ваши генералы предлагают напасть на <b id=\"erExtVictimName\">$1</b> " + addToVictimListImg.parent().html() + " $2");
+					}
 				}
+				
+
+				
 			}
 			
 			return mdialog;
@@ -161,12 +173,12 @@ function controller(extOptions) {
 	// init estateVictims
 	if (extOptions.options.estateVictims) {
 		var estateVictims = new estateVictimsClass();
-		estateVictims.init(mergeOptions(extOptions.estateVictims, defaultConfig.estateVictims));		
+		estateVictims.init(extOptions.estateVictims);		
 	
-		var estateVictimsListViewer = new estateVictimsListViewerClass(estateVictims, popup, estateVictimsListViewerCss);
+		var estateVictimsListViewer = new estateVictimsListViewerClass(estateVictims, popup, estateVictimsListViewerCss, 'refreshEstate', extOptions.systemOptions);
 		estateVictimsListViewer.init();
 	
-		var estateUiBuilder = new estateUiBuilderClass(estateVictimsListViewer, estateUiBuilderCss, 'erExtEsteteVictimList', 'refreshEstate');
+		var estateUiBuilder = new estateUiBuilderClass(estateVictimsListViewer, estateUiBuilderCss, 'erExtEsteteVictimList', 'erExtEsteteAddToVictimList', 'erExtVictimName');
 		estateUiBuilder.init();
 	}
 }
@@ -174,6 +186,7 @@ function controller(extOptions) {
 var loadOptions = [
 	{systemName: 'options', defaultName: "myoptions"},
 	{systemName: 'estateVictims', defaultName: "estateVictims"},
+	{systemName: 'systemOptions', defaultName: "systemOptions"}
 ];
 
 $(document).ready(function() {

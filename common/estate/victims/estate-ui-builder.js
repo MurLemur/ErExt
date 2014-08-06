@@ -1,8 +1,11 @@
-var estateUiBuilderClass = function(estateVictimsListViewer, css, listImgID, anchorID) {
+var estateUiBuilderClass = function(estateVictimsListViewer, css, listImgID, addToListImg, victimNameHolderID) {
 	this.estateVictimsListViewer = estateVictimsListViewer;
 	this.css = css;
 	this.listImgID = listImgID;
-	this.anchor = $('#' + anchorID);
+	this.addToListImg = addToListImg;
+	this.victimNameHolderID = victimNameHolderID;
+	this.mainHolder = $('body');
+	
 	var self = this;
 	
 	this.init = function() {
@@ -20,12 +23,17 @@ var estateUiBuilderClass = function(estateVictimsListViewer, css, listImgID, anc
 	};
 	
 	this.initDelegator = function() {
-		var position = null;
-		var anchorWidth = self.anchor.width();
-		$('body').delegate('#' + self.listImgID, 'click', function() {
-			position = self.anchor.offset();
-
-			self.estateVictimsListViewer.toggleShow(position.left + anchorWidth + 10, position.top);
+		self.mainHolder.delegate('#' + self.listImgID, 'click', function() {
+			self.estateVictimsListViewer.toggleShow();
 		});
+		
+		self.mainHolder.delegate('#' + self.addToListImg, 'click', function() {
+			if (!self.estateVictimsListViewer.getIsVisible()) {
+				self.estateVictimsListViewer.show();
+			}
+			
+			self.estateVictimsListViewer.setVictimName($("#" + victimNameHolderID).text());
+		});
+		
 	}				
 }
