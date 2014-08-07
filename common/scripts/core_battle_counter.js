@@ -21,8 +21,8 @@
  					if (htime < 4) battle_data.hdate = hdate - 1
  					else battle_data.hdate = hdate;
  				} else {
- 					var battle_data = JSON.parse(localStorage["battle_data"]);
- 					if ((battle_data.hdate != hdate && htime > 4) || (battle_data.hdate != hdate - 1 && htime < 4)) {
+ 					var battle_data = JSON.parse(bdata);
+ 					if ((battle_data.hdate != hdate && htime > 4) || (battle_data.hdate != (hdate - 1) && htime < 4)) {
  						battle_data.hcount = 0;
  						battle_data.hmoney = 0;
  						battle_data.gcount = 0;
@@ -50,8 +50,8 @@
  					if (htime < 4) battle_data.hdate = hdate - 1
  					else battle_data.hdate = hdate;
  				} else {
- 					var battle_data = JSON.parse(localStorage["battle_data"]);
- 					if ((battle_data.hdate != hdate && htime > 4) || (battle_data.hdate != hdate - 1 && htime < 4)) {
+ 					var battle_data = JSON.parse(bdata);
+ 					if ((battle_data.hdate != hdate && htime > 4) || (battle_data.hdate != (hdate - 1) && htime < 4)) {
  						battle_data.gcount = 0;
  						battle_data.gmoney = 0;
  						battle_data.hcount = 0;

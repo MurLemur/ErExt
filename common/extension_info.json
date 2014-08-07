@@ -7,21 +7,24 @@
 	"content.move.js",		
 	"content.common.js",
   "contents/content.taverna.js",
+  "contents/lottery/content.lottery-zk.js",
+  "contents/lottery/content.lottery-er.js",
 	"contents/services/content.sidzoku.js",
 	"contents/services/content.yo-bods.js",
 	"contents/services/content.efimerka.js",
 	"contents/trade/content.trade-sell.js",
 	"contents/trade/content.trade-buy.js",
-	"contents/content.global-event-report.js"
+	"contents/content.global-event-report.js",
+  "contents/content.polyana.js"
   ], 
   "description": "Extension for EReality.ru", 
   "creator": "MurLemur",
   "background_scripts": [ 
     "tools/jquery.js",
     "main.js", 
-	"user/active-items/active-items.js",
-	"tools/messaging-enum.js",
-    "user/active-items/background.user-active-items.js" 
+	  "user/active-items/active-items.js",
+	  "tools/messaging-enum.js",
+    "user/active-items/background.user-active-items.js"
   ], 
   "homepage_url": "http://forum.ereality.ru/topic176876/page1.html", 
   "version": "1.0.10", 

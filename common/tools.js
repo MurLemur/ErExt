@@ -50,7 +50,10 @@ var defaultConfig = {
 		'estateVictims': true,
 		'battleInfo': true,
 		'menu_maps': true,
-		'battleCounter': true
+		'battleCounter': true,
+		'lottery_zk': true,
+		'repeat_kudes': true
+
 	},
 	
 	systemOptions: {
