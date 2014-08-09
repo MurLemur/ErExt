@@ -138,7 +138,7 @@ function controller(extOptions) {
 		Estates.showAttackHistory = function() {
 			oldShowAttackHistory.apply(Estates);
 			$("#estateHistoryData b").each(function() {
-				var imagesSpan = $('<span></span>');
+				var current = $(this);
 				
 				current.after($(addToVictimListImg.parent().html() + "<a href='http://www.ereality.ru/~" + current.text() + "' target='_blank'><img class=\"inf\" src=\"http://img.ereality.ru/inf.gif\"></a>"));
 			});
