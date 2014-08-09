@@ -9,6 +9,7 @@
 //
 // @require css/faction-counter-css.js
 // @require css/faction-count-builder-css.js
+// @require css/battle-count-builder-css.js
 // @require common/faction-counter/faction-counter.js
 // @require common/faction-counter/faction-count-builder.js
 //

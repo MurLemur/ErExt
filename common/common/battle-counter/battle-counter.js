@@ -3,7 +3,7 @@ var battleCounterClass = function( popup, chatMsgSelector, css) {
 	this.chatMsgSelector = chatMsgSelector;
 	this.css = css;
 
-	this.view;	
+	this.view;
 	this.hideTimer;	
 	this.copyLinkId = "er-ext-copy-link";
 	this.closeButtonId = "er-ext-close-button";
@@ -13,12 +13,9 @@ var battleCounterClass = function( popup, chatMsgSelector, css) {
 						"gmoney":0};
 	
 	var self = this;
-//	this.init = function() {
-//		this.prepareView();
-//	};
 	
- 	this.prepareView = function() {		
-		var bdata = localStorage["battle_data"];
+ 	this.prepareView = function() {
+ 		var bdata = localStorage["battle_data"];
 		if (bdata) {
 			var battle_data = JSON.parse(localStorage["battle_data"]);
 			var now_dt = new Date();
@@ -28,11 +25,18 @@ var battleCounterClass = function( popup, chatMsgSelector, css) {
 		} 
 		this.view = $("<table class=\"textS\"></table>");			
 		this.view.append(this.getExitButton());	
-		this.view.append("<tr style=\"color: #646464;font-weight: bold;\"><td> Хаотические:</td><td>"+this.battle_data.hcount+"</td><td> сер.</td><td>"+this.battle_data.hmoney+" </td></tr>");
-		this.view.append("<tr style=\"color: #646464;font-weight: bold;\"><td> Групповые:</td><td>"+this.battle_data.gcount+"</td><td> сер.</td><td>"+this.battle_data.gmoney+" </td></tr>");	
-		this.view.append("<tr style=\"color: #646464;font-weight: bold;\"><td> Итого:</td><td>"+(this.battle_data.hcount+this.battle_data.gcount)+"</td><td> сер.</td><td>"+(this.battle_data.hmoney+this.battle_data.gmoney)+" </td></tr>");	
+		this.view.append("<tr style=\"color: #646464;font-weight: bold;\"><td> Счетчик :</td><td><span id=\"mur_battle_trigger\"></span></td><td></td><td></td></tr>");
+		this.view.append("<tr style=\"color: #646464;font-weight: bold;\"><td> Хаотические:</td><td>"+this.battle_data.hcount+"</td><td> "+this.battle_data.hmoney+" </td><td> сер. </td></tr>");
+		this.view.append("<tr style=\"color: #646464;font-weight: bold;\"><td> Групповые:</td><td>"+this.battle_data.gcount+"</td><td>"+this.battle_data.gmoney+" </td><td> сер. </td></tr>");	
+		this.view.append("<tr style=\"color: #646464;font-weight: bold;\"><td> Итого:</td><td>"+(this.battle_data.hcount+this.battle_data.gcount)+"</td><td> "+(this.battle_data.hmoney+this.battle_data.gmoney)+" </td><td> сер. </td></tr>");	
 		
 		this.view.append(this.getCopyLink());
+		$.post("http://www.ereality.ru/ajax/json.php",
+			'{"controller":"hero","action":"panel","params":{"argv":{}}}',
+			function(response) {
+				$("#mur_battle_trigger",this.view).text(response.response.info.main.counter);
+			},
+			"json");
 	};
 	
 	this.show = function(positionX, positionY) {

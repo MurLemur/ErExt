@@ -77,21 +77,6 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		}).toString() + ")();";
 	}
 
-	script = script + "(" +
-		(function() {
-
-		var zzz = Estates.showAttackHistory;
-
-		Estates.showAttackHistory = function() {
-			zzz.apply(Estates);
-			$.each($("#estateHistoryData b"), function(num, val) {
-				$(val).append($("<a href='http://www.ereality.ru/~" + val.innerHTML + "' target='_blank'><img class=\"inf\" src=\"http://img.ereality.ru/inf.gif\"></a>"));
-			})
-			return;
-		}
-
-	}).toString() + ")();";
-
 	//Обновка инфы для таймера поместья
 	if (myoptions.timer_estate) {
 		script = script + "(" +
@@ -125,11 +110,11 @@ function controller(extOptions) {
 		
 		var parseDialogOld = Estates.parseDialog;
 		var victimListImg = $('<img src="' + erExtImages.estateVictimListSmall + '" class="estateTooltip" title="Список жертв" id="erExtEsteteVictimList">')
-			.css({'vertical-align': 'middle', 'display': 'inline'})
+			.css({'vertical-align': 'middle', 'display': 'inline', 'cursor': 'pointer'})
 			.wrap('<p>');
 		
 		var addToVictimListImg = $('<img src="' + erExtImages.estateVictimAddToListSmall + '" id="erExtEsteteAddToVictimList"  title="Добавить в список жертв">')
-			.css({'vertical-align': 'middle', 'display': 'inline'})
+			.css({'vertical-align': 'middle', 'display': 'inline', 'cursor': 'pointer'})
 			.wrap('<p>');
 			
 		Estates.parseDialog = function() { 
@@ -151,18 +136,17 @@ function controller(extOptions) {
 			return mdialog;
 		}
 		
-		/*var oldShowAttackHistory = Estates.showAttackHistory;
+		var oldShowAttackHistory = Estates.showAttackHistory;
 		var estateHistoryHolder = $('#estateHistoryData');
 		Estates.showAttackHistory = function() {
 			oldShowAttackHistory.apply(Estates);
-			
-			estateHistoryHolder.find('b').each(function() {
-				var element = $(this);
-				var userName = element.text();
-				element.html("<a href='http://www.ereality.ru/~" + userName + "' target='_blank'><b>" + userName + "</b></a>");
-			});
+			$.each($("#estateHistoryData b"), function(num, val) {
+				$(val).attr("id","erExtVictimName");
+				$(val).after($(addToVictimListImg.parent().html()+"<a href='http://www.ereality.ru/~" + val.innerHTML + "' target='_blank'><img class=\"inf\" src=\"http://img.ereality.ru/inf.gif\"></a>"));
+			})
+			return;
 		}
-		*/
+		
 			
 	}).toString()
 		.replace("optionsReplace", '(' + JSON.stringify(extOptions) + ')')

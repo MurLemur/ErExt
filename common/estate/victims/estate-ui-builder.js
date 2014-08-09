@@ -31,8 +31,7 @@ var estateUiBuilderClass = function(estateVictimsListViewer, css, listImgID, add
 			if (!self.estateVictimsListViewer.getIsVisible()) {
 				self.estateVictimsListViewer.show();
 			}
-			
-			self.estateVictimsListViewer.setVictimName($("#" + victimNameHolderID).text());
+			self.estateVictimsListViewer.setVictimName($(this).prev().text());
 		});
 		
 	}				

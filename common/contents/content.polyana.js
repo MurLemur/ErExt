@@ -43,7 +43,6 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 					var Old_xmlSend = Wizard.xmlSend;
 					Wizard.xmlSend = function() {
 						Old_xmlSend.apply(Wizard);
-						console.debug($("item", Wizard.xml).text());
 						var kdata = localStorage["kudes_data"];
 						if (!kdata) {
 							var kudes_data = {}

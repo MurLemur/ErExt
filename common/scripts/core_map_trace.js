@@ -59,6 +59,8 @@ var script_map_trace = "(" +
 
 				for (i = 0; i < map_mas.length; i++) {
 					if (chest.search(map_mas[i][0] + ':' + map_mas[i][1], cur_mas) != -1)
+						var expr = new RegExp(">"+map_mas[i][0] + ':' + map_mas[i][1]+"<");
+						if (overlay.html().search(expr)==-1)
 						overlay.append('<div class="point activ" style="position:absolute; ' + chest.getSectorPosition(map_mas[i][0], map_mas[i][1], newmap) + '"><span>' + map_mas[i][0] + ':' + map_mas[i][1] + '</span></div>');
 				}
 
