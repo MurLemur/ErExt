@@ -125,12 +125,9 @@ function controller(extOptions) {
 					mdialog.title += victimListImg.parent().html();
 					
 					if (mdialog.type == "fightattackclose") {	
-						mdialog.text = mdialog.text.replace(new RegExp("Ваши генералы предлагают напасть на <b>(.+)</b> (<img.+>)"), "Ваши генералы предлагают напасть на <b id=\"erExtVictimName\">$1</b> " + addToVictimListImg.parent().html() + " $2");
+						mdialog.text = mdialog.text.replace(new RegExp("Ваши генералы предлагают напасть на <b>(.+)</b> (<img.+>)"), "Ваши генералы предлагают напасть на <b>$1</b> " + addToVictimListImg.parent().html() + " $2");
 					}
 				}
-				
-
-				
 			}
 			
 			return mdialog;
@@ -140,14 +137,12 @@ function controller(extOptions) {
 		var estateHistoryHolder = $('#estateHistoryData');
 		Estates.showAttackHistory = function() {
 			oldShowAttackHistory.apply(Estates);
-			$.each($("#estateHistoryData b"), function(num, val) {
-				$(val).attr("id","erExtVictimName");
-				$(val).after($(addToVictimListImg.parent().html()+"<a href='http://www.ereality.ru/~" + val.innerHTML + "' target='_blank'><img class=\"inf\" src=\"http://img.ereality.ru/inf.gif\"></a>"));
-			})
-			return;
-		}
-		
-			
+			$("#estateHistoryData b").each(function() {
+				var current = $(this);
+				
+				current.after($(addToVictimListImg.parent().html() + "<a href='http://www.ereality.ru/~" + current.text() + "' target='_blank'><img class=\"inf\" src=\"http://img.ereality.ru/inf.gif\"></a>"));
+			});
+		}			
 	}).toString()
 		.replace("optionsReplace", '(' + JSON.stringify(extOptions) + ')')
 		.replace("imagesReplace", '(' + JSON.stringify(imagesOptions) + ')') + ")();";
