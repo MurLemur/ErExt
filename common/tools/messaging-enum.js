@@ -2,5 +2,6 @@ var messagingEnum = {
 	usersListActiveItemsContent: "usersListActiveItemsContent",
 	userItemsBackground: "userItemsBackground",
 	userActiveItemsStart: "userActiveItemsStart",
-	lottery: "lottery"
+	lotteryToBackground: "lotteryToBackground",
+	lotteryToContent: "lotteryToContent"
 }

@@ -4,6 +4,7 @@
 
  battle.xmlRecv = function(xml) {
  	Old_xmlRecv.apply(battle, [xml]);
+
  	if ($("msg", xml).length > 0) {
  		$.get($("msg", xml).text().match(/(id\d{1,})/)[0].replace(/id/, "/log") + "/page1.xml", function(response) {
  			if ($("start", response).attr("type") == 2) {
@@ -34,7 +35,6 @@
  				}
  				battle_data.hmoney = Math.round(battle_data.hmoney);
  				localStorage["battle_data"] = JSON.stringify(battle_data);
- 			//	alert("Боев:" + battle_data.hcount + "  Серебра: " + battle_data.hmoney);
  			}
  			if ($("start", response).attr("type") == 1 && $("start", response).attr("place").search("Остров Дыхания Льдов") == -1) {
  				var hdate = $("start", response).attr("date").match(/\d{1,}-\d{1,}-(\d{1,})/)[1];
@@ -63,7 +63,6 @@
  				}
  				battle_data.gmoney = Math.round(battle_data.gmoney);
  				localStorage["battle_data"] = JSON.stringify(battle_data);
- 				//alert("Боев:" + battle_data.gcount + "  Серебра: " + battle_data.gmoney);
  			}
  		}, "xml");
  	}

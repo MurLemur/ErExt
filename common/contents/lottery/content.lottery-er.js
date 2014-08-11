@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name        lottery
 // @include     http://www.ereality.ru/map.php*action*mytickets
+// @require     tools/messaging-enum.js
 // @require     tools.js
 // @require 	tools/jquery.js
 // @all-frames  true
@@ -16,7 +17,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	}
 	if (myoptions.lottery_zk) {
 		$('#div_bhtml').prepend($("<a href=\"http://www.gosov.net/lotery.html\" target=\"_blank\"><b>Воспользоваться сервисом клана \"Золотой Клуб\"</b></a>"));
-		kango.addMessageListener(messagingEnum.lottery, function(event) {
+		kango.addMessageListener(messagingEnum.lotteryToContent, function(event) {
 			var mes = event.data.split("%2C");
 			if (mes.length == 5)
 				if ($("td:contains(Номера)", $("b:contains(Серебряный хомяк)").parent()).text().search(mes.join(" ")) == -1) {

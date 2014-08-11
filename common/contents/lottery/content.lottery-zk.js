@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name        lottery
 // @include     http://www.gosov.net/lotery.html
+// @require     tools/messaging-enum.js
 // @require     tools.js
 // @require 	tools/jquery.js
 // @all-frames  true
@@ -17,7 +18,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	if (myoptions.lottery_zk) {
 		$('#resultDiv').delegate($(".bilet"), "click", function(evt) {
 			var bilet = $(evt.target).parent().parent().parent().parent().parent().html();
-			if (bilet.search(/bilet/) == 18) kango.dispatchMessage(messagingEnum.lottery, bilet.match(/class="d(\d{1,})/g).join('%2C').replace(/class="d/g, ""));
+			if (bilet.search(/bilet/) == 18) kango.dispatchMessage(messagingEnum.lotteryToBackground, bilet.match(/class="d(\d{1,})/g).join('%2C').replace(/class="d/g, ""));
 		});
 	}
 	//=========================end.

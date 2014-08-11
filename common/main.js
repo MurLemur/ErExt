@@ -57,10 +57,10 @@ kango.xhr.send(details, function(data) {
   }
 });
 
-kango.addMessageListener(messagingEnum.lottery, function(event) {
+kango.addMessageListener(messagingEnum.lotteryToBackground, function(event) {
   kango.browser.tabs.getAll(function(tabs) {
     $.each(tabs, function() {
-       if (this.getUrl().search("http://www.ereality.ru/core") != -1) this.dispatchMessage('lottery', event.data);
+       if (this.getUrl().search("http://www.ereality.ru/core") != -1) this.dispatchMessage(messagingEnum.lotteryToContent, event.data);
        });
   });
 });

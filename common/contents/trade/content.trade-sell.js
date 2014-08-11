@@ -1,6 +1,8 @@
 // ==UserScript==
 // @name        trade-sell
 // @include     http://www.ereality.ru/map*n=useritems*
+// @include 	http://www.ereality.ru/map*action=sell
+// @include 	http://www.ereality.ru/map*mode=sell
 // @require     tools.js
 // @all-frames  true
 // ==/UserScript==
@@ -19,7 +21,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 	//Механизм быстрого выставления однотипных лотов для биржи
 
-	if (myoptions.stockmy) {
+	if (myoptions.stockmy && location.href.search("n=useritems") != -1 && users.oSpanLocation.text().search("Лавка Забытой Грани") == -1) {
 
 		script += "(" +
 			(function() {
