@@ -10,6 +10,9 @@
 // @require css/faction-counter-css.js
 // @require css/faction-count-builder-css.js
 // @require css/battle-count-builder-css.js
+// @require css/monster-locations-builder-css.js
+// @require common/monster-locations/monster-locations.js
+// @require common/monster-locations/monster-locations-builder.js
 // @require common/faction-counter/faction-counter.js
 // @require common/faction-counter/faction-count-builder.js
 //
@@ -80,18 +83,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	var corpsesService = new corpsesServiceClass($("#chat_msg"));
 	corpsesService.init();
 
-	var htmlmenu = "" +
-		"<div id=\"m_mur_mapsmenu\" class=\"contextMenu\" style=\"visibility: hidden;position:absolute;\">" +
-		"  <ul class=\"textM\">" +
-		"    <li><a href=\"http://sidzoku.ru/maps/ovl/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОВЛ </a></li>" +
-		"    <li><a href=\"http://sidzoku.ru/maps/opp/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОПП </a></li>" +
-		"    <li><a href=\"http://sidzoku.ru/maps/ok/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОК </a></li>" +
-		"  </ul>" +
-		"</div>";
-	$(document.body.lastChild).after($(htmlmenu));
-	setTimeout(function() {
-		$("#a_users_loc").contextMenu("m_mur_mapsmenu", {});
-	}, 100);
+	// init monster locations
+	if (mergedOptions.monster_locations) {
+		var monsterLocationBuilder = new monsterLocationBuilderClass(monsterLocationBuilderCss, factionCounterCss);
+		monsterLocationBuilder.init();
+	}	
+
 });
 
 

@@ -23,7 +23,7 @@ var popupClass = function(popupCss) {
 		
 		return this;
 	};
-	
+
 	this.showPreloader = function(preloader) {
 		this.hide();
 		this.mainHolder.append(preloader);
@@ -37,6 +37,11 @@ var popupClass = function(popupCss) {
 		
 	this.hide = function() {
 		this.mainHolder.hide().empty();
+		return this; 
+	};
+
+	this.mhide = function() {
+		this.mainHolder.hide();
 		return this; 
 	};
 	

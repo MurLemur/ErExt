@@ -3,6 +3,7 @@
 // @include     http://www.ereality.ru/core/*
 // @require     tools.js
 // @require     scripts/core_map_trace.js
+// @require     scripts/core_monster_locations.js
 // @require     scripts/core_timers.js
 // @require     scripts/core_battle_counter.js
 // @all-frames  false
@@ -376,7 +377,7 @@ function pfunction(){
 	+ ")();"; 
 }
 
-// ПКМ по локации вызывает меню с картами ОВЛ и ОПП
+		// ПКМ по локации вызывает меню с картами ОВЛ и ОПП
 		if (myoptions.menu_maps) {
 			script += "(" +
 				(function() {
@@ -385,6 +386,7 @@ function pfunction(){
 					"  <ul class=\"textM\">" +
 					"    <li><a href=\"http://sidzoku.ru/maps/ovl/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОВЛ </a></li>" +
 					"    <li><a href=\"http://sidzoku.ru/maps/opp/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОПП </a></li>" +
+					"    <li><a href=\"http://sidzoku.ru/maps/ok/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОК </a></li>" +
 					"  </ul>" +
 					"</div>";
 				$(document.body.lastChild).after($(htmlmenu));
@@ -480,6 +482,11 @@ if (myoptions.keyalt) {
 
 		if (myoptions.teammate_trace) {
 			script = script.replace("teammate_trace = false", "teammate_trace = true");
+		}
+
+		// Ареалы монстров
+		if (myoptions.monster_locations) {
+			script += script_monster_locations.replace("monster_fon.png", kango.io.getResourceUrl("res/monster_fon.png"));
 		}
 
 

@@ -52,8 +52,8 @@ var defaultConfig = {
 		'menu_maps': true,
 		'battleCounter': true,
 		'lottery_zk': true,
-		'repeat_kudes': true
-
+		'repeat_kudes': true,
+		'monster_locations': true
 	},
 	
 	systemOptions: {
