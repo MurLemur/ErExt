@@ -23,8 +23,8 @@ var monsterLocationBuilderClass = function(monsterLocationBuilderCss, factionCou
 	this.bindListeners = function() {		
 		this.openLink.on('click', function() {
 			self.position = $(this).offset();
-			
-			self.monsterLocation.hide().show(self.position.left, self.position.top).hideAfter(self.timeToShow);
+			var popupwindow = self.monsterLocation.hide().show(self.position.left, self.position.top);
+			(typeof(popupwindow)!="undefined") && popupwindow.hideAfter(self.timeToShow);
 		});
 	}
 };

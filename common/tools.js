@@ -80,6 +80,10 @@ var defaultConfig = {
 			sound: "nosound",
 			detect: "Сражаются: <img width="
 		},
+		"sound_aliens": {
+			sound: "nosound",
+			detect: "Добро пожаловать на остров! Вы можете координировать"
+		},
 		"sound_fishing": {
 			sound: "nosound",
 			detect: "У вас закончилась приманка!"

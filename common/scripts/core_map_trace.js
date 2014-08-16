@@ -113,8 +113,15 @@ var script_map_trace = "(" +
 				//Следы для тиммейтов
 				var teammate_trace = false;
 				if (teammate_trace)
+					if (user.place2 == 14) 
+					$.each(main.Map.additionalObjects, function(key) {
+						var msector = key;
+						if (chest.search(msector, current_mas) == -1 && map_mas)
+							current_mas.push(msector);
+					});	
+					else
 					$.each(main.placeHeroes, function(key, places) {
-						msector = places.x + ':' + places.y;
+						var msector = places.x + ':' + places.y;
 						if (chest.search(msector, current_mas) == -1 && map_mas)
 							current_mas.push(msector);
 					});

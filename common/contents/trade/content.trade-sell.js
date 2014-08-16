@@ -20,8 +20,8 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	var script="";
 
 	//Механизм быстрого выставления однотипных лотов для биржи
+	if (myoptions.stockmy && location.href.search("n=useritems") != -1 ) {
 
-	if (myoptions.stockmy && location.href.search("n=useritems") != -1 && users.oSpanLocation.text().search("Лавка Забытой Грани") == -1) {
 
 		script += "(" +
 			(function() {
@@ -97,8 +97,9 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			$($("#cat")[0]).after($(htmlelements));
 
 		}).toString() + ")();";
+		
 	}
-	if (myoptions.stock_sell_offline_find) {
+	if (myoptions.stock_sell_offline_find && !(location.href.search("mode=sell")!= -1 && document.getElementById("npc366")!=undefined)) {
 		script += " (" +
 			(function() {
 			$.each($("table[id^=tbl] td[colspan=4] b"), function(index, elem) {
