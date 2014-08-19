@@ -158,9 +158,9 @@ var monsterLocationClass = function( popup, css) {
 		});
 		$("img[src*=monst]",$(this.view)).on("click", function() {
 			if ($(this).attr("class") == "mur_active_img")
-				$(this).attr("class", "") = "";
+				$(this).attr("class", "");
 			else
-				$(this).attr("class", "mur_active_img")
+				$(this).attr("class", "mur_active_img");
 		});
 	};
 	

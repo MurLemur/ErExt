@@ -66,7 +66,7 @@ var script_monster_locations = "(" +
 
 	draw = function() {
 		var map_div = $('#main').contents().find('div#container #mapContent');
-		if (map_div) {
+		if (map_div && main.Map) {
 			var overlay = $('<div id="overlay_monsters"></div>');
 
 			overlay.attr('style', map_div.find('div:first').attr('style')).css({
@@ -99,7 +99,7 @@ var script_monster_locations = "(" +
 		}
 	}
 
-	$('#main').on('load.chest', function() {
+	$('#main').on('load.monstr', function() {
 		if (user.place2 == 1 || user.place2 == 3) draw()
 	});
 }).toString() + ")();";

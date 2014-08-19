@@ -489,9 +489,23 @@ if (myoptions.keyalt) {
 			script += script_monster_locations.replace("monster_fon.png", kango.io.getResourceUrl("res/monster_fon.png"));
 		}
 
-
+		// Подсчет заработка в групповых и хаотических боях
 		if (myoptions.battleCounter) {
 			script += script_battle_counter;
+		}
+
+		if (myoptions.no_flash) {
+			script += "(" +
+				(function() {
+				var coreAudio = $('<audio id="coreAudio"><source src="" type="audio/mp3"></audio>').css("display", "none");	
+				coreAudio.appendTo('body');
+				core.playSwfSound = function(sound) {
+					coreAudio.attr("src", 'http://www.ereality.ru/mp3/' + sound + '.mp3');
+					coreAudio[0].play();
+					return
+				};
+				$("embed").remove();
+			}).toString() + ")();";
 		}
 
 		// Таймеры таверны и поместья

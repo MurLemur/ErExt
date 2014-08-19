@@ -53,7 +53,8 @@ var defaultConfig = {
 		'battleCounter': true,
 		'lottery_zk': true,
 		'repeat_kudes': true,
-		'monster_locations': true
+		'monster_locations': true,
+		'no_flash': false
 	},
 	
 	systemOptions: {
