@@ -36,7 +36,7 @@
 		"popup": {
             "url": "button/popup.html",
             "width": 260,
-            "height": 100
+            "height": 125
 	     }
 	},
     "permissions": {

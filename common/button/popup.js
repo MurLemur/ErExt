@@ -23,7 +23,14 @@ var popupClass = function(config) {
 		$('#options').click(function() {
 			kango.ui.optionsPage.open();
 			window.close();
-		});		
+		});	
+
+		$("#dp_stats").click(function() {
+		 	if (kango.browser.getName() != "firefox") { var url_dp_stats = kango.io.getResourceUrl("services/dp_stats.html");
+		 } 	else { var url_dp_stats = kango.io.getResourceUrl("content/services/dp_stats.html").replace("resource","chrome")}
+			kango.browser.tabs.create({url:url_dp_stats}); 
+			window.close();
+		});	
 	};
 	
 	this.pauseListener = function(isPaused, setImgCallback) {

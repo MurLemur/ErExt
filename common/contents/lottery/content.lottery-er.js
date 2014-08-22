@@ -35,7 +35,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 				if ($("td:contains(Номера)", $("b:contains(Золотой бизон)").parent()).text().search(mes.join(" ")) == -1) {
 					var ticket = $("input[value*=Заполнить]:first", $("b:contains(Золотой бизон)").parent());
 					if (ticket.length > 0) {
-						var ticket_id = ticket.attr("onclick").match(/\(1, (\d{1,})/)[1];
+						var ticket_id = ticket.attr("onclick").match(/\(0, (\d{1,})/)[1];
 						$.post("http://www.ereality.ru/map.php?action=fill&ltype=1&tid=" + ticket_id + "&y=undefined",
 							'FieldList=' + mes.join("%2C") + '&y=',
 							function(response) {

@@ -1,0 +1,18 @@
+body{
+	background:#eee;
+}
+table td {
+	text-align: center;	
+}
+.zebra tr:first-child {
+	    -moz-border-radius: 6px 0 0 0;
+	    -webkit-border-radius: 6px 0 0 0;
+	    border-radius: 6px 0 0 0;
+     	background: none repeat scroll 0 0 darkgray;
+	}
+.zebra tbody tr:nth-child(even) {
+    background: #f5f5f5;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+}
