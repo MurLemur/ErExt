@@ -1,4 +1,4 @@
-var contextBlockerClass = function(css) {
+var contextBlockerClass = function(css, holder) {
 	this.css = css;
 	this.blockStatus = false;
 	var self = this;	
@@ -27,7 +27,7 @@ var contextBlockerClass = function(css) {
 	};
 	
 	this.init = function() {
-		$("#div_users a#span_sort").parent().prepend(this.buildLink());
+		holder.parent().prepend(this.buildLink());
 		if (localStorage['blockStatus']=='true') this.blockContext($("img[src*=block_cmenu]"));
 
 

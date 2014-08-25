@@ -1,4 +1,4 @@
-var monsterLocationBuilderClass = function(monsterLocationBuilderCss, factionCounterCss) {
+var monsterLocationBuilderClass = function(monsterLocationBuilderCss, factionCounterCss, holder) {
 	this.monsterLocation;
 	this.openLink;
 	this.position;
@@ -11,7 +11,7 @@ var monsterLocationBuilderClass = function(monsterLocationBuilderCss, factionCou
 		var popupMonsters = new popupClass(popupCss);
 		this.monsterLocation = new monsterLocationClass(popupMonsters, factionCounterCss);
 	
-		$("#div_users a#span_sort").parent().prepend(this.buildLink());
+		holder.parent().prepend(this.buildLink());
 		this.monsterLocation.init();
 		this.bindListeners();		
 	},

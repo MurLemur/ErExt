@@ -54,7 +54,8 @@ var defaultConfig = {
 		'lottery_zk': true,
 		'repeat_kudes': true,
 		'monster_locations': true,
-		'no_flash': false
+		'no_flash': false,
+		'buttons_holder': false
 	},
 	
 	systemOptions: {

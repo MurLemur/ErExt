@@ -1,4 +1,4 @@
-var factionContBuilderClass = function(factionContBuilderCss, factionCounterCss) {
+var factionContBuilderClass = function(factionContBuilderCss, factionCounterCss, holder) {
 	this.factionCounter;
 	this.openLink;
 	this.position;
@@ -11,7 +11,7 @@ var factionContBuilderClass = function(factionContBuilderCss, factionCounterCss)
 		this.factionCounter = new factionCounterClass("#div_users", "#div_users1", popup, "#chat_msg", factionCounterCss);
 		this.factionCounter.init();
 	
-		$("#div_users a#span_sort").parent().prepend(this.buildLink());
+		holder.parent().prepend(this.buildLink());
 		this.bindListeners();		
 	},
 	this.buildLink = function() {

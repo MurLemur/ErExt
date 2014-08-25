@@ -1,4 +1,4 @@
-var battleCountBuilderClass = function(factionContBuilderCss, factionCounterCss) {
+var battleCountBuilderClass = function(factionContBuilderCss, factionCounterCss, holder) {
 	this.battleCounter;
 	this.openLink;
 	this.position;
@@ -10,7 +10,7 @@ var battleCountBuilderClass = function(factionContBuilderCss, factionCounterCss)
 	this.init = function() {
 		this.battleCounter = new battleCounterClass(popup, "#chat_msg", factionCounterCss);
 	
-		$("#div_users a#span_sort").parent().prepend(this.buildLink());
+		holder.parent().prepend(this.buildLink());
 		this.battleCounter.init();
 		this.bindListeners();		
 	},

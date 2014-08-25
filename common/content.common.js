@@ -11,6 +11,7 @@
 // @require css/faction-count-builder-css.js
 // @require css/battle-count-builder-css.js
 // @require css/monster-locations-builder-css.js
+// @require common/buttons_holder.js
 // @require common/monster-locations/monster-locations.js
 // @require common/monster-locations/monster-locations-builder.js
 // @require common/faction-counter/faction-counter.js
@@ -40,15 +41,22 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		return;
 	}
 	
+	var holder = $("#div_users a#span_sort");
+
+	if (mergedOptions.buttons_holder) {
+		button_holder_init();
+		var holder = $('#mur_holder');
+	}
+	
 	// init faction count
 	if (mergedOptions.okcount) {
-		var factionContBuilder = new factionContBuilderClass(factionContBuilderCss, factionCounterCss);
+		var factionContBuilder = new factionContBuilderClass(factionContBuilderCss, factionCounterCss, holder);
 		factionContBuilder.init();
 	}
 
 	// init battle count
 	if (mergedOptions.battleCounter) {
-		var battleCountBuilder = new battleCountBuilderClass(factionContBuilderCss, factionCounterCss);
+		var battleCountBuilder = new battleCountBuilderClass(factionContBuilderCss, factionCounterCss, holder);
 		battleCountBuilder.init();
 	}	
 	
@@ -69,13 +77,13 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	
 	// init block context menu
 	if (mergedOptions.block_cmenu) {
-		var contextBlocker = new contextBlockerClass(contextBlockerCss);
+		var contextBlocker = new contextBlockerClass(contextBlockerCss, holder);
 		contextBlocker.init();
 	}
 
 	// init trace map
 	if (mergedOptions.map_trace) {
-		var traceMap = new traceMapClass(traceCss);
+		var traceMap = new traceMapClass(traceCss, holder);
 		traceMap.init();
 	}
 	
@@ -85,7 +93,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 
 	// init monster locations
 	if (mergedOptions.monster_locations) {
-		var monsterLocationBuilder = new monsterLocationBuilderClass(monsterLocationBuilderCss, factionCounterCss);
+		var monsterLocationBuilder = new monsterLocationBuilderClass(monsterLocationBuilderCss, factionCounterCss, holder);
 		monsterLocationBuilder.init();
 	}	
 

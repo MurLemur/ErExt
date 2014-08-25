@@ -1,4 +1,4 @@
-var traceMapClass = function(css) {
+var traceMapClass = function(css, holder) {
 	this.css = css;
 	this.isEnable = false;
 	var self = this;
@@ -24,7 +24,7 @@ var traceMapClass = function(css) {
 
 
 	this.init = function() {
-		$("#div_users a#span_sort").parent().prepend(this.buildLink());
+		holder.parent().prepend(this.buildLink());
 		if (localStorage['isEnableTrace']=='true') setTimeout(function() {$("img[src*=footprint]").click();},500);
 	}
 }
