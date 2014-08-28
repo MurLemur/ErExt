@@ -27,6 +27,9 @@
 // @require css/context-blocker-css.js
 // @require common/context-blocker/context-blocker.js
 //
+// @require css/OK-hide-corpses-css.js
+// @require common/OK-hide-corpses.js
+//
 // @require css/trace-map-css.js
 // @require common/trace-map/trace-map.js
 //
@@ -41,11 +44,17 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		return;
 	}
 	
-	var holder = $("#div_users a#span_sort");
+	//var holder = $("#div_users a#span_sort");
 
-	if (mergedOptions.buttons_holder) {
-		button_holder_init();
-		var holder = $('#mur_holder');
+	if (mergedOptions.buttons_holder) button_holder_init();
+	else $("#div_users").children().first().after("<div class=\"wrap\" style=\"z-index: 999;\"><span id=\"mur_holder\"></span></div>");
+
+	var holder = $('#mur_holder');
+
+	// Показывать только живых на локе Острова Крови
+	if (mergedOptions.ok_hide_corpses) {
+		var hideCorpses = new hideCorpsesClass(hideCorpsesCss, holder);
+		hideCorpses.init();
 	}
 	
 	// init faction count
@@ -95,8 +104,29 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	if (mergedOptions.monster_locations) {
 		var monsterLocationBuilder = new monsterLocationBuilderClass(monsterLocationBuilderCss, factionCounterCss, holder);
 		monsterLocationBuilder.init();
-	}	
-
+	}
+	
+	// Увеличенные кнопки дополнения
+	if (mergedOptions.biggest_buttons) {
+		$("img", $(".wrap")).css({
+			"background-color": "#d7d7d7",
+			"border": "1px solid #AAAAAA",
+			"cursor": "pointer",
+			"height": "13px",
+			"margin-left": "3px",
+			"padding": "5px"
+		});
+		$(".wrap").css({
+			"background-color": "",
+			"border": "",
+			"padding": ""
+		});
+		if (!mergedOptions.buttons_holder) $(".wrap").css({
+			"position": "absolute",
+			"right": "30px",
+			"top": "-30px"
+		});
+	}
 });
 
 

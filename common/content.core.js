@@ -26,7 +26,9 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
 		var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
+		var custom_sounds="";
 		if (mergedSystemOptions.trace_img_src!="") trace_img_src=mergedSystemOptions.trace_img_src;
+		if (mergedSystemOptions.custom_sounds!="") custom_sounds=mergedSystemOptions.custom_sounds;
 		window.setTimeout(function() { pfunction(); }, 100);			
 	});
 
@@ -494,20 +496,88 @@ if (myoptions.keyalt) {
 			script += script_battle_counter;
 		}
 
+		// Работа со звуковыми оповещениями
 		if (myoptions.no_flash) {
 			script += "(" +
 				(function() {
-				var coreAudio = $('<audio id="coreAudio"><source src="" type="audio/mp3"></audio>').css("display", "none");	
+				var custom_sounds = "mur_custom_sounds".split(";");
+				var mur_sounds = {};
+				for (var i = 0; i < custom_sounds.length; i++) {
+					if (custom_sounds[i].length > 5) {
+						snd = custom_sounds[i].split(")");
+						soundName = snd[0].replace("(", "");
+						soundLink = snd[1];
+						mur_sounds[soundName] = soundLink;
+					}
+				}
+				var coreAudio = $('<audio id="coreAudio"><source src="" type="audio/mp3"></audio>').css("display", "none");
 				coreAudio.appendTo('body');
 				core.playSwfSound = function(sound) {
-					coreAudio.attr("src", 'http://www.ereality.ru/mp3/' + sound + '.mp3');
+					if (mur_sounds && mur_sounds[sound] != undefined)
+						coreAudio.attr("src", mur_sounds[sound]);
+					else
+						coreAudio.attr("src", 'http://www.ereality.ru/mp3/' + sound + '.mp3');
 					coreAudio[0].play();
 					return
 				};
 				$("embed").remove();
+			}).toString().replace("mur_custom_sounds", custom_sounds) + ")();";
+		}
+
+		// На КТ показывать кто в бою
+		if (myoptions.kt_in_battle) {
+			script += "(" +
+				(function() {
+				var old_dataBuild = users.dataBuild;
+				users.dataBuild = function() {
+					old_dataBuild.apply(users);
+					users.isClanTournament(user.place2) &&
+						users.data.length > 4 &&
+						users.data_pos < 39 &&
+						$.post("http://www.ereality.ru/ajax/fdemands/",
+							'<?xml version="1.0" encoding="windows-1251"?><request mode="10" />',
+							function(response) {
+								$.each($("d", response), function(index, elem) {
+									var mas_players = ($(elem).attr("n1") + $(elem).attr("n2")).split(":");
+									$.each(mas_players, function(i) {
+										if (mas_players[i] != "") {
+											var link = $('<a href="http://www.ereality.ru/log/#id' + $(elem).attr("id") + '/page999" target="_blank"><img src="http://img.ereality.ru/a/swords.gif" class="i" title="В бою"/></a>')
+											$("#div_users1 a:contains(" + mas_players[i] + ")").next().next().after(link);
+										};
+									});
+								});
+							});
+				}
 			}).toString() + ")();";
 		}
 
+		// На ОК показывать только тех кто жив
+		if (myoptions.ok_hide_corpses) {
+			script += "(" +
+				(function() {
+				if ($("img[src*=sun-glasses-on]").length == 1) core.hideCorpses = true;
+				else core.hideCorpses = false;
+				$("img[src*=sun-glasses]").on('click', function() {
+					setTimeout(
+						function() {
+							if ($("img[src*=sun-glasses-on]").length == 1) core.hideCorpses = true;
+							else core.hideCorpses = false;
+						}, 100);
+				});
+				var old_dataRecv = users.dataRecv;
+				users.dataRecv = function(data) {
+					if (user.place2 == 8 && core.hideCorpses) {
+						var new_data = [];
+						var temp_data = data.split("\n");
+						new_data.push(temp_data[0]);
+						for (var i = 1; i < temp_data.length; i++) {
+							(temp_data[i].split("#")[16] == 0) && new_data.push(temp_data[i]);
+						}
+						old_dataRecv.apply(users, [new_data.join("\n")]);
+					} else old_dataRecv.apply(users, [data]);
+				}
+			}).toString() + ")();";
+		}
 		// Таймеры таверны и поместья
 		if (myoptions.timer_taverna || myoptions.timer_estate) {
 			myoptions.timer_taverna && (script_timers = script_timers.replace("core.mur_timer.taverna = false", "core.mur_timer.taverna = true"));

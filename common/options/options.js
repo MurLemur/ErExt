@@ -1,17 +1,20 @@
 ﻿var extensionOptionsClass = function(soundSelectOptions) {
 	this.soundSelectOptions = soundSelectOptions;
+	this.mur_sounds = {};
 	var self = this;
 	
 	this.init = function() {
 		this.loadExtentionOption("options", defaultConfig.myoptions, function() {
 			self.prepareOptionButtons();
 		});
-		this.loadExtentionOption("soptions", defaultConfig.soundOptions, function() {
-			self.prepareSoundOptionsButtons(this.soundSelectOptions);
-		});	
+
 		this.loadExtentionOption("systemOptions", defaultConfig.systemOptions, function() {
 			self.prepareSystemOptions();
 		});
+
+		this.loadExtentionOption("soptions", defaultConfig.soundOptions, function() {
+			self.prepareSoundOptionsButtons(this.soundSelectOptions);
+		});	
 	};
 	
 	this.saveOptions = function(optionKey, optionValue) {
@@ -35,15 +38,50 @@
 		});		
 	};
 	
-	this.prepareSoundOptionsButtons = function() {
+	this.refreshSoundOptions = function() {
+		var custom_sounds = $("#custom_sounds").val().split(";");
+		var htmlopt = "";
+		this.mur_sounds = {};
+		for (var i = 0; i < custom_sounds.length; i++) {
+			if (custom_sounds[i].length > 5) {
+				snd = custom_sounds[i].split(")");
+				soundName = snd[0].replace("(", "");
+				soundLink = snd[1];
+				this.mur_sounds[soundName] = soundLink;
+				htmlopt += '<option value="' + soundName + '">' + soundName + '</option>'
+			}
+		}
 		$.each(defaultConfig.soundOptions, function(key) {
-			$('#' + key).parent().parent().append('<td><audio controls id="s_'+key+'" src="http://www.ereality.ru/mp3/'+defaultConfig.soundOptions[key].sound+'.mp3" type="audio/mp3" </audio></td>');
-			$('#' + key).html(self.soundSelectOptions).val(defaultConfig.soundOptions[key].sound).on("click", function() {
+			$('#' + key).html(self.soundSelectOptions + htmlopt).val(defaultConfig.soundOptions[key].sound);
+		});
+	};
+
+	this.prepareSoundOptionsButtons = function() {
+		this.refreshSoundOptions();
+		$.each(defaultConfig.soundOptions, function(key) {
+			if (self.mur_sounds && self.mur_sounds[defaultConfig.soundOptions[key].sound] != undefined)
+				src_sound = self.mur_sounds[defaultConfig.soundOptions[key].sound];
+			else
+				src_sound = 'http://www.ereality.ru/mp3/' + defaultConfig.soundOptions[key].sound + '.mp3" type="audio/mp3';
+			$('#' + key).parent().parent().append('<td><audio controls id="s_' + key + '" src="' + src_sound + '" type="audio/mp3" </audio></td>');
+			$('#' + key).val(defaultConfig.soundOptions[key].sound).on("click", function() {
 				defaultConfig.soundOptions[this.id].sound = $(this).val();
-				$('#s_' + this.id).attr("src",'http://www.ereality.ru/mp3/'+$(this).val()+'.mp3');
+				if (self.mur_sounds && self.mur_sounds[$(this).val()] != undefined)
+					$('#s_' + this.id).attr("src", self.mur_sounds[$(this).val()]);
+				else
+					$('#s_' + this.id).attr("src", 'http://www.ereality.ru/mp3/' + $(this).val() + '.mp3');
 				self.saveOptions("soptions", defaultConfig.soundOptions);
 			});
-		});	
+			$("#custom_sounds").on("change", function() {
+				self.refreshSoundOptions();
+			});
+			$("#no_flash").on("click", function() {
+				if ($(this).prop("checked")) $("#form_custom_sounds").show();
+				else $("#form_custom_sounds").hide();
+			});
+			if ($("#no_flash").prop("checked")) $("#form_custom_sounds").show();
+			else $("#form_custom_sounds").hide();
+		});
 	};
 	
 	this.loadExtentionOption = function(optionKey, defaultOptions, callback) { 
@@ -225,21 +263,22 @@ var modalWindow = {
 
 KangoAPI.onReady(function() {
 	var htmlopt = '<option value="nosound">Отключено</option>'+
-      '<option value="sound1">Звук  1</option>'+
-      '<option value="sound2">Звук  2</option>'+
-      '<option value="sound3">Звук  3</option>'+
-      '<option value="sound4">Звук  4</option>'+
-      '<option value="sound5">Звук  5</option>'+
-      '<option value="alarm">Звук  6</option>'+
-      '<option value="chat">Звук 7</option>'+
-      '<option value="fight">Звук  8</option>'+
-      '<option value="fish">Звук  9</option>'+
-      '<option value="mine">Звук 10</option>'+
-      '<option value="msg">Звук 11</option>'+
-      '<option value="trade">Звук 12</option>'+
-      '<option value="wood">Звук 13</option>'+
-      '<option value="work">Звук 14</option>';
-	  
+      '<option value="sound1">Звук  1 (sound1)</option>'+
+      '<option value="sound2">Звук  2 (sound2)</option>'+
+      '<option value="sound3">Звук  3 (sound3)</option>'+
+      '<option value="sound4">Звук  4 (sound4)</option>'+
+      '<option value="sound5">Звук  5 (sound5)</option>'+
+      '<option value="alarm">Звук  6 (alarm)</option>'+
+      '<option value="chat">Звук 7 (chat)</option>'+
+      '<option value="fight">Звук  8 (fight)</option>'+
+      '<option value="fish">Звук  9 (fish)</option>'+
+      '<option value="mine">Звук 10 (mine)</option>'+
+      '<option value="msg">Звук 11 (msg)</option>'+
+      '<option value="trade">Звук 12 (trade)</option>'+
+      '<option value="wood">Звук 13 (wood)</option>'+
+      '<option value="work">Звук 14 (work)</option>';
+
+	 
 	
 	
 	new extensionOptionsClass(htmlopt).init();

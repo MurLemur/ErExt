@@ -29,9 +29,8 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 								"1": "option_ovl",
 								"3": "option_opp"
 							}
-
-							str = options_loc[Map.heroMap];
-							location_mas = str.split(";");
+							var str = options_loc[Map.heroMap];
+							var location_mas = str.split(";");
 							for (var i = 0; i < location_mas.length; i++) {
 								if (location_mas[i].length > 5) {
 									loc = location_mas[i].split(")");

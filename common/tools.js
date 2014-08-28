@@ -55,7 +55,10 @@ var defaultConfig = {
 		'repeat_kudes': true,
 		'monster_locations': true,
 		'no_flash': false,
-		'buttons_holder': false
+		'buttons_holder': false,
+		'kt_in_battle': true,
+		'ok_hide_corpses': true,
+		'biggest_buttons': false
 	},
 	
 	systemOptions: {
@@ -63,6 +66,7 @@ var defaultConfig = {
 		"trace_img_src": "",
 		"locatioons_ovl": "",
 		"locatioons_opp": "",
+		"custom_sounds": "",
 		"estateVictims" : {
 			"popupPositionX" : -1,
 			"popupPositionY" : -1
