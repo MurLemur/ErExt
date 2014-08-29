@@ -43,7 +43,7 @@ var defaultConfig = {
 		"teammate_trace": false,
 		"taverna_fast_click": true,
 		"timer_taverna": true,
-		"timer_estate": true,
+		"timer_estate": false,
 		"stock_sell_offline_find": true,
 		"clickablePSmiles" : true,
 		'clickbaleNamesInGlobalEventReports' : true,
@@ -58,7 +58,8 @@ var defaultConfig = {
 		'buttons_holder': false,
 		'kt_in_battle': true,
 		'ok_hide_corpses': true,
-		'biggest_buttons': false
+		'biggest_buttons': false,
+		'freeze_chat': true
 	},
 	
 	systemOptions: {

@@ -30,6 +30,9 @@
 // @require css/OK-hide-corpses-css.js
 // @require common/OK-hide-corpses.js
 //
+// @require css/freeze-chat-css.js
+// @require common/freeze_chat.js
+//
 // @require css/trace-map-css.js
 // @require common/trace-map/trace-map.js
 //
@@ -55,6 +58,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	if (mergedOptions.ok_hide_corpses) {
 		var hideCorpses = new hideCorpsesClass(hideCorpsesCss, holder);
 		hideCorpses.init();
+	}
+
+	// Заморозка чата
+	if (mergedOptions.freeze_chat) {
+		var freezeChat = new freezeChatClass(freezeChatCss, holder);
+		freezeChat.init();
 	}
 	
 	// init faction count

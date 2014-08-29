@@ -446,15 +446,18 @@ if (myoptions.keyalt) {
 				"json");
 	core.onKeyUp=function(event){
 			event = (window.event || event);
-			if ((event.keyCode == 112)&&(battle.bstatus==0)) {    // F11 
+			if ((event.keyCode == 112)&&(battle.bstatus==0)) {    // F1 
 						$.each(battle.items, function(num, val) {
 							if ((val.img == "draftroll.png") || (val.img == "summonscroll.jpg") || (val.img == "ejectroll.png")) battle.selectItem(battle.items[num].uid)
 						})
 			}
-			if ((event.keyCode == 113)&&(battle.bstatus==0)) {    // F12 
+			if ((event.keyCode == 113)&&(battle.bstatus==0)) {    // F2 
 						$.each(battle.items, function(num, val) {
 							if ((val.img == "draftroll.png") || (val.img == "summonscroll.jpg") || (val.img == "ejectroll.png")) battle.selectItem(battle.items[num].uid)
 						})
+			}
+			if ((event.keyCode == 115)&&(battle.bstatus==0)) {    // F4
+				 $("#autobattle")[0].click();
 			}
 			if (event.keyCode == 27) core.trigger('move')
 			if (event.altKey) {
@@ -578,6 +581,27 @@ if (myoptions.keyalt) {
 				}
 			}).toString() + ")();";
 		}
+
+		// Заморозка чата
+		if (myoptions.freeze_chat) {
+			script += "(" +
+				(function() {
+				if ($("img[src*=stop-chat-on]").length == 1) core.freezeChat = true;
+				else core.freezeChat = false;
+				$("img[src*=stop-chat]").on('click', function() {
+					setTimeout(
+						function() {
+							if ($("img[src*=stop-chat-on]").length == 1) core.freezeChat = true;
+							else core.freezeChat = false;
+						}, 100);
+				});
+				var old_scrollDown = chat.scrollDown;
+				chat.scrollDown = function(data) {
+					if (!core.freezeChat) old_scrollDown.apply(chat);
+				}
+			}).toString() + ")();";
+		}
+
 		// Таймеры таверны и поместья
 		if (myoptions.timer_taverna || myoptions.timer_estate) {
 			myoptions.timer_taverna && (script_timers = script_timers.replace("core.mur_timer.taverna = false", "core.mur_timer.taverna = true"));
