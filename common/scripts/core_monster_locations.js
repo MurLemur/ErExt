@@ -56,7 +56,7 @@ var script_monster_locations = "(" +
 /*Техас-73*/"53":["16:141", "14:142", "15:142", "16:142", "17:142", "13:143", "14:143", "15:143", "16:143", "17:143", "18:143", "13:144", "14:144", "15:144", "16:144", "17:144", "18:144", "19:144", "13:145", "14:145", "15:145", "16:145", "17:145", "18:145", "13:146", "14:146", "15:146", "16:146", "17:146", "18:146", "19:146", "13:147", "14:147", "15:147", "16:147", "17:147", "18:147", "14:148", "15:148", "16:148", "17:148", "18:148", "19:148", "14:149", "15:149", "16:149", "17:149", "18:149", "15:150", "16:150", "17:150", "18:150", "15:151", "16:151", "17:151"] 
  		}
 		
-		
+
 	getSectorPosition = function(x, y) {
 		Point = main.Map.globalCoordsToRelative(main.Map.getCellGlobalCoords(x, y))
 		PointX = Point.x;
@@ -65,7 +65,7 @@ var script_monster_locations = "(" +
 	}
 
 	draw = function() {
-		var map_div = $('#main').contents().find('div#container #mapContent');
+		var map_div = top.main.$("#mapContent");
 		if (map_div && main.Map) {
 			var overlay = $('<div id="overlay_monsters"></div>');
 
@@ -76,13 +76,11 @@ var script_monster_locations = "(" +
 			$.each($(".mur_active_img"), function(key, val) {
 				var id = val.src.match(/monster_(\d{2})/)[1];
 				var areal = monsters_loc[id];
-
 				for (i = 0; i < areal.length; i++) {
 					sector = areal[i].match(/(\d{1,}):(\d{1,})/);
 					overlay.append('<div class="point activ" style="position:absolute; ' + getSectorPosition(sector[1], sector[2]) + '"><span>' + areal[i] + '</span></div>');
 				}
 			});
-
 			overlay.find('.point.activ').css({
 				height: '32px',
 				width: '64px',
@@ -95,11 +93,21 @@ var script_monster_locations = "(" +
 				color: '#222',
 				textShadow: '0 0 5px #eee'
 			}).css('background-image', 'url(monster_fon.png)');
-			map_div.append(overlay);
+			if (top.main.$("#overlay_monsters").length == 0) {
+				map_div.append(overlay);
+			}
 		}
 	}
 
 	$('#main').on('load.monstr', function() {
-		if (user.place2 == 1 || user.place2 == 3) draw()
+		if (user.place2 == 1 || user.place2 == 3) {
+			var map_div = top.main.$("#mapContent");
+			if (map_div.attr("id") == undefined) setTimeout(
+				function() {
+						map_div = top.main.$("#mapContent");
+					draw();
+				}, 100)
+			else draw();
+		}
 	});
 }).toString() + ")();";

@@ -50,7 +50,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	//var holder = $("#div_users a#span_sort");
 
 	if (mergedOptions.buttons_holder) button_holder_init();
-	else $("#div_users").children().first().after("<div class=\"wrap\" style=\"z-index: 999;\"><span id=\"mur_holder\"></span></div>");
+	else $("#div_users").children().first().after("<div class=\"wrap\" style=\"z-index: 95;\"><span id=\"mur_holder\"></span></div>");
 
 	var holder = $('#mur_holder');
 

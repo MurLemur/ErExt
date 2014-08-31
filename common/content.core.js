@@ -5,6 +5,7 @@
 // @require     scripts/core_map_trace.js
 // @require     scripts/core_monster_locations.js
 // @require     scripts/core_timers.js
+// @require     scripts/core_buttons.js
 // @require     scripts/core_battle_counter.js
 // @all-frames  false
 // ==/UserScript==
@@ -24,9 +25,9 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
   	
 
 var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
+var custom_sounds="";
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
 		var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
-		var custom_sounds="";
 		if (mergedSystemOptions.trace_img_src!="") trace_img_src=mergedSystemOptions.trace_img_src;
 		if (mergedSystemOptions.custom_sounds!="") custom_sounds=mergedSystemOptions.custom_sounds;
 		window.setTimeout(function() { pfunction(); }, 100);			
@@ -499,6 +500,11 @@ if (myoptions.keyalt) {
 			script += script_battle_counter;
 		}
 
+		// Корректировка высоты дива когда мелкие горизонтальные кнопки.
+		if (!myoptions.buttons_holder && !myoptions.biggest_buttons) {
+			script += script_correct_buttons;
+		}
+
 		// Работа со звуковыми оповещениями
 		if (myoptions.no_flash) {
 			script += "(" +
@@ -573,8 +579,9 @@ if (myoptions.keyalt) {
 						var new_data = [];
 						var temp_data = data.split("\n");
 						new_data.push(temp_data[0]);
-						for (var i = 1; i < temp_data.length; i++) {
-							(temp_data[i].split("#")[16] == 0) && new_data.push(temp_data[i]);
+						new_data.push(temp_data[1]);
+						for (var i = 2; i < temp_data.length; i++) {
+							(temp_data[i].split("#")[16] == 0 || temp_data[i].split("#")[16] == undefined) && new_data.push(temp_data[i]);
 						}
 						old_dataRecv.apply(users, [new_data.join("\n")]);
 					} else old_dataRecv.apply(users, [data]);

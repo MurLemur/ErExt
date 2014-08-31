@@ -43,7 +43,7 @@ var defaultConfig = {
 		"teammate_trace": false,
 		"taverna_fast_click": true,
 		"timer_taverna": true,
-		"timer_estate": false,
+		"timer_estate": true,
 		"stock_sell_offline_find": true,
 		"clickablePSmiles" : true,
 		'clickbaleNamesInGlobalEventReports' : true,

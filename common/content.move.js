@@ -40,7 +40,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 								}
 							}
 				}
-				end_mark			
+				end_mark
 			}).toString().replace("option_ovl", mergedSystemOptions.locatioons_ovl).replace("option_opp", mergedSystemOptions.locatioons_opp) + ")();";
 
 		if (location.href.search("modeSwitch")!=-1) {
