@@ -41,7 +41,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 							}
 				}
 				end_mark
-			}).toString().replace("option_ovl", mergedSystemOptions.locatioons_ovl).replace("option_opp", mergedSystemOptions.locatioons_opp) + ")();";
+			}).toString().replace("option_ovl", getStringifyParams(mergedSystemOptions.locatioons_ovl)).replace("option_opp", getStringifyParams(mergedSystemOptions.locatioons_opp)) + ")();";
 
 		if (location.href.search("modeSwitch")!=-1) {
 			script=script.replace("begin_mark","var old_MapDraw = Map.draw;Map.draw = function() {old_MapDraw.apply(Map);top.$('#main').trigger('load');");

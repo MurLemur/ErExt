@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name        trade-sell
 // @include     http://www.ereality.ru/map*n=useritems*
+// @include     http://www.ereality.ru/map*e=useritems*
 // @include 	http://www.ereality.ru/map*action=sell
 // @include 	http://www.ereality.ru/map*mode=sell
 // @require     tools.js

@@ -177,6 +177,15 @@ function inject_global(script_src) {
 	document.body.appendChild(scr);
 }
 
+getStringifyParams = function(str) {
+	var mas = str.match(/(.*)$/gm);
+	var result = "";
+	for (var i = 0; i < mas.length; i++) {
+		if (mas[i] != "") result += mas[i] + "\"+\n\"";
+	};
+return result;
+}
+
 
 var toolsClass = function() {
 	var self = this;

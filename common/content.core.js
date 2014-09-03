@@ -509,11 +509,12 @@ if (myoptions.keyalt) {
 		if (myoptions.no_flash) {
 			script += "(" +
 				(function() {
-				var custom_sounds = "mur_custom_sounds".split(";");
+				var custom_sounds = "mur_custom_sounds";
+				var parse_custom_sounds = custom_sounds.split(";");
 				var mur_sounds = {};
-				for (var i = 0; i < custom_sounds.length; i++) {
-					if (custom_sounds[i].length > 5) {
-						snd = custom_sounds[i].split(")");
+				for (var i = 0; i < parse_custom_sounds.length; i++) {
+					if (parse_custom_sounds[i].length > 5) {
+						snd = parse_custom_sounds[i].split(")");
 						soundName = snd[0].replace("(", "");
 						soundLink = snd[1];
 						mur_sounds[soundName] = soundLink;
@@ -530,7 +531,7 @@ if (myoptions.keyalt) {
 					return
 				};
 				$("embed").remove();
-			}).toString().replace("mur_custom_sounds", custom_sounds) + ")();";
+			}).toString().replace("mur_custom_sounds", getStringifyParams(custom_sounds)) + ")();";
 		}
 
 		// На КТ показывать кто в бою
