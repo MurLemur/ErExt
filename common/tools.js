@@ -59,7 +59,10 @@ var defaultConfig = {
 		'kt_in_battle': true,
 		'ok_hide_corpses': true,
 		'biggest_buttons': false,
-		'freeze_chat': true
+		'freeze_chat': true,
+		'abil_heal': false,
+		'sounds_on_off': true,
+		'battle_move': false
 	},
 	
 	systemOptions: {

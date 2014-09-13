@@ -7,10 +7,7 @@
 // @require tools/popup.js
 // @require tools/messaging-enum.js
 //
-// @require css/faction-counter-css.js
-// @require css/faction-count-builder-css.js
-// @require css/battle-count-builder-css.js
-// @require css/monster-locations-builder-css.js
+// @require css/common-css.js
 // @require common/buttons_holder.js
 // @require common/monster-locations/monster-locations.js
 // @require common/monster-locations/monster-locations-builder.js
@@ -24,16 +21,16 @@
 // @require user/active-items/items-builder.js
 // @require user/active-items/user-list-active-items.js
 //
-// @require css/context-blocker-css.js
 // @require common/context-blocker/context-blocker.js
 //
-// @require css/OK-hide-corpses-css.js
 // @require common/OK-hide-corpses.js
 //
-// @require css/freeze-chat-css.js
 // @require common/freeze_chat.js
 //
-// @require css/trace-map-css.js
+// @require common/abilki-heal.js
+//
+// @require common/sounds-on-off.js
+//
 // @require common/trace-map/trace-map.js
 //
 // @require common/services/corpses.js
@@ -53,6 +50,18 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	else $("#div_users").children().first().after("<div class=\"wrap\" style=\"z-index: 95;\"><span id=\"mur_holder\"></span></div>");
 
 	var holder = $('#mur_holder');
+
+	// Восстановлениие здоровья персонажа за счет абилок
+	if (mergedOptions.abil_heal) {
+		var abilHeal = new abilHealClass(abilHealCss, holder);
+		abilHeal.init();
+	}
+
+	// Отключение/включение звуков в игре
+	if (mergedOptions.sounds_on_off) {
+		var sounds = new soundsClass(soundsCss, holder);
+		sounds.init();
+	}
 
 	// Показывать только живых на локе Острова Крови
 	if (mergedOptions.ok_hide_corpses) {
@@ -132,6 +141,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		});
 		if (!mergedOptions.buttons_holder) $(".wrap").css({
 			"position": "absolute",
+			"margin-left": "15px",
 			"right": "30px",
 			"top": "-30px"
 		});

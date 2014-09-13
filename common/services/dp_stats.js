@@ -132,5 +132,11 @@ $.ajax({
             $("#glava_" + i).append($("<a target='_blank' href='http://www.ereality.ru/~" + info[3] + "'><img src='http://img.ereality.ru/inf.gif'></a>"));
             $("#aktivka_" + i).text(info[4]);
         });
+        var sila_max = parseInt((parseInt($("#sila_0").text()) + parseInt($("#sila_1").text()) + parseInt($("#sila_2").text()) + parseInt($("#sila_3").text()) + parseInt($("#sila_4").text())) / 4.4);
+        $("#sila_max").text(sila_max);
+        for (var i = 0; i < 5; i++) {
+            if (parseInt($("#sila_" + i).text()) < sila_max) $("#vstup_" + i).append($("<img title='Можно вступить' src='../res/yes.png'>"))
+            else $("#vstup_" + i).append($("<img title='Нельзя вступить' src='../res/no.png'>"))
+        }
     }
 });

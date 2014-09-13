@@ -481,6 +481,30 @@ if (myoptions.keyalt) {
 	+ ")();"; 
 }
 
+		// По "ё" перемещение в бою в первый ряд
+		if (myoptions.battle_move) {
+			script = script + "(" +
+				(function() {
+					var old_onKeyUp = core.onKeyUp;
+					core.onKeyUp = function(event) {
+						event = (window.event || event);
+						if ((event.keyCode == 192) && (battle.bstatus == 0)) {
+							$.each(battle.players, function(index, val) {
+								if (val.id == user.id) {
+									if (val.y == 1) battle.make_move({
+										'x': val.x,
+										'y': 0
+									});
+								}
+							})
+						}
+					var myrezult = old_onKeyUp.apply(core, arguments);
+					return myrezult
+				}
+				$(document).unbind('keyup'); $(document).keyup(core.onKeyUp);
+			}).toString() + ")();";
+	}
+
 		// След
 		if (myoptions.map_trace) {
 			script += script_map_trace.replace("sec_red.png", trace_img_src);
@@ -609,6 +633,44 @@ if (myoptions.keyalt) {
 				}
 			}).toString() + ")();";
 		}
+
+		// Выключение/включение звуков игры
+		if (myoptions.sounds_on_off) {
+			script += "(" +
+				(function() {
+				if ($("img[src*=sound-on]").length == 1) core.sounds_on_off = true;
+				else core.sounds_on_off = false;
+				$("img[src*=sound-o]").on('click', function() {
+					setTimeout(
+						function() {
+							if ($("img[src*=sound-on").length == 1) core.sounds_on_off = true;
+							else core.sounds_on_off = false;
+						}, 100);
+				});
+				var old_playSwfSound = core.playSwfSound;
+				core.playSwfSound = function() {
+					if (core.sounds_on_off) old_playSwfSound.apply(core,arguments);
+				}
+			}).toString() + ")();";
+		}
+
+
+	// Восстановление жизней персонажа за абилки
+	if (myoptions.abil_heal) {
+		script += "(" +
+			(function() {
+			$("img[src*=medkit]").on('click', function() {
+				$.get("http://www.ereality.ru/clan.php?action=use_abil&i=18&h=1", function(response) {
+					if ($("b", response)[0].innerHTML == "Вы успешно использовали восстановление!") {
+						top.core.alertMsg($("b", response)[0].innerHTML);
+						top.core.trigger('move');
+					} else
+						top.core.alertError($("b", response)[0].innerHTML);
+				});
+			});
+
+		}).toString() + ")();";
+	}
 
 		// Таймеры таверны и поместья
 		if (myoptions.timer_taverna || myoptions.timer_estate) {

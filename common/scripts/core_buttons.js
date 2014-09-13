@@ -1,7 +1,9 @@
 var script_correct_buttons = "(" +
-	(function() {    
-		var d_users = $("#div_users1");  
-		d_users.css("height", +d_users.css("height").replace("px", "") - 12);
+	(function() {
+		setTimeout(function() {
+			var d_users = $("#div_users1");
+			d_users.css("height", +d_users.css("height").replace("px", "") - 12);
+		}, 100);
 		var old_onWndResize = core.onWndResize;
 		core.onWndResize = function() {
 			old_onWndResize.apply(core, arguments);
