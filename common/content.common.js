@@ -114,9 +114,9 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		traceMap.init();
 	}
 	
-	//init corpses service
-	var corpsesService = new corpsesServiceClass($("#chat_msg"));
-	corpsesService.init();
+	//init corpses service  Сайт корпсов походу непашет уже
+	//var corpsesService = new corpsesServiceClass($("#chat_msg"));
+	//corpsesService.init();
 
 	// init monster locations
 	if (mergedOptions.monster_locations) {

@@ -45,7 +45,7 @@
 		for (var i = 0; i < custom_sounds.length; i++) {
 			if (custom_sounds[i].length > 5) {
 				snd = custom_sounds[i].split(")");
-				soundName = snd[0].replace("(", "");
+				soundName = snd[0].replace("(", "").replace(/\n/, "");
 				soundLink = snd[1];
 				this.mur_sounds[soundName] = soundLink;
 				htmlopt += '<option value="' + soundName + '">' + soundName + '</option>'

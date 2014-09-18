@@ -643,7 +643,7 @@ if (myoptions.keyalt) {
 				$("img[src*=sound-o]").on('click', function() {
 					setTimeout(
 						function() {
-							if ($("img[src*=sound-on").length == 1) core.sounds_on_off = true;
+							if ($("img[src*=sound-on]").length == 1) core.sounds_on_off = true;
 							else core.sounds_on_off = false;
 						}, 100);
 				});

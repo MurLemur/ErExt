@@ -56,7 +56,7 @@ var defaultConfig = {
 		'monster_locations': true,
 		'no_flash': false,
 		'buttons_holder': false,
-		'kt_in_battle': true,
+		'kt_in_battle': false,
 		'ok_hide_corpses': true,
 		'biggest_buttons': false,
 		'freeze_chat': true,

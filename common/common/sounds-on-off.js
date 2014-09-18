@@ -24,7 +24,7 @@ var soundsClass = function(css, holder) {
 
 	this.init = function() {
 		holder.parent().prepend(this.buildLink());
-		if (localStorage['soundsStatus'] == 'true') this.sounds($("img[src*=sound-o]"));
+		if (localStorage['soundsStatus'] == 'false') this.sounds($("img[src*=sound-o]"));
 	}
 }
 			
