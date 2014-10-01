@@ -4,7 +4,6 @@
     self._onCommand();
   });
 }
-
 MyExtension.prototype = {
 
   _onCommand: function() {

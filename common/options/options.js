@@ -203,10 +203,10 @@ var extensionOptionsExportClass = function() {
 	this.importFunctions = {
 		soptions: function(soundOptions) {
 			kango.invokeAsync('kango.storage.getItem', 'soptions', function(options) { 
-				$.each(options, function(key) {
+				if (options==null) var options = defaultConfig.soundOptions;
+				$.each(defaultConfig.soundOptions, function(key) {
 					options[key].sound = soundOptions[key].sound;
 				});	
-			
 				kango.invokeAsync('kango.storage.setItem', 'soptions', options);
 			});						
 		}

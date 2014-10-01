@@ -18,16 +18,18 @@ var estateVictimsClass = function() {
 		if (!self._isNameValid(victimName) || typeof self.victimsList[victimName] !== 'undefined' || self.currentVictimsAmount >= self.maxVictimsAmount) {
 			return false;
 		}
-		
+
 		if (comment.length > self.commentMaxLength) {
 			return false;
 		}
-		
+
 		self.currentVictimsAmount++;
-		self.victimsList[victimName] = {'comment': comment};		
-	
-		kango.invokeAsync('kango.storage.setItem', 'estateVictims', self.victimsList);
-		
+		self.victimsList[victimName] = {'comment': comment};
+
+		// Для ФФ такой вот костыль :
+		if (kango.browser.getName() == "firefox") kango.invokeAsync('kango.storage.setItem', 'estateVictims', $.parseJSON(JSON.stringify(self.victimsList)));
+		else kango.invokeAsync('kango.storage.setItem', 'estateVictims', self.victimsList);
+
 		return true;
 	};
 	
@@ -39,7 +41,9 @@ var estateVictimsClass = function() {
 		delete self.victimsList[victimName];
 		self.currentVictimsAmount--;
 		
-		kango.invokeAsync('kango.storage.setItem', 'estateVictims', self.victimsList);
+		// Для ФФ такой вот костыль :
+		if (kango.browser.getName() == "firefox") kango.invokeAsync('kango.storage.setItem', 'estateVictims', $.parseJSON(JSON.stringify(self.victimsList)));
+		else kango.invokeAsync('kango.storage.setItem', 'estateVictims', self.victimsList);
 	};
 	
 	this.getVictimsList = function() {
