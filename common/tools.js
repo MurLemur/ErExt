@@ -202,7 +202,7 @@ var toolsClass = function() {
 			options = jQuery.extend(true, [], options);
 			option = options.pop();
 			kango.invokeAsync('kango.storage.getItem', option.systemName, function(extOptions) { 
-				loadedOptions[option.systemName] = mergeOptions(extOptions, defaultConfig[option.defaultName]);	
+				loadedOptions[option.systemName] = JSON.parse(JSON.stringify(mergeOptions(extOptions, defaultConfig[option.defaultName])));	
 				self._loadOption(options, loadedOptions, callback);			
 			});	
 		} else {
