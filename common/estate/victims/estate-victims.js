@@ -25,10 +25,8 @@ var estateVictimsClass = function() {
 
 		self.currentVictimsAmount++;
 		self.victimsList[victimName] = {'comment': comment};
-
-		// Для ФФ такой вот костыль :
-		if (kango.browser.getName() == "firefox") kango.invokeAsync('kango.storage.setItem', 'estateVictims', $.parseJSON(JSON.stringify(self.victimsList)));
-		else kango.invokeAsync('kango.storage.setItem', 'estateVictims', self.victimsList);
+		
+		kango.invokeAsync('kango.storage.setItem', 'estateVictims', self.victimsList);
 
 		return true;
 	};
@@ -41,9 +39,7 @@ var estateVictimsClass = function() {
 		delete self.victimsList[victimName];
 		self.currentVictimsAmount--;
 		
-		// Для ФФ такой вот костыль :
-		if (kango.browser.getName() == "firefox") kango.invokeAsync('kango.storage.setItem', 'estateVictims', $.parseJSON(JSON.stringify(self.victimsList)));
-		else kango.invokeAsync('kango.storage.setItem', 'estateVictims', self.victimsList);
+		kango.invokeAsync('kango.storage.setItem', 'estateVictims', self.victimsList);
 	};
 	
 	this.getVictimsList = function() {
