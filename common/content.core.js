@@ -488,7 +488,7 @@ if (myoptions.keyalt) {
 					var old_onKeyUp = core.onKeyUp;
 					core.onKeyUp = function(event) {
 						event = (window.event || event);
-						if ((event.keyCode == 192) && (battle.bstatus == 0)) {
+							if ((event.keyCode == 192) && (battle.bstatus == 0)) {
 							$.each(battle.players, function(index, val) {
 								if (val.id == user.id) {
 									if (val.y == 1) battle.make_move({
