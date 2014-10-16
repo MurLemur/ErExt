@@ -24,6 +24,7 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 //=====================================================================  
   	
 
+
 var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
 var custom_sounds="";
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
@@ -37,6 +38,13 @@ function pfunction(){
 
 
  script="";
+
+ script += "(" +
+			(function() {
+				 core.mur_soundOptions = soundOptionsReplace;
+		}).toString() + ")();";
+
+script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfig.soundOptions) + ')');
 
  if ((myoptions.questsectors)||(myoptions.chatsectors)) {
 	script +=  "(" +

@@ -105,10 +105,16 @@ var extensionOptionsExportClass = function() {
 		{systemName: 'estateVictims', defaultName: "estateVictims"}
 	];
 	
-	this.init = function() {
+	this.init = function(HelpScreens) {
 		self._initExportButton();
 		self._initImportButton();
 		self._initExportLink();
+
+		$.each(HelpScreens, function(key) {
+			$('#' + key).next().before($("<img src=\"res/eye.png\" style=\"cursor: pointer\">").on("click", function() {
+				modalWindow.showpic(HelpScreens[key]);
+			}));
+		});
 	}
 	
 	this._initExportButton = function() {
@@ -205,7 +211,7 @@ var extensionOptionsExportClass = function() {
 			kango.invokeAsync('kango.storage.getItem', 'soptions', function(options) { 
 				if (options==null) var options = defaultConfig.soundOptions;
 				$.each(defaultConfig.soundOptions, function(key) {
-					options[key].sound = soundOptions[key].sound;
+					(soundOptions[key]!=undefined) && (options[key].sound = soundOptions[key].sound);
 				});	
 				kango.invokeAsync('kango.storage.setItem', 'soptions', options);
 			});						
@@ -231,7 +237,7 @@ var modalWindow = {
     },
     
      initWin: function(html) {
-         if ($('#modalwindow').length==0) $("body").append($("<div id=\"modalwindow\" class=\"confirm\">"+html+"</div>"));
+         if ($('#modalwindow').length==0) $("body").append($("<div id=\"modalwindow\" align=\"center\" class=\"confirm\">"+html+"</div>"));
     	 else $('#modalwindow').html(html);
          $('#modalwindow').show(); 
     },
@@ -240,7 +246,6 @@ var modalWindow = {
         $('#modalwindow').hide(); 
     },
      show: function(message) {
-     		
        var html=  '  <h1>'+message+'</h1>'+
                   '  <p></p>'+
                   '  <center><button id="bt_close">Закрыть</button></center>'+
@@ -258,7 +263,17 @@ var modalWindow = {
 			window.location.reload();
 		});
 
-	}
+	},
+	showpic: function(message) {
+       var html=  '  <p></p>'+
+       			  '  <img src="'+message+'">'+
+                  '  <p></p>'+
+                  '  <center><button id="bt_close">Закрыть</button></center>'+
+                  '  <p></p>';
+        modalWindow.initBlock();
+        modalWindow.initWin(html);
+        document.getElementById('bt_close').onclick = function() { modalWindow.close(); }  
+    }
 }
 
 KangoAPI.onReady(function() {
@@ -278,9 +293,40 @@ KangoAPI.onReady(function() {
       '<option value="wood">Звук 13 (wood)</option>'+
       '<option value="work">Звук 14 (work)</option>';
 
-	 
-	
-	
+     var HelpScreens = {
+		fastex: 	"https://github.com/MurLemur/ErExt/blob/master/help_images/fastex.png",
+		abil_heal:  "https://github.com/MurLemur/ErExt/blob/master/help_images/abil_heal.png",
+		battleCounter: "https://github.com/MurLemur/ErExt/blob/master/help_images/battleCounter.png",
+		battleInfo: "https://github.com/MurLemur/ErExt/blob/master/help_images/battleInfo.png",
+		biggest_buttons: "https://github.com/MurLemur/ErExt/blob/master/help_images/biggest_buttons.png",
+		block_cmenu: "https://github.com/MurLemur/ErExt/blob/master/help_images/block_cmenu.png",
+		buttons_holder: "https://github.com/MurLemur/ErExt/blob/master/help_images/buttons_holder.png",
+		contextmenus: "https://github.com/MurLemur/ErExt/blob/master/help_images/contextmenus.png",
+		estatenamelink: "https://github.com/MurLemur/ErExt/blob/master/help_images/estatenamelink.png",
+		estateVictims: "https://github.com/MurLemur/ErExt/blob/master/help_images/estateVictims.png",
+		freeze_chat: "https://github.com/MurLemur/ErExt/blob/master/help_images/freeze_chat.png",
+		global_info: "https://github.com/MurLemur/ErExt/blob/master/help_images/global_info.png",
+		location_info: "https://github.com/MurLemur/ErExt/blob/master/help_images/location_info.png",
+		lotereya: "https://github.com/MurLemur/ErExt/blob/master/help_images/lotereya.png",
+		lottery_zk: "https://github.com/MurLemur/ErExt/blob/master/help_images/lottery_zk.png",
+		map_trace: "https://github.com/MurLemur/ErExt/blob/master/help_images/map_trace.png",
+		menu_maps: "https://github.com/MurLemur/ErExt/blob/master/help_images/menu_maps.png",
+		monster_locations: "https://github.com/MurLemur/ErExt/blob/master/help_images/monster_locations.png",
+		ok_hide_corpses: "https://github.com/MurLemur/ErExt/blob/master/help_images/ok_hide_corpses.png",
+		okcount: "https://github.com/MurLemur/ErExt/blob/master/help_images/okcount.png",
+		oplot_button: "https://github.com/MurLemur/ErExt/blob/master/help_images/oplot_button.png",
+		questsectors: "https://github.com/MurLemur/ErExt/blob/master/help_images/questsectors.png",
+		repeat_kudes: "https://github.com/MurLemur/ErExt/blob/master/help_images/repeat_kudes.png",
+		sounds_on_off: "https://github.com/MurLemur/ErExt/blob/master/help_images/sounds_on_off.png",
+		stock_sell_offline_find: "https://github.com/MurLemur/ErExt/blob/master/help_images/stock_sell_offline_find.png",
+		stockmy: "https://github.com/MurLemur/ErExt/blob/master/help_images/stockmy.png",
+		taverna_fast_click: "https://github.com/MurLemur/ErExt/blob/master/help_images/taverna_fast_click.png",
+		timer_estate: "https://github.com/MurLemur/ErExt/blob/master/help_images/timer_estate.png",
+		timer_taverna: "https://github.com/MurLemur/ErExt/blob/master/help_images/timer_taverna.png",
+		trade_buy_full_lot: "https://github.com/MurLemur/ErExt/blob/master/help_images/trade_buy_full_lot.png",
+		userlistactiveitems: "https://github.com/MurLemur/ErExt/blob/master/help_images/userlistactiveitems.png"
+		} 
+
 	new extensionOptionsClass(htmlopt).init();
-	new extensionOptionsExportClass().init();
+	new extensionOptionsExportClass().init(HelpScreens);
 });

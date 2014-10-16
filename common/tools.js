@@ -62,7 +62,8 @@ var defaultConfig = {
 		'freeze_chat': true,
 		'abil_heal': false,
 		'sounds_on_off': true,
-		'battle_move': false
+		'battle_move': false,
+		'oplot_button': true
 	},
 	
 	systemOptions: {
@@ -125,7 +126,31 @@ var defaultConfig = {
 		"sound_caving": {
 			sound: "nosound",
 			detect: "Сейсмопредупреждение"
-		}	
+		},
+		"sound_vnezap": {
+			sound: "nosound",
+			detect: "Внезапный удар"
+		}	,
+		"sound_heal": {
+			sound: "nosound",
+			detect: "Воодушевление"
+		},
+		"sound_25": {
+			sound: "nosound",
+			detect: ""
+		},
+		"sound_50": {
+			sound: "nosound",
+			detect: ""
+		},
+		"sound_75": {
+			sound: "nosound",
+			detect: ""
+		},
+		"sound_100": {
+			sound: "nosound",
+			detect: ""
+		}								
 	},	
 	estateVictims: {}
 }

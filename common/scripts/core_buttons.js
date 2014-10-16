@@ -25,4 +25,12 @@ var script_correct_buttons = "(" +
 			div_users.css("height", +div_users.css("height").replace("px", "") - 12);
 			return;
 		}
+		var old_init_size = core.init_size;
+		core.init_size = function() {
+			old_init_size.apply(core, arguments);
+			var div_users = $("#div_users1");
+			div_users.css("height", +div_users.css("height").replace("px", "") - 12);
+			return;
+
+		}
 	}).toString() + ")();";
