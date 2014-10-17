@@ -62,7 +62,14 @@ var defaultConfig = {
 		'freeze_chat': true,
 		'abil_heal': false,
 		'sounds_on_off': true,
-		'battle_move': false
+		'battle_move': false,
+		'filterEmptyJailNotfication': false,
+		'okHelpMessageFilterEnabled': false,
+		'filterOneTeamIsStrongerMessage': false,
+		'filterBattleIsClosedMessage': false,
+		'filterRingOfRendomMessage': false,
+		'filterGoldenHorseShoeMessage' : false,
+		'filterEliteTournamentMessage' : false,
 	},
 	
 	systemOptions: {
@@ -74,7 +81,8 @@ var defaultConfig = {
 		"estateVictims" : {
 			"popupPositionX" : -1,
 			"popupPositionY" : -1
-		}
+		},
+		'okHelpMessageMinLevel' : 10
 	},
 
 	soundOptions: {
