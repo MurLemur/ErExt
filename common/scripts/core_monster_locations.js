@@ -101,13 +101,15 @@ var script_monster_locations = "(" +
 
 	$('#main').on('load.monstr', function() {
 		if (user.place2 == 1 || user.place2 == 3) {
-			var map_div = top.main.$("#mapContent");
-			if (map_div.attr("id") == undefined) setTimeout(
-				function() {
+			if (top.main.$) {
+				var map_div = top.main.$("#mapContent");
+				if (map_div.attr("id") == undefined) setTimeout(
+					function() {
 						map_div = top.main.$("#mapContent");
-					draw();
-				}, 100)
-			else draw();
+						draw();
+					}, 100)
+				else draw();
+			}
 		}
 	});
 }).toString() + ")();";

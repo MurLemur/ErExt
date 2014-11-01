@@ -24,6 +24,7 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 //=====================================================================  
   	
 //Global vars? OMG!!!11!
+
 var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
 var custom_sounds="";
 var mergedSystemOptions = {};
@@ -39,6 +40,13 @@ var mergedSystemOptions = {};
 function pfunction(){
 
  script="";
+
+ script += "(" +
+			(function() {
+				 core.mur_soundOptions = soundOptionsReplace;
+		}).toString() + ")();";
+
+script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfig.soundOptions) + ')');
 
  if ((myoptions.questsectors)||(myoptions.chatsectors)) {
 	script +=  "(" +
@@ -115,7 +123,7 @@ function pfunction(){
 			return string.replace(forumRegExp, "http://www.ereality.ru/goto/forum.ereality.ru");
 		};
 		
-		var ringOfRendomRegExp = new RegExp('.+ собрал Кольцо Рандома! Его удача обернулась для .+ потерей' , 'g');
+		var ringOfRendomRegExp = new RegExp('.+ собрал.+ Кольцо Рандома! Е.+ удача обернулась для .+ потерей' , 'g');
 		function filterRingOfRendomNotification(_text) {
 			if(_text.search(ringOfRendomRegExp) != -1) {
 				return true;
@@ -124,7 +132,7 @@ function pfunction(){
 			return  false;
 		}
 		
-		var goldenHorseShoeRegExp = new RegExp('Поздравляем победителя Золотой Подковы! .+ бесплатно получил купон на .+ золота, купив .+ золота.' , 'g');
+		var goldenHorseShoeRegExp = new RegExp('Поздравляем победителя Золотой Подковы! .+ бесплатно получил.+ купон на .+ золота, купив .+ золота.' , 'g');
 		function filterGoldenHorseShoeNotification(_text) {
 			if(_text.search(goldenHorseShoeRegExp) != -1) {
 				return true;
@@ -619,7 +627,7 @@ if (myoptions.keyalt) {
 					var old_onKeyUp = core.onKeyUp;
 					core.onKeyUp = function(event) {
 						event = (window.event || event);
-						if ((event.keyCode == 192) && (battle.bstatus == 0)) {
+							if ((event.keyCode == 192) && (battle.bstatus == 0)) {
 							$.each(battle.players, function(index, val) {
 								if (val.id == user.id) {
 									if (val.y == 1) battle.make_move({

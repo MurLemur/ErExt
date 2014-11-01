@@ -19,6 +19,7 @@
 	"mur_contents/trade/content.trade-buy.js",
 	"mur_contents/content.global-event-report.js",
   "mur_contents/content.polyana.js",
+  "mur_contents/content.oplot.js",
   "mur_contents/content.erlog.js",
   "mur_contents/content.altar.js"
   ], 
@@ -32,7 +33,7 @@
     "user/active-items/background.user-active-items.js"
   ], 
   "homepage_url": "http://forum.ereality.ru/topic176876/page1.html", 
-  "version": "1.0.11", 
+  "version": "1.0.12", 
   "name": "EReality Extension",
   "browser_button": {
 		"caption": "Открыть меню", 

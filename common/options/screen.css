@@ -163,13 +163,13 @@ label.buttonclass:hover .button {
   top: 50%;
   left: 50%;
   width: 80%;
-  min-width: 280px;
-  max-width: 500px;
+  min-width: 380px;
+  max-width: 600px;
   height: auto;
   background: #E2E2E2;
   border-radius: 10px;
   padding: 0;
-  margin: -140px 0 0 -250px;
+  margin: -160px 0 0 -270px;
   border-top: 1px solid white;
   animation: fade 1s ease 1 forwards;
   border: 1px solid #aaa; 
@@ -206,3 +206,14 @@ label.buttonclass:hover .button {
 .confirm button:hover {
     background: green;
 }
+.confirm * {
+max-width: 95%;
+max-height: 95%;
+}
+.confirm img {
+    border:ridge 3px #f5f5f5;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+}
+

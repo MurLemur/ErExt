@@ -21,8 +21,30 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 	
 
-			var script = "(" +
-			(function() {
+		var script = "(" +
+		(function() {
+
+				var Old_drawCaution = Map.drawCaution;
+				Map.drawCaution = function() {
+					Old_drawCaution.apply(Map);
+					if (top.core.caution) {
+						if (top.core.caution < 25 && top.main.Map.caution.percent >= 25 && top.core.mur_soundOptions["sound_25"].sound != "nosound") {
+							top.core.playSwfSound(top.core.mur_soundOptions["sound_25"].sound);
+						}
+						if (top.core.caution < 50 && top.main.Map.caution.percent >= 50 && top.core.mur_soundOptions["sound_50"].sound != "nosound") {
+							top.core.playSwfSound(top.core.mur_soundOptions["sound_50"].sound);
+						}
+						if (top.core.caution < 75 && top.main.Map.caution.percent >= 75 && top.core.mur_soundOptions["sound_75"].sound != "nosound") {
+							top.core.playSwfSound(top.core.mur_soundOptions["sound_75"].sound);
+						}
+						if (top.core.caution < 100 && top.main.Map.caution.percent >= 100 && top.core.mur_soundOptions["sound_100"].sound != "nosound") {
+							top.core.playSwfSound(top.core.mur_soundOptions["sound_100"].sound);
+						}
+					}
+					top.core.caution = top.main.Map.caution.percent;
+					return;
+				}
+
 				begin_mark
 				if (document.getElementsByClassName("SearchPlace").length > 0) {	
 							options_loc = {
