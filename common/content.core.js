@@ -123,7 +123,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			return string.replace(forumRegExp, "http://www.ereality.ru/goto/forum.ereality.ru");
 		};
 		
-		var ringOfRendomRegExp = new RegExp('.+ собрал.+ Кольцо Рандома! Е.+ удача обернулась для .+ потерей' , 'g');
+		var ringOfRendomRegExp = new RegExp('.+ собра.+ Кольцо Рандома! Е.+ удача обернулась для .+ потерей' , 'g');
 		function filterRingOfRendomNotification(_text) {
 			if(_text.search(ringOfRendomRegExp) != -1) {
 				return true;
@@ -132,7 +132,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			return  false;
 		}
 		
-		var goldenHorseShoeRegExp = new RegExp('Поздравляем победителя Золотой Подковы! .+ бесплатно получил.+ купон на .+ золота, купив .+ золота.' , 'g');
+		var goldenHorseShoeRegExp = new RegExp('Поздравляем победителя Золотой Подковы! .+ бесплатно получи.+ купон на .+ золота, купив .+ золота.' , 'g');
 		function filterGoldenHorseShoeNotification(_text) {
 			if(_text.search(goldenHorseShoeRegExp) != -1) {
 				return true;
