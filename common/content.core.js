@@ -23,19 +23,21 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 	}
 //=====================================================================  
   	
-
+//Global vars? OMG!!!11!
 
 var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
 var custom_sounds="";
+var mergedSystemOptions = {};
+
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
-		var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
+		mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
+		
 		if (mergedSystemOptions.trace_img_src!="") trace_img_src=mergedSystemOptions.trace_img_src;
 		if (mergedSystemOptions.custom_sounds!="") custom_sounds=mergedSystemOptions.custom_sounds;
 		window.setTimeout(function() { pfunction(); }, 100);			
 	});
 
 function pfunction(){
-
 
  script="";
 
@@ -82,6 +84,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		var soundOptions = soundOptionsReplace;
 		var erExtOptions = optionsReplace;
 		var erExtImages = erExtImagesReplace;
+		var erExtSystemOptions = erExtSystemOptionsReplace;
 		
 		// @TODO refactor it
 		function modifySectors(_text) {
@@ -115,10 +118,38 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		}; 
 		
 		//Подправляем ссыллки на форум, что-бы было с автологином,
+		var forumRegExp = new RegExp("http://forum.ereality.ru", 'g');
 		function modifyForumLink(string) {
-			return string.replace(new RegExp("http://forum.ereality.ru", 'g'),"http://www.ereality.ru/goto/forum.ereality.ru");
+			return string.replace(forumRegExp, "http://www.ereality.ru/goto/forum.ereality.ru");
 		};
 		
+		var ringOfRendomRegExp = new RegExp('.+ собра.+ Кольцо Рандома! Е.+ удача обернулась для .+ потерей' , 'g');
+		function filterRingOfRendomNotification(_text) {
+			if(_text.search(ringOfRendomRegExp) != -1) {
+				return true;
+			}
+			
+			return  false;
+		}
+		
+		var goldenHorseShoeRegExp = new RegExp('Поздравляем победителя Золотой Подковы! .+ бесплатно получи.+ купон на .+ золота, купив .+ золота.' , 'g');
+		function filterGoldenHorseShoeNotification(_text) {
+			if(_text.search(goldenHorseShoeRegExp) != -1) {
+				return true;
+			}
+			
+			return  false;
+		}
+		
+		var eliteTournamentStartRegExp = new RegExp('Глашатаи известили о начале Элитного турнира! Деньги, опыт, девочки, картинка в инфу и бессмертная слава ждут тебя!' , 'g');
+		var eliteTournamentContinueRegExp = new RegExp('Идет подача заявок на участие в Элитном Турнире. Без тебя не начинаем.' , 'g');
+		function filterEliteTournamentNotification(_text) {
+			if(_text.search(eliteTournamentStartRegExp) != -1 || _text.search(eliteTournamentContinueRegExp) != -1) {
+				return true;
+			}
+			
+			return  false;
+		}
 		
 		function filterBrokenItemNotifications(_text) {
 			if (_text.search('Вещи в критическом состоянии:') == -1) {
@@ -135,9 +166,62 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			return false;
 		}
 		
+		function filterJailEmptyNotification(_text) {
+			if (_text.search('Тюрьма пуста!') == -1) {
+				return false;
+			}
+
+			if (new Date().getTime() - OKMessages.emptyJail.time > OKMessages.emptyJail.messageDelay) {
+				OKMessages.emptyJail.time = new Date().getTime();
+			
+				return false;
+			}
+			
+			return true;
+		}
+		
+		function filterOneTeamIsStrongerMessage(_text) { 
+			if (_text.search('Нельзя вмешаться за более сильную команду, если она сильнее второй в ') == -1) {
+				return false;
+			}
+
+			if (new Date().getTime() - OKMessages.oneTeamStronger.time > OKMessages.oneTeamStronger.messageDelay) {
+				OKMessages.oneTeamStronger.time = new Date().getTime();
+			
+				return false;
+			}
+			
+			return true;		
+		} 
+		
+		function filterBattleIsClosedMessage(_text) {
+			if (_text.search('Вы не можете вмешаться в закрытый бой') == -1) {
+				return false;
+			}
+
+			if (new Date().getTime() - OKMessages.battleIsClosed.time > OKMessages.battleIsClosed.messageDelay) {
+				OKMessages.battleIsClosed.time = new Date().getTime();
+			
+				return false;
+			}
+			
+			return true;			
+		}
+		
+		var filterOkMessageRegExp = /\[([0-9]+)\/[0-9]+\] Сектор \(.+:.+\)\. Бой [0-9]+ \([0-9]+-[0-9]+\) против [0-9]+ \([0-9]+-[0-9]+\)\. Ауры [0-9]+% и [0-9]+%\./;
+		function filterOkHelpMessage(_text) {
+			var match = filterOkMessageRegExp.exec(_text);
+
+			if (match != null && Number.parseInt(match[1], 10)  >= Number.parseInt(erExtSystemOptions.okHelpMessageMinLevel, 10)) {
+				return false;
+			}
+			
+			return true;
+		}
+		
 		function modifyClanTournamentMessage(_text) {			
 			$.each(clanTournament, function() {
-				var regEx = new RegExp(this.detect, 'g')
+				var regEx = new RegExp(this.detect, 'g');
 				if (_text.search(regEx) > -1) {				
 					_text = _text.replace(regEx, this.replace);
 				}
@@ -176,6 +260,20 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			messageDelay: 5 * 60 * 1000 // 5 minutes
 		};
 		
+		var OKMessages = {
+			emptyJail: {
+				time: 0,
+				messageDelay: 60 * 1000 // 1 minute
+			},
+			oneTeamStronger: {
+				time: 0,
+				messageDelay: 60 * 1000 // 1 minute
+			},
+			battleIsClosed: {
+				time: 0,
+				messageDelay: 60 * 1000 // 1 minute
+			}
+		}
 		
 		var clanTournament = [
 			{detect: "<b>(.+)</b> взял флаг на секторе <b>(.+)</b>!", replace: "<b><span class=\"nick1\" id=\"\" style=\"cursor:pointer\" name=\"6:$1\">$1</span></b> взял флаг на секторе <b>$2</b>! "},
@@ -231,7 +329,8 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		}
 		
 		
-		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {			
+		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {		
+			//console.log(sys, _t, _id, _time, _nick, _tn, _color, _text);
 			if (erExtOptions.clickablePSmiles) {
 				_text = modifyPrivateSmiles(_text);
 			}
@@ -252,11 +351,41 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 						return;
 					}
 				
+					if (erExtOptions.filterEmptyJailNotfication && filterJailEmptyNotification(_text)) {
+						return;
+					}
+					
+					if (erExtOptions.filterOneTeamIsStrongerMessage && filterOneTeamIsStrongerMessage(_text)) {
+						return;
+					}
+					
+					if (erExtOptions.filterBattleIsClosedMessage && filterBattleIsClosedMessage(_text)) {
+						return;
+					}
+
+					if (erExtOptions.filterRingOfRendomMessage && filterRingOfRendomNotification(_text)) {
+						return;
+					}
+					
+					if (erExtOptions.filterGoldenHorseShoeMessage && filterGoldenHorseShoeNotification(_text)) {
+						return;
+					}
+					
+					if (erExtOptions.filterEliteTournamentMessage && filterEliteTournamentNotification(_text)) {
+						return;
+					}
+					
 					$.each(soundOptions, function(key) {
 						if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
 							return;
 						}
 					});
+				}
+				
+				if (_t == CHAT_FLAG_ALIGN) {
+					if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
+						return;
+					}
 				}
 			}
 			
@@ -339,7 +468,9 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 	}).toString();
 	
 	formatSmilesString = formatSmilesString.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfig.soundOptions) + ')')
-		.replace("optionsReplace", '(' + JSON.stringify(myoptions) + ')').replace("erExtImagesReplace", '(' + JSON.stringify(erExtImages) + ')');	
+		.replace("optionsReplace", '(' + JSON.stringify(myoptions) + ')')
+		.replace("erExtImagesReplace", '(' + JSON.stringify(erExtImages) + ')')
+		.replace("erExtSystemOptionsReplace", '(' + JSON.stringify(mergedSystemOptions) + ')');		
 	
 	script += "(" + formatSmilesString + ")();"; 
 

@@ -34,6 +34,8 @@
 // @require common/trace-map/trace-map.js
 //
 // @require common/services/corpses.js
+//
+// @require common/location-info/location-info.js
 // ==/UserScript==
 
 kango.invokeAsync('kango.storage.getItem', "options", function(options) {
@@ -122,6 +124,11 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	if (mergedOptions.monster_locations) {
 		var monsterLocationBuilder = new monsterLocationBuilderClass(monsterLocationBuilderCss, factionCounterCss, holder);
 		monsterLocationBuilder.init();
+	}
+	
+	// init location info
+	if (myoptions.location_info) {
+		new locationInfoClass('chat_msg', 'span_location', 'span_location_count').init();
 	}
 	
 	// Увеличенные кнопки дополнения
