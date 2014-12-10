@@ -68,6 +68,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 				var mdialog = zzz(arguments[0]);
 		
 				mdialog.title = mdialog.title + '<a href="javascript: Estates.hideDialog();">[X]<a>';
+				$("#estateDialogText").css("overflowY","auto");
 				if ((mdialog.type == "selection") && ($("#estateSelectionCard1")[0].previousElementSibling.innerHTML.search("[X]") < 0)) {
 					$("#estateSelectionCard1").prev().append($("<a href=\"javascript: Estates.hideDialog();\">[X]</a>"));
 				}

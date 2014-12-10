@@ -44,7 +44,7 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 			return;
 		}
 
-		if (typeof sef.keyMap.battleKeyMap[code] !== 'undefined') {
+		if (typeof self.keyMap.battleKeyMap[code] !== 'undefined') {
 			document.getElementById(sef.keyMap.battleKeyMap[code]).click();
 		}
 	}

@@ -23,7 +23,8 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 	}
 //=====================================================================  
   	
-//Global vars? OMG!!!11!
+//Global vars? OMG!!!11!  
+//А есть идеи как сделать лучше?
 
 var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
 var custom_sounds="";
@@ -686,6 +687,9 @@ if (myoptions.keyalt) {
 				var coreAudio = $('<audio id="coreAudio"><source src="" type="audio/mp3"></audio>').css("display", "none");
 				coreAudio.appendTo('body');
 				core.playSwfSound = function(sound) {
+					if (!sound || sound == '-' || sound == 'nosound') {
+						return;
+					}
 					if (mur_sounds && mur_sounds[sound] != undefined)
 						coreAudio.attr("src", mur_sounds[sound]);
 					else
@@ -802,7 +806,7 @@ if (myoptions.keyalt) {
 				$.get("http://www.ereality.ru/clan.php?action=use_abil&i=18&h=1", function(response) {
 					if ($("b", response)[0].innerHTML == "Вы успешно использовали восстановление!") {
 						top.core.alertMsg($("b", response)[0].innerHTML);
-						top.core.trigger('move');
+						top.user.setHME(top.user.hp, top.user.hp, top.user.hp, top.user.ma, top.user.ma, top.user.ma, top.user.en, top.user.en, top.user.en);
 					} else
 						top.core.alertError($("b", response)[0].innerHTML);
 				});
