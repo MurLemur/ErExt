@@ -63,6 +63,7 @@ var defaultConfig = {
 		'abil_heal': false,
 		'sounds_on_off': true,
 		'oplot_button': true,
+		'forum_pages': true,
 		'filterEmptyJailNotfication': false,
 		'okHelpMessageFilterEnabled': false,
 		'filterOneTeamIsStrongerMessage': false,
