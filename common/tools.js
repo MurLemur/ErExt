@@ -62,6 +62,7 @@ var defaultConfig = {
 		'freeze_chat': true,
 		'abil_heal': false,
 		'sounds_on_off': true,
+		'battle_move': false,
 		'oplot_button': true,
 		'forum_pages': true,
 		'filterEmptyJailNotfication': false,

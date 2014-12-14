@@ -16,7 +16,7 @@ function controller(extOptions) {
 		var fp = +location.href.match(/page(\d{1,}).html/)[1];
 
 		function mur_nextpage() {
-			if (fp < +$("a[href*=page]:last").text()) location.href = location.href.replace(/page(\d{1,}).html/, "page" + (fp + 1) + ".html")
+			if (fp < +$("a[href*=page]:last",$("#Content").children().first()).text()) location.href = location.href.replace(/page(\d{1,}).html/, "page" + (fp + 1) + ".html")
 		}
 		function mur_prevpage() {
 			if (fp > 1) location.href = location.href.replace(/page(\d{1,}).html/, "page" + (fp - 1) + ".html")

@@ -33,6 +33,7 @@ var serviceButtonBuilderClass = function(configOptions, userName, serviceRequest
 		if (self.configOptions.glamurstupki) {		
 			new glamsUserAnalyzerClass(self.divHolder, self.infoButtonsCss, self.serviceRequestSender, self.userName).init();
 		}
-		$("#content").parent().css( "padding-top", "-=22" );	
+		$(".content_bg").css( "height", "+=21" );
+
 	}
 }
