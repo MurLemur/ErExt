@@ -60,14 +60,20 @@ var script_map_trace = "(" +
 			
 			this.getOverlay = function(mapID) {
 				if (self.maps[mapID]['overlay'] == null) {
-					self.maps[mapID]['overlay'] = self.initOverlay();
+					self.maps[mapID]['overlay'] = self.initOverlay(self.maps[mapID]['mapNew']);
 				}
 				
 				return self.maps[mapID]['overlay'];
 			};
 			
-			this.initOverlay = function() {
-				return $('<div></div>');
+			this.initOverlay = function(newmap) {
+				var overlay = $('<div></div>');
+				
+				if (!newmap) {
+					overlay.css({'position': 'absolute', 'overflow':'hidden', 'left': '28px', 'top': '22px', 'width':'504px', 'height':'300px'});
+				}
+				
+				return overlay;
 			};
 
 			this.getSectorPosition = function(x, y, newmap) {
@@ -81,6 +87,7 @@ var script_map_trace = "(" +
 					PointX = main.CenterX - dx;
 					PointY = main.CenterY - dy;
 				}
+
 				return {
 					X: PointX,
 					Y: PointY
