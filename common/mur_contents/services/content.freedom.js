@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_Freedom_BattleAnalysis
-// @include http://freedom.erclan.ru/analiz/*
+// @include http://freedom.erclan.ru/analiz*
 // @require tools/jquery.js
 // @require tools.js
 //

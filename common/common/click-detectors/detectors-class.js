@@ -13,7 +13,7 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 	}
 	
 	this.isChatStringEmpty = function() {
-		return top.document.getElementById("chat_msg").value == "";
+		return (top.document.getElementById("chat_msg")==undefined || top.document.getElementById("chat_msg").value == "");
 	}
 	
 	this.detectAttackLocationClick = function(code) {
@@ -50,7 +50,7 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 	}
 	
 	this.detectCapchaClick = function(code) {
-		if (!self.pluginOptions.numcapcha || top.frames.main.document.getElementById("CaptchaButtons") == null) {	
+		if (!self.pluginOptions.numcapcha || top.frames.main==undefined || top.frames.main.document.getElementById("CaptchaButtons") == null) {	
 			return false;
 		}
 			
@@ -70,7 +70,7 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 	}
 	
 	this.detectUndergroundClick = function(code) {
-		if (top.frames.main.document.getElementById("underground") == null) {
+		if (top.frames.main==undefined || top.frames.main.document.getElementById("underground") == null) {
 			return;
 		}
 
@@ -84,7 +84,7 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 	}
 	
 	this.detectInstanceClick = function(code) {
-		if (!self.pluginOptions.kbdinst || top.frames.main.document.getElementById("div_inst_top") == null) {
+		if (!self.pluginOptions.kbdinst || top.frames.main==undefined || top.frames.main.document.getElementById("div_inst_top") == null) {
 			return;
 		}
 		

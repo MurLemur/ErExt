@@ -1,11 +1,8 @@
 // ==UserScript==
 // @name        ErExt_main
 // @include     http://www.ereality.ru/core*
-// @include 	http://ratings.ereality.ru/clans*
 // @include 	http://freedom.erclan.ru/analiz*
 // @include 	http://www.ereality.ru/log*
-// @include     http://www.news.ereality.ru/*sostav&id=*
-// @include     http://cc.erclans.ru/*page_id=45*
 // @include		http://www.ereality.ru/map.php*
 // @include		http://www.ereality.ru/move*
 // @include     http://www.ereality.ru/instance*

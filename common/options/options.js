@@ -115,6 +115,14 @@ var extensionOptionsExportClass = function() {
 				modalWindow.showpic(HelpScreens[key]);
 			}));
 		});
+
+		setTimeout(function() {
+		$("#snow").on("click", function() {
+				if ($(this).prop("checked")) $("#snowflakesCanvas").show();
+				else $("#snowflakesCanvas").hide();
+			});
+		if ($("#snow").prop("checked")) $("#snowflakesCanvas").show();
+	},100);
 	}
 	
 	this._initExportButton = function() {
@@ -324,7 +332,22 @@ KangoAPI.onReady(function() {
 		timer_estate: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/timer_estate.png",
 		timer_taverna: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/timer_taverna.png",
 		trade_buy_full_lot: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/trade_buy_full_lot.png",
-		userlistactiveitems: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/userlistactiveitems.png"
+		userlistactiveitems: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/userlistactiveitems.png",
+		aliensmy: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/aliensmy.png",
+		armory: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/armory.png",
+		bodestate: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/bodestate.png",
+		clan_ct_buttons: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/clan_ct_buttons.png",
+		efimerka: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/efimerka.png",
+		faceshop: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/faceshop.png",
+		forum_pages: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/forum_pages.png",
+		glamurstupki: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/glamurstupki.png",
+		info: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/info.png",
+		inventory: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/inventory.png",
+		locatioons_opp: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/locatioons_opp.png",
+		locatioons_ovl: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/locatioons_ovl.png",
+		sidzoku: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/sidzoku.png",
+		zk: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/zk.png",
+		tab_refresh: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/tab_refresh.png"		
 		} 
 
 	new extensionOptionsClass(htmlopt).init();

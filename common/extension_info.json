@@ -13,7 +13,6 @@
 	"mur_contents/services/content.sidzoku.js",
 	"mur_contents/services/content.yo-bods.js",
 	"mur_contents/services/content.efimerka.js",
-	"mur_contents/services/content.corpses.js",
 	"mur_contents/services/content.freedom.js",
 	"mur_contents/trade/content.trade-sell.js",
 	"mur_contents/trade/content.trade-buy.js",
@@ -22,7 +21,8 @@
   "mur_contents/content.oplot.js",
   "mur_contents/content.erlog.js",
   "mur_contents/content.altar.js",
-  "mur_contents/content.forum.js"
+  "mur_contents/content.forum.js",
+  "mur_contents/content.clan.js"
   ], 
   "description": "Extension for EReality.ru", 
   "creator": "MurLemur",
@@ -47,7 +47,17 @@
 	     }
 	},
     "permissions": {
-        "notifications": true
-    },	
+        "notifications": true,
+        "content_scripts": [
+        "http://www.ereality.ru/*",
+        "http://freedom.erclan.ru/analiz*",
+        "http://forum.ereality.ru/*page*.html",
+        "http://gosov.net/lotery.html",
+        "http://*.com/efimerka/",
+        "http://sidzoku.ru/landlord/",
+        "http://armory.sidzoku.ru/",
+        "http://yo-bod.com/faceshop/"
+        ]
+     },
   "options_page": "options.html"
 }

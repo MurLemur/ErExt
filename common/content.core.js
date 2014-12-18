@@ -7,6 +7,7 @@
 // @require     scripts/core_timers.js
 // @require     scripts/core_buttons.js
 // @require     scripts/core_battle_counter.js
+// @require     scripts/core_inventory.js
 // @all-frames  false
 // ==/UserScript==
 
@@ -23,9 +24,6 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 	}
 //=====================================================================  
   	
-//Global vars? OMG!!!11!  
-//А есть идеи как сделать лучше?
-
 var trace_img_src=kango.io.getResourceUrl("res/sec_red.png");
 var custom_sounds="";
 var mergedSystemOptions = {};
@@ -89,7 +87,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		
 		// @TODO refactor it
 		function modifySectors(_text) {
-			if ((_text.search("опыта")==-1)&&(_text.search("Вы подобрали")==-1)&&(_text.search("http")==-1)) {
+			if ((_text.search("опыта")==-1)&&(_text.search("Вы подобрали")==-1)&&(_text.search("http")==-1)&&(_text.search("www.")==-1)) {
 				if ((_text.search("Ауры")!=-1)||(_text.search("ептикон")!=-1)||(_text.search("за убийство")!=-1)||(_text.search("Людей:")!=-1)) {
 					_text=_text.replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
 					}
@@ -667,6 +665,11 @@ if (myoptions.keyalt) {
 		// Корректировка высоты дива когда мелкие горизонтальные кнопки.
 		if (!myoptions.buttons_holder && !myoptions.biggest_buttons) {
 			script += script_correct_buttons;
+		}
+
+		// Кнопка для объединения всех ресурсов в инвентаре
+		if (myoptions.inventory) {
+			script += script_inventory.replace("inv_union.png", kango.io.getResourceUrl("res/inv_union.png")).replace("inv_union_bg.png", kango.io.getResourceUrl("res/inv_union_bg.png"));
 		}
 
 		// Работа со звуковыми оповещениями

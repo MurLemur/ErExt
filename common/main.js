@@ -22,6 +22,11 @@ try {
   } else {
     kango.ui.browserButton.setIcon('icons/buttong.png');
   }
+  sopt = kango.storage.getItem('systemOptions');
+  if (sopt.background_scripts_host=="крон.жукодавы.рф/er") {
+    sopt.background_scripts_host="gosov.net/murlemur";
+    kango.storage.setItem('systemOptions',sopt);
+  }
 } catch (e) {
   var opt = {
     "startup_update_notification": "true"
