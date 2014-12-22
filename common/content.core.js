@@ -645,7 +645,7 @@ if (myoptions.keyalt) {
 
 		// След
 		if (myoptions.map_trace) {
-			script += script_map_trace.replace("sec_red.png", trace_img_src);
+			script += script_map_trace.replace("sec_red.png", trace_img_src).replace(/sec_avto/g, kango.io.getResourceUrl("res/sec_avto.png"));
 		}
 
 		if (myoptions.teammate_trace) {
