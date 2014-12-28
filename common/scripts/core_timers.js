@@ -3,11 +3,15 @@ var script_timers= "(" +
 core.mur_timer = {};
 core.mur_timer.taverna = false;
 core.mur_timer.estate = false;
+core.mur_timer.pet = false;
 core.mur_timer.taverna_update = true;
 core.mur_timer.estate_update = true;
+core.mur_timer.pet_update = true;
 core.mur_timer.taverna_timer = new Date();
+core.mur_timer.pet_timer = new Date();
 core.mur_timer.estate_timer = new Date();
 core.mur_timer.estate_time = new Date();
+core.mur_timer.pet_cards = 0;
 core.mur_timer.estate_cards = 0;
 core.mur_timer.estate_type = 0;
 
@@ -26,8 +30,10 @@ core.mur_timer.getMyTime = function(time) {
 core.mur_timer.init = function() {
 	core.mur_timer.taverna_getinfo();
 	core.mur_timer.estate_getinfo();
+	core.mur_timer.pet_getinfo();
 	var html = "" +
 		"<div class=\"ext_countdown\">" +
+		"	<img id=\"mur_closepic\" src=\"icon_close.gif\">" +
 		"	<table>" +
 		"	<tr id=\"tav\">" +
 		"		<td>Таверна : </td>" +
@@ -36,6 +42,10 @@ core.mur_timer.init = function() {
 		"	<tr id=\"est\">" +
 		"		<td>Поместье(<span id=\"countm\"></span>): </td>" +
 		"		<td><span id=\"est_timer\"></span></td>" +
+		"	</tr>" +
+		"	<tr id=\"pet\">" +
+		"		<td>Лицензии(<span id=\"pcountm\"></span>): </td>" +
+		"		<td><span id=\"pet_timer\"></span></td>" +
 		"	</tr>" +
 		"	</table>" +
 		"</div>";
@@ -54,13 +64,55 @@ core.mur_timer.init = function() {
 		"right": "300px",
 		"top": "10px"
 	};
-	$("#div_chat_msg").parent().append($(html).css(htmlcss).hide());
-	core.mur_timer.setstyle();
-	$("#tav_timer").text(core.mur_timer.getMyTime(core.mur_timer.taverna_timer));
-	$("#countm").text(core.mur_timer.estate_cards);
-	$("#est_timer").text(core.mur_timer.getMyTime(core.mur_timer.estate_timer));
-	(!core.mur_timer.taverna) && $("#tav").remove();
-	(!core.mur_timer.estate)  && $("#est").remove();
+		$("#div_chat_msg").parent().append($("<img id=\"mur_clock_pic\" src=\"alarm-clock.png\">").css({
+			position: "absolute",
+			top: "10px",
+			right: "300px"
+		}).hide());
+		$("#div_chat_msg").parent().append($(html).css(htmlcss).hide());
+		core.mur_timer.setstyle();
+		$("#tav_timer").text(core.mur_timer.getMyTime(core.mur_timer.taverna_timer));
+		$("#countm").text(core.mur_timer.estate_cards);
+		$("#est_timer").text(core.mur_timer.getMyTime(core.mur_timer.estate_timer));
+		$("#pcountm").text(core.mur_timer.pet_cards);
+		$("#pet_timer").text(core.mur_timer.getMyTime(core.mur_timer.pet_timer));
+		$("#pet").on("click", function() {
+			if (localStorage["pet_id"] != undefined) json.send("farm", "sendToFight", {
+				id: localStorage["pet_id"]
+			});
+			core.mur_timer.pet_getinfo();
+			core.mur_timer.main();
+		});
+		(!core.mur_timer.taverna) && $("#tav").remove();
+		(!core.mur_timer.estate) && $("#est").remove();
+		(!core.mur_timer.pet) && $("#pet").remove();
+		if (core.mur_timer.pet) {
+			var old_jsonSend = json.send;
+			json.send = function() {
+				if (arguments[0] == "farm" && arguments[1] == "sendToFight") localStorage["pet_id"] = arguments[2].id;
+				old_jsonSend.apply(json, arguments);
+				return;
+			}
+		};
+		$("#mur_closepic").css({
+			position: "absolute",
+			top: "3px",
+			right: "3px",
+			opacity: 0
+		});
+		$("#mur_closepic").hover(function() {
+			$(this).css("opacity", 0.5)
+		}, function() {
+			$(this).css("opacity", 0)
+		});
+		$("#mur_closepic").on("click",function() {
+			$(".ext_countdown").hide();
+			$("#mur_clock_pic").show();
+		});
+		$("#mur_clock_pic").on("click",function() {
+			$("#mur_clock_pic").hide();
+			$(".ext_countdown").show();
+		});
 
 
 }
@@ -76,6 +128,29 @@ core.mur_timer.taverna_getinfo = function() {
 	}
 	$.post("/ajax/taverna/", "<request action=\"getQueue\"></request>", xmlResponse);
 	core.mur_timer.taverna_update = false;
+}
+
+core.mur_timer.pet_getinfo = function() {
+		function m_jsonResponse(jsondata) {
+			core.mur_timer.pet_cards = jsondata.response.cards;
+			timer = jsondata.response.nextCard;
+			var time = new Date();
+			core.mur_timer.pet_timer.setTime(time.getTime() + timer * 1000);
+
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/ajax/json.php",
+			data: JSON.stringify({
+				"controller": "farm",
+				"action": "init",
+				"params": {}
+			}),
+			success: m_jsonResponse,
+			dataType: "json"
+		});
+		core.mur_timer.pet_update = false;
 }
 
 core.mur_timer.estate_getinfo = function() {
@@ -103,7 +178,8 @@ core.mur_timer.estate_getinfo = function() {
 		}
 		if (core.mur_timer.estate_timer < (new Date()) || (core.mur_timer.estate_cards>=5)) $("#est").hide();
 	}
-	$.post("/ajax/estates/", "<request action=\"get_estate\"></request>", xmlResponse);
+	if (user.nowplace=="22:73" || user.nowplace=="11:69" || user.nowplace=="13:48") $.post("/ajax/estates/", "<request action=\"get_estate\"></request>", xmlResponse);
+	else xmlResponse("");
 	core.mur_timer.estate_update = false;
 }
 
@@ -132,16 +208,36 @@ core.mur_timer.main = function() {
 			}
 		}
 	if (core.mur_timer.estate) {
-		(core.mur_timer.estate_update) && core.mur_timer.estate_getinfo();
+			(core.mur_timer.estate_update) && core.mur_timer.estate_getinfo();
 
-		$("#countm").text(core.mur_timer.estate_cards);
-		$("#est_timer").text(core.mur_timer.getMyTime(core.mur_timer.estate_timer));
-		if (core.mur_timer.estate_timer < (new Date()) || (core.mur_timer.estate_cards>=5)) {
-			core.mur_timer.estate_getinfo();
-		} else $("#est").show();
+			$("#countm").text(core.mur_timer.estate_cards);
+			$("#est_timer").text(core.mur_timer.getMyTime(core.mur_timer.estate_timer));
+			if (core.mur_timer.estate_timer < (new Date()) || (core.mur_timer.estate_cards >= 5)) {
+				core.mur_timer.estate_getinfo();
+			} else $("#est").show();
+		}
+		if (core.mur_timer.pet) {
+			(core.mur_timer.pet_update) && core.mur_timer.pet_getinfo();
+
+			$("#pcountm").text(core.mur_timer.pet_cards);
+			if (core.mur_timer.pet_cards > 0) {
+				$("#pcountm").parent().css({
+					cursor: "pointer"
+				});
+			} else $("#pcountm").parent().css({
+				cursor: ""
+			});
+			$("#pet_timer").text(core.mur_timer.getMyTime(core.mur_timer.pet_timer));
+			if (core.mur_timer.pet_timer < (new Date()) || ((core.mur_timer.pet_cards == 0) && $("#pet_timer").text() == "0:00")) {
+				$("#pet").hide();
+				core.mur_timer.pet_getinfo();
+			} else $("#pet").show();
 	}
-	if (((core.mur_timer.estate_timer < (new Date())) || (!core.mur_timer.estate)) && ((core.mur_timer.taverna_timer < (new Date())) || (!core.mur_timer.taverna))) $(".ext_countdown").hide();
-	else $(".ext_countdown").show();
+
+	if (((core.mur_timer.estate_timer < (new Date())) || (!core.mur_timer.estate)) 
+		&& ((core.mur_timer.taverna_timer < (new Date())) || (!core.mur_timer.taverna))  
+		&& ((core.mur_timer.pet_timer < (new Date())) || (!core.mur_timer.pet))) $(".ext_countdown").hide();
+	else ($("#mur_clock_pic").css("display")=="none") && $(".ext_countdown").show();
 }
 
 	core.mur_timer.setstyle = function(style) {

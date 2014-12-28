@@ -87,7 +87,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		
 		// @TODO refactor it
 		function modifySectors(_text) {
-			if ((_text.search("опыта")==-1)&&(_text.search("Вы подобрали")==-1)&&(_text.search("http")==-1)&&(_text.search("www.")==-1)) {
+			if ((_text.search("опыта")==-1)&&(_text.search("Вы подобрали")==-1)&&(_text.search("http")==-1)&&(_text.search("www.")==-1)&&(_text.search("aliens")==-1)) {
 				if ((_text.search("Ауры")!=-1)||(_text.search("ептикон")!=-1)||(_text.search("за убийство")!=-1)||(_text.search("Людей:")!=-1)) {
 					_text=_text.replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
 					}
@@ -819,15 +819,16 @@ if (myoptions.keyalt) {
 	}
 
 		// Таймеры таверны и поместья
-		if (myoptions.timer_taverna || myoptions.timer_estate) {
+		if (myoptions.timer_taverna || myoptions.timer_estate || myoptions.timer_pet) {
 			myoptions.timer_taverna && (script_timers = script_timers.replace("core.mur_timer.taverna = false", "core.mur_timer.taverna = true"));
 			myoptions.timer_estate && (script_timers = script_timers.replace("core.mur_timer.estate = false", "core.mur_timer.estate = true"));
+			myoptions.timer_pet && (script_timers = script_timers.replace("core.mur_timer.pet = false", "core.mur_timer.pet = true"));
 			if (kango.browser.getName() != "firefox") {
 				script_timers = script_timers.replace("MurTimerCss","-webkit-linear-gradient(top, #fff,#bbb)");
 			} else {
 				script_timers = script_timers.replace("MurTimerCss","-moz-linear-gradient(center top , #fff, #bbb) repeat scroll 0 0 rgba(0, 0, 0, 0)");
 			}
-			script += script_timers.replace(/sound_taverna/g,defaultConfig.soundOptions["sound_taverna"].sound);
+			script += script_timers.replace(/sound_taverna/g,defaultConfig.soundOptions["sound_taverna"].sound).replace("alarm-clock.png", kango.io.getResourceUrl("res/alarm-clock.png")).replace("icon_close.gif", kango.io.getResourceUrl("res/icon_close.gif"));
 		}
 
 		inject_global(script);

@@ -44,6 +44,7 @@ var defaultConfig = {
 		"taverna_fast_click": true,
 		"timer_taverna": true,
 		"timer_estate": true,
+		"timer_pet": true,
 		"stock_sell_offline_find": true,
 		"clickablePSmiles" : true,
 		'clickbaleNamesInGlobalEventReports' : true,
