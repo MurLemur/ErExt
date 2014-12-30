@@ -432,8 +432,10 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 
 			var globalImg = $("<img>").attr("src", erExtImages.globalEventImage).css({cursor: "pointer", width: "20px", height: "30px"});
 			var globalLink = $("<a href=\"#\" title=\"Глобальные события\"></a>");
-			
 			globalTd.append(globalLink.append(globalImg));
+			$("img[src*='ch1_13.jpg']").attr("onclick","window.open(\"/event/global/\")");
+				
+			
 			
 			$("#td_dyn").after(globalTd);
 		}
