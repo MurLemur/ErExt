@@ -207,15 +207,18 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			return true;			
 		}
 		
-		var filterOkMessageRegExp = /\[([0-9]+)\/[0-9]+\] Сектор \(.+:.+\)\. Бой [0-9]+ \([0-9]+-[0-9]+\) против [0-9]+ \([0-9]+-[0-9]+\)\. Ауры [0-9]+% и [0-9]+%\./;
-		function filterOkHelpMessage(_text) {
-			var match = filterOkMessageRegExp.exec(_text);
-
-			if (match != null && Number.parseInt(match[1], 10)  >= Number.parseInt(erExtSystemOptions.okHelpMessageMinLevel, 10)) {
-				return false;
+		var filterOkMessageRegExp = /\[([0-9]+)\/[0-9]+\] :102: Сектор \(.+:.+\)\. Бой [0-9]+ \([0-9]+-[0-9]+\) против [0-9]+ \([0-9]+-[0-9]+\)\. Ауры -{0,}[0-9]+% и -{0,}[0-9]+%\..{0,}/;
+		function filterOkHelpMessage(_text) { 
+			var match = filterOkMessageRegExp.exec(_text);				
+			if (match != null) {
+				if (Number.parseInt(match[1], 10)  >= Number.parseInt(erExtSystemOptions.okHelpMessageMinLevel, 10)) {
+					return false;
+				}
+				
+				return true;
 			}
 			
-			return true;
+			return false;
 		}
 		
 		function modifyClanTournamentMessage(_text) {			
@@ -334,6 +337,12 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				_text = modifyPrivateSmiles(_text);
 			}
 			
+			if (_t == CHAT_FLAG_ALIGN) { 
+				if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
+					return;
+				}
+			}
+			
 			if (erExtOptions.chatsectors) {
 				_text = modifySectors(_text);
 			}
@@ -379,12 +388,6 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 							return;
 						}
 					});
-				}
-				
-				if (_t == CHAT_FLAG_ALIGN) {
-					if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
-						return;
-					}
 				}
 			}
 			
