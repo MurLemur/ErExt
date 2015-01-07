@@ -42,8 +42,8 @@
 		"tooltipText": "Открыть меню",
 		"popup": {
             "url": "button/popup.html",
-            "width": 260,
-            "height": 125
+            "width": 270,
+            "height": 150
 	     }
 	},
     "permissions": {
