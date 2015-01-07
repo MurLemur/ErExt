@@ -69,7 +69,7 @@ var defaultConfig = {
 		'clan_ct_buttons': true,
 		'inventory': true,
 		'snow': true,
-		'chatLightMessage': true,
+		'chatLightMessage': false,
 		'filterEmptyJailNotfication': false,
 		'okHelpMessageFilterEnabled': false,
 		'filterOneTeamIsStrongerMessage': false,

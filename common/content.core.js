@@ -389,13 +389,12 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 							}
 						});
 					}
-				} else if (erExtOptions.chatLightMessage && _t == CHAT_FLAG_PRIVATE) {
-					if (_nick == user.name) var mid = _id
-					else if (erExtOptions.chatLightMessage) {
+				} else if (erExtOptions.chatLightMessage && _nick == user.name) var mid = _id
+					else if (erExtOptions.chatLightMessage && _tn.search(user.name) != -1) {
 						_text = "<span style=\"background-color: " + erExtSystemOptions.chatBgColor + "\">" + _text + "</span>";
 						var mid = 0;
 					}
-				}
+				
 				if (erExtOptions.forumgoto) {
 					_text = modifyForumLink(_text);
 				}
