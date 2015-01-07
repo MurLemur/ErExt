@@ -331,72 +331,78 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		}
 		
 		
-		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {		
-			//console.log(sys, _t, _id, _time, _nick, _tn, _color, _text);
-			if (erExtOptions.clickablePSmiles) {
-				_text = modifyPrivateSmiles(_text);
-			}
-			
-			if (_t == CHAT_FLAG_ALIGN) { 
-				if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
-					return;
+			chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
+				//console.log(sys, _t, _id, _time, _nick, _tn, _color, _text);
+				if (erExtOptions.clickablePSmiles) {
+					_text = modifyPrivateSmiles(_text);
 				}
-			}
-			
-			if (erExtOptions.chatsectors) {
-				_text = modifySectors(_text);
-			}
-			
-			if (_nick == keeperName) {				
-				if (_t == CHAT_FLAG_BATTLELOG) {
-					if (erExtOptions.clickable_nicks_on_clan_tournament) {
-						_text = modifyClanTournamentMessage(_text);
+
+				if (_t == CHAT_FLAG_ALIGN) {
+					if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
+						return;
 					}
 				}
-			
-				if (_t == CHAT_FLAG_PRIVATE) {
-					if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
-						return;
-					}
-				
-					if (erExtOptions.filterEmptyJailNotfication && filterJailEmptyNotification(_text)) {
-						return;
-					}
-					
-					if (erExtOptions.filterOneTeamIsStrongerMessage && filterOneTeamIsStrongerMessage(_text)) {
-						return;
-					}
-					
-					if (erExtOptions.filterBattleIsClosedMessage && filterBattleIsClosedMessage(_text)) {
-						return;
+
+				if (erExtOptions.chatsectors) {
+					_text = modifySectors(_text);
+				}
+
+				if (_nick == keeperName) {
+					if (_t == CHAT_FLAG_BATTLELOG) {
+						if (erExtOptions.clickable_nicks_on_clan_tournament) {
+							_text = modifyClanTournamentMessage(_text);
+						}
 					}
 
-					if (erExtOptions.filterRingOfRendomMessage && filterRingOfRendomNotification(_text)) {
-						return;
-					}
-					
-					if (erExtOptions.filterGoldenHorseShoeMessage && filterGoldenHorseShoeNotification(_text)) {
-						return;
-					}
-					
-					if (erExtOptions.filterEliteTournamentMessage && filterEliteTournamentNotification(_text)) {
-						return;
-					}
-					
-					$.each(soundOptions, function(key) {
-						if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+					if (_t == CHAT_FLAG_PRIVATE) {
+						if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
 							return;
 						}
-					});
+
+						if (erExtOptions.filterEmptyJailNotfication && filterJailEmptyNotification(_text)) {
+							return;
+						}
+
+						if (erExtOptions.filterOneTeamIsStrongerMessage && filterOneTeamIsStrongerMessage(_text)) {
+							return;
+						}
+
+						if (erExtOptions.filterBattleIsClosedMessage && filterBattleIsClosedMessage(_text)) {
+							return;
+						}
+
+						if (erExtOptions.filterRingOfRendomMessage && filterRingOfRendomNotification(_text)) {
+							return;
+						}
+
+						if (erExtOptions.filterGoldenHorseShoeMessage && filterGoldenHorseShoeNotification(_text)) {
+							return;
+						}
+
+						if (erExtOptions.filterEliteTournamentMessage && filterEliteTournamentNotification(_text)) {
+							return;
+						}
+
+						$.each(soundOptions, function(key) {
+							if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
+								return;
+							}
+						});
+					}
+				} else if (erExtOptions.chatLightMessage && _t == CHAT_FLAG_PRIVATE) {
+					if (_nick == user.name) var mid = _id
+					else if (erExtOptions.chatLightMessage) {
+						_text = "<span style=\"background-color: " + erExtSystemOptions.chatBgColor + "\">" + _text + "</span>";
+						var mid = 0;
+					}
 				}
+				if (erExtOptions.forumgoto) {
+					_text = modifyForumLink(_text);
+				}
+
+				oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
+				if (erExtOptions.chatLightMessage && mid && mid != 0) $("#n_" + mid).css("background-color", erExtSystemOptions.chatBgColor);
 			}
-			
-			if (erExtOptions.forumgoto) {
-				_text = modifyForumLink(_text);
-			}	
-			
-			oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
-		}
 		
 		if (erExtOptions.forumgoto) {			
 			messenger.PrintMessage = function (Message, PrintReply, isClanOrAlign) { 

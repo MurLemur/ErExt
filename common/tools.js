@@ -69,13 +69,14 @@ var defaultConfig = {
 		'clan_ct_buttons': true,
 		'inventory': true,
 		'snow': true,
+		'chatLightMessage': true,
 		'filterEmptyJailNotfication': false,
 		'okHelpMessageFilterEnabled': false,
 		'filterOneTeamIsStrongerMessage': false,
 		'filterBattleIsClosedMessage': false,
 		'filterRingOfRendomMessage': false,
 		'filterGoldenHorseShoeMessage' : false,
-		'filterEliteTournamentMessage' : false
+		'filterEliteTournamentMessage' : false 
 	},
 	
 	systemOptions: {
@@ -88,7 +89,8 @@ var defaultConfig = {
 			"popupPositionX" : -1,
 			"popupPositionY" : -1
 		},
-		'okHelpMessageMinLevel' : 10
+		"okHelpMessageMinLevel" : 10,
+		"chatBgColor" : "#00FF7F"
 	},
 
 	soundOptions: {
