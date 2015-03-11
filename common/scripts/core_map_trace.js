@@ -2,13 +2,79 @@ var script_map_trace = "(" +
 	(function() {
 		var erExtMainFraime = $('#main');
 		
-		var _chest = function(mainFraime) {
+		var _chest = function(mainFraime, user) {
+			this.user = user;
 			this.mainFraime = mainFraime;
+			this.autosaveToCashe = false;
+			this.turnedOn = false;
+			
 			this.maps = {
 				'ok': {
-					overlay: null, 
+					overlay: null,
 					footsteps: {},
-					mapNew: false 
+					basicFootSteps: {
+						5 :{ 
+							259: true,
+							260: true,
+							261: true
+						},
+						6: {
+							260: true
+						},
+						8: {
+							249: true,
+							250: true,
+							251: true
+						},
+						9: {
+							250: true,
+							271: true
+						},
+						10: {
+							259: true,
+							270: true,
+							271: true,
+							272: true
+						},
+						11: {
+							258: true,
+							259: true,
+							260: true
+						},
+						14: {
+							251: true,
+							252: true,
+							253: true
+						},
+						15: {
+							252: true,
+							263: true,
+							264: true,
+							265: true
+						},
+						16: {
+							264: true
+						}
+						
+					},
+					mapNew: false,
+					customImages: {
+						6: {
+							260: 'sec_avto.png'
+						},
+						8: {
+							249: 'sec_avto.png'
+						},
+						10: {
+							271: 'sec_avto.png'
+						},
+						15: {
+							252: 'sec_avto.png'
+						},
+						16: {
+							264: 'sec_avto.png'
+						}
+					}
 				},
 				'aliens': {
 					overlay: null,
@@ -60,18 +126,22 @@ var script_map_trace = "(" +
 			
 			this.getOverlay = function(mapID) {
 				if (self.maps[mapID]['overlay'] == null) {
-					self.maps[mapID]['overlay'] = self.initOverlay(self.maps[mapID]['mapNew']);
+					self.maps[mapID]['overlay'] = self.initOverlay(mapID, self.maps[mapID]['mapNew']);
 				}
 				
 				return self.maps[mapID]['overlay'];
 			};
 			
-			this.initOverlay = function(newmap) {
+			this.initOverlay = function(mapID, newmap) {
 				var overlay = $('<div></div>');
 				
 				if (!newmap) {
 					overlay.css({'position': 'absolute', 'overflow':'hidden', 'left': '28px', 'top': '22px', 'width':'504px', 'height':'300px'});
 				}
+				
+				self.mergeFootsteps(mapID, self.getFootstepsFromCache(mapID));
+				self.mergeFootsteps(mapID, self.maps[mapID]['basicFootSteps']);
+				self.drawBasicFootsteps(overlay, mapID);
 				
 				return overlay;
 			};
@@ -93,7 +163,7 @@ var script_map_trace = "(" +
 					Y: PointY
 				};			
 			};
-			
+
 			this.moveFootstepsToPositions = function(overlay, mapID) {
 				overlay.children().each(function() {
 					var footstep = $(this);
@@ -111,7 +181,7 @@ var script_map_trace = "(" +
 					return;
 				}
 				
-				overlay.append(self.getFootprint(x, y, self.maps[mapID].mapNew));				
+				overlay.append(self.getFootprint(x, y, mapID));				
 				self.saveFootstep(x, y, mapID);
 			};
 			
@@ -125,13 +195,65 @@ var script_map_trace = "(" +
 			
 			this.saveFootstep = function(x, y, mapID) {
 				if (typeof self.maps[mapID]['footsteps'][x] == 'undefined') {
-					self.maps[mapID]['footsteps'][x] = [];
+					self.maps[mapID]['footsteps'][x] = {};
 				}
 				
 				self.maps[mapID]['footsteps'][x][y] = true;
+				
+				if (self.autosaveToCashe) { 
+					self.saveFootstepsToCache(mapID, self.maps[mapID]['footsteps']);
+				}
 			};
 			
-			this.getFootprint = function(positionX, positionY, newMap) {
+			this.saveFootsteps = function() {
+				var mapID = self.detectMapID();
+				
+				if (mapID == null) {
+					return;
+				}
+				
+				self.saveFootstepsToCache(mapID, self.maps[mapID]['footsteps']);
+			}
+			
+			this.saveFootstepsToCache = function(mapID, footsteps) {
+				localStorage['ErExtFootsteps_' + mapID] = JSON.stringify(footsteps);
+			};
+			
+			this.getFootstepsFromCache = function(mapID) {
+				if (typeof localStorage['ErExtFootsteps_' + mapID] != 'undefined') {
+					return JSON.parse(localStorage['ErExtFootsteps_' + mapID]);
+				}
+				
+				return {};				
+			};
+			
+			this.removeFootstepsFromCache = function(mapID) {
+				localStorage.removeItem('ErExtFootsteps_' + mapID);
+			}
+			
+			this.drawBasicFootsteps = function(overlay, mapID) {
+				for (x in self.maps[mapID]['footsteps']) {					
+					for (y in self.maps[mapID]['footsteps'][x]) {
+						if (self.maps[mapID]['footsteps'][x][y]) {
+							overlay.append(self.getFootprint(x, y, mapID));	
+						}
+					}
+				}
+			};
+			
+			this.mergeFootsteps = function(mapID, footsteps) {
+				for (x in footsteps) {					
+					for (y in footsteps[x]) {
+						if (typeof self.maps[mapID]['footsteps'][x] == 'undefined') {
+							self.maps[mapID]['footsteps'][x] = {};
+						} 
+						
+						self.maps[mapID]['footsteps'][x][y] = footsteps[x][y];
+					}
+				}
+			}
+			
+			this.getFootprint = function(positionX, positionY, mapID) {
 				return $('<div sectorX="' + positionX + '" sectorY="' + positionY + '"><span>' + positionX + ':' + positionY + '</span></div>').css({
 					position: 'absolute',
 					height: '32px',
@@ -144,39 +266,88 @@ var script_map_trace = "(" +
 					opacity: '0.6',
 					color: '#222',
 					textShadow: '0 0 5px #eee',
-					'background-image': 'url(sec_red.png)'
+					'background-image': 'url(' + self.getBackgroundImg(positionX, positionY, mapID) + ')'
 				});
 			};
 			
-			this.userMadeFootstep = function() {
-				var mapType = null;
-				
-				if (user.coldX != "0,0") {
-					mapType = 'odl';
-				} else if (user.place2 == 8) {
-					mapType = 'ok';
-				} else if (user.place2 == 1) {
-					mapType = 'ovl';
-				} else if (user.place2 == 3) {
-					mapType = 'opp';
-				} else if (user.place2 == 14) {
-					mapType = 'to';
-				} else if ((user.place2 > 19 && user.place2 < 100)  || (user.place2 > 199 && user.place2 < 310)) {
-					mapType = 'aliens';
+			this.getBackgroundImg = function(positionX, positionY, mapID) {
+				var backgroundImg = 'sec_red.png';
+
+				if (typeof self.maps[mapID]['customImages'] != 'undefined' 
+					&& typeof self.maps[mapID]['customImages'][positionX] != 'undefined' 
+						&& typeof self.maps[mapID]['customImages'][positionX][positionY] != 'undefined') {
+					backgroundImg = self.maps[mapID]['customImages'][positionX][positionY];
+	
 				}
+
+				return backgroundImg;
+			}
+			
+			this.userMadeFootstep = function() {
+				var mapID = self.detectMapID();
 				
-				if (mapType == null) {
+				if (mapID == null) {
 					return;
 				}
 				
-				self.drawOverlay(main.px, main.py, mapType);
+				self.drawOverlay(main.px, main.py, mapID);
 			};
+			
+			this.detectMapID = function() {
+				var mapID = null;
+				
+				if (self.user.coldX != "0,0") {
+					mapID = 'odl';
+				} else if (self.user.place2 == 8) {
+					mapID = 'ok';
+				} else if (self.user.place2 == 1) {
+					mapID = 'ovl';
+				} else if (self.user.place2 == 3) {
+					mapID = 'opp';
+				} else if (self.user.place2 == 14) {
+					mapID = 'to';
+				} else if ((self.user.place2 > 19 && self.user.place2 < 100)  || (self.user.place2 > 199 && self.user.place2 < 310)) {
+					mapID = 'aliens';
+				}
+				
+				return mapID;
+			}
 			
 			this.clearOverlay = function(mapID) {
 				self.maps[mapID]['footsteps'] = {};
-				self.maps[mapID]['overlay'] = null;
-			}
+				
+				if (typeof self.maps[mapID]['overlay'] != 'undefined') {
+					self.maps[mapID]['overlay'] = null;
+				}
+			};
 			
+			this.clearFootstepsMap = function(mapID) {				
+				self.clearOverlay(mapID);
+				
+				self.removeFootstepsFromCache(mapID);
+			};
+			
+			this.clearFootstepsMaps = function() {
+				for (mapID in self.maps) {
+					self.clearFootstepsMap(mapID);
+				}
+			};
+			
+			this.isAutosaveToCashe = function() {
+				return self.autosaveToCashe;
+			};
+			
+			this.setAutosaveToCashe = function(autosaveToCashe) {
+				self.autosaveToCashe = autosaveToCashe;
+			};
+			
+			this.isTurnedOn = function() {
+				return self.turnedOn;
+			};
+
+			this.setTurnedOn = function(turnedOn) {
+				self.turnedOn = turnedOn;
+			}
 			// не переписывал, пока выключенно почему-то
 			this.footstepsForTeammate = function() {
 				/*	
@@ -200,37 +371,68 @@ var script_map_trace = "(" +
 			};
 		};
 		
-		var chest = new _chest(erExtMainFraime);
-
-		// Храмы на ОК
-		var startOKsectors = [[5,259],[5,260],[5,261],[6,260],[8,249],[8,250],[8,251],[9,250],[14,251],[14,252],[14,253],[15,252],[15,263],[15,264],[15,265],[16,264],[11,258],[11,259],[11,260],[10,259],[10,270],[10,271],[10,272],[9,271]]; 
-		$.each(startOKsectors, function(index, value) {
-				chest.addFootstep(value[0],value[1],"ok", chest.getOverlay("ok"));
-				chest.moveFootstepsToPositions(chest.getOverlay("ok"),"ok");
-			});
-		$("span:contains('6:260')",chest.getOverlay("ok")).parent().css('background-image', 'url(sec_avto)');
-		$("span:contains('8:249')",chest.getOverlay("ok")).parent().css('background-image', 'url(sec_avto)');
-		$("span:contains('10:271')",chest.getOverlay("ok")).parent().css('background-image', 'url(sec_avto)');
-		$("span:contains('15:252')",chest.getOverlay("ok")).parent().css('background-image', 'url(sec_avto)');
-		$("span:contains('16:264')",chest.getOverlay("ok")).parent().css('background-image', 'url(sec_avto)');
-
-
+		var chest = new _chest(erExtMainFraime, user);		
+		
 		$("#span_mode5").children().on("click", function() {
 			chest.clearOverlay('aliens');
+			chest.clearFootstepsMap('alians');
+			
 			chest.clearOverlay('odl');
+			chest.clearFootstepsMap('odl');
 		});				
 
 
-		$("img[src*=footprint]").on('click', function() {
-			setTimeout(
-				function() {
-					if ($("img[src*=footprint_on]").length == 1) {
-						// привязываем событие
-						erExtMainFraime.on('load', chest.userMadeFootstep);
-					} else {
-						erExtMainFraime.off('load', chest.userMadeFootstep);
-					}
-				}, 100);
+		$(document).ready(function() {
+			if (localStorage['isEnableTrace'] == 'true') { 
+				chest.setTurnedOn(true);
+				erExtMainFraime.on('load', chest.userMadeFootstep);
+			}
+			
+			if (localStorage['isEnableTraceAutosave'] == 'true') {
+				chest.setAutosaveToCashe(true);
+			}
 
-		})
+			$('body').delegate('#footprint_turn_on', 'click', function() {
+				if (chest.isTurnedOn()) {
+					chest.setTurnedOn(false);
+					erExtMainFraime.off('load', chest.userMadeFootstep);
+					
+					$('#footprint_img_turn_off').show();
+					$('#footprint_img_turn_on').hide();
+					
+					$('#footprint_text_turn_off').show();
+					$('#footprint_text_turn_on').hide();
+				}
+				else {
+					chest.setTurnedOn(true);
+					erExtMainFraime.on('load', chest.userMadeFootstep);
+					
+					$('#footprint_img_turn_off').hide();
+					$('#footprint_img_turn_on').show();
+					
+					$('#footprint_text_turn_off').hide();
+					$('#footprint_text_turn_on').show();
+				} 		
+				
+				localStorage['isEnableTrace'] = chest.isTurnedOn();
+			}).delegate('#footprint_clear', 'click', function() {
+				chest.clearFootstepsMaps();
+			}).delegate('#footprint_autosave', 'click', function() {
+				if (chest.isAutosaveToCashe()) {
+					chest.setAutosaveToCashe(false);
+					$('#footprint_autosave_img_on').hide();
+					$('#footprint_autosave_img_off').show();
+				}
+				else {
+					chest.setAutosaveToCashe(true);
+					$('#footprint_autosave_img_off').hide();
+					$('#footprint_autosave_img_on').show();
+				}
+				
+				localStorage['isEnableTraceAutosave'] = chest.isAutosaveToCashe();
+			}).delegate('#footprint_save', 'click', function() {
+				chest.saveFootsteps();
+				console.log('save!');
+			});
+		});
 	}).toString() + ")();";

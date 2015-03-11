@@ -32,8 +32,23 @@ var contextBlockerCss = {
 var traceCss = {
 	traceImgOff: kango.io.getResourceUrl("res/footprint_off.png"),
 	traceImgOn: kango.io.getResourceUrl("res/footprint_on.png"),
+	iconClose: kango.io.getResourceUrl("res/icon_close.gif"),
+	iconCloseHover: kango.io.getResourceUrl("res/icon_close_hover.gif"),
+	iconSyncOn: kango.io.getResourceUrl("res/sync_on.png"),
+	iconSyncOff: kango.io.getResourceUrl("res/sync_off.png"),
+	iconDelete: kango.io.getResourceUrl("res/delete-map.png"),
+	iconSave: kango.io.getResourceUrl("res/save-map.png"),
+	iconImgOff15: kango.io.getResourceUrl("res/footprint_off_15.png"),
+	iconImgOn15: kango.io.getResourceUrl("res/footprint_on_15.png"),
 	link: {
 		"margin-right": "3px",
+		"cursor": "pointer"
+	},
+	table: {
+		"color": "#646464",
+		"font-weight": "bold"
+	},
+	tr: {
 		"cursor": "pointer"
 	}
 }
