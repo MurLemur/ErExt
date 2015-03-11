@@ -112,7 +112,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 
 	// init trace map
 	if (mergedOptions.map_trace) {
-		var traceMap = new traceMapClass(traceCss, holder);
+		var traceMap = new traceMapClass(traceCss, holder, popup);
 		traceMap.init();
 	}
 	
