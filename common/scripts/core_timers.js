@@ -77,11 +77,28 @@ core.mur_timer.init = function() {
 		$("#pcountm").text(core.mur_timer.pet_cards);
 		$("#pet_timer").text(core.mur_timer.getMyTime(core.mur_timer.pet_timer));
 		$("#pet").on("click", function() {
-			if (localStorage["pet_id"] != undefined) json.send("farm", "sendToFight", {
-				id: localStorage["pet_id"]
-			});
-			core.mur_timer.pet_getinfo();
-			core.mur_timer.main();
+					if (localStorage["pet_id"] != undefined) {
+						function m_jsonResponse(jsondata) {
+							core.mur_timer.pet_cards = jsondata.response.cards;
+							timer = jsondata.response.nextCard;
+							var time = new Date();
+							core.mur_timer.pet_timer.setTime(time.getTime() + timer * 1000);
+							core.mur_timer.main();
+						}
+						$.ajax({
+							type: "POST",
+							url: "/ajax/json.php",
+							data: JSON.stringify({
+								"controller": "farm",
+								"action": "sendToFight",
+								"params": {
+									id: localStorage["pet_id"]
+								}
+							}),
+							success: m_jsonResponse,
+							dataType: "json"
+						});
+					}
 		});
 		(!core.mur_timer.taverna) && $("#tav").remove();
 		(!core.mur_timer.estate) && $("#est").remove();

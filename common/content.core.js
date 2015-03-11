@@ -636,7 +636,7 @@ if (myoptions.keyalt) {
 					var old_onKeyUp = core.onKeyUp;
 					core.onKeyUp = function(event) {
 						event = (window.event || event);
-							if ((event.keyCode == 192) && (battle.bstatus == 0)) {
+							if ((event.keyCode == 192 || event.key=="ё") && (battle.bstatus == 0)) {
 							$.each(battle.players, function(index, val) {
 								if (val.id == user.id) {
 									if (val.y == 1) battle.make_move({
@@ -840,6 +840,12 @@ if (myoptions.keyalt) {
 			}
 			script += script_timers.replace(/sound_taverna/g,defaultConfig.soundOptions["sound_taverna"].sound).replace("alarm-clock.png", kango.io.getResourceUrl("res/alarm-clock.png")).replace("icon_close.gif", kango.io.getResourceUrl("res/icon_close.gif"));
 		}
+
+		// Ограничиваем длину поля чата, ато можно было писать сообщение длинное , а отправляется только 250 символов
+		script += "(" +
+			(function() {
+				$("#chat_msg").attr("maxlength", 250);
+			}).toString() + ")();";
 
 		inject_global(script);
 	}

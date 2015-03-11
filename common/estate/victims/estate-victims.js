@@ -1,7 +1,7 @@
 var estateVictimsClass = function() {	
 	this.victimsList = {};
 
-	this.maxVictimsAmount = 50;	
+	this.maxVictimsAmount = 150;	
 	this.currentVictimsAmount = 0;
 	
 	this.victimNameMaxLength = 18;

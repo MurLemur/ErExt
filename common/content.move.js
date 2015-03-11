@@ -48,8 +48,9 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 				begin_mark
 				if (document.getElementsByClassName("SearchPlace").length > 0) {	
 							options_loc = {
-								"1": "option_ovl",
-								"3": "option_opp"
+								"1":  "option_ovl",
+								"3":  "option_opp",
+								"14": "option_to"
 							}
 							var str = options_loc[Map.heroMap];
 							var location_mas = str.split(";");

@@ -124,9 +124,14 @@ var monsterLocationClass = function( popup, css) {
 
 	this.show = function(positionX, positionY) {
 		this.popup.hide();
-		if ($("img[src*=ru\\/map\\/00\\/]",main.document).length>0 || $("img[src*=ru\\/map\\/10\\/]",main.document).length>0 || $("img[src*=ru\\/map\\/20\\/]",main.document).length>0) 	this.view = this.view_ovl
-		else if ($("img[src*=ru\\/map\\/01\\/]",main.document).length>0 || $("img[src*=ru\\/map\\/11\\/]",main.document).length>0 || $("img[src*=ru\\/map\\/21\\/]",main.document).length>0)	this.view = this.view_opp
-		else return;	
+		var lengtOVL= $("img[src*=ru\\/map\\/00\\/]",main.document).length + $("img[src*=ru\\/map\\/10\\/]",main.document).length + $("img[src*=ru\\/map\\/20\\/]",main.document).length;	
+		var lengtOPP= $("img[src*=ru\\/map\\/01\\/]",main.document).length + $("img[src*=ru\\/map\\/11\\/]",main.document).length + $("img[src*=ru\\/map\\/21\\/]",main.document).length;	
+		if (lengtOVL>lengtOPP) this.view = this.view_ovl 
+		else if (lengtOVL<lengtOPP) this.view = this.view_opp
+		else return;
+	//	if ($("img[src*=ru\\/map\\/00\\/]",main.document).length>0 || $("img[src*=ru\\/map\\/10\\/]",main.document).length>0 || $("img[src*=ru\\/map\\/20\\/]",main.document).length>0) 	this.view = this.view_ovl
+	//	else if ($("img[src*=ru\\/map\\/01\\/]",main.document).length>0 || $("img[src*=ru\\/map\\/11\\/]",main.document).length>0 || $("img[src*=ru\\/map\\/21\\/]",main.document).length>0)	this.view = this.view_opp
+	//	else return;	
 		this.bindListeners();
 		this.popup.show(this.view).move(this.calculatePositionX(positionX), this.calculatePositionY(positionY), 0, 0);
 		return this;
