@@ -392,30 +392,20 @@ var script_map_trace = "(" +
 				chest.setAutosaveToCashe(true);
 			}
 
-			$('body').delegate('#footprint_turn_on', 'click', function() {
+			$('#er-ex-footstep_img').on('click', function() {
 				if (chest.isTurnedOn()) {
 					chest.setTurnedOn(false);
 					erExtMainFraime.off('load', chest.userMadeFootstep);
-					
-					$('#footprint_img_turn_off').show();
-					$('#footprint_img_turn_on').hide();
-					
-					$('#footprint_text_turn_off').show();
-					$('#footprint_text_turn_on').hide();
 				}
 				else {
 					chest.setTurnedOn(true);
 					erExtMainFraime.on('load', chest.userMadeFootstep);
-					
-					$('#footprint_img_turn_off').hide();
-					$('#footprint_img_turn_on').show();
-					
-					$('#footprint_text_turn_off').hide();
-					$('#footprint_text_turn_on').show();
 				} 		
 				
 				localStorage['isEnableTrace'] = chest.isTurnedOn();
-			}).delegate('#footprint_clear', 'click', function() {
+			});
+			
+			$('body').delegate('#footprint_clear', 'click', function() {
 				chest.clearFootstepsMaps();
 			}).delegate('#footprint_autosave', 'click', function() {
 				if (chest.isAutosaveToCashe()) {
@@ -432,7 +422,6 @@ var script_map_trace = "(" +
 				localStorage['isEnableTraceAutosave'] = chest.isAutosaveToCashe();
 			}).delegate('#footprint_save', 'click', function() {
 				chest.saveFootsteps();
-				console.log('save!');
 			});
 		});
 	}).toString() + ")();";
