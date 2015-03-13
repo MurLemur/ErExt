@@ -48,7 +48,7 @@ var traceCss = {
 		"color": "#646464",
 		"font-weight": "bold"
 	},
-	tr: {
+	td: {
 		"cursor": "pointer"
 	}
 }

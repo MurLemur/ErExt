@@ -7,32 +7,55 @@ var traceMapClass = function(css, holder, popup) {
 	var self = this;
 
 	this.buildLink = function() {
-		var img = $("<img src=\"" + self.css.traceImgOff + "\">").on('click', function() {
-			self.onPress($(this));
+		var imgSrc = self.css.traceImgOff;
+		
+		if (localStorage['isEnableTrace'] == 'true') {
+			imgSrc = self.css.traceImgOn;
+		}
+	
+		var img = $("<img id=\"er-ex-footstep_img\" src=\"" + imgSrc + "\">").on('mousedown', function(event) {
+			if (event.which == 1) {
+				self.onLeftClick($(this));
+			}
+			
+			if (event.which == 3) { 
+				self.onRigthClick($(this));
+				event.preventDefault();
+			}
+		}).on('contextmenu', function(event) {
+			return false;
 		});
 
 		return $("<a title=\"След\"></a>").append(img).css(this.css.link);
 	};
 
-	this.onPress = function(traceImg) {
+	this.onLeftClick = function(traceImg) {
+		if (localStorage['isEnableTrace'] == 'true') {
+			traceImg.attr('src', self.css.traceImgOff);
+			return;
+		}
+		
+		traceImg.attr('src', self.css.traceImgOn);
+	};
+	
+	this.onRigthClick = function(traceImg) {
 		this.popup.show(this.view).move(this.calculatePositionX(traceImg.offset().left), this.calculatePositionY(traceImg.offset().top), 0, 0);
 		this.bindListeners();
-	}
+	};
 
 	this.prepareView = function() {
 		this.view = $("<table class=\"textS\" cellspacing=\"4px\"></table>").css(self.css.table);
 		
 		this.view.append(this.getExitButton());	
-		this.view.append(this.getTurnButton());
 		this.view.append(this.getSaveButton());
 		this.view.append(this.getAutosaveButton());		
 		this.view.append(this.getClearButton());
-	}
+	};
 	
 	this.init = function() {
 		holder.parent().prepend(this.buildLink());
 		this.prepareView();
-	}
+	};
 	
 	this.calculatePositionX = function(x) {
 		return x -= this.view.width();
@@ -51,6 +74,13 @@ var traceMapClass = function(css, holder, popup) {
 		}, function() {
 			$(this).attr("src", self.css.iconClose);
 		});
+		
+		this.view.find('span').hover(function() {
+			$(this).css({'text-decoration': 'underline'});
+		},
+		function() {
+			$(this).css({'text-decoration': 'none'});
+		}); 
 	};
 	
 	this.hide = function() {
@@ -64,19 +94,19 @@ var traceMapClass = function(css, holder, popup) {
 	};
 	
 	this.getSaveButton = function() {
-		var tr = $("<tr id=\"footprint_save\" align=\"center\" valign=\"center\"></tr>").css(self.css.tr);
+		var tr = $("<tr align=\"center\" valign=\"center\"></tr>");
 		
 		var text = $("<span>Сохранить</span>");
 		var saveImg = $("<img src=\"" + self.css.iconSave + "\">");
 	
 		var imgTd = $("<td></td>").append(saveImg);
-		var textTd = $("<td></td>").append(text);
+		var textTd = $("<td id=\"footprint_save\"></td>").append(text).css(self.css.td);
 
 		return tr.append(imgTd).append(textTd);
-	}
+	};
 	
 	this.getAutosaveButton = function() {
-		var tr = $("<tr align=\"center\" valign=\"center\" id=\"footprint_autosave\"></tr>").css(self.css.tr);
+		var tr = $("<tr align=\"center\" valign=\"center\"></tr>");
 		
 		var text = $("<span>Авто</br>сохранение</span>");
 		
@@ -84,7 +114,7 @@ var traceMapClass = function(css, holder, popup) {
 		var syncOffImg = $("<img id=\"footprint_autosave_img_off\" src=\"" + self.css.iconSyncOff + "\">");		
 				
 		var imgTd = $("<td></td>").append(syncOnImg).append(syncOffImg);
-		var textTd = $("<td></td>").append(text);
+		var textTd = $("<td id=\"footprint_autosave\"></td>").append(text).css(self.css.td);
 		
 		if (localStorage['isEnableTraceAutosave'] == 'true') {
 			syncOffImg.hide();
@@ -96,41 +126,18 @@ var traceMapClass = function(css, holder, popup) {
 		return tr.append(imgTd).append(textTd);
 	};
 	
-	this.getTurnButton = function() {
-		var tr = $("<tr id=\"footprint_turn_on\" align=\"center\" valign=\"center\"></tr>").css(self.css.tr);
-		
-		var turnOnText = $("<span id=\"footprint_text_turn_on\">Выключить</span>");
-		var turnOffText = $("<span id=\"footprint_text_turn_off\">Включить</span>");
-		
-		var turnOffImg = $("<img id=\"footprint_img_turn_off\" src=\"" + self.css.iconImgOff15 + "\">");
-		var turnOnImg = $("<img id=\"footprint_img_turn_on\" src=\"" + self.css.iconImgOn15 + "\">");		
-		
-		var imgTd = $("<td></td>").append(turnOffImg).append(turnOnImg);
-		var textTd = $("<td></td>").append(turnOnText).append(turnOffText);		
-		
-		if (localStorage['isEnableTrace'] == 'true') {
-			turnOffImg.hide();
-			turnOffText.hide();
-		}
-		else {
-			turnOnImg.hide();
-			turnOnText.hide();
-		}
-	
-		return tr.append(imgTd).append(textTd);
-	};
-	
 	this.getClearButton = function() {
-		var tr = $("<tr id=\"footprint_clear\" align=\"center\" valign=\"center\"></tr>").css(self.css.tr);	
+		var tr = $("<tr align=\"center\" valign=\"center\"></tr>");	
 	
 		var text = $("<span>Очистить</span>");		
 		var clearImg = $("<img src=\"" + self.css.iconDelete + "\">");
 		
 		var imgTd = $("<td></td>").append(clearImg);
-		var textTd = $("<td></td>").append(text);
+		var textTd = $("<td id=\"footprint_clear\"></td>").append(text).css(self.css.td);
 		
 		return tr.append(imgTd).append(textTd);
 	};
+	
 
 }
 			
