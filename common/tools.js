@@ -69,6 +69,7 @@ var defaultConfig = {
 		'clan_ct_buttons': true,
 		'inventory': true,
 		'snow': true,
+		'no_block_browser_keys': true,
 		'chatLightMessage': false,
 		'filterEmptyJailNotfication': false,
 		'okHelpMessageFilterEnabled': false,

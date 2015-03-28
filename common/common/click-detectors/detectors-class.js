@@ -63,9 +63,8 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 		if (!self.pluginOptions.esc_move) {
 			return;
 		} 
-		
-		if (typeof self.keyMap[code] !== 'undefined') { 
-			top.frames.main.document.getElementById(self.keyMap[code]).click();
+		if (typeof self.keyMap.cancelKeyMap[code] !== 'undefined') { 
+			top.frames.main.document.getElementById(self.keyMap.cancelKeyMap[code]).click();
 		}
 	}
 	

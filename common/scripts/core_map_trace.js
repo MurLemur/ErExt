@@ -289,7 +289,7 @@ var script_map_trace = "(" +
 				if (mapID == null) {
 					return;
 				}
-				
+				self.footstepsForTeammate();
 				self.drawOverlay(main.px, main.py, mapID);
 			};
 			
@@ -349,27 +349,37 @@ var script_map_trace = "(" +
 				self.turnedOn = turnedOn;
 			}
 			// не переписывал, пока выключенно почему-то
-			this.footstepsForTeammate = function() {
-				/*	
-				var teammate_trace = false;
-					if (teammate_trace) {
-						if (user.place2 == 14) {
-							$.each(main.Map.additionalObjects, function(key) {
-								var msector = key;
-								if (chest.search(msector, current_mas) == -1 && map_mas)
-									current_mas.push(msector);
-							});	
-						} else {
-							$.each(main.placeHeroes, function(key, places) {
-								var msector = places.x + ':' + places.y;
-								if (chest.search(msector, current_mas) == -1 && map_mas)
-									current_mas.push(msector);
-							});
-						}						
-					}
-				*/
-			};
+		this.footstepsForTeammate = function() {
+			var teammate_trace = false;
+			if (teammate_trace) {
+				if (user.place2 == 14) {
+					$.each(main.Map.additionalObjects, function(key) {
+						var value = key.split(":")
+						chest.addFootstep(value[0], value[1], "to", chest.getOverlay("to"));
+						chest.moveFootstepsToPositions(chest.getOverlay("to"), "to");
+					});
+					/*	
+					var teammate_trace = false;
+						if (teammate_trace) {
+							if (user.place2 == 14) {
+								$.each(main.Map.additionalObjects, function(key) {
+									var msector = key;
+									if (chest.search(msector, current_mas) == -1 && map_mas)
+										current_mas.push(msector);
+								});	
+							} else {
+								$.each(main.placeHeroes, function(key, places) {
+									var msector = places.x + ':' + places.y;
+									if (chest.search(msector, current_mas) == -1 && map_mas)
+										current_mas.push(msector);
+								});
+							}						
+						}
+					*/
+				}
+			}
 		};
+	};
 		
 		var chest = new _chest(erExtMainFraime, user);		
 		

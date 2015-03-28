@@ -116,13 +116,14 @@ var extensionOptionsExportClass = function() {
 			}));
 		});
 
+	/*	//Снег
 		setTimeout(function() {
 		$("#snow").on("click", function() {
 				if ($(this).prop("checked")) $("#snowflakesCanvas").show();
 				else $("#snowflakesCanvas").hide();
 			});
 		if ($("#snow").prop("checked")) $("#snowflakesCanvas").show();
-	},100);
+	},100); */
 	}
 	
 	this._initExportButton = function() {

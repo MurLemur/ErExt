@@ -47,8 +47,8 @@ if (myoptions.unpaused) {
 			detectors.detectUndergroundClick(e.keyCode);
 			detectors.detectInstanceClick(e.keyCode);
 			
-			// Отменяем действие браузера
-			return false;
+			// Отменяем или нет действие браузера
+			return myoptions.no_block_browser_keys;
 		}
 	} 
 	else if ((location.href.search("http://www.ereality.ru/move") != -1)&&(myoptions.chatsectors)) { 
@@ -58,7 +58,8 @@ if (myoptions.unpaused) {
 			var detectors = new detectorsClass(clickDetectorsKeyMaps, myoptions);
 			detectors.detectCancelClick(e.keyCode);
 			
-			return false;
+			// Отменяем или нет действие браузера
+			return myoptions.no_block_browser_keys;
 		}
 
 		window.setTimeout( function() {
@@ -81,7 +82,8 @@ if (myoptions.unpaused) {
 			var detectors = new detectorsClass(clickDetectorsKeyMaps, myoptions);
 			detectors.detectInstanceClick(e.keyCode);	
 			
-			return false;
+			// Отменяем или нет действие браузера
+			return myoptions.no_block_browser_keys;
 		}
 	}  
 	else if ((location.href.search("http://www.ereality.ru/map.php") != -1) && (location.href.search("rating") == -1)  && (location.href.search("fights") == -1)) {  // Исключая рейтинги на арене,там свой обработчик ников
@@ -116,8 +118,8 @@ if (myoptions.unpaused) {
 			var detectors = new detectorsClass(clickDetectorsKeyMaps, myoptions);
 			detectors.detectUndergroundClick(e.keyCode);
 			
-			// Отменяем действие браузера
-			return false;
+			// Отменяем или нет действие браузера
+			return myoptions.no_block_browser_keys;
 		}
 	} 
 	//=========================end.
