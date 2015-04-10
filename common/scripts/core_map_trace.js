@@ -60,19 +60,19 @@ var script_map_trace = "(" +
 					mapNew: false,
 					customImages: {
 						6: {
-							260: 'sec_avto.png'
+							260: 'sec_avto'
 						},
 						8: {
-							249: 'sec_avto.png'
+							249: 'sec_avto'
 						},
 						10: {
-							271: 'sec_avto.png'
+							271: 'sec_avto'
 						},
 						15: {
-							252: 'sec_avto.png'
+							252: 'sec_avto'
 						},
 						16: {
-							264: 'sec_avto.png'
+							264: 'sec_avto'
 						}
 					}
 				},

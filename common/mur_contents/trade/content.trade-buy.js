@@ -14,7 +14,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 	if (myoptions.trade_buy_full_lot) {
 		var tradeString = (function() { 
-			var buttons = $("table[id^=\"tbl\"] .item_buttons button[onclick^=\"PartialBuyLot\"]", top.frames.main.document);
+			var buttons = $("table[id^=\"tbl\"] .item_buttons button[onclick*=\"BuyLot\"]", top.frames.main.document);
 
 			$.each(buttons, function() {
 				var holder = $(this).parent();

@@ -2,7 +2,7 @@
 var defaultConfig = {
 	myoptions: {
 		"faceshop":false,
-		"efimerka":true,
+		"efimerka":false,
 		"armory":true,
 		"unpaused":true,
 		"info":true,
@@ -10,6 +10,7 @@ var defaultConfig = {
 		"glamurstupki":true,
 		"bodestate":true,
 		"sidzoku":true,
+		"spdressroom":true,
 		"okcount":true,
 		"cemetry":true,
 		"numfight":true,
@@ -45,6 +46,7 @@ var defaultConfig = {
 		"timer_taverna": true,
 		"timer_estate": true,
 		"timer_pet": true,
+		"timer_egg": true,
 		"stock_sell_offline_find": true,
 		"clickablePSmiles" : true,
 		'clickbaleNamesInGlobalEventReports' : true,

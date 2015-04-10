@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name        polyana
 // @include     http://www.ereality.ru/map*acti*eate_demand*uid*
+// @include     http://www.ereality.ru/map*acti*improve*uid*
 // @include     http://www.ereality.ru/map.php*action=item_list
+// @include     http://www.ereality.ru/map.php*action=improve_items
 // @require     tools.js
 // @all-frames  true
 // ==/UserScript==
@@ -15,7 +17,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		return;
 	}
 	if (myoptions.repeat_kudes) {
-		if ((location.href.search("http://www.ereality.ru/map.php") != -1) && (location.href.search("action=item_list") != -1)) {
+		if ((location.href.search("http://www.ereality.ru/map.php") != -1) && ((location.href.search("action=item_list") != -1) || (location.href.search("action=improve_items") != -1))) {
 
 			var script_add_buttons = "(" +
 				(function() {

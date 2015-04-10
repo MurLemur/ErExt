@@ -4,14 +4,17 @@ core.mur_timer = {};
 core.mur_timer.taverna = false;
 core.mur_timer.estate = false;
 core.mur_timer.pet = false;
+core.mur_timer.egg = false;
 core.mur_timer.taverna_update = true;
 core.mur_timer.estate_update = true;
 core.mur_timer.pet_update = true;
 core.mur_timer.taverna_timer = new Date();
 core.mur_timer.pet_timer = new Date();
+core.mur_timer.pet_timer_egg = new Date();
 core.mur_timer.estate_timer = new Date();
 core.mur_timer.estate_time = new Date();
 core.mur_timer.pet_cards = 0;
+core.mur_timer.pet_eggs = 0;
 core.mur_timer.estate_cards = 0;
 core.mur_timer.estate_type = 0;
 
@@ -44,7 +47,7 @@ core.mur_timer.init = function() {
 		"		<td><span id=\"est_timer\"></span></td>" +
 		"	</tr>" +
 		"	<tr id=\"pet\">" +
-		"		<td>Лицензии(<span id=\"pcountm\"></span>): </td>" +
+		"		<td><span id=\"mur_eggs\" style=\"position:absolute\"></span> Лицензии(<span id=\"pcountm\"></span>): </td>" +
 		"		<td><span id=\"pet_timer\"></span></td>" +
 		"	</tr>" +
 		"	</table>" +
@@ -81,6 +84,8 @@ core.mur_timer.init = function() {
 						function m_jsonResponse(jsondata) {
 							core.mur_timer.pet_cards = jsondata.response.cards;
 							timer = jsondata.response.nextCard;
+							core.mur_timer.pet_eggs = 0;
+							$.each(jsondata.response.pets, function() { if (this.type==0) core.mur_timer.pet_eggs++});
 							var time = new Date();
 							core.mur_timer.pet_timer.setTime(time.getTime() + timer * 1000);
 							core.mur_timer.main();
@@ -151,8 +156,12 @@ core.mur_timer.pet_getinfo = function() {
 		function m_jsonResponse(jsondata) {
 			core.mur_timer.pet_cards = jsondata.response.cards;
 			timer = jsondata.response.nextCard;
+			timer_egg = jsondata.response.eggTime;
+			core.mur_timer.pet_eggs = 0;
+			$.each(jsondata.response.pets, function() { if (this.type==0) core.mur_timer.pet_eggs++});
 			var time = new Date();
 			core.mur_timer.pet_timer.setTime(time.getTime() + timer * 1000);
+			core.mur_timer.pet_timer_egg.setTime(time.getTime() + timer_egg * 1000);
 
 		}
 
@@ -237,6 +246,18 @@ core.mur_timer.main = function() {
 			(core.mur_timer.pet_update) && core.mur_timer.pet_getinfo();
 
 			$("#pcountm").text(core.mur_timer.pet_cards);
+			if (core.mur_timer.egg) {
+				if (core.mur_timer.pet_timer_egg < (new Date())) core.mur_timer.pet_getinfo();
+				if ($("#mur_eggs").children().length != core.mur_timer.pet_eggs) {
+					$("#mur_eggs").empty();
+					$("#mur_eggs").css({
+						left: -25 * core.mur_timer.pet_eggs
+					});
+					for (var i = 0; i < core.mur_timer.pet_eggs; i++) {
+						$("#mur_eggs").append($("<img width=\"25px\" src=\"http://img.ereality.ru/-x-/w/egg.png\">"));
+					}
+				}
+			}
 			if (core.mur_timer.pet_cards > 0) {
 				$("#pcountm").parent().css({
 					cursor: "pointer"

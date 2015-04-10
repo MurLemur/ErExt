@@ -833,6 +833,7 @@ if (myoptions.keyalt) {
 			myoptions.timer_taverna && (script_timers = script_timers.replace("core.mur_timer.taverna = false", "core.mur_timer.taverna = true"));
 			myoptions.timer_estate && (script_timers = script_timers.replace("core.mur_timer.estate = false", "core.mur_timer.estate = true"));
 			myoptions.timer_pet && (script_timers = script_timers.replace("core.mur_timer.pet = false", "core.mur_timer.pet = true"));
+			myoptions.timer_egg && (script_timers = script_timers.replace("core.mur_timer.egg = false", "core.mur_timer.egg = true"));
 			if (kango.browser.getName() != "firefox") {
 				script_timers = script_timers.replace("MurTimerCss","-webkit-linear-gradient(top, #fff,#bbb)");
 			} else {
