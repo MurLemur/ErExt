@@ -8,6 +8,7 @@
 // @require     scripts/core_buttons.js
 // @require     scripts/core_battle_counter.js
 // @require     scripts/core_inventory.js
+// @require     scripts/core_golosovalka.js
 // @all-frames  false
 // ==/UserScript==
 
@@ -670,6 +671,11 @@ if (myoptions.keyalt) {
 		// Подсчет заработка в групповых и хаотических боях
 		if (myoptions.battleCounter) {
 			script += script_battle_counter;
+		}
+
+		// Голосовалка за проф праздники
+		if (myoptions.golosovalka) {
+			script += script_golosovalka.replace(/golosovalka_pic/g, kango.io.getResourceUrl("res/yes.png"));
 		}
 
 		// Корректировка высоты дива когда мелкие горизонтальные кнопки.

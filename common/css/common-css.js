@@ -103,3 +103,12 @@ var abilHealCss = {
 		"cursor": "pointer"
 	}
 }
+
+var golosovalkaCss = {
+	golosovalkaImg: kango.io.getResourceUrl("res/golosovalka.png"),
+	link: {
+		"margin-right": "3px",
+		"cursor": "pointer",
+		"display":"none"
+	}
+}

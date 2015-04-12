@@ -276,6 +276,12 @@ core.mur_timer.main = function() {
 		&& ((core.mur_timer.taverna_timer < (new Date())) || (!core.mur_timer.taverna))  
 		&& ((core.mur_timer.pet_timer < (new Date())) || (!core.mur_timer.pet))) $(".ext_countdown").hide();
 	else ($("#mur_clock_pic").css("display")=="none") && $(".ext_countdown").show();
+		
+		// Нужно ли показать кнопку голосовалки
+		if ($("#m_golosovalka").length>0) {
+			var now_dt = new Date();
+			if (now_dt.getDate() != core.mur_golosovalka_date) $("#m_golosovalka").show();
+		}
 }
 
 	core.mur_timer.setstyle = function(style) {

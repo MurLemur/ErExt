@@ -27,6 +27,8 @@
 //
 // @require common/freeze_chat.js
 //
+// @require common/golosovalka.js
+//
 // @require common/abilki-heal.js
 //
 // @require common/sounds-on-off.js
@@ -126,6 +128,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		monsterLocationBuilder.init();
 	}
 	
+	// Голосовалка за профессии
+	if (mergedOptions.golosovalka) {
+		var golosovalka = new golosovalkaClass(golosovalkaCss, holder);
+		golosovalka.init();
+	}
+
 	// init location info
 	if (myoptions.location_info) {
 		new locationInfoClass('chat_msg', 'span_location', 'span_location_count').init();

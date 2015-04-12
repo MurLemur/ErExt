@@ -70,6 +70,7 @@ var defaultConfig = {
 		'forum_pages': true,
 		'clan_ct_buttons': true,
 		'inventory': true,
+		'golosovalka': true,
 		'snow': true,
 		'no_block_browser_keys': true,
 		'chatLightMessage': false,

@@ -5,7 +5,8 @@
 // @require tools.js
 //
 // ==/UserScript==
-		
+	
+/*  Сайт фридомов тю-тю поэтому пока убрал		
 function controller(extOptions) {		
 	if (!extOptions.options.unpaused) {
 		return;
@@ -25,3 +26,5 @@ var loadOptions = [
 $(document).ready(function() {
 	tools.loadOptions(loadOptions, controller);
 });
+
+*/
