@@ -849,10 +849,12 @@ if (myoptions.keyalt) {
 		}
 
 		// Ограничиваем длину поля чата, ато можно было писать сообщение длинное , а отправляется только 250 символов
-		script += "(" +
-			(function() {
-				$("#chat_msg").attr("maxlength", 250);
-			}).toString() + ")();";
+		if (myoptions.chat_maxlength) {
+			script += "(" +
+				(function() {
+					$("#chat_msg").attr("maxlength", 250);
+				}).toString() + ")();";
+		}
 
 		inject_global(script);
 	}

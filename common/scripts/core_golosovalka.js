@@ -27,7 +27,6 @@ var script_golosovalka = "(" +
 	$("#m_golosovalka").contextMenu("m_mur_golosovalka",{});
 	$("#m_golosovalka").on("click",function() {
 		$.get("http://www.ereality.ru/holiday.php?click="+localStorage['golosovalka_id'], function(response) {
-		//	console.debug(response);
 					if ($("b", response)[0].innerHTML == "Спасибо за голосование!") 
 						top.core.alertMsg($("b", response)[0].innerHTML);
 					else
@@ -39,8 +38,10 @@ var script_golosovalka = "(" +
 		$("#m_golosovalka").hide();
 
 	});
-	if (localStorage['golosovalka_id']==undefined) core.mur_setmirka(4); 
-	else $("#mur_mirka"+localStorage['golosovalka_id'],$("#m_mur_golosovalka")).append($("<img src=\"golosovalka_pic\">"));
+	if (localStorage['golosovalka_id']==undefined) {
+		core.mur_setmirka(4); 
+		$("img:first",$("#m_mur_golosovalka")).remove();
+	} else $("#mur_mirka"+localStorage['golosovalka_id'],$("#m_mur_golosovalka")).append($("<img src=\"golosovalka_pic\">"));
 	core.mur_golosovalka_date = localStorage['golosovalka_date'];
 	var now_dt = new Date();
 	if (now_dt.getDate()!=core.mur_golosovalka_date) $("#m_golosovalka").show();

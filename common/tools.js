@@ -71,6 +71,7 @@ var defaultConfig = {
 		'clan_ct_buttons': true,
 		'inventory': true,
 		'golosovalka': true,
+		'chat_maxlength': true,
 		'snow': true,
 		'no_block_browser_keys': true,
 		'chatLightMessage': false,

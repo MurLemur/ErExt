@@ -349,7 +349,10 @@ KangoAPI.onReady(function() {
 		sidzoku: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/sidzoku.png",
 		zk: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/zk.png",
 		timer_pet: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/timer_pet.png",
-		tab_refresh: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/tab_refresh.png"		
+		tab_refresh: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/tab_refresh.png",
+		golosovalka: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/golosovalka.png",
+		timer_egg: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/timer_egg.png",
+		spdressroom: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/spdressroom.png"			
 		} 
 
 	new extensionOptionsClass(htmlopt).init();

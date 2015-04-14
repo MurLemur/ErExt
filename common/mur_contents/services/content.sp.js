@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name     ErExt_SidzokuService
+// @name     ErExt_SpService
 // @require 	tools/jquery.js
 // @require 	tools.js
-// @include     http://sidzoku.ru/landlord/
+// @include     http://order.ereality.ru/sp-shop/*
 // ==/UserScript==
 
 
@@ -19,7 +19,10 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	}
 
 	$(document).ready(function() {
-			var heroName = location.href.replace("http://sidzoku.ru/landlord/#", "");
-			$("#heroName").val(heroName).parent().find("img[src=\"img/btn_search_char.png\"]").click();
+		setTimeout(function() {
+			var heroName = location.href.replace("http://order.ereality.ru/sp-shop/#", "");
+			$("#one_getsetid").val(heroName); 
+			$(".upload_set_button").click();
+		}, 500);		
 	});
 });
