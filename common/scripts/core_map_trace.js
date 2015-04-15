@@ -7,6 +7,7 @@ var script_map_trace = "(" +
 			this.mainFraime = mainFraime;
 			this.autosaveToCashe = false;
 			this.turnedOn = false;
+			this.teamStepsOn = false;
 			
 			this.maps = {
 				'ok': {
@@ -289,7 +290,8 @@ var script_map_trace = "(" +
 				if (mapID == null) {
 					return;
 				}
-				self.footstepsForTeammate();
+				
+				self.footstepsForTeammate(mapID);
 				self.drawOverlay(main.px, main.py, mapID);
 			};
 			
@@ -348,40 +350,28 @@ var script_map_trace = "(" +
 			this.setTurnedOn = function(turnedOn) {
 				self.turnedOn = turnedOn;
 			}
-			// не переписывал, пока выключенно почему-то
-		this.footstepsForTeammate = function() {
-			var teammate_trace = false;
-			if (teammate_trace) {
-				if (user.place2 == 14) {
-					$.each(main.Map.additionalObjects, function(key) {
-						var value = key.split(":")
-						chest.addFootstep(value[0], value[1], "to", chest.getOverlay("to"));
-						chest.moveFootstepsToPositions(chest.getOverlay("to"), "to");
-					});
-					/*	
-					var teammate_trace = false;
-						if (teammate_trace) {
-							if (user.place2 == 14) {
-								$.each(main.Map.additionalObjects, function(key) {
-									var msector = key;
-									if (chest.search(msector, current_mas) == -1 && map_mas)
-										current_mas.push(msector);
-								});	
-							} else {
-								$.each(main.placeHeroes, function(key, places) {
-									var msector = places.x + ':' + places.y;
-									if (chest.search(msector, current_mas) == -1 && map_mas)
-										current_mas.push(msector);
-								});
-							}						
-						}
-					*/
+			
+			this.setTeamStepsOn = function(teamStepsOn) { 
+				self.teamStepsOn = teamStepsOn;
+			};
+						
+			this.footstepsForTeammate = function(mapID) {
+				if (mapID == 'to') {
+					if (self.teamStepsOn) {	
+						var overlay = self.getOverlay(mapID);
+						
+						$.each(main.Map.additionalObjects, function(key) {
+							var coords = key.split(":");
+							self.addFootstep(coords[0], coords[1], mapID, overlay);
+						});
+					}
 				}
-			}
-		};
+			};
 	};
 		
 		var chest = new _chest(erExtMainFraime, user);		
+		chest.setTeamStepsOn('teamStepsOnReplace');
+		
 		
 		$("#span_mode5").children().on("click", function() {
 			chest.clearOverlay('aliens');
