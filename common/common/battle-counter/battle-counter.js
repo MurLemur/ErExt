@@ -44,7 +44,7 @@ var battleCounterClass = function( popup, chatMsgSelector, css) {
 		var bdata = localStorage["battle_data"];
 		if (bdata) {
 			var battle_data = JSON.parse(localStorage["battle_data"]);
-			var now_dt = new Date();
+			var now_dt = new Date( new Date().getTime() +(3 +((new Date()).getTimezoneOffset()/60)) * 3600 * 1000); // GMT +3
 			if (now_dt.getHours() < 4) date_now = now_dt.getDate() - 1
 			else date_now = now_dt.getDate();
 			if (date_now == battle_data.hdate) this.battle_data = battle_data;

@@ -848,14 +848,6 @@ if (myoptions.keyalt) {
 			script += script_timers.replace(/sound_taverna/g,defaultConfig.soundOptions["sound_taverna"].sound).replace("alarm-clock.png", kango.io.getResourceUrl("res/alarm-clock.png")).replace("icon_close.gif", kango.io.getResourceUrl("res/icon_close.gif"));
 		}
 
-		// Ограничиваем длину поля чата, ато можно было писать сообщение длинное , а отправляется только 250 символов
-		if (myoptions.chat_maxlength) {
-			script += "(" +
-				(function() {
-					$("#chat_msg").attr("maxlength", 250);
-				}).toString() + ")();";
-		}
-
 		inject_global(script);
 	}
 

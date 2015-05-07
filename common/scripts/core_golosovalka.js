@@ -32,7 +32,7 @@ var script_golosovalka = "(" +
 					else
 						top.core.alertError($("b", response)[0].innerHTML);
 		});
-		var now_dt = new Date();
+		var now_dt =  new Date( new Date().getTime() +(3 +((new Date()).getTimezoneOffset()/60)) * 3600 * 1000); // GMT +3
 		core.mur_golosovalka_date = now_dt.getDate();
 		localStorage['golosovalka_date']=core.mur_golosovalka_date;
 		$("#m_golosovalka").hide();
@@ -43,8 +43,8 @@ var script_golosovalka = "(" +
 		$("img:first",$("#m_mur_golosovalka")).remove();
 	} else $("#mur_mirka"+localStorage['golosovalka_id'],$("#m_mur_golosovalka")).append($("<img src=\"golosovalka_pic\">"));
 	core.mur_golosovalka_date = localStorage['golosovalka_date'];
-	var now_dt = new Date();
+	var now_dt =  new Date( new Date().getTime() +(3 +((new Date()).getTimezoneOffset()/60)) * 3600 * 1000); // GMT +3
 	if (now_dt.getDate()!=core.mur_golosovalka_date) $("#m_golosovalka").show();
 
 
-	}).toString() + ")();";
+	}).toString() + ")();"

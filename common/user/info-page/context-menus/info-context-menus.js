@@ -39,20 +39,8 @@ var ContextMenus = [{
 		itemlink: "http://sidzoku.ru/lesorub/"
 	},{
 		itemdescription: "Калькулятор",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/calc/lesorub.php"
-	},{
-		itemdescription: "Калькулятор",
-		itemimg: "http://img.ereality.ru/clan/111.gif",
-		itemlink: "http://un-limits.ru/mirncalc/wood.html"
-	},{
-		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/40.gif",
 		itemlink: "http://sp.erclans.ru/evgeska_prof.php?calc=lesorub"
-	},{
-		itemdescription: "Гайд",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/library/lesorub.php"
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
@@ -60,7 +48,7 @@ var ContextMenus = [{
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/1.gif",
-		itemlink: "http://order.ereality.ru/articles.php?article_id=71"
+		itemlink: "http://order.ereality.ru/articles.php?article_id=397"
 	}]
 }, {
 	target: "p12_",
@@ -146,21 +134,13 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/services/mine.php"
 	},{
-		itemdescription: "Калькулятор",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/calc/podzemka.php"
-	},{
-		itemdescription: "Гайд",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/library/profs/collier.php"
+		itemdescription: "Ресурсы в шахтах",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/16.php"
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/shahter.html"
-	}, {
-		itemdescription: "Гайд",
-		itemimg: "http://img.ereality.ru/clan/111.gif",
-		itemlink: "http://un-limits.ru/gayds/under.html"
 	}]
 }, {
 	target: "p6_",
@@ -170,21 +150,9 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/248.gif",
 		itemlink: "http://dot-ereality.ru/index.php?do=calc_digger"
 	},{
-		itemdescription: "Калькулятор",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/calc/podzemka.php"
-	},{
-		itemdescription: "Гайд",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/library/profs/digger.php"
-	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/diggers.html "
-	}, {
-		itemdescription: "Гайд",
-		itemimg: "http://img.ereality.ru/clan/111.gif",
-		itemlink: "http://un-limits.ru/gayds/digger.html"
 	}]
 }, {
 	target: "p7_",
@@ -193,22 +161,10 @@ var ContextMenus = [{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/248.gif",
 		itemlink: "http://dot-ereality.ru/index.php?do=calc_builder"
-	},{
-		itemdescription: "Калькулятор",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/calc/podzemka.php"
-	},{
-		itemdescription: "Гайд",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/library/profs/builder.php"
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/gajd_stroitelya.html"
-	}, {
-		itemdescription: "Гайд",
-		itemimg: "http://img.ereality.ru/clan/111.gif",
-		itemlink: "http://un-limits.ru/gayds/builder.html"
 	}]
 }, {
 	target: "p10_",
@@ -218,13 +174,13 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/248.gif",
 		itemlink: "http://dot-ereality.ru/index.php?do=calc_shedule"
 	},{
+		itemdescription: "Расписание",
+		itemimg: "http://img.ereality.ru/clan/93.gif",
+		itemlink: "http://bregan.erclans.ru/bregan/modules/breganmetall/breganmetall.php"
+	},{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/metall/"
-	},{
-		itemdescription: "Гайд",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/library/profs/metall.php"
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
@@ -426,9 +382,9 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/gobivan/"
 	},{
-		itemdescription: "Гайд",
-		itemimg: "http://img.ereality.ru/clan/29.gif",
-		itemlink: "http://yo-bod.com/library/quests/gobivan.php"
+		itemdescription: "Авторитет",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/4.php"
 	}]
 },{
 	target: "polemarh",
