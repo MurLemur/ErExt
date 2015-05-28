@@ -32,6 +32,9 @@ var clickDetectorsKeyMaps = {
 	cancelKeyMap: {
 		27: 'movementCancel' // cancel
 	},
+	attackEnterKeyMap: {
+		13: 'monster' // attack
+	},
 	instanceKeyMap: {
 		move: {
 			37: 'inst-left',

@@ -46,6 +46,7 @@ if (myoptions.unpaused) {
 			detectors.detectCapchaClick(e.keyCode);
 			detectors.detectUndergroundClick(e.keyCode);
 			detectors.detectInstanceClick(e.keyCode);
+			detectors.detectEnterClick(e.keyCode);
 			
 			// Отменяем или нет действие браузера
 			return myoptions.no_block_browser_keys;

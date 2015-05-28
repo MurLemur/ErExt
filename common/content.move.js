@@ -19,8 +19,6 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
 		var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
 
-	
-
 		var script = "(" +
 		(function() {
 

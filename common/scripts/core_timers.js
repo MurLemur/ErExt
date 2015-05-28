@@ -279,7 +279,7 @@ core.mur_timer.main = function() {
 		
 		// Нужно ли показать кнопку голосовалки
 		if ($("#m_golosovalka").length>0) {
-			var now_dt = new Date();
+			var now_dt = new Date( new Date().getTime() +(3 +((new Date()).getTimezoneOffset()/60)) * 3600 * 1000); // GMT +3
 			if (now_dt.getDate() != core.mur_golosovalka_date) $("#m_golosovalka").show();
 		}
 }

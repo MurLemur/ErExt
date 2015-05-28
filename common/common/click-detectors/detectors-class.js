@@ -67,6 +67,19 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 			top.frames.main.document.getElementById(self.keyMap.cancelKeyMap[code]).click();
 		}
 	}
+
+	this.detectEnterClick = function(code) {
+		//if (!self.pluginOptions.enter_attack) {
+		//	return;
+		//} 
+		if (self.isBattleScreenActive() || self.isMessengerFormActive() || !self.isChatStringEmpty()) { 
+			return;
+		}
+		if ((typeof self.keyMap.attackEnterKeyMap[code] !== 'undefined') && top.frames.main.document.getElementsByClassName(self.keyMap.attackEnterKeyMap[code]).length>0) { 
+			try {top.frames.main.document.getElementsByClassName(self.keyMap.attackEnterKeyMap[code])[0].ondblclick();}
+			catch(e) {}
+		}
+	}
 	
 	this.detectUndergroundClick = function(code) {
 		if (top.frames.main==undefined || top.frames.main.document.getElementById("underground") == null) {
