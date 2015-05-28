@@ -332,78 +332,291 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		}
 		
 		
-			chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
-				//console.log(sys, _t, _id, _time, _nick, _tn, _color, _text);
-				if (erExtOptions.clickablePSmiles) {
-					_text = modifyPrivateSmiles(_text);
+		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
+			//console.log(sys, _t, _id, _time, _nick, _tn, _color, _text);
+			if (erExtOptions.clickablePSmiles) {
+				_text = modifyPrivateSmiles(_text);
+			}
+
+			if (_t == CHAT_FLAG_ALIGN) {
+				if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
+					return;
+				}
+			}
+
+			if (erExtOptions.chatsectors) {
+				_text = modifySectors(_text);
+			}
+
+			if (_nick == keeperName) {
+				if (_t == CHAT_FLAG_CLAN) {
+					if (_text.match(/<u><b color="#AA0000">(.*?)<\/b><\/u>/g)) {
+						exp = /<u><b color="#AA0000">(.*?)<\/b><\/u>/ig;
+						_text = _text.replace(exp, '<a href="javascript:$(\'#div_sp_panel input[name=h_name]\').val(\'$1\');chat.showShutPanel();">[Зашить $1]</a>');
+					}
+				}
+				
+				if (_t == CHAT_FLAG_BATTLELOG) {
+					if (erExtOptions.clickable_nicks_on_clan_tournament) {
+						_text = modifyClanTournamentMessage(_text);
+					}
 				}
 
-				if (_t == CHAT_FLAG_ALIGN) {
-					if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
+				if (_t == CHAT_FLAG_PRIVATE) {
+					if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
 						return;
 					}
-				}
 
-				if (erExtOptions.chatsectors) {
-					_text = modifySectors(_text);
-				}
-
-				if (_nick == keeperName) {
-					if (_t == CHAT_FLAG_BATTLELOG) {
-						if (erExtOptions.clickable_nicks_on_clan_tournament) {
-							_text = modifyClanTournamentMessage(_text);
-						}
+					if (erExtOptions.filterEmptyJailNotfication && filterJailEmptyNotification(_text)) {
+						return;
 					}
 
-					if (_t == CHAT_FLAG_PRIVATE) {
-						if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
+					if (erExtOptions.filterOneTeamIsStrongerMessage && filterOneTeamIsStrongerMessage(_text)) {
+						return;
+					}
+
+					if (erExtOptions.filterBattleIsClosedMessage && filterBattleIsClosedMessage(_text)) {
+						return;
+					}
+
+					if (erExtOptions.filterRingOfRendomMessage && filterRingOfRendomNotification(_text)) {
+						return;
+					}
+
+					if (erExtOptions.filterGoldenHorseShoeMessage && filterGoldenHorseShoeNotification(_text)) {
+						return;
+					}
+
+					if (erExtOptions.filterEliteTournamentMessage && filterEliteTournamentNotification(_text)) {
+						return;
+					}
+
+					$.each(soundOptions, function(key) {
+						if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
 							return;
 						}
+					});
+				}
+			} else if (erExtOptions.chatLightMessage && _nick == user.name) var mid = _id
+				else if (erExtOptions.chatLightMessage && _tn.search(user.name) != -1) {
+					_text = "<span style=\"background-color: " + erExtSystemOptions.chatBgColor + "\">" + _text + "</span>";
+					var mid = 0;
+				}
+			
+			if (erExtOptions.forumgoto) {
+				_text = modifyForumLink(_text);
+			}
 
-						if (erExtOptions.filterEmptyJailNotfication && filterJailEmptyNotification(_text)) {
-							return;
+			oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
+			if (erExtOptions.chatLightMessage && mid && mid != 0) $("#n_" + mid).css("background-color", erExtSystemOptions.chatBgColor);
+		}
+	
+
+		var erExtSPTools = function() {
+			this.menuChatULCss = {
+				"margin": "0px",
+				"color": "rgb(0, 0, 0)",
+				"display": "block",
+				"cursor": "pointer",
+				"padding": "3px",
+				"border": "1px solid rgb(221, 221, 221)",
+				"background-color": "transparent"
+			};
+			
+			this.erExtSpPanel = $('#div_sp_panel');
+			this.erExtSpPanelHeroInput = this.erExtSpPanel.find('input[name=h_name]');
+			this.erExtSpPanelNameQreas = this.erExtSpPanel.find('select[name=qreas]'); 
+			this.erExtSpPanelNameRes = this.erExtSpPanel.find('input[name=reas]');
+			this.erExtSpPanelWarnButton = $('<button type="button" id="warn_but"><span class="ui-button-text">Предупредить</span></button>');
+			this.erExtSpPanelRez = $('<input id="rez" type="checkbox">').css({"vertical-align": "bottom", "margin": "0px", "margin-left": "3px", "margin-right": "3px"});
+			
+			var self = this;
+			
+			this.init = function() {
+				self.initMenuChatUl();
+				setTimeout(function() {
+					self.initSpPanel();
+				}, 500);				
+				self.initSPMenuChat();
+			};
+			
+			this.initMenuChatUl = function() {
+				$('#menuChat ul').append($('<li id="sp_ld">Личное дело</li>').css(self.menuChatULCss))
+					.append($('<li id="shutup">Зашить рот</li>').css(self.menuChatULCss))
+					.append($('<li id="warn">Предупредить</li>').css(self.menuChatULCss));
+			};
+			
+			this.initSpPanel = function() {
+				self.erExtSpPanel.find('select[name=min]').parent().append($('<label>Рец.</label>').prepend(self.erExtSpPanelRez));				
+				self.erExtSpPanel.parent().find('.ui-dialog-buttonset').append(self.erExtSpPanelWarnButton);
+				
+				self.initSpPanalListeners();
+			};
+			
+			this.initSpPanalListeners = function() {
+				self.erExtSpPanelNameQreas.change(function() {
+					self.erExtSpPanelRez.removeAttr('checked');
+				});
+				
+				self.erExtSpPanelWarnButton.on("click", function() {
+					var userName = self.erExtSpPanelHeroInput.val();
+					var reason = self.erExtSpPanelNameRes.val();
+					
+					if (userName == "" || reason == "") {
+						return;
+					}
+					
+					chat.send("/ch/", {
+						action: "post",
+						p_type: CHAT_FLAG_PRIVATE,
+						p_text: urlencode('[' + userName + '] Предупреждение по ст.' + reason + ' http://forum.ereality.ru/topic183171/page1.html')
+					});
+					
+					chat.send("/ch/", {
+						action: "post",
+						p_type: CHAT_FLAG_CLAN,
+						p_text: urlencode('[' + userName + '] Игрок был предупрежден по ст. ' + reason)
+					});
+					
+				});
+				
+				self.erExtSpPanelRez.on("change", function() {
+					if (self.erExtSpPanelNameQreas.val() > -1) {
+						self.erExtSpPanelNameRes.val(self.erExtSpPanelNameQreas.find('option:selected').text() + ' [Рецидив]');
+						self.erExtSpPanelNameQreas.val(-1);
+					}
+				});
+			};	
+
+			this.initSPMenuChat = function() {
+				core.wndChat.contextMenu("menuChat", {
+					onContextMenu: function(e) {
+						var targ = $(e.target);
+						self.menu_target = targ;
+						var id = targ.attr("id");
+						return id && "n_" == id.substr(0, 2) ? !0 : !1
+					},
+					onShowMenu: function(e, menu) {
+						return user.bless_uid < 1 && $("#bless", menu).remove(), menu
+					},
+					
+					bindings: {
+						"barter": function() {
+							return barter.StartBarter(self.menu_target.text()), !0
+						},
+						"private": function() {
+							return chat.msgPrivate(self.menu_target.text()), !0
+						},
+						"info": function() {
+							return core.infoByName(self.menu_target.text()), !0
+						},
+						"bless": function() {
+							return core.blessFrmShow(user.bless_uid, self.menu_target.text()), !0
+						},
+						"ignor": function() {
+							return chat.ignorAdd(self.menu_target.text()), !0
+						},
+						"sp_ld": function() {
+							window.open('http://www.ereality.ru/ldh/?h_name=' + self.menu_target.text(), '_blank');
+							return true;
+						},
+						'shutup': function() {
+							self.erExtSpPanelHeroInput.val(self.menu_target.text());
+							
+							chat.showShutPanel();
+							return true;
+						},
+						'warn': function() {
+							self.erExtSpPanelHeroInput.val(self.menu_target.text());
+							chat.showShutPanel();
+
+							return true;
 						}
-
-						if (erExtOptions.filterOneTeamIsStrongerMessage && filterOneTeamIsStrongerMessage(_text)) {
-							return;
-						}
-
-						if (erExtOptions.filterBattleIsClosedMessage && filterBattleIsClosedMessage(_text)) {
-							return;
-						}
-
-						if (erExtOptions.filterRingOfRendomMessage && filterRingOfRendomNotification(_text)) {
-							return;
-						}
-
-						if (erExtOptions.filterGoldenHorseShoeMessage && filterGoldenHorseShoeNotification(_text)) {
-							return;
-						}
-
-						if (erExtOptions.filterEliteTournamentMessage && filterEliteTournamentNotification(_text)) {
-							return;
-						}
-
-						$.each(soundOptions, function(key) {
-							if (detectForSound(_text, soundOptions[key].detect, soundOptions[key].sound)) {
-								return;
-							}
+					}
+				});
+			};
+		}
+		
+		var chatModifierClass = function() {
+			this.messageDelay = 2000; // 2 seconds
+			this.erExtIntIds = {
+				"-1": null,
+				"1": null
+			};
+			this.oldChatSend = chat.send;
+			this.erExtCurrIntId = 1;
+			this.erExtLastMsgTime = new Date().getTime();
+			
+			var self = this;
+						
+			this.init = function() {
+				chat.erExt = {
+					msgQueue: []
+				}
+				
+				chat.send = self.chatSend;
+			};
+			
+			this.chatSend = function($path, $params) {
+				if ($params.action == "post") {				
+					if (chat.erExt.msgQueue.length > 0) {
+						chat.erExt.msgQueue.push({
+							"path": $path,
+							"params": $params
 						});
 					}
-				} else if (erExtOptions.chatLightMessage && _nick == user.name) var mid = _id
-					else if (erExtOptions.chatLightMessage && _tn.search(user.name) != -1) {
-						_text = "<span style=\"background-color: " + erExtSystemOptions.chatBgColor + "\">" + _text + "</span>";
-						var mid = 0;
+					else {
+						var time = new Date().getTime();
+						if (time - self.erExtLastMsgTime > self.messageDelay + 100) {
+							self.erExtLastMsgTime = time;
+							self.oldChatSend.apply(chat, [$path, $params]);
+						} 
+						else {
+							self.erExtCurrIntId *= -1;
+							
+							chat.erExt.msgQueue.push({
+								"path": $path,
+								"params": $params
+							});
+							
+							self.erExtIntIds[self.erExtCurrIntId] = self.startChatCheker(self.erExtCurrIntId);
+						}					
 					}
-				
-				if (erExtOptions.forumgoto) {
-					_text = modifyForumLink(_text);
 				}
-
-				oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
-				if (erExtOptions.chatLightMessage && mid && mid != 0) $("#n_" + mid).css("background-color", erExtSystemOptions.chatBgColor);
-			}
+				else {
+					self.oldChatSend.apply(chat, [$path, $params]);
+				}
+			};
+			
+			this.startChatCheker = function (intervalID) {				
+				return setInterval(function() {
+					self.erExtChecker(intervalID);
+				}, self.messageDelay);
+			};
+			
+			this.erExtChecker =	function (intervalID) {
+				if (chat.erExt.msgQueue.length > 0) {
+					var msg = chat.erExt.msgQueue.shift();
+					
+					if (chat.erExt.msgQueue.length == 0) {
+						clearInterval(self.erExtIntIds[intervalID]);						
+					}
+					
+					self.oldChatSend.apply(chat, [msg.path, msg.params]);					
+					self.erExtLastMsgTime = new Date().getTime();
+				}				
+			};
+		}
 		
+
+		$(document).ready(function() {
+			if($("#ch_shut_btn:visible").length > 0) {
+				new erExtSPTools().init();
+
+				new chatModifierClass().init();
+			}
+		});
+
 		if (erExtOptions.forumgoto) {			
 			messenger.PrintMessage = function (Message, PrintReply, isClanOrAlign) { 
 				Message['text'] = modifyForumLink(Message['text']);
