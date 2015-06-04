@@ -13,6 +13,7 @@ var defaultConfig = {
 		"spdressroom":true,
 		"okcount":true,
 		"cemetry":true,
+		"sledopit":true,
 		"numfight":true,
 		"numcapcha":true,
 		"kbdinst":true,

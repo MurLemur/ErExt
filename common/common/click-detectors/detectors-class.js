@@ -69,9 +69,9 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 	}
 
 	this.detectEnterClick = function(code) {
-		//if (!self.pluginOptions.enter_attack) {
-		//	return;
-		//} 
+		if (!self.pluginOptions.sledopit) {
+			return;
+		} 
 		if (self.isBattleScreenActive() || self.isMessengerFormActive() || !self.isChatStringEmpty()) { 
 			return;
 		}
