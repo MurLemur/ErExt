@@ -448,7 +448,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			
 			this.initSpPanel = function() {
 				self.erExtSpPanel.find('select[name=min]').parent().append($('<label>Рец.</label>').prepend(self.erExtSpPanelRez));				
-				self.erExtSpPanel.parent().find('.ui-dialog-buttonset').append(self.erExtSpPanelWarnButton);
+				self.erExtSpPanel.parent().find('.ui-dialog-buttonset').find('.ui-button-text:contains(\'Личные дела\')').parent().parent().append(self.erExtSpPanelWarnButton);
 				
 				self.initSpPanalListeners();
 			};
@@ -610,7 +610,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		
 
 		$(document).ready(function() {
-			if($("#ch_shut_btn:visible").length > 0) {
+			if (user.c_id <= 10) {
 				new erExtSPTools().init();
 
 				new chatModifierClass().init();
