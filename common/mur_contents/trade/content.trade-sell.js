@@ -20,6 +20,11 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	
 	var script="";
 
+	// Ссылка на ресурсы в госе
+	if (myoptions.resources_prices) {
+		$("#span_lotmassa").parent().parent().append($("<br><a target=\"_blank\" href=\"http://www.ereality.ru/goto/er-help.ru/s/14.php\">Ресурсы в госе</a>"));
+	}
+
 	//Механизм быстрого выставления однотипных лотов для биржи
 	if (myoptions.stockmy && location.href.search("n=useritems") != -1 ) {
 
@@ -114,5 +119,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		}).toString() + ")();";
 	}
 		(script != "") && inject_global(script);
+
+
 //=========================end.
 });

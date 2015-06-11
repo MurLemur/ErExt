@@ -16,6 +16,7 @@
 // @require 	user/info-page/dressing-rooms/sidzoku-dress-room.js
 // @require 	user/info-page/user-analizer/sheer-user-analyzer.js
 // @require 	user/info-page/user-analizer/glam-user-analyzer.js
+// @require 	user/info-page/user-analizer/nickname-history.js
 // @require 	user/info-page/ratings/goses-user-ratings.js
 // @require 	user/info-page/schedule/dragons-schedule.js
 //

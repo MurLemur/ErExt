@@ -118,6 +118,10 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/248.gif",
 		itemlink: "http://dot-ereality.ru/index.php?do=calc_cook"
 	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/10.php"
+	},{
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/1.gif",
 		itemlink: "http://order.ereality.ru/articles.php?article_id=381"
@@ -137,6 +141,10 @@ var ContextMenus = [{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/shaxta/"
+	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/92.php"
 	},{
 		itemdescription: "Карта шахт",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
@@ -213,6 +221,14 @@ var ContextMenus = [{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/metall/"
+	},{
+		itemdescription: "Прогноз",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/89.php"
+	},{
+		itemdescription: "Стоимость",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/37.php"
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
@@ -234,6 +250,10 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/remeslo/"
 	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/13.php"
+	},{
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/rem.html"
@@ -254,6 +274,14 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/93.gif",
 		itemlink: "http://bregan.erclans.ru/bregan/index.php?q=bregankud"
 	}, {
+		itemdescription: "Шансы",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/8.php"
+	}, {
+		itemdescription: "Экстракты",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/122.php"
+	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/pkudesnik.html"
@@ -273,6 +301,10 @@ var ContextMenus = [{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/traper/"
+	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/64.php"
 	},{
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
@@ -301,7 +333,12 @@ var ContextMenus = [{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/40.gif",
 		itemlink: "http://sp.erclans.ru/evgeska_prof.php?calc=grec_aura"
-	}, {
+	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/83.php"
+	}
+	, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/priest.html"
@@ -325,6 +362,10 @@ var ContextMenus = [{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/93.gif",
 		itemlink: "http://bregan.erclans.ru/bregan/index.php?q=breganarmourer"
+	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/62.php"
 	},{
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",

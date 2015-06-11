@@ -11,6 +11,8 @@ var defaultConfig = {
 		"bodestate":true,
 		"sidzoku":true,
 		"spdressroom":true,
+		"nickhistory":true,
+		"resources_prices":true,
 		"okcount":true,
 		"cemetry":true,
 		"sledopit":true,
@@ -122,6 +124,10 @@ var defaultConfig = {
 		"sound_tool_broken": {
 			sound: "nosound",
 			detect: "текущая прочность инструмента: <b>0</b>"
+		},
+		"sound_full_wagon": {
+			sound: "nosound",
+			detect: "Тeлeжка перегружена!"
 		},
 		"sound_user_injury" : {
 			sound: "nosound",
