@@ -39,6 +39,7 @@ var defaultConfig = {
 		"damaged_items_notification_filter": true,
 		"clickable_nicks_on_clan_tournament": true,
 		"stockmy":true,
+		"taverna_filters":true,
 		"map_trace":true,
 		"startup_update_notification":true,
 		"global_info": true,
@@ -75,6 +76,7 @@ var defaultConfig = {
 		'inventory': true,
 		'golosovalka': true,
 		'snow': true,
+		'sanctions': true,
 		'no_block_browser_keys': true,
 		'chatLightMessage': false,
 		'filterEmptyJailNotfication': false,
@@ -127,7 +129,11 @@ var defaultConfig = {
 		},
 		"sound_full_wagon": {
 			sound: "nosound",
-			detect: "Тeлeжка перегружена!"
+			detect: "Т.л.жка п.р.груж.на!"
+		},
+		"sound_full_weight": {
+			sound: "nosound",
+			detect: "Вы п.р.груж.ны"
 		},
 		"sound_user_injury" : {
 			sound: "nosound",

@@ -677,7 +677,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				
 					if (erExtOptions.userlistactiveitems) {
 						$.each($("#div_battle span[class*=bp]"), function(num, val) {
-							val.setAttribute("name", battle.players[val.id.substr(1)].name);
+							(val.id!="")&&val.setAttribute("name", battle.players[val.id.substr(1)].name);
 						})
 					}
 
