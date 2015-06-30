@@ -35,6 +35,9 @@ var serviceButtonBuilderClass = function(configOptions, userName, serviceRequest
 		if (self.configOptions.glamurstupki) {		
 			new glamsUserAnalyzerClass(self.divHolder, self.infoButtonsCss, self.serviceRequestSender, self.userName).init();
 		}
+		if (self.configOptions.nickhistory) {		
+			new NickHistorylass($(".charSearch").parent(), {"border": "1px solid #AAAAAA", "cursor": "pointer"}, self.userName).init();
+		}
 		$(".content_bg").css( "height", "+=25" );
 
 	}

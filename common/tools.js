@@ -11,6 +11,8 @@ var defaultConfig = {
 		"bodestate":true,
 		"sidzoku":true,
 		"spdressroom":true,
+		"nickhistory":true,
+		"resources_prices":true,
 		"okcount":true,
 		"cemetry":true,
 		"sledopit":true,
@@ -37,6 +39,7 @@ var defaultConfig = {
 		"damaged_items_notification_filter": true,
 		"clickable_nicks_on_clan_tournament": true,
 		"stockmy":true,
+		"taverna_filters":true,
 		"map_trace":true,
 		"startup_update_notification":true,
 		"global_info": true,
@@ -73,6 +76,7 @@ var defaultConfig = {
 		'inventory': true,
 		'golosovalka': true,
 		'snow': true,
+		'sanctions': true,
 		'no_block_browser_keys': true,
 		'chatLightMessage': false,
 		'filterEmptyJailNotfication': false,
@@ -122,6 +126,14 @@ var defaultConfig = {
 		"sound_tool_broken": {
 			sound: "nosound",
 			detect: "текущая прочность инструмента: <b>0</b>"
+		},
+		"sound_full_wagon": {
+			sound: "nosound",
+			detect: "Т.л.жка п.р.груж.на!"
+		},
+		"sound_full_weight": {
+			sound: "nosound",
+			detect: "Вы п.р.груж.ны"
 		},
 		"sound_user_injury" : {
 			sound: "nosound",

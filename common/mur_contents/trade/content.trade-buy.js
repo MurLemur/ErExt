@@ -12,6 +12,10 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		return;
 	}
 
+	// Ссылка на ресурсы в госе
+	if (myoptions.resources_prices) {
+		$("#span_lotmassa").parent().parent().append($("<br><a target=\"_blank\" href=\"http://www.ereality.ru/goto/er-help.ru/s/14.php\">Ресурсы в госе</a>"));
+	}
 	if (myoptions.trade_buy_full_lot) {
 		var tradeString = (function() { 
 			var buttons = $("table[id^=\"tbl\"] .item_buttons button[onclick*=\"BuyLot\"]", top.frames.main.document);
@@ -33,5 +37,8 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		
 		script = "(" + tradeString + ")();";
 		inject_global(script);
+
 	}
+
+	
 });

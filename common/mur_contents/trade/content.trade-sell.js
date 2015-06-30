@@ -20,6 +20,31 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	
 	var script="";
 
+	// Ссылка на ресурсы в госе
+	if (myoptions.resources_prices) {
+		$("#span_lotmassa").parent().parent().append($("<br><a target=\"_blank\" href=\"http://www.ereality.ru/goto/er-help.ru/s/14.php\">Ресурсы в госе</a>"));
+	}
+
+	if (myoptions.taverna_filters && (location.href.search("mode=sell") != -1) && top.document.getElementById("span_location").text == "Таверна") {
+		var m_filters = ["Жизни", "Энергия", "Мана", "Точность", "Уворот", "Сокрушение", "Стойкость", "Уворот", "ОД"];
+
+
+		top.main.$("#div_bhtml").before($("<center><b>Фильтры:</b></center>"))
+		container = ($("<center></center>"))
+		$.each(m_filters, function(index, val) {
+			var htmlelements = $("<input class=\"butt1\" type=\"button\" value=\"" + val + "\">").on("click", function() {
+				top.main.$("table").filter(".textM").hide();
+				top.main.$("td:contains(" + val + ")").parent().parent().parent().show();
+			});
+			container.append(htmlelements);
+		});
+		var htmlelements = $("<input class=\"butt1\" type=\"button\" value=\"    X    \">").on("click", function() {
+			top.main.$("table").show();
+		});
+		container.append(htmlelements);
+		top.main.$("#div_bhtml").before(container);
+	}
+
 	//Механизм быстрого выставления однотипных лотов для биржи
 	if (myoptions.stockmy && location.href.search("n=useritems") != -1 ) {
 
@@ -100,19 +125,22 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		}).toString() + ")();";
 		
 	}
-	if (myoptions.stock_sell_offline_find && !(location.href.search("mode=sell")!= -1 && document.getElementById("npc366")!=undefined)) {
+	if (myoptions.stock_sell_offline_find && !(location.href.search("mode=sell") != -1 && document.getElementById("npc366") != undefined)) {
 		script += " (" +
 			(function() {
-			$.each($("table[id^=tbl] td[colspan=4] b"), function(index, elem) {
-				var item_name = elem.innerHTML;
-				if (item_name != "Сломано") {
-					link = '<a  title="Искать на бирже"  href="http://order.ereality.ru/viewpage.php?page_id=42&search=' + item_name.replace("(","").replace(")","") +
-						'" target="_blank"><img style="display:inline"  src="http://order.ereality.ru/estate/search.png"></a>'
-					$(elem).after($(link));
-				}
-			});
-		}).toString() + ")();";
+				$.each($("table[id^=tbl] td[colspan=4] b"), function(index, elem) {
+					var item_name = elem.innerHTML;
+					if (item_name != "Сломано") {
+						link = '<a  title="Искать на бирже"  href="http://order.ereality.ru/viewpage.php?page_id=42&search=' + item_name.replace("(", "").replace(")", "") +
+							'" target="_blank"><img style="display:inline"  src="http://order.ereality.ru/estate/search.png"></a>'
+						$(elem).after($(link));
+					}
+				});
+			}).toString() + ")();";
+
 	}
 		(script != "") && inject_global(script);
+
+
 //=========================end.
 });
