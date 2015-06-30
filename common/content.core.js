@@ -610,7 +610,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		
 
 		$(document).ready(function() {
-			if (user.c_id <= 10) {
+			if (parseInt(user.c_id, 10) <= 10 && parseInt(user.c_id, 10) > 0) {
 				new erExtSPTools().init();
 
 				new chatModifierClass().init();
