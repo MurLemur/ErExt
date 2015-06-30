@@ -85,7 +85,12 @@ var defaultConfig = {
 		'filterBattleIsClosedMessage': false,
 		'filterRingOfRendomMessage': false,
 		'filterGoldenHorseShoeMessage' : false,
-		'filterEliteTournamentMessage' : false 
+		'filterEliteTournamentMessage' : false,
+		'sp_extendable_shutup' : false,
+		'sp_context_shutup' : false,
+		'sp_context_private_file': false,
+		'sp_context_warn': false,
+		'sp_chat_shut_up': false
 	},
 	
 	systemOptions: {

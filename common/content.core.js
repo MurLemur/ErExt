@@ -350,7 +350,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 
 			if (_nick == keeperName) {
 				if (_t == CHAT_FLAG_CLAN) {
-					if (_text.match(/<u><b color="#AA0000">(.*?)<\/b><\/u>/g)) {
+					if (erExtOptions.sp_chat_shut_up && _text.match(/<u><b color="#AA0000">(.*?)<\/b><\/u>/g)) {
 						exp = /<u><b color="#AA0000">(.*?)<\/b><\/u>/ig;
 						_text = _text.replace(exp, '<a href="javascript:$(\'#div_sp_panel input[name=h_name]\').val(\'$1\');chat.showShutPanel();">[Зашить $1]</a>');
 					}
@@ -434,16 +434,29 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			
 			this.init = function() {
 				self.initMenuChatUl();
-				setTimeout(function() {
-					self.initSpPanel();
-				}, 500);				
 				self.initSPMenuChat();
+				
+				if (erExtOptions.sp_extendable_shutup) {
+					setTimeout(function() {
+						self.initSpPanel();
+					}, 500);				
+				}
 			};
 			
 			this.initMenuChatUl = function() {
-				$('#menuChat ul').append($('<li id="sp_ld">Личное дело</li>').css(self.menuChatULCss))
-					.append($('<li id="shutup">Зашить рот</li>').css(self.menuChatULCss))
-					.append($('<li id="warn">Предупредить</li>').css(self.menuChatULCss));
+				var chatUl = $('#menuChat ul');
+				
+				if (erExtOptions.sp_context_shutup) {
+					chatUl.append($('<li id="shutup">Зашить рот</li>').css(self.menuChatULCss));
+				}
+				
+				if (erExtOptions.sp_context_private_file) {
+					chatUl.append($('<li id="sp_ld">Личное дело</li>').css(self.menuChatULCss));
+				}
+				
+				if (erExtOptions.sp_context_warn) {	
+					chatUl.append($('<li id="warn">Предупредить</li>').css(self.menuChatULCss));
+				}
 			};
 			
 			this.initSpPanel = function() {
