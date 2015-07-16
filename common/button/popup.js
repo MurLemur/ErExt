@@ -36,6 +36,20 @@ var popupClass = function(config) {
 			kango.browser.tabs.create({url:url_dp_stats}); 
 			window.close();
 		});	
+
+		$("#calc_cloak").click(function() {
+		 	if (kango.browser.getName() != "firefox") { var url_calc_cloak = kango.io.getResourceUrl("services/calc_cloak.html");
+		 } 	else { var url_calc_cloak = kango.io.getResourceUrl("content/services/calc_cloak.html").replace("resource","chrome")}
+			kango.browser.tabs.create({url:url_calc_cloak}); 
+			window.close();
+		});	
+
+		$("#all_smiles").click(function() {
+		 	if (kango.browser.getName() != "firefox") { var url_all_smiles = kango.io.getResourceUrl("services/all_smiles.html");
+		 } 	else { var url_all_smiles = kango.io.getResourceUrl("content/services/all_smiles.html").replace("resource","chrome")}
+			kango.browser.tabs.create({url:url_all_smiles}); 
+			window.close();
+		});	
 	};
 	
 	this.pauseListener = function(isPaused, setImgCallback) {

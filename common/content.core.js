@@ -331,6 +331,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			}
 		}
 		
+		chat.chatMsgColor = erExtSystemOptions.chatMsgColor.slice(1);
 		
 		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
 			//console.log(sys, _t, _id, _time, _nick, _tn, _color, _text);
@@ -348,6 +349,10 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				_text = modifySectors(_text);
 			}
 
+			if (erExtOptions.chatOtherUsersMessageColor && _nick != keeperName && _nick != user.name) {
+				_color = chat.chatMsgColor;
+			}
+			
 			if (_nick == keeperName) {
 				if (_t == CHAT_FLAG_CLAN) {
 					if (erExtOptions.sp_chat_shut_up && _text.match(/<u><b color="#AA0000">(.*?)<\/b><\/u>/g)) {
@@ -412,7 +417,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		}
 	
 
-		var erExtSPTools = function() {
+		var erExtSPToolsClass = function() {
 			this.menuChatULCss = {
 				"margin": "0px",
 				"color": "rgb(0, 0, 0)",
@@ -427,8 +432,13 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			this.erExtSpPanelHeroInput = this.erExtSpPanel.find('input[name=h_name]');
 			this.erExtSpPanelNameQreas = this.erExtSpPanel.find('select[name=qreas]'); 
 			this.erExtSpPanelNameRes = this.erExtSpPanel.find('input[name=reas]');
-			this.erExtSpPanelWarnButton = $('<button type="button" id="warn_but"><span class="ui-button-text">Предупредить</span></button>');
+			this.erExtSpPanelMin = this.erExtSpPanel.find('select[name=min]');
+			this.erExtSpPanelMinOptions = this.erExtSpPanelMin.find('option').slice(1);
+			this.erExtSpPanelWarnButton = $('<button type="button"><span class="ui-button-text">Предупредить</span></button>');
 			this.erExtSpPanelRez = $('<input id="rez" type="checkbox">').css({"vertical-align": "bottom", "margin": "0px", "margin-left": "3px", "margin-right": "3px"});
+			this.erExtSpPanelGiveLink = $('<button type="button"><span class="ui-button-text">Ссылка</span></button>');
+			this.erExtSpPanelLinkSelect = $('<select><option value="">Выберите ссылку</option></select>');
+			this.qreasTimeMap = {};
 			
 			var self = this;
 			
@@ -437,15 +447,13 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				self.initSPMenuChat();
 				
 				if (erExtOptions.sp_extendable_shutup) {
-					setTimeout(function() {
-						self.initSpPanel();
-					}, 500);				
+					self.initSpPanel();			
 				}
 			};
 			
 			this.initMenuChatUl = function() {
 				var chatUl = $('#menuChat ul');
-				
+
 				if (erExtOptions.sp_context_shutup) {
 					chatUl.append($('<li id="shutup">Зашить рот</li>').css(self.menuChatULCss));
 				}
@@ -457,18 +465,83 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				if (erExtOptions.sp_context_warn) {	
 					chatUl.append($('<li id="warn">Предупредить</li>').css(self.menuChatULCss));
 				}
+				
+				if (erExtOptions.sp_context_link) {	
+					chatUl.append($('<li id="link">Ссылка</li>').css(self.menuChatULCss));
+				}
 			};
 			
-			this.initSpPanel = function() {
-				self.erExtSpPanel.find('select[name=min]').parent().append($('<label>Рец.</label>').prepend(self.erExtSpPanelRez));				
-				self.erExtSpPanel.parent().find('.ui-dialog-buttonset').find('.ui-button-text:contains(\'Личные дела\')').parent().parent().append(self.erExtSpPanelWarnButton);
+			this.initSpPanel = function() { 
+				chat.shut_dialog.dialog({height:170});
+				self.erExtSpPanel.find('select[name=min]').parent().append($('<label>Рец.</label>').prepend(self.erExtSpPanelRez));			
+				var panelButtonsSet = self.erExtSpPanel.parent().find('.ui-dialog-buttonset').find('.ui-button-text:contains(\'Личные дела\')').parent().parent();
+				
+				panelButtonsSet.append('<br/>').append(self.erExtSpPanelWarnButton).append(self.erExtSpPanelGiveLink);
+				
+				if (erExtOptions.sp_shut_up_panel_background_color) {
+					self.erExtSpPanel.css({"background-color": erExtSystemOptions.shutUpBgColor});
+					panelButtonsSet.parent().css({"background-color": erExtSystemOptions.shutUpBgColor});
+				}
+				
+				self.initInitLinksRow();
+				self.initQreasTimeMap();
 				
 				self.initSpPanalListeners();
 			};
 			
+			this.initInitLinksRow = function() {
+				self.erExtSpPanel.find('[name=fshut] table').append($('<tr><td align="right"><b>Ссылки:&nbsp</b></td></tr>').append($('<td></td>').append(self.erExtSpPanelLinkSelect)));
+			
+				$.each(erExtSystemOptions.sp_shut_up_links.split(";"), function() {
+					if (this.length > 0) {
+						var data = this.split('|');
+						
+						if (data[1].length > 0 && data[0].length > 0) {
+							self.erExtSpPanelLinkSelect.append($('<option></option>').attr('value', data[1]).text(data[0]));
+						}
+					} 
+				});
+			}
+			this.initQreasTimeMap = function() {				
+				$.each(erExtSystemOptions.sp_qreas_time_map.split(';'), function() {
+					var data = this.split(':');
+					var qreasId = data[0].trim();
+					
+					if (qreasId.length > 0 && data[1].length > 0) {
+						var times = data[1].split(',');
+						
+						if (times.length < 1) {
+							return;
+						}
+						
+						self.qreasTimeMap[qreasId] = {};						
+						for (i in times) {
+							var time = times[i].trim();
+							
+							if (time.length > 0) {
+								self.qreasTimeMap[qreasId][time] = true;
+							}								
+						}
+					}
+				});
+			}
+			
 			this.initSpPanalListeners = function() {
 				self.erExtSpPanelNameQreas.change(function() {
+					self.erExtSpPanelMin.val(0);
 					self.erExtSpPanelRez.removeAttr('checked');
+					self.erExtSpPanelMinOptions.removeAttr('disabled');
+					
+					var qreasId = self.erExtSpPanelNameQreas.val();
+					if (typeof self.qreasTimeMap[qreasId] != 'undefined') {
+						self.erExtSpPanelMinOptions.each(function() {
+							var option = $(this);
+							
+							if (typeof self.qreasTimeMap[qreasId][option.val()] == 'undefined') {
+								option.attr('disabled', 'disabled');
+							}
+						});
+					}
 				});
 				
 				self.erExtSpPanelWarnButton.on("click", function() {
@@ -498,6 +571,22 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 						self.erExtSpPanelNameRes.val(self.erExtSpPanelNameQreas.find('option:selected').text() + ' [Рецидив]');
 						self.erExtSpPanelNameQreas.val(-1);
 					}
+				});
+				
+				self.erExtSpPanelGiveLink.on('click', function() {
+					var userName = self.erExtSpPanelHeroInput.val();
+					var link = self.erExtSpPanelLinkSelect.val();
+					var title = self.erExtSpPanelLinkSelect.find(":selected").text();
+					
+					if (userName == "" || link == "") {
+						return;
+					}
+					
+					chat.send("/ch/", {
+						action: "post",
+						p_type: chat.flag,
+						p_text: urlencode('[' + userName + '] ' + title + ": "+ link)
+					});
 				});
 			};	
 
@@ -540,6 +629,12 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 							return true;
 						},
 						'warn': function() {
+							self.erExtSpPanelHeroInput.val(self.menu_target.text());
+							chat.showShutPanel();
+
+							return true;
+						},
+						'link': function() {
 							self.erExtSpPanelHeroInput.val(self.menu_target.text());
 							chat.showShutPanel();
 
@@ -621,13 +716,81 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			};
 		}
 		
+		var chatTradeFlooderClass = function() {
+			this.phrases = [];
+			this.phrasesKey = 0;
+			
+			var self = this;
+			
+			this.init = function() {
+				self.preparePhrases();
+				self.initPraseKey();
 
-		$(document).ready(function() {
-			if (parseInt(user.c_id, 10) <= 10 && parseInt(user.c_id, 10) > 0) {
-				new erExtSPTools().init();
-
-				new chatModifierClass().init();
+				//self.runTimer();
 			}
+			this.initPraseKey = function() {
+				var key = localStorage["chat_trade_flooder_key"];
+				
+				if (typeof key == "undefined") {
+					key = 0;
+				}
+				
+				self.key = key;
+			}
+			
+			this.runTimer = function() {
+				if (self.phrases.length == 0) {
+					return;
+				}
+				
+				setInterval(function() {
+					chat.send("/ch/", {
+						action: "post",
+						p_type: CHAT_FLAG_PRIVATE,
+						p_text: urlencode('[Смотритель] ' + self.getPrase())
+					});
+					
+					console.log(new Date().toString());
+				}, 60000);
+			}
+			
+			this.getPrase = function() {
+				if (typeof self.phrases[self.phrasesKey] == "undefined") {
+					self.phrasesKey = 0;
+				}
+				
+				var prase = self.phrases[self.phrasesKey];				
+				self.phrasesKey++;
+				
+				localStorage["chat_trade_flooder_key"] = self.phrasesKey;
+				
+				return prase;
+			}
+			
+			this.preparePhrases = function() {
+				var phrases = erExtSystemOptions.trade_flooder_phrases.split("|");
+				
+				for (i in phrases) {
+					var phrase = phrases[i].trim().slice(0, 250);
+					
+					if (phrase.length > 0) {
+						self.phrases.push(phrase);
+					}
+				}
+				
+			}
+		}
+		
+		$(document).ready(function() {
+			setTimeout(function() {
+				if (parseInt(user.c_id, 10) <= 10 && parseInt(user.c_id, 10) > 0) {
+					new erExtSPToolsClass().init();
+
+					new chatModifierClass().init();
+					
+					new chatTradeFlooderClass().init();
+				}
+			}, 1000);
 		});
 
 		if (erExtOptions.forumgoto) {			

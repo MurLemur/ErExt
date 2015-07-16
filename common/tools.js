@@ -79,6 +79,7 @@ var defaultConfig = {
 		'sanctions': true,
 		'no_block_browser_keys': true,
 		'chatLightMessage': false,
+		'chatOtherUsersMessageColor': false,
 		'filterEmptyJailNotfication': false,
 		'okHelpMessageFilterEnabled': false,
 		'filterOneTeamIsStrongerMessage': false,
@@ -90,7 +91,9 @@ var defaultConfig = {
 		'sp_context_shutup' : false,
 		'sp_context_private_file': false,
 		'sp_context_warn': false,
-		'sp_chat_shut_up': false
+		'sp_context_link': false,
+		'sp_chat_shut_up': false,
+		'sp_shut_up_panel_background_color': false
 	},
 	
 	systemOptions: {
@@ -104,7 +107,35 @@ var defaultConfig = {
 			"popupPositionY" : -1
 		},
 		"okHelpMessageMinLevel" : 10,
-		"chatBgColor" : "#00FF7F"
+		"chatBgColor" : "#00FF7F",
+		"chatMsgColor" : "#000000",
+		"shutUpBgColor" : "#d7d7d7",
+		"sp_shut_up_links": "",
+		"sp_qreas_time_map": 
+			"0:3,6;" +
+			"1:3,6;" + 
+			"2:6,18;" +
+			"3:6,36;" +
+			"4:1,3;" + 
+			"5:6,18,36,72,144;" +
+			"6:144;" + 
+			"7:6,18,36,72,144;" + 
+			"8:144;" +
+			"9:144;" + 
+			"10:36,72;" +
+			"11:1,3;" +
+			"12:1,3;" + 
+			"13:6,18;" + 
+			"14:144;" +
+			"15:144;" +
+			"16:72,144;" +
+			"17:72,144;" +
+			"18:144;" +
+			"19:72,144;" +
+			"20:72,144;" +
+			"21:36,72;" + 
+			"23:144;",
+		"trade_flooder_phrases": ""
 	},
 
 	soundOptions: {
