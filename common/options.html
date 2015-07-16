@@ -232,7 +232,9 @@
     <tr><td><input type="checkbox" id="filterGoldenHorseShoeMessage"><label for="filterGoldenHorseShoeMessage">Фильтровать сообщение о Золотой Подкове.</label></td>
     <td><input type="checkbox" id="filterEliteTournamentMessage"><label for="filterEliteTournamentMessage">Фильтровать сообщение о Элитном Турнире.</label></td></tr>
      <tr><td><input type="checkbox" id="chatLightMessage"><label for="chatLightMessage">Подсвечивать фон сообщений для вас в чате . Цвет:   </label><input type="color" id="chatBgColor"></td>
-    <td></td></tr>
+    <td>
+		<input type="checkbox" id="chatOtherUsersMessageColor"><label for="chatOtherUsersMessageColor">Все сообщения других пользователей одним цветом . Цвет:   </label><input type="color" id="chatMsgColor">
+	</td></tr>
    </table>
 </section>
 
@@ -248,6 +250,11 @@
     </textarea><span></span>
     <p style="color:#A4A4A4">Данные вводить в таком виде:<br>(11:22) Моя Локация;(33:44) Любимая Шахта;</p>
     
+	<p>Торговый автофлудер:</p>
+	<p><textarea id="trade_flooder_phrases"  cols=60 rows=5>
+    </textarea><span></span>
+    <p style="color:#A4A4A4">Данные вводить в таком виде:<br> Куплю гараж | Продам мопед, мопед не мой, я только разместил объяву | </p>
+	
    </form>
 	<label class="buttonclass">	
 		<div class="button" id="exportButton">Экспорт настроек в файл</div>
@@ -273,8 +280,31 @@
 		<tr>
 			<td><input type="checkbox" id="sp_context_warn"><label for="sp_context_warn">Предупредить в контекстном меню</label></td>
 		</tr>
+				<tr>
+			<td><input type="checkbox" id="sp_context_link"><label for="sp_context_link">Ссылка в контекстном меню</label></td>
+		</tr>
 		<tr>
 			<td><input type="checkbox" id="sp_chat_shut_up"><label for="sp_chat_shut_up">Зашивка из чата</label></td>
+		</tr>
+		<tr>
+			<td>
+				<input type="checkbox" id="sp_shut_up_panel_background_color"><label for="sp_shut_up_panel_background_color">Фоновый цвет молчемета . Цвет:   </label><input type="color" id="shutUpBgColor">
+			</td>
+		</tr>
+		<tr>
+			<td>
+			    <p>Свои ссылки в молчемете:</p>
+				<p><textarea id="sp_shut_up_links"  cols=60 rows=5>
+				</textarea><span></span>
+				<p style="color:#A4A4A4">Данные вводить в таком виде:<br>Гугл|wwww.google.com; Имя|Ссылка;</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			    <p>Карта минут молчания за наказания:</p>
+				<p><textarea id="sp_qreas_time_map"  cols=60 rows=5>
+				</textarea><span></span>
+			</td>
 		</tr>
     </table>
 </section>
