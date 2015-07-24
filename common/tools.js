@@ -93,7 +93,10 @@ var defaultConfig = {
 		'sp_context_warn': false,
 		'sp_context_link': false,
 		'sp_chat_shut_up': false,
-		'sp_shut_up_panel_background_color': false
+		'sp_shut_up_panel_background_color': false,
+        'trade_flooder_active': false,
+        'alternative_chat_send': false,
+        'forum_ignore': true
 	},
 	
 	systemOptions: {
@@ -106,6 +109,10 @@ var defaultConfig = {
 			"popupPositionX" : -1,
 			"popupPositionY" : -1
 		},
+        "forumIgnore": {
+            "popupPositionX" : -1,
+            "popupPositionY" : -1
+        },
 		"okHelpMessageMinLevel" : 10,
 		"chatBgColor" : "#00FF7F",
 		"chatMsgColor" : "#000000",
@@ -135,7 +142,8 @@ var defaultConfig = {
 			"20:72,144;" +
 			"21:36,72;" + 
 			"23:144;",
-		"trade_flooder_phrases": ""
+		"trade_flooder_phrases": "",
+        "forum_ignore_user_replace": "glad"
 	},
 
 	soundOptions: {
@@ -219,8 +227,9 @@ var defaultConfig = {
 			sound: "nosound",
 			detect: ""
 		}								
-	},	
-	estateVictims: {}
+	},
+	estateVictims: {},
+    forumIgnore: {}
 }
 
 function mergeOptions(options, defaultOptions) {
@@ -287,20 +296,16 @@ var toolsClass = function() {
 	var self = this;
 	
 	this.loadOptions = function(options, callback) {
-		self._loadOption(options, {}, callback);
-	};
-	
-	this._loadOption = function(options, loadedOptions, callback) {
-		if (options.length > 0) {			
-			options = jQuery.extend(true, [], options);
-			option = options.pop();
-			kango.invokeAsync('kango.storage.getItem', option.systemName, function(extOptions) { 
-				loadedOptions[option.systemName] = JSON.parse(JSON.stringify(mergeOptions(extOptions, defaultConfig[option.defaultName])));	
-				self._loadOption(options, loadedOptions, callback);			
-			});	
-		} else {
-			callback(loadedOptions);
-		}
+        var loadedOptions = {};
+
+        for (i in options) {
+            var extOptions = kango.storage.getItem(options[i].systemName);
+
+            loadedOptions[options[i].systemName] =
+                JSON.parse(JSON.stringify(mergeOptions(extOptions, defaultConfig[options[i].defaultName])));
+        }
+
+        callback(loadedOptions);
 	};
 }
 

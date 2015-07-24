@@ -128,6 +128,8 @@
     <td><input type="checkbox" id="resources_prices"><label for="resources_prices">Ссылка на гос цены ресов на бирже(при поиске и выставлении на продажу).</label></td></tr>
     <tr><td><input type="checkbox" id="sanctions"><label for="sanctions">"Компактный вид" при покупке чертежей ремесленника в мастерской.</label></td>
     <td><input type="checkbox" id="taverna_filters"><label for="taverna_filters">Фильтры при продаже супов в таверне.</label></td></tr>
+    <tr><td><input type="checkbox" id="forum_ignore"><label for="forum_ignore">Форумный игнор</label></td>
+        <td><input type="checkbox" id="alternative_chat_send"><label for="alternative_chat_send">Альтернативная отсылка сообщений в чат</label></td></tr>
     </table>
 </section>
 
@@ -250,11 +252,21 @@
     </textarea><span></span>
     <p style="color:#A4A4A4">Данные вводить в таком виде:<br>(11:22) Моя Локация;(33:44) Любимая Шахта;</p>
     
-	<p>Торговый автофлудер:</p>
+	<p>Торговый автофлудер: <input type="checkbox" id="trade_flooder_active"></p>
 	<p><textarea id="trade_flooder_phrases"  cols=60 rows=5>
     </textarea><span></span>
-    <p style="color:#A4A4A4">Данные вводить в таком виде:<br> Куплю гараж | Продам мопед, мопед не мой, я только разместил объяву | </p>
-	
+    <p style="color:#A4A4A4">Данные вводить в таком виде:<br> Куплю порох | Продам руны | </p>
+
+       <p>Кем заменять персонажей в форумном игноре:</p>
+       <select id="forum_ignore_user_replace">
+           <option value="gusid">Гусид</option>
+           <option value="sasha">Саша</option>
+           <option value="invis">Анонимус</option>
+           <option value="glad">Гладиатор</option>
+           <option value="fisher">Рыбак</option>
+           <option value="miner">Шахтер</option>
+       </select>
+       <p></p>
    </form>
 	<label class="buttonclass">	
 		<div class="button" id="exportButton">Экспорт настроек в файл</div>

@@ -257,6 +257,8 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		var oldChatHTML = chat.html;
 		var oldPrintMessage = messenger.PrintMessage;
 		var keeperName = 'Смотритель';
+        var reminderName = 'Напоминание';
+
 		var brokenItems = {
 			time: 0,
 			text: '',
@@ -349,7 +351,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				_text = modifySectors(_text);
 			}
 
-			if (erExtOptions.chatOtherUsersMessageColor && _nick != keeperName && _nick != user.name) {
+			if (erExtOptions.chatOtherUsersMessageColor && _nick != keeperName && _nick != user.name && _nick != reminderName) {
 				_color = chat.chatMsgColor;
 			}
 			
@@ -725,8 +727,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			this.init = function() {
 				self.preparePhrases();
 				self.initPraseKey();
-
-				//self.runTimer();
+				self.runTimer();
 			}
 			this.initPraseKey = function() {
 				var key = localStorage["chat_trade_flooder_key"];
@@ -742,16 +743,14 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				if (self.phrases.length == 0) {
 					return;
 				}
-				
+
 				setInterval(function() {
 					chat.send("/ch/", {
 						action: "post",
-						p_type: CHAT_FLAG_PRIVATE,
-						p_text: urlencode('[Смотритель] ' + self.getPrase())
+						p_type: CHAT_FLAG_TRADE,
+						p_text: self.getPrase()
 					});
-					
-					console.log(new Date().toString());
-				}, 60000);
+				}, 1000 * 60 * 10);
 			}
 			
 			this.getPrase = function() {
@@ -771,26 +770,34 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				var phrases = erExtSystemOptions.trade_flooder_phrases.split("|");
 				
 				for (i in phrases) {
-					var phrase = phrases[i].trim().slice(0, 250);
+					var phrase = phrases[i].trim().slice(0, 249);
 					
 					if (phrase.length > 0) {
 						self.phrases.push(phrase);
 					}
 				}
-				
 			}
 		}
 		
 		$(document).ready(function() {
 			setTimeout(function() {
-				if (parseInt(user.c_id, 10) <= 10 && parseInt(user.c_id, 10) > 0) {
-					new erExtSPToolsClass().init();
+                var isSp = parseInt(user.c_id, 10) <= 10 && parseInt(user.c_id, 10) > 0;
 
-					new chatModifierClass().init();
-					
-					new chatTradeFlooderClass().init();
+                if (erExtOptions.alternative_chat_send ||
+                    erExtOptions.trade_flooder_active ||
+                    (isSp && erExtOptions.sp_extendable_shutup)) {
+                    new chatModifierClass().init();
+                }
+
+				if (isSp && erExtOptions.sp_extendable_shutup) {
+					new erExtSPToolsClass().init();
 				}
-			}, 1000);
+
+                if (erExtOptions.trade_flooder_active) {
+                    new chatTradeFlooderClass().init();
+                }
+
+			}, 1500);
 		});
 
 		if (erExtOptions.forumgoto) {			
