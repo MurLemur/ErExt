@@ -316,6 +316,10 @@ var script_map_trace = "(" +
 			}
 			
 			this.clearOverlay = function(mapID) {
+				if (typeof self.maps[mapID] == 'undefined') {
+					return;
+				}
+				
 				self.maps[mapID]['footsteps'] = {};
 				
 				if (typeof self.maps[mapID]['overlay'] != 'undefined') {

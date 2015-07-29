@@ -1,63 +1,67 @@
 {
   "content_scripts": [
-	"content.main.js", 
-	"content.info.js", 
-	"content.estate.js",
-	"content.core.js", 
-	"content.move.js",		
-	"content.common.js",
-  "mur_contents/content.taverna.js",
-  "mur_contents/lottery/content.lottery-zk.js",
-  "mur_contents/lottery/content.lottery-er.js",
-  "mur_contents/lottery/content.lottery-er-filltickets.js",
-	"mur_contents/services/content.sidzoku.js",
-	"mur_contents/services/content.efimerka.js",
-	"mur_contents/trade/content.trade-sell.js",
-	"mur_contents/trade/content.trade-buy.js",
-	"mur_contents/content.global-event-report.js",
-  "mur_contents/content.polyana.js",
-  "mur_contents/content.oplot.js",
-  "mur_contents/content.sanctions.js",
-  "mur_contents/content.altar.js",
-  "mur_contents/content.forum.js",
-  "mur_contents/content.clan.js",
-  "mur_contents/order/lhd/content.sessions.js",
-  "mur_contents/order/lhd/content.trade-transfer.js",
-  "mur_contents/order/lhd/content.ip-search.js",
-  "mur_contents/order/lhd/content.uid-search.js",
-  "mur_contents/order/lhd/content.cross-sessions2.js"
-  ], 
-  "description": "Extension for EReality.ru", 
+    "content.main.js",
+    "content.info.js",
+    "content.estate.js",
+    "content.core.js",
+    "content.move.js",
+    "content.common.js",
+    "mur_contents/content.taverna.js",
+    "mur_contents/lottery/content.lottery-zk.js",
+    "mur_contents/lottery/content.lottery-er.js",
+    "mur_contents/lottery/content.lottery-er-filltickets.js",
+    "mur_contents/services/content.sidzoku.js",
+    "mur_contents/services/content.efimerka.js",
+    "mur_contents/trade/content.trade-sell.js",
+    "mur_contents/trade/content.trade-buy.js",
+    "mur_contents/content.global-event-report.js",
+    "mur_contents/content.polyana.js",
+    "mur_contents/content.oplot.js",
+    "mur_contents/content.sanctions.js",
+    "mur_contents/content.altar.js",
+    "mur_contents/content.forum.js",
+    "mur_contents/content.clan.js",
+    "mur_contents/order/lhd/content.sessions.js",
+    "mur_contents/order/lhd/content.trade-transfer.js",
+    "mur_contents/order/lhd/content.ip-search.js",
+    "mur_contents/order/lhd/content.uid-search.js",
+    "mur_contents/order/lhd/content.cross-sessions2.js",
+    "mur_contents/forum/content.forum-topic.js",
+    "mur_contents/forum/content.forum-forum.js",
+    "mur_contents/forum/content.forum-category.js",
+    "mur_contents/forum/content.forum-all.js"
+  ],
+  "description": "Extension for EReality.ru",
   "creator": "MurLemur",
-  "background_scripts": [ 
+  "background_scripts": [
     "tools/jquery.js",
     "user/active-items/active-items.js",
-	  "tools/messaging-enum.js",
-    "main.js", 
+    "tools/messaging-enum.js",
+    "main.js",
     "user/active-items/background.user-active-items.js"
-  ], 
-  "homepage_url": "http://forum.ereality.ru/topic176876/page1.html", 
-  "version": "1.0.15", 
+  ],
+  "homepage_url": "http://forum.ereality.ru/topic176876/page1.html",
+  "version": "1.0.16",
   "name": "EReality Extension",
   "browser_button": {
-		"caption": "Открыть меню", 
-		"icon": "icons/button.png", 
-		"tooltipText": "Открыть меню",
-		"popup": {
-            "url": "button/popup.html",
-            "width": 270,
-            "height": 200
-	     }
-	},
-    "permissions": {
-        "notifications": true,
-        "content_scripts": [
-        "http://www.ereality.ru/*",
-        "http://forum.ereality.ru/*page*.html",
-        "http://gosov.net/lotery.html",
-        "http://*.com/efimerka/",
-        "http://sidzoku.ru/landlord/"
-        ]
-     },
+    "caption": "Открыть меню",
+    "icon": "icons/button.png",
+    "tooltipText": "Открыть меню",
+    "popup": {
+      "url": "button/popup.html",
+      "width": 270,
+      "height": 200
+    }
+  },
+  "permissions": {
+    "notifications": true,
+    "content_scripts": [
+      "http://www.ereality.ru/*",
+      "http://forum.ereality.ru/*",
+      "http://gosov.net/lotery.html",
+      "http://*.com/efimerka/",
+      "http://sidzoku.ru/landlord/"
+    ]
+  },
   "options_page": "options.html"
 }
