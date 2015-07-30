@@ -218,6 +218,8 @@ var script_set_autowear = "(" +
             this.notifyAboutWearing = function(mapID) {
                 self.chat.html(0, "1", "0", self.clock.timeStr(), "Смотритель", self.user.name,  "666666",
                     "Комплект <b>" + self.setsMap[mapID]['setName'] + "</b> одет!  :240: ");
+
+                self.chat.scrollDown();
             }
 
             this.wearSet = function(mapID) {
