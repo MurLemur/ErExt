@@ -6,7 +6,7 @@ var IgnoreToolsClass = function(ignoreList) {
         "gusid": {
             name: "Гусид",
             img: "res/gusid.png",
-            comment: "Я злой гусид!"
+            comment: "Gusatrix has you!"
         },
         "invis": {
             name: "Анонимус",

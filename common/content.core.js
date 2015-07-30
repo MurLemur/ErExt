@@ -9,6 +9,7 @@
 // @require     scripts/core_battle_counter.js
 // @require     scripts/core_inventory.js
 // @require     scripts/core_golosovalka.js
+// @require     scripts/core_set_autowear.js
 // @all-frames  false
 // ==/UserScript==
 
@@ -1083,6 +1084,10 @@ if (myoptions.keyalt) {
 		if (myoptions.inventory) {
 			script += script_inventory.replace("inv_union.png", kango.io.getResourceUrl("res/inv_union.png")).replace("inv_union_bg.png", kango.io.getResourceUrl("res/inv_union_bg.png"));
 		}
+
+        if (myoptions.sets_autowear) {
+            script += script_set_autowear;
+        }
 
 		// Работа со звуковыми оповещениями
 		if (myoptions.no_flash) {
