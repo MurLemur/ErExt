@@ -9,7 +9,6 @@ var script_set_autowear = "(" +
             this.chat = chat;
             this.heroPanel = heroPanel;
 
-            this.currentMap = null;
             this.currentSetID = null;
 
             this.setsSelect = null;
@@ -39,21 +38,24 @@ var script_set_autowear = "(" +
                 'aliens': {
                     'setId': 0,
                     'setName': ''
+                },
+                'mine' : {
+                    'setId': 0,
+                    'setName': ''
                 }
             }
-
 
             this.ilands = {
                 "ovl": "Остров Весеннего Листа",
                 "opp": "Остров Покинутых Песков",
                 "to": "Темный остров",
                 "ok": "Остров Крови",
-                "aliens": "Остров Альёнов"
+                "aliens": "Остров Альёнов",
+                "mine": "Подземный мир"
             };
 
             this.init = function() {
                 self.loadFromStorage();
-                self.loadCurrentMapID();
                 self.loadCurrentSetID();
 
                 self.initShowSetsForm();
@@ -89,6 +91,9 @@ var script_set_autowear = "(" +
                 if (typeof localStorage['ErExtSetMaps'] != 'undefined') {
                     self.setsMap = JSON.parse(localStorage['ErExtSetMaps']);
                     self.setsBuff = JSON.parse(localStorage['ErExtSetMaps']);
+                }
+                else {
+                    self.setsMap = JSON.parse(JSON.stringify(self.setsBuff));
                 }
             }
 
@@ -196,26 +201,9 @@ var script_set_autowear = "(" +
                     return;
                 }
 
-                self.changeCurrentMapID(mapID);
-
                 if (self.wearSet(mapID)) {
                     self.notifyAboutWearing(mapID);
                 }
-            }
-
-            this.changeCurrentMapID = function(mapID) {
-                self.currentMap = mapID;
-
-                localStorage['ErExtSetCurrentMapID'] = mapID;
-            }
-
-            this.loadCurrentMapID = function() {
-                if (typeof localStorage['ErExtSetCurrentMapID'] != 'undefined') {
-                    self.currentMap = localStorage['ErExtSetCurrentMapID'];
-                    return;
-                }
-
-                self.currentMap = null;
             }
 
             this.loadCurrentSetID = function() {
@@ -253,6 +241,8 @@ var script_set_autowear = "(" +
                     mapID = 'ok';
                 } else if (self.user.place2 == 1) {
                     mapID = 'ovl';
+                } else if (self.user.place2 == 2) {
+                    mapID = 'mine';
                 } else if (self.user.place2 == 3) {
                     mapID = 'opp';
                 } else if (self.user.place2 == 14) {
@@ -265,7 +255,7 @@ var script_set_autowear = "(" +
             }
 
             this.isSetNeedToWear = function(mapID) {
-                return self.currentMap != mapID || self.setsMap[mapID]['setId'] != self.currentSetID;
+                return self.setsMap[mapID]['setId'] != self.currentSetID;
             }
         }
 
