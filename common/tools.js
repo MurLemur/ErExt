@@ -96,7 +96,8 @@ var defaultConfig = {
 		'sp_shut_up_panel_background_color': false,
         'trade_flooder_active': false,
         'alternative_chat_send': false,
-        'forum_ignore': true
+        'forum_ignore': true,
+        'sets_autowear': false
 	},
 	
 	systemOptions: {
