@@ -871,6 +871,31 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				}
 			}
 		}
+
+        if (core.mur_soundOptions['sound_battle_skip_turn']['sound'] != 'nosound') {
+            var OldBattleXmlProc = battle.xmlProc;
+
+            battle.xmlProc = function (XML) {
+                OldBattleXmlProc.apply(battle, [XML]);
+
+                try {
+                    var responseLogs = $(XML.getElementsByTagName("response")).find('logs');
+                    if (responseLogs.attr('uid') == battle.round) {
+                        responseLogs.find('skip').each(function () {
+                            var p1 = $(this).attr('p1').split(';');
+
+                            if (p1[0] == user.name) {
+                                core.playSwfSound(core.mur_soundOptions['sound_battle_skip_turn']['sound']);
+                            }
+                        });
+                    }
+                } catch (e) {
+                }
+
+            }
+        }
+
+
 		
 	}).toString();
 	

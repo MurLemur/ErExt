@@ -227,7 +227,11 @@ var defaultConfig = {
 		"sound_100": {
 			sound: "nosound",
 			detect: ""
-		}								
+		},
+        "sound_battle_skip_turn": {
+            sound: "nosound",
+            detect: ""
+        }
 	},
 	estateVictims: {},
     forumIgnore: {}
