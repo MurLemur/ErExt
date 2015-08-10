@@ -87,6 +87,7 @@ core.mur_timer.init = function() {
 							core.mur_timer.pet_eggs = 0;
 							$.each(jsondata.response.pets, function() { if (this.type==0) core.mur_timer.pet_eggs++});
 							var time = new Date();
+							if (timer==0) timer=60;
 							core.mur_timer.pet_timer.setTime(time.getTime() + timer * 1000);
 							core.mur_timer.main();
 						}
@@ -160,6 +161,8 @@ core.mur_timer.pet_getinfo = function() {
 			core.mur_timer.pet_eggs = 0;
 			$.each(jsondata.response.pets, function() { if (this.type==0) core.mur_timer.pet_eggs++});
 			var time = new Date();
+			if (timer_egg==0) timer_egg=60*24;
+			if (timer==0) timer=60;
 			core.mur_timer.pet_timer.setTime(time.getTime() + timer * 1000);
 			core.mur_timer.pet_timer_egg.setTime(time.getTime() + timer_egg * 1000);
 
@@ -324,7 +327,7 @@ core.mur_timer.init();
 	$(document.body.lastChild).after($(htmlmenu));
 	$(".ext_countdown").contextMenu("m_mur_timer",{});
 
-setTimeout(function () {core.mur_timer.main();}, 100);
+setTimeout(function () {core.mur_timer.main();}, 300);
 setInterval(function () {core.mur_timer.main();}, 10000);
 
 }).toString()
