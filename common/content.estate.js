@@ -92,6 +92,21 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		}).toString() + ")();";
 	}
 
+	//Инфа по экспедициям вверх тормашками.
+	if (myoptions.expedition_estate) {
+		script = script + "(" +
+			(function() {
+				Estates.getExpeditionTitle = function() {
+					for (var title = " - ", i = this.expeditions.length - 1; i >= 0; i--)(this.expeditions.length - 1) != i && (title += "<br />"), title += this.expeditions[i].timeRemain > 0 ? "- до завершения " + this.sysTimeToStr(this.expeditions[i].timeRemain) + ", используется население: " + this.expeditions[i].population : "- экспедиция завершена, используется население: " + this.expeditions[i].population;
+					title += "<br><b>Всего экспедиций: " + this.expeditions.length + "</b>";
+					return title
+				}
+				$(document).ready(function() {
+						Estates.updateExpeditionTitle();
+					});
+			}).toString() + ")();";
+	}
+
 	inject_global(script);
 
 

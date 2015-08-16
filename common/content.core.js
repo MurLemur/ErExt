@@ -932,7 +932,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 	var zxzx6=core.onKeyDown;
 	core.onKeyDown=function(event){
 	event=(window.event||event);
-	if ((event.keyCode==13)&&(battle.bstatus==0)&&((document.getElementById("chat_msg").value != "" ))) { return}
+	if ((event.keyCode==13)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
 	else
 		{var myrezult=zxzx6.apply(core,arguments);
 	     return myrezult}
@@ -940,7 +940,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 	var zxzx7=core.onKeyUp;
 	core.onKeyUp=function(event){
 	event=(window.event||event);
-	if ((event.keyCode==13)&&(battle.bstatus==0)&&((document.getElementById("chat_msg").value != "" ))) { return}
+	if ((event.keyCode==13)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
 	else
 		{var myrezult=zxzx7.apply(core,arguments);
 	     return myrezult}
@@ -1059,7 +1059,7 @@ if (myoptions.keyalt) {
 					var old_onKeyUp = core.onKeyUp;
 					core.onKeyUp = function(event) {
 						event = (window.event || event);
-							if ((event.keyCode == 192 || event.key=="ё") && (battle.bstatus == 0)) {
+							if ((event.keyCode == 192 || event.key=="ё") && (battle.bstatus == 0) && (document.getElementById("chat_msg").value == "" )) {
 							$.each(battle.players, function(index, val) {
 								if (val.id == user.id) {
 									if (val.y == 1) battle.make_move({

@@ -71,6 +71,22 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			script=script.replace("end_mark","").replace("begin_mark","");
 		}
 
+		//копирование инфы о ботах на секторе в чат по пкм
+		if (myoptions.location_bot_info) {
+			script += "(" +
+				(function() {
+					$("li", "div.MonstersOnTheMapContainer").on("contextmenu", function() {
+						$("#chat_msg", top.document).val("");
+						Map.reportBots()
+					})
+					$("li", "div.MonstersOnTheMapContainer").each(function() {
+						this.oncontextmenu = function() {
+							return false
+						};
+					})
+
+				}).toString() + ")();";
+		}
 			inject_global(script);
 		
 	});

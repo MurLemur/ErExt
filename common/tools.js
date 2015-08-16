@@ -97,7 +97,10 @@ var defaultConfig = {
         'trade_flooder_active': false,
         'alternative_chat_send': false,
         'forum_ignore': true,
-        'sets_autowear': false
+        'sets_autowear': false,
+        'trade_bookmarks':true,
+        'location_bot_info':true,
+        'expedition_estate':true
 	},
 	
 	systemOptions: {
@@ -234,7 +237,8 @@ var defaultConfig = {
         }
 	},
 	estateVictims: {},
-    forumIgnore: {}
+    forumIgnore: {},
+    trade_bookmarks: {}
 }
 
 function mergeOptions(options, defaultOptions) {

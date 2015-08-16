@@ -34,11 +34,8 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			});
 		}).toString();
 	
-		
 		script = "(" + tradeString + ")();";
 		inject_global(script);
 
 	}
-
-	
 });
