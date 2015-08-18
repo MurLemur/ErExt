@@ -26,7 +26,10 @@
 			$('#' + key).val(defaultConfig.systemOptions[key]).on("input",function() {
 				defaultConfig.systemOptions[key] = $(this).val();
 				self.saveOptions("systemOptions", defaultConfig.systemOptions);
-			});
+			}).val(defaultConfig.systemOptions[key]).on("change",function() {
+                defaultConfig.systemOptions[key] = $(this).val();
+                self.saveOptions("systemOptions", defaultConfig.systemOptions);
+            });
 		});
 	};
 	this.prepareOptionButtons = function() {
