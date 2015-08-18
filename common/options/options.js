@@ -359,7 +359,10 @@ KangoAPI.onReady(function() {
         taverna_filters: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/taverna_filters.png",
         sets_autowear: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/set-autowear.png",
         alternative_chat_send: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/alternative_chat_send.png",
-        forum_ignore: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/forum_ignore.png"
+        forum_ignore: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/forum_ignore.png",
+        trade_bookmarks: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/trade_bookmarks.png",
+        location_bot_info: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/location_bot_info.png",
+        expedition_estate: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/expedition_estate.png"
     }
 
 	new extensionOptionsClass(htmlopt).init();

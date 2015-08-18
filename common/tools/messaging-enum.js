@@ -3,5 +3,7 @@ var messagingEnum = {
 	userItemsBackground: "userItemsBackground",
 	userActiveItemsStart: "userActiveItemsStart",
 	lotteryToBackground: "lotteryToBackground",
-	lotteryToContent: "lotteryToContent"
+	lotteryToContent: "lotteryToContent",
+	UndergroundToBackground: "UndergroundToBackground",
+	UndergroundToContent: "UndergroundToContent"
 }

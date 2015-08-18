@@ -8,6 +8,7 @@
 // @include     http://www.ereality.ru/instance*
 // @require     tools.js
 // @require		tools/jquery.js
+// @require     tools/messaging-enum.js
 
 // @require		common/click-detectors/key-maps.js
 // @require		common/click-detectors/detectors-class.js
@@ -122,7 +123,14 @@ if (myoptions.unpaused) {
 			// Отменяем или нет действие браузера
 			return myoptions.no_block_browser_keys;
 		}
-	} 
-	//=========================end.
+			if (myoptions.underground_map) {
+				if (top.frames.main != undefined && top.frames.main.document.getElementById("underground") != null) {
+					kango.dispatchMessage(messagingEnum.UndergroundToBackground, top.document.getElementById("span_location").innerHTML.replace("Сектор (", "").replace(")", ""));
+				}
+			} 
+
+}			
+//=========================end.
+
 } 
  }); 

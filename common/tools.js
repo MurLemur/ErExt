@@ -100,7 +100,8 @@ var defaultConfig = {
         'sets_autowear': false,
         'trade_bookmarks':true,
         'location_bot_info':true,
-        'expedition_estate':true
+        'expedition_estate':true,
+        'underground_map':true
 	},
 	
 	systemOptions: {

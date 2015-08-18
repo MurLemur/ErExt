@@ -150,6 +150,10 @@ var ContextMenus = [{
 		itemimg: "http://img.ereality.ru/clan/191.gif",
 		itemlink: "http://gosov.net/services/mine.php"
 	},{
+		itemdescription: "Карта шахт",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://er-help.ru/scripts/map_shaxt.php"
+	},{
 		itemdescription: "Ресурсы в шахтах",
 		itemimg: "http://img.ereality.ru/clan/292.gif",
 		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/16.php"

@@ -143,6 +143,5 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 			inject_global(script1);
 		}
-
 //=========================end.
 });

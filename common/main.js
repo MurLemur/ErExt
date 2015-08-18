@@ -43,7 +43,7 @@ var details = {
 kango.xhr.send(details, function(data) {
   if (data.status == 200 && data.response != null) {
     var text = data.response;
-    if (+text > 15) {
+    if (+text > 16) {
       kango.ui.browserButton.setIcon('icons/grumpy.png');
       if (opt.startup_update_notification != false) {
         try {
@@ -64,7 +64,15 @@ kango.xhr.send(details, function(data) {
 kango.addMessageListener(messagingEnum.lotteryToBackground, function(event) {
   kango.browser.tabs.getAll(function(tabs) {
     $.each(tabs, function() {
-       if (this.getUrl().search("http://www.ereality.ru/core") != -1) this.dispatchMessage(messagingEnum.lotteryToContent, event.data);
-       });
+      if (this.getUrl().search("http://www.ereality.ru/core") != -1) this.dispatchMessage(messagingEnum.lotteryToContent, event.data);
+    });
+  });
+});
+
+kango.addMessageListener(messagingEnum.UndergroundToBackground, function(event) {
+  kango.browser.tabs.getAll(function(tabs) {
+    $.each(tabs, function() {
+      if (this.getUrl().search("http://er-help.ru/scripts/map_shaxt.php") != -1) this.dispatchMessage(messagingEnum.UndergroundToContent, event.data);
+    });
   });
 });

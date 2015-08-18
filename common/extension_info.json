@@ -22,6 +22,7 @@
     "mur_contents/content.altar.js",
     "mur_contents/content.forum.js",
     "mur_contents/content.clan.js",
+    "mur_contents/content.underground-map.js",
     "mur_contents/order/lhd/content.sessions.js",
     "mur_contents/order/lhd/content.trade-transfer.js",
     "mur_contents/order/lhd/content.ip-search.js",
@@ -61,7 +62,9 @@
       "http://forum.ereality.ru/*",
       "http://gosov.net/lotery.html",
       "http://*.com/efimerka/",
-      "http://sidzoku.ru/landlord/"
+      "http://sidzoku.ru/landlord/",
+      "http://order.ereality.ru/*",
+      "http://er-help.ru/scripts/map_shaxt*"
     ]
   },
   "options_page": "options.html"
