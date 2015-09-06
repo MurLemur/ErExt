@@ -36,27 +36,34 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		return;
 	}
 
-	var userName = $("#char_frm input[name=echar]").val();
-	var serviceRequestSender = new serviceRequestSenderClass();
+	function init_info() {
+		var userName = $("#char_frm input[name=echar]").val();
+		if (userName==undefined) {
+			setTimeout(init_info,20);
+			return;
+		}
+		var serviceRequestSender = new serviceRequestSenderClass();
 
-	// init service buttons
-	new serviceButtonBuilderClass(mergedOptions, userName, serviceRequestSender, infoButtonsCss).init();
+		// init service buttons
+		new serviceButtonBuilderClass(mergedOptions, userName, serviceRequestSender, infoButtonsCss).init();
 
-	$(".slotsInfoNew").after($("<br />"));
+		$(".slotsInfoNew").after($("<br />"));
 
-	// init estates 
-	new estatesBuilderClass(mergedOptions, userName).init();
+		// init estates 
+		new estatesBuilderClass(mergedOptions, userName).init();
 
-	// init context menus
-	if (mergedOptions.contextmenus) {
-		new ContexMenusBuilderClass(ContextMenus).init();
-	}
-	
-	$(document).ready(function() {
-		// init dragon schedule
-		if (mergedOptions.dragon_time) {
-			new dragonsScheduleClass(serviceRequestSender).init();
+		// init context menus
+		if (mergedOptions.contextmenus) {
+			new ContexMenusBuilderClass(ContextMenus).init();
 		}
 
-	});
+		$(document).ready(function() {
+			// init dragon schedule
+			if (mergedOptions.dragon_time) {
+				new dragonsScheduleClass(serviceRequestSender).init();
+			}
+
+		});
+	}
+	init_info();
 });

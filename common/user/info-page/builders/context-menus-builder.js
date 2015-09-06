@@ -5,7 +5,10 @@ var ContexMenusBuilderClass = function(ContextMenus) {
 	this.init = function() {
 
 		$.each(ContextMenus, function(key, menu) {
-			script += '$("img[src*=' + menu["target"] + ']").contextMenu("' + menu["menuname"] + '",{});'
+
+			script_prepare = '$("img[src*=' + menu["target"] + ']").contextMenu("' + menu["menuname"] + '",{});';
+			if (menu["target"].search("pro")>0) script += script_prepare.replace("contextMenu","parent().contextMenu");
+			else script += script_prepare;
 			html += '' +
 				'<div class="contextMenu" id="' + menu["menuname"] + '" style="visibility: hidden;position:absolute;">' +
 				'<ul class="textM">'

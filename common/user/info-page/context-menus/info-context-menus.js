@@ -1,5 +1,5 @@
 var ContextMenus = [{
-	target: "p1_",
+	target: "p\\\\/pro\\\\/1_",
 	menuname: "m_hunter",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -15,7 +15,7 @@ var ContextMenus = [{
 		itemlink: "http://http://gosov.net/hunter.html"
 	}]
 }, {
-	target: "p15_",
+	target: "p\\\\/pro\\\\/15_",
 	menuname: "m_zaklinatel",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -39,7 +39,7 @@ var ContextMenus = [{
 		itemlink: "http://forum.ereality.ru/topic72154/page1.html#post1485425"
 	}]
 }, {
-	target: "p11_",
+	target: "p\\\\/pro\\\\/11_",
 	menuname: "m_lesorub",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -63,7 +63,7 @@ var ContextMenus = [{
 		itemlink: "http://order.ereality.ru/articles.php?article_id=397"
 	}]
 }, {
-	target: "p12_",
+	target: "p\\\\/pro\\\\/12_",
 	menuname: "m_plotnik",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -87,7 +87,7 @@ var ContextMenus = [{
 		itemlink: "http://gosov.net/plotnik.html"
 	}]
 }, {
-	target: "p4_",
+	target: "p\\\\/pro\\\\/4_",
 	menuname: "m_fisherman",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -103,7 +103,7 @@ var ContextMenus = [{
 		itemlink: "http://gosov.net/fishman.html"
 	}]
 }, {
-	target: "p5_",
+	target: "p\\\\/pro\\\\/5_",
 	menuname: "m_cook",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -131,7 +131,7 @@ var ContextMenus = [{
 		itemlink: "http://gosov.net/povar.html"
 	}]
 }, {
-	target: "p8_",
+	target: "p\\\\/pro\\\\/8_",
 	menuname: "m_collier",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -167,7 +167,7 @@ var ContextMenus = [{
 		itemlink: "http://order.ereality.ru/articles.php?article_id=201#shaht"
 	}]
 }, {
-	target: "p6_",
+	target: "p\\\\/pro\\\\/6_",
 	menuname: "m_digger",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -187,7 +187,7 @@ var ContextMenus = [{
 		itemlink: "http://order.ereality.ru/articles.php?article_id=201#zeml"
 	}]
 }, {
-	target: "p7_",
+	target: "p\\\\/pro\\\\/7_",
 	menuname: "m_builder",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -207,7 +207,7 @@ var ContextMenus = [{
 		itemlink: "http://order.ereality.ru/articles.php?article_id=201#stroj"
 	}]
 }, {
-	target: "p10_",
+	target: "p\\\\/pro\\\\/10_",
 	menuname: "m_metall",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -243,7 +243,7 @@ var ContextMenus = [{
 		itemlink: "http://order.ereality.ru/articles.php?article_id=16"
 	}]
 }, {
-	target: "p3_",
+	target: "p\\\\/pro\\\\/3_",
 	menuname: "m_remeslo",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -267,7 +267,7 @@ var ContextMenus = [{
 		itemlink: "http://order.ereality.ru/articles.php?article_id=325"
 	}]
 }, {
-	target: "p13_",
+	target: "p\\\\/pro\\\\/13_",
 	menuname: "m_kydesnik",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -295,7 +295,7 @@ var ContextMenus = [{
 		itemlink: "http://order.ereality.ru/articles.php?article_id=369"
 	}]
 }, {
-	target: "p9_",
+	target: "p\\\\/pro\\\\/9_",
 	menuname: "m_trapper",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -319,7 +319,7 @@ var ContextMenus = [{
 		itemlink: "http://order.ereality.ru/articles.php?article_id=46"
 	}]
 }, {
-	target: "p2_",
+	target: "p\\\\/pro\\\\/2_",
 	menuname: "m_priest",
 	menuitems: [{
 		itemdescription: "Рейтинг",
@@ -352,7 +352,7 @@ var ContextMenus = [{
 		itemlink: "http://order.ereality.ru/articles.php?article_id=411"
 	}]
 }, {
-	target: "p14_",
+	target: "p\\\\/pro\\\\/14_",
 	menuname: "m_armourer",
 	menuitems: [{
 		itemdescription: "Рейтинг",
