@@ -94,6 +94,7 @@ var defaultConfig = {
 		'sp_context_link': false,
 		'sp_chat_shut_up': false,
 		'sp_shut_up_panel_background_color': false,
+        'sp_shut_up_panel_links_giver': true,
         'trade_flooder_active': false,
         'alternative_chat_send': false,
         'forum_ignore': true,
@@ -101,7 +102,8 @@ var defaultConfig = {
         'trade_bookmarks':true,
         'location_bot_info':true,
         'expedition_estate':true,
-        'underground_map':true
+        'underground_map':true,
+        'turquoise_grid': true
 	},
 	
 	systemOptions: {

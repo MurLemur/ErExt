@@ -10,6 +10,7 @@
 // @require     scripts/core_inventory.js
 // @require     scripts/core_golosovalka.js
 // @require     scripts/core_set_autowear.js
+// @require     scripts/core_turquoise_grid.js
 // @all-frames  false
 // ==/UserScript==
 
@@ -479,7 +480,10 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				self.erExtSpPanel.find('select[name=min]').parent().append($('<label>Рец.</label>').prepend(self.erExtSpPanelRez));			
 				var panelButtonsSet = self.erExtSpPanel.parent().find('.ui-dialog-buttonset').find('.ui-button-text:contains(\'Личные дела\')').parent().parent();
 				
-				panelButtonsSet.append('<br/>').append(self.erExtSpPanelWarnButton).append(self.erExtSpPanelGiveLink);
+				panelButtonsSet.append('<br/>').append(self.erExtSpPanelWarnButton);
+                if (erExtOptions.sp_shut_up_panel_links_giver) {
+                    panelButtonsSet.append(self.erExtSpPanelGiveLink);
+                }
 				
 				if (erExtOptions.sp_shut_up_panel_background_color) {
 					self.erExtSpPanel.css({"background-color": erExtSystemOptions.shutUpBgColor});
@@ -568,29 +572,32 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 					});
 					
 				});
-				
-				self.erExtSpPanelRez.on("change", function() {
-					if (self.erExtSpPanelNameQreas.val() > -1) {
-						self.erExtSpPanelNameRes.val(self.erExtSpPanelNameQreas.find('option:selected').text() + ' [Рецидив]');
-						self.erExtSpPanelNameQreas.val(-1);
-					}
-				});
-				
-				self.erExtSpPanelGiveLink.on('click', function() {
-					var userName = self.erExtSpPanelHeroInput.val();
-					var link = self.erExtSpPanelLinkSelect.val();
-					var title = self.erExtSpPanelLinkSelect.find(":selected").text();
-					
-					if (userName == "" || link == "") {
-						return;
-					}
-					
-					chat.send("/ch/", {
-						action: "post",
-						p_type: chat.flag,
-						p_text: urlencode('[' + userName + '] ' + title + ": "+ link)
-					});
-				});
+
+                self.erExtSpPanelRez.on("change", function () {
+                    if (self.erExtSpPanelNameQreas.val() > -1) {
+                        self.erExtSpPanelNameRes.val(self.erExtSpPanelNameQreas.find('option:selected').text() + ' [Рецидив]');
+                        self.erExtSpPanelNameQreas.val(-1);
+                    }
+                });
+
+
+                if (erExtOptions.sp_shut_up_panel_links_giver) {
+                    self.erExtSpPanelGiveLink.on('click', function () {
+                        var userName = self.erExtSpPanelHeroInput.val();
+                        var link = self.erExtSpPanelLinkSelect.val();
+                        var title = self.erExtSpPanelLinkSelect.find(":selected").text();
+
+                        if (userName == "" || link == "") {
+                            return;
+                        }
+
+                        chat.send("/ch/", {
+                            action: "post",
+                            p_type: chat.flag,
+                            p_text: urlencode('[' + userName + '] ' + title + ": " + link)
+                        });
+                    });
+                }
 			};	
 
 			this.initSPMenuChat = function() {
@@ -1113,6 +1120,10 @@ if (myoptions.keyalt) {
 
         if (myoptions.sets_autowear) {
             script += script_set_autowear;
+        }
+
+        if (myoptions.turquoise_grid) {
+            script += script_turquoise_grid.replace("turquoise_grid", kango.io.getResourceUrl("res/turquoise_grid"));
         }
 
 		// Работа со звуковыми оповещениями
