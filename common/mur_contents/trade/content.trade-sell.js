@@ -26,7 +26,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	}
 
 	if (myoptions.taverna_filters && (location.href.search("mode=sell") != -1) && top.document.getElementById("span_location").text == "Таверна") {
-		var m_filters = ["Жизни", "Энергия", "Мана", "Точность", "Уворот", "Сокрушение", "Стойкость", "Уворот", "ОД"];
+		var m_filters = ["Жизни", "Энергия", "Мана", "Точность", "Уворот", "Сокрушение", "Стойкость", "ОД"];
 
 
 		top.main.$("#div_bhtml").before($("<center><b>Фильтры:</b></center>"))

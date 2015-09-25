@@ -53,6 +53,10 @@ var ContextMenus = [{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/40.gif",
 		itemlink: "http://sp.erclans.ru/evgeska_prof.php?calc=lesorub"
+	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/112.php"
 	}, {
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/191.gif",
@@ -93,6 +97,10 @@ var ContextMenus = [{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro4_p1.html"
+	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/146.php"
 	},{
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/1.gif",
@@ -378,6 +386,30 @@ var ContextMenus = [{
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/1.gif",
 		itemlink: "http://order.ereality.ru/articles.php?article_id=188"
+	}]
+}, {
+	target: "p\\\\/pro\\\\/16_",
+	menuname: "m_geolog",
+	menuitems: [{
+		itemdescription: "Рейтинг",
+		itemimg: "http://www.ereality.ru/favicon.ico",
+		itemlink: "http://ratings.ereality.ru/pro16_p1.html"
+	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/137.php"
+	}]
+},{
+	target: "p\\\\/pro\\\\/17_",
+	menuname: "m_juvelir",
+	menuitems: [{
+		itemdescription: "Рейтинг",
+		itemimg: "http://www.ereality.ru/favicon.ico",
+		itemlink: "http://ratings.ereality.ru/pro17_p1.html"
+	},{
+		itemdescription: "Калькулятор",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/138.php"
 	}]
 },{
 	target: "aliens_",
