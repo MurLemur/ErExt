@@ -42,6 +42,18 @@ var script_set_autowear = "(" +
                 'mine' : {
                     'setId': 0,
                     'setName': ''
+                },
+                'fogcity' : {
+                    'setId': 0,
+                    'setName': ''
+                },
+                "ctournament":  {
+                    'setId': 0,
+                    'setName': ''
+                },
+                "seatrip":  {
+                    'setId': 0,
+                    'setName': ''
                 }
             }
 
@@ -51,7 +63,10 @@ var script_set_autowear = "(" +
                 "to": "Темный остров",
                 "ok": "Остров Крови",
                 "aliens": "Остров Альёнов",
-                "mine": "Подземный мир"
+                "mine": "Подземный мир",
+                "fogcity": "Туманный город",
+                "ctournament": "Клановый турнир",
+                "seatrip": "Морские путешествия"
             };
 
             this.init = function() {
@@ -89,8 +104,8 @@ var script_set_autowear = "(" +
 
             this.loadFromStorage = function() {
                 if (typeof localStorage['ErExtSetMaps'] != 'undefined') {
-                    self.setsMap = JSON.parse(localStorage['ErExtSetMaps']);
-                    self.setsBuff = JSON.parse(localStorage['ErExtSetMaps']);
+                    self.setsMap = self.mergeIslandData(self.setsBuff, JSON.parse(localStorage['ErExtSetMaps']));
+                    self.setsBuff = self.mergeIslandData(self.setsBuff,JSON.parse(localStorage['ErExtSetMaps']));
                 }
                 else {
                     self.setsMap = JSON.parse(JSON.stringify(self.setsBuff));
@@ -175,6 +190,21 @@ var script_set_autowear = "(" +
                 self.setsSelect.val(setID);
             }
 
+            this.mergeIslandData = function(defaultIsland, customIslands) {
+                var merged = {};
+
+                for (i in defaultIsland) {
+                    if (typeof customIslands[i] == 'undefined') {
+                        merged[i] = defaultIsland[i];
+                    }
+                    else {
+                        merged[i] = customIslands[i];
+                    }
+                }
+
+                return merged;
+            }
+
             this.removeFromSetForSetMap = function(setId) {
                 for (var i in self.setsMap) {
                     if (self.setsMap[i]['setId'] == setId) {
@@ -217,7 +247,7 @@ var script_set_autowear = "(" +
 
             this.notifyAboutWearing = function(mapID) {
                 self.chat.html(0, "1", "0", self.clock.timeStr(), "Смотритель", self.user.name,  "666666",
-                    "Комплект <b>" + self.setsMap[mapID]['setName'] + "</b> одет!  :240: ");
+                    "Комплект <b>" + self.setsMap[mapID]['setName'] + "</b> надет!  :240: ");
 
                 self.chat.scrollDown();
             }
@@ -249,8 +279,15 @@ var script_set_autowear = "(" +
                     mapID = 'opp';
                 } else if (self.user.place2 == 14) {
                     mapID = 'to';
-                } else if ((self.user.place2 > 19 && self.user.place2 < 100)  || (self.user.place2 > 199 && self.user.place2 < 310)) {
+                }
+                else if (self.user.place2 >= 25 && self.user.place2 <= 27) {
+                    mapID = 'seatrip';
+                } else if (self.user.place2 > 199 && self.user.place2 <= 310) {
                     mapID = 'aliens';
+                } else if (self.user.place2 == 0) {
+                    mapID = 'fogcity';
+                } else if (self.user.place2 >= 125 && self.user.place2 <= 186) {
+                    mapID = 'ctournament';
                 }
 
                 return mapID;
