@@ -131,7 +131,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 				$.each($("table[id^=tbl] td[colspan=4] b"), function(index, elem) {
 					var item_name = elem.innerHTML;
 					if (item_name != "Сломано") {
-						link = '<a  title="Искать на бирже"  href="http://order.ereality.ru/viewpage.php?page_id=42&search=' + item_name.replace("(", "").replace(")", "") +
+						link = '<a  title="Искать на бирже"  href="http://usercp.ereality.ru/services/stock/search?search=' + item_name.replace("(", "").replace(")", "") +
 							'" target="_blank"><img style="display:inline"  src="http://order.ereality.ru/estate/search.png"></a>'
 						$(elem).after($(link));
 					}
