@@ -16,8 +16,8 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	if (!myoptions.unpaused) {
 		return;
 	}
-//=====================================================================  
-	
+//=====================================================================
+
 	var script="";
 
 	// Ссылка на ресурсы в госе
@@ -52,12 +52,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 		script += "(" +
 			(function() {
 
-			//Выставление лота на биржу	
+			//Выставление лота на биржу
 			top.core.addlot = function(id, price, ltime) {
 				$.post("http://www.ereality.ru/ajax/stock/", '<root type="5" uid="' + id + '" price="' + price + '" stype="0" stime="' + ltime + '" bprice="0" whole="0"></root>', stock_processXML);
 			}
 
-			
+
 
 			top.core.addbuttons = function() {
 				myprice = $("#myprice");
@@ -123,17 +123,19 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			$($("#cat")[0]).after($(htmlelements));
 
 		}).toString() + ")();";
-		
+
 	}
 	if (myoptions.stock_sell_offline_find && !(location.href.search("mode=sell") != -1 && document.getElementById("npc366") != undefined)) {
 		script += " (" +
 			(function() {
 				$.each($("table[id^=tbl] td[colspan=4] b"), function(index, elem) {
-					var item_name = elem.innerHTML;
+					var item_name = $(this).text();
+
 					if (item_name != "Сломано") {
-						link = '<a  title="Искать на бирже"  href="http://order.ereality.ru/viewpage.php?page_id=42&search=' + item_name.replace("(", "").replace(")", "") +
-							'" target="_blank"><img style="display:inline"  src="http://order.ereality.ru/estate/search.png"></a>'
-						$(elem).after($(link));
+                        var link = $('<a  title="Искать на бирже" target="_blank"><img style="display:inline"  src="http://order.ereality.ru/estate/search.png"></a>')
+                            .attr('href', 'http://usercp.ereality.ru/services/stock/search?search=' + encodeURIComponent(item_name.replace("(", "").replace(")", "")));
+
+						$(elem).after(link);
 					}
 				});
 			}).toString() + ")();";
