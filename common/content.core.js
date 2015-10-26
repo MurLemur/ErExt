@@ -1019,7 +1019,7 @@ if (myoptions.keyalt) {
 		var zxzx8=core.onKeyUp;
 		var HSets = []; // Список сохраненных комплектов
 		$.post("http://www.ereality.ru/ajax/json.php",
-				'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}}}',
+				'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}},"client":1}',
 				function(response) {
 						for(prop in response.response.sets) if (response.response.sets.hasOwnProperty(prop)) {
 							HSets.push(prop);
