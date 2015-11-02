@@ -932,14 +932,14 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 }
 
 
-//При не пустой строке чата не завершать бой энтером , поидее )
+//При не пустой строке чата не завершать бой энтером и уже пробелом , поидее )
 	if (myoptions.keyenter) {
 		script+=  "(" +
 	(function(){
 	var zxzx6=core.onKeyDown;
 	core.onKeyDown=function(event){
 	event=(window.event||event);
-	if ((event.keyCode==13)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
+	if ((event.keyCode==13 || event.keyCode==32)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
 	else
 		{var myrezult=zxzx6.apply(core,arguments);
 	     return myrezult}
@@ -947,7 +947,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 	var zxzx7=core.onKeyUp;
 	core.onKeyUp=function(event){
 	event=(window.event||event);
-	if ((event.keyCode==13)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
+	if ((event.keyCode==13 || event.keyCode==32)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
 	else
 		{var myrezult=zxzx7.apply(core,arguments);
 	     return myrezult}
@@ -1275,8 +1275,9 @@ if (myoptions.keyalt) {
 	}
 
 		// Таймеры таверны и поместья
-		if (myoptions.timer_taverna || myoptions.timer_estate || myoptions.timer_pet) {
+		if (myoptions.timer_taverna || myoptions.timer_jeweler || myoptions.timer_estate || myoptions.timer_pet) {
 			myoptions.timer_taverna && (script_timers = script_timers.replace("core.mur_timer.taverna = false", "core.mur_timer.taverna = true"));
+			myoptions.timer_jeweler && (script_timers = script_timers.replace("core.mur_timer.jeweler = false", "core.mur_timer.jeweler = true"));
 			myoptions.timer_estate && (script_timers = script_timers.replace("core.mur_timer.estate = false", "core.mur_timer.estate = true"));
 			myoptions.timer_pet && (script_timers = script_timers.replace("core.mur_timer.pet = false", "core.mur_timer.pet = true"));
 			myoptions.timer_egg && (script_timers = script_timers.replace("core.mur_timer.egg = false", "core.mur_timer.egg = true"));
@@ -1285,7 +1286,7 @@ if (myoptions.keyalt) {
 			} else {
 				script_timers = script_timers.replace("MurTimerCss","-moz-linear-gradient(center top , #fff, #bbb) repeat scroll 0 0 rgba(0, 0, 0, 0)");
 			}
-			script += script_timers.replace(/sound_taverna/g,defaultConfig.soundOptions["sound_taverna"].sound).replace("alarm-clock.png", kango.io.getResourceUrl("res/alarm-clock.png")).replace("icon_close.gif", kango.io.getResourceUrl("res/icon_close.gif"));
+			script += script_timers.replace(/sound_taverna/g,defaultConfig.soundOptions["sound_taverna"].sound).replace("alarm-clock.png", kango.io.getResourceUrl("res/alarm-clock.png")).replace("icon_close.gif", kango.io.getResourceUrl("res/icon_close.gif")).replace(/sound_jeweler/g,defaultConfig.soundOptions["sound_jeweler"].sound);
 		}
 
 		inject_global(script);

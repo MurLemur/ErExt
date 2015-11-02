@@ -22,6 +22,8 @@
     "mur_contents/content.altar.js",
     "mur_contents/content.forum.js",
     "mur_contents/content.clan.js",
+    "mur_contents/content.jeweler.js",
+    "mur_contents/content.estate-services.js",
     "mur_contents/content.underground-map.js",
     "mur_contents/order/lhd/content.sessions.js",
     "mur_contents/order/lhd/content.trade-transfer.js",
@@ -43,7 +45,7 @@
     "user/active-items/background.user-active-items.js"
   ],
   "homepage_url": "http://forum.ereality.ru/topic176876/page1.html",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "name": "EReality Extension",
   "browser_button": {
     "caption": "Открыть меню",

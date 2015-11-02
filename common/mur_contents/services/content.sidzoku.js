@@ -19,7 +19,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	}
 
 	$(document).ready(function() {
-			var heroName = location.href.replace("http://sidzoku.ru/landlord/#", "");
-			$("#heroName").val(heroName).parent().find("img[src=\"img/btn_search_char.png\"]").click();
+		var heroName = location.href.replace("http://sidzoku.ru/landlord/#", "");
+		$("#heroName").val(heroName).parent().find("img[src=\"img/btn_search_char.png\"]").click();
 	});
 });

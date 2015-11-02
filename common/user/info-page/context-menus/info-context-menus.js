@@ -398,6 +398,10 @@ var ContextMenus = [{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/292.gif",
 		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/137.php"
+	},{
+		itemdescription: "Престиж",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/153.php"
 	}]
 },{
 	target: "p\\\\/pro\\\\/17_",
@@ -410,6 +414,10 @@ var ContextMenus = [{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/292.gif",
 		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/138.php"
+	},{
+		itemdescription: "Престиж",
+		itemimg: "http://img.ereality.ru/clan/292.gif",
+		itemlink: "http://www.ereality.ru/goto/er-help.ru/s/153.php"
 	}]
 },{
 	target: "aliens_",

@@ -48,6 +48,7 @@ var defaultConfig = {
 		"teammate_trace": false,
 		"taverna_fast_click": true,
 		"timer_taverna": true,
+		"timer_jeweler": true,
 		"timer_estate": true,
 		"timer_pet": true,
 		"timer_egg": true,
@@ -103,7 +104,8 @@ var defaultConfig = {
         'location_bot_info':true,
         'expedition_estate':true,
         'underground_map':true,
-        'turquoise_grid': true
+        'turquoise_grid': true,
+        'estate_services': true
 	},
 	
 	systemOptions: {
@@ -202,6 +204,10 @@ var defaultConfig = {
 			sound: "nosound",
 			detect: ""
 		},
+		"sound_jeweler": {
+			sound: "nosound",
+			detect: ""
+		},
 		"sound_item_broken": {
 			sound: "nosound",
 			detect: "Вещи сломались"
@@ -233,6 +239,14 @@ var defaultConfig = {
 		"sound_100": {
 			sound: "nosound",
 			detect: ""
+		},
+		"sound_attack_to" : {
+			sound: "nosound",
+			detect: "атакован монстрами на секторе"	
+		},
+		"sound_boat" : {
+			sound: "nosound",
+			detect: "Вы переместились на .+ потрачено"	
 		},
         "sound_battle_skip_turn": {
             sound: "nosound",

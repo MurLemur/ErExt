@@ -2,13 +2,16 @@ var script_timers= "(" +
 	(function(){
 core.mur_timer = {};
 core.mur_timer.taverna = false;
+core.mur_timer.jeweler = false;
 core.mur_timer.estate = false;
 core.mur_timer.pet = false;
 core.mur_timer.egg = false;
 core.mur_timer.taverna_update = true;
+core.mur_timer.jeweler_update = true;
 core.mur_timer.estate_update = true;
 core.mur_timer.pet_update = true;
 core.mur_timer.taverna_timer = new Date();
+core.mur_timer.jeweler_timer = new Date();
 core.mur_timer.pet_timer = new Date();
 core.mur_timer.pet_timer_egg = new Date();
 core.mur_timer.estate_timer = new Date();
@@ -32,6 +35,7 @@ core.mur_timer.getMyTime = function(time) {
 
 core.mur_timer.init = function() {
 	core.mur_timer.taverna_getinfo();
+	core.mur_timer.jeweler_getinfo();
 	core.mur_timer.estate_getinfo();
 	core.mur_timer.pet_getinfo();
 	var html = "" +
@@ -41,6 +45,10 @@ core.mur_timer.init = function() {
 		"	<tr id=\"tav\">" +
 		"		<td>Таверна : </td>" +
 		"		<td><span id=\"tav_timer\"></span></td>" +
+		"	</tr>" +
+		"	<tr id=\"jew\">" +
+		"		<td>Ювелирка : </td>" +
+		"		<td><span id=\"jew_timer\"></span></td>" +
 		"	</tr>" +
 		"	<tr id=\"est\">" +
 		"		<td>Поместье(<span id=\"countm\"></span>): </td>" +
@@ -75,6 +83,7 @@ core.mur_timer.init = function() {
 		$("#div_chat_msg").parent().append($(html).css(htmlcss).hide());
 		core.mur_timer.setstyle();
 		$("#tav_timer").text(core.mur_timer.getMyTime(core.mur_timer.taverna_timer));
+		$("#juw_timer").text(core.mur_timer.getMyTime(core.mur_timer.jeweler_timer));
 		$("#countm").text(core.mur_timer.estate_cards);
 		$("#est_timer").text(core.mur_timer.getMyTime(core.mur_timer.estate_timer));
 		$("#pcountm").text(core.mur_timer.pet_cards);
@@ -107,6 +116,7 @@ core.mur_timer.init = function() {
 					}
 		});
 		(!core.mur_timer.taverna) && $("#tav").remove();
+		(!core.mur_timer.jeweler) && $("#jew").remove();
 		(!core.mur_timer.estate) && $("#est").remove();
 		(!core.mur_timer.pet) && $("#pet").remove();
 		if (core.mur_timer.pet) {
@@ -152,6 +162,47 @@ core.mur_timer.taverna_getinfo = function() {
 	$.post("/ajax/taverna/", "<request action=\"getQueue\"></request>", xmlResponse);
 	core.mur_timer.taverna_update = false;
 }
+
+	core.mur_timer.jeweler_getinfo = function() {
+
+		function m_jsonResponse(jsondata) {
+			core.mur_timer.jeweler_parseinfo(jsondata.response);
+		}
+
+	
+	$.ajax({
+		type: "POST",
+		url: "/ajax/json.php",
+		data: JSON.stringify({
+			"controller": "jeweler",
+			"action": "init",
+			"params": {},
+			"client": 1,
+		}),
+		success: m_jsonResponse,
+		dataType: "json"
+	});
+	core.mur_timer.jeweler_update = false;
+}
+
+	core.mur_timer.jeweler_parseinfo = function(jsondata) {
+		wT = jsondata.workersLine;
+		if (wT != undefined) {
+			timer = 0;
+			for (var key in wT) {
+				timer = wT[key].timeLeft;
+			}
+			var time = new Date();
+			core.mur_timer.jeweler_timer.setTime(time.getTime() + timer * 1000);
+			localStorage["jeweler_time"] = core.mur_timer.jeweler_timer;
+		} else {
+			if (new Date().setTime(Date.parse(localStorage["jeweler_time"])) > new Date()) {
+				core.mur_timer.jeweler_timer.setTime(Date.parse(localStorage["jeweler_time"]));
+			}
+
+		}
+		core.mur_timer.jeweler_update = false;
+	}
 
 core.mur_timer.pet_getinfo = function() {
 		function m_jsonResponse(jsondata) {
@@ -236,6 +287,29 @@ core.mur_timer.main = function() {
 				}
 			}
 		}
+	if (core.mur_timer.jeweler) {
+			(core.mur_timer.jeweler_update) && core.mur_timer.jeweler_getinfo();
+
+			$("#jew_timer").text(core.mur_timer.getMyTime(core.mur_timer.jeweler_timer));
+			if (core.mur_timer.jeweler_timer < (new Date())) $("#jew").hide();
+			else {
+				$("#jew").show();
+				if ($("#jew_timer").text().search(/0\:0[0-5]/) > -1) {
+					if ($("#jew").css("color") != "rgb(255, 0, 0)") {
+						("sound_jeweler" != "nosound") && core.playSwfSound("sound_jeweler");
+						$("#jew").css({
+							"color": "rgb(255,0,0)",
+							"font-weight": "bolder"
+						});
+					}
+				} else {
+					if ($("#jew").css("color") == "rgb(255, 0, 0)") $("#jew").css({
+						"color": "rgb(0,0,0)",
+						"font-weight": ""
+					});
+				}
+			}
+		}	
 	if (core.mur_timer.estate) {
 			(core.mur_timer.estate_update) && core.mur_timer.estate_getinfo();
 
@@ -276,7 +350,8 @@ core.mur_timer.main = function() {
 	}
 
 	if (((core.mur_timer.estate_timer < (new Date())) || (!core.mur_timer.estate)) 
-		&& ((core.mur_timer.taverna_timer < (new Date())) || (!core.mur_timer.taverna))  
+		&& ((core.mur_timer.taverna_timer < (new Date())) || (!core.mur_timer.taverna)) 
+		&& ((core.mur_timer.jeweler_timer < (new Date())) || (!core.mur_timer.jeweler)) 
 		&& ((core.mur_timer.pet_timer < (new Date())) || (!core.mur_timer.pet))) $(".ext_countdown").hide();
 	else ($("#mur_clock_pic").css("display")=="none") && $(".ext_countdown").show();
 		

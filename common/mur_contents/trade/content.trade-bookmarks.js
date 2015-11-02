@@ -53,6 +53,10 @@ $(document).ready(function() {
                 }
 
             });
+            if (location.href.search("usercp.ereality.ru") != -1) button_add.css({
+                top: 0,
+                left: "20px"
+            });
             $("#nm").after(button_add);
         }
     }
