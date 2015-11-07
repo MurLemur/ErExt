@@ -371,7 +371,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 					}
 				}
 
-				if (_t == CHAT_FLAG_PRIVATE) {
+				if (_t == CHAT_FLAG_PRIVATE || _t == CHAT_FLAG_GROUP) {
 					if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
 						return;
 					}

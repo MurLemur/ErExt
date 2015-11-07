@@ -105,6 +105,7 @@ var defaultConfig = {
         'expedition_estate':true,
         'underground_map':true,
         'turquoise_grid': true,
+        'turquoise_info':true,
         'estate_services': true
 	},
 	

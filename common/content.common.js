@@ -29,6 +29,8 @@
 //
 // @require common/golosovalka.js
 //
+// @require common/turquoise_info.js
+//
 // @require common/abilki-heal.js
 //
 // @require common/sounds-on-off.js
@@ -126,6 +128,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	if (mergedOptions.monster_locations) {
 		var monsterLocationBuilder = new monsterLocationBuilderClass(monsterLocationBuilderCss, factionCounterCss, holder);
 		monsterLocationBuilder.init();
+	}
+
+	// Информация о товарах на островах
+	if (mergedOptions.turquoise_info) {
+		var turquoiseInfoBuilder = new turquoiseInfoClass(turquoiseCss, holder);
+		turquoiseInfoBuilder.init();
 	}
 	
 	// Голосовалка за профессии

@@ -78,6 +78,7 @@ core.mur_timer.init = function() {
 		$("#div_chat_msg").parent().append($("<img id=\"mur_clock_pic\" src=\"alarm-clock.png\">").css({
 			position: "absolute",
 			top: "10px",
+			cursor: "pointer",
 			right: "300px"
 		}).hide());
 		$("#div_chat_msg").parent().append($(html).css(htmlcss).hide());
@@ -131,6 +132,7 @@ core.mur_timer.init = function() {
 			position: "absolute",
 			top: "3px",
 			right: "3px",
+			cursor: "pointer",
 			opacity: 0
 		});
 		$("#mur_closepic").hover(function() {

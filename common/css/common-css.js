@@ -112,3 +112,11 @@ var golosovalkaCss = {
 		"display":"none"
 	}
 }
+
+var turquoiseCss = {
+	turquoiseImg: kango.io.getResourceUrl("res/boat-icon.png"),
+	link: {
+		"margin-right": "3px",
+		"cursor": "pointer"
+	}
+}
