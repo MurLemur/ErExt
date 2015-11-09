@@ -2,6 +2,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/1_",
 	menuname: "m_hunter",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post4204230"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro1_p1.html"
@@ -18,6 +22,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/15_",
 	menuname: "m_zaklinatel",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic72154/page1.html#post1746229"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro15_p1.html"
@@ -42,6 +50,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/11_",
 	menuname: "m_lesorub",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post1007291"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro11_p1.html"
@@ -70,6 +82,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/12_",
 	menuname: "m_plotnik",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post1037463"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro12_p1.html"
@@ -94,6 +110,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/4_",
 	menuname: "m_fisherman",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post4430419"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro4_p1.html"
