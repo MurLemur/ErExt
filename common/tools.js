@@ -88,6 +88,7 @@ var defaultConfig = {
 		'filterRingOfRendomMessage': false,
 		'filterGoldenHorseShoeMessage' : false,
 		'filterEliteTournamentMessage' : false,
+		'CTFilterEnabled': false,
 		'sp_extendable_shutup' : false,
 		'sp_context_shutup' : false,
 		'sp_context_private_file': false,
@@ -106,7 +107,8 @@ var defaultConfig = {
         'underground_map':true,
         'turquoise_grid': true,
         'turquoise_info':true,
-        'estate_services': true
+        'estate_services': true,
+        'teleport': true
 	},
 	
 	systemOptions: {
@@ -124,6 +126,9 @@ var defaultConfig = {
             "popupPositionY" : -1
         },
 		"okHelpMessageMinLevel" : 10,
+		"minCTtime" : 9,
+		"maxCTtime" : 24,
+		"sledopit_index": 1,
 		"chatBgColor" : "#00FF7F",
 		"chatMsgColor" : "#000000",
 		"shutUpBgColor" : "#d7d7d7",

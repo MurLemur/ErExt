@@ -120,3 +120,11 @@ var turquoiseCss = {
 		"cursor": "pointer"
 	}
 }
+
+var teleportCss = {
+	teleportImg: kango.io.getResourceUrl("res/m_teleport.gif"),
+	link: {
+		"margin-right": "3px",
+		"cursor": "pointer"
+	}
+}

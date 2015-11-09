@@ -80,7 +80,7 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 				//top.frames.main.document.getElementsByClassName(self.keyMap.attackEnterKeyMap[code])[0].ondblclick(); // В вебкитах не пашет ибо не находится в контексте плагина
 				var o = document.createEvent('UIEvents');
 				o.initUIEvent('dblclick', true, true, window, 1);
-				top.frames.main.document.getElementsByClassName("monster")[0].dispatchEvent(o);
+				top.frames.main.document.getElementsByClassName("monster")[self.pluginOptions.sledopit_index-1].dispatchEvent(o);
 			}
 			catch(e) {}
 		}

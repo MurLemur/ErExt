@@ -1,6 +1,5 @@
 var abilHealClass = function(css, holder) {
 	this.css = css;
-	this.freezeChatStatus = false;
 	var self = this;
 
 	this.buildLink = function() {

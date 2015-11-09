@@ -112,9 +112,10 @@ var turquoiseInfoClass = function(css, holder) {
 		$("#mur_closeinf").on("click", function() {
 			self.Status = false;
 			$(".ext_trade_info").hide();
+			localStorage['turquoiseInfoStatus'] = self.Status;
 		});
 		$("#mur_update").on("click", function() {
-			this.ShowInfo();
+			self.ShowInfo();
 		});
 
 	}

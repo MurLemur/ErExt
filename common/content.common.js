@@ -33,6 +33,8 @@
 //
 // @require common/abilki-heal.js
 //
+// @require common/teleport.js
+//
 // @require common/sounds-on-off.js
 //
 // @require common/trace-map/trace-map.js
@@ -52,6 +54,13 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	
 	//var holder = $("#div_users a#span_sort");
 
+	// Индекс кучки параметром перекидываю в доступные настройки
+	if (mergedOptions.sledopit) {
+		var systemOptions = mergeOptions(kango.storage.getItem('systemOptions'), defaultConfig.systemOptions);
+		mergedOptions.sledopit_index = systemOptions.sledopit_index;
+	};
+
+
 	if (mergedOptions.buttons_holder) button_holder_init();
 	else $("#div_users").children().first().after("<div class=\"wrap\" style=\"z-index: 95;\"><span id=\"mur_holder\"></span></div>");
 
@@ -61,6 +70,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	if (mergedOptions.abil_heal) {
 		var abilHeal = new abilHealClass(abilHealCss, holder);
 		abilHeal.init();
+	}
+
+	// Телепорт малым свитком
+	if (mergedOptions.teleport) {
+		var teleport = new teleportClass(teleportCss, holder);
+		teleport.init();
 	}
 
 	// Отключение/включение звуков в игре

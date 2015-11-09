@@ -223,6 +223,15 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			
 			return false;
 		}
+
+		function filterCT(_text) {
+			var now_dt = new Date(new Date().getTime() + (3 + ((new Date()).getTimezoneOffset() / 60)) * 3600 * 1000); // GMT +3
+				if (_text.search("  :102:  КТ !!!") >= 0 && now_dt.getHours() >= erExtSystemOptions.minCTtime && now_dt.getHours() < erExtSystemOptions.maxCTtime) {
+					return true;
+				}
+
+				return false;
+		}
 		
 		function modifyClanTournamentMessage(_text) {			
 			$.each(clanTournament, function() {
@@ -345,6 +354,12 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 
 			if (_t == CHAT_FLAG_ALIGN) {
 				if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
+					return;
+				}
+			}
+
+			if (_t == CHAT_FLAG_PRIVATE) {
+				if (erExtOptions.CTFilterEnabled && filterCT(_text)) {
 					return;
 				}
 			}
@@ -1273,6 +1288,36 @@ if (myoptions.keyalt) {
 
 		}).toString() + ")();";
 	}
+
+		// Телепорт малым свитком
+		if (myoptions.teleport) {
+			script += "(" +
+				(function() {
+					fast_teleport = function() {
+						$.each(inventory.items, function(index, value) {
+							if (value.w_id == 3033) {
+								json.jsonSend({"controller": "inventory","action": "use","params": {"uid": value.uid},"client": 1});
+								return false;
+							}
+						})
+					}
+					$("img[src*=m_teleport]").on('click', function() {
+					if ($.isEmptyObject(inventory.items)) {
+						$.post("http://www.ereality.ru/ajax/json.php",
+							'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}},"client":1}',
+							function(response) {
+								heroPanel.updateHeroInv(response.response);
+								fast_teleport();
+							},
+							"json");
+					} else fast_teleport();;
+						
+					});
+
+				}).toString() + ")();";
+		}
+
+
 
 		// Таймеры таверны и поместья
 		if (myoptions.timer_taverna || myoptions.timer_jeweler || myoptions.timer_estate || myoptions.timer_pet) {

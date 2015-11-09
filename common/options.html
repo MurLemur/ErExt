@@ -124,7 +124,7 @@
     <td><input type="checkbox" id="no_block_browser_keys"><label for="no_block_browser_keys">Не блокировать хоткеи браузера</label></td></tr>
      <tr><td><input type="checkbox" id="timer_egg"><label for="timer_egg">Отображать яйца, если они есть в питомнике.</label></td>
     <td><input type="checkbox" id="golosovalka"><label for="golosovalka">Кнопка голосовалки за проф праздники.</label></td></tr>
-    <tr><td><input type="checkbox" id="sledopit"><label for="sledopit">Нападение по энтеру в палатке Следопыта.</label></td>
+    <tr><td><input type="checkbox" id="sledopit"><label for="sledopit">Нападение по энтеру в палатке Следопыта. (Номер кучки : </label><input type="number" maxlength="1" max="9" min="1" style="width: 3em" title="Введите номер кучки (число 1-9)" id="sledopit_index">)</td>
     <td><input type="checkbox" id="resources_prices"><label for="resources_prices">Ссылка на гос цены ресов на бирже(при поиске и выставлении на продажу).</label></td></tr>
     <tr><td><input type="checkbox" id="sanctions"><label for="sanctions">"Компактный вид" при покупке чертежей ремесленника в мастерской.</label></td>
     <td><input type="checkbox" id="taverna_filters"><label for="taverna_filters">Фильтры при продаже супов в таверне.</label></td></tr>
@@ -140,7 +140,7 @@
         <td><input type="checkbox" id="estate_services"><label for="estate_services">Подмена ссылок в сервисах поместий биржу из ЛК.</label></td>
         </tr>
         <tr><td><input type="checkbox" id="turquoise_info"><label for="turquoise_info">Кнопка информации о товарах на островах.</label></td>
-        <td></td>
+        <td><input type="checkbox" id="teleport"><label for="teleport">Кнопка телепорта малым свитком.</label></td>
         </tr>
         
     </table>
@@ -258,7 +258,7 @@
     <table>
     <tr><td><input type="checkbox" id="filterOneTeamIsStrongerMessage"><label for="filterOneTeamIsStrongerMessage">Фильтровать сообщение о невозможности нападения на группу на ОК.</label></td>
     <td><input type="checkbox" id="filterBattleIsClosedMessage"><label for="filterBattleIsClosedMessage">Фильтровать сообщение о закрытом бое на ОК.</label></td></tr>
-    <tr><td><input type="checkbox" id="okHelpMessageFilterEnabled"><label for="okHelpMessageFilterEnabled">Фильтровать сообщение о помощи в чате фракции. Минимальный уровень: </label><input type="text" id="okHelpMessageMinLevel"></td>
+    <tr><td><input type="checkbox" id="okHelpMessageFilterEnabled"><label for="okHelpMessageFilterEnabled">Фильтровать сообщение о помощи в чате фракции. Минимальный уровень: </label><input type="text" size="2" id="okHelpMessageMinLevel" size="2"></td>
     <td><input type="checkbox" id="filterRingOfRendomMessage"><label for="filterRingOfRendomMessage">Фильтровать сообщение о собранном кольце рандома.</label></td></tr>
     <tr><td><input type="checkbox" id="filterGoldenHorseShoeMessage"><label for="filterGoldenHorseShoeMessage">Фильтровать сообщение о Золотой Подкове.</label></td>
     <td><input type="checkbox" id="filterEliteTournamentMessage"><label for="filterEliteTournamentMessage">Фильтровать сообщение о Элитном Турнире.</label></td></tr>
@@ -266,6 +266,8 @@
     <td>
 		<input type="checkbox" id="chatOtherUsersMessageColor"><label for="chatOtherUsersMessageColor">Все сообщения других пользователей одним цветом . Цвет:   </label><input type="color" id="chatMsgColor">
 	</td></tr>
+    <tr><td><input type="checkbox" id="CTFilterEnabled"><label for="CTFilterEnabled">Фильтровать сообщение с призывом на КТ: с </label><input type="number" maxlength="2" max="24" min="0" style="width: 3em" title="Введите часы (число 0-24)" id="minCTtime">ч. по <input type="number" maxlength="2" max="24" min="0" style="width: 3em" title="Введите часы (число 0-24)" id="maxCTtime">ч.</td>
+    <td></td></tr>
    </table>
 </section>
 
