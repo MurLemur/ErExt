@@ -134,6 +134,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/5_",
 	menuname: "m_cook",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post6029732"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro5_p1.html"
@@ -162,6 +166,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/8_",
 	menuname: "m_collier",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post1925761"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro8_p1.html"
@@ -198,6 +206,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/6_",
 	menuname: "m_digger",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post1925761"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro6_p1.html"
@@ -218,6 +230,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/7_",
 	menuname: "m_builder",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post6178301"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro7_p1.html"
@@ -238,6 +254,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/10_",
 	menuname: "m_metall",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post1285115"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro10_p1.html"
@@ -274,6 +294,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/3_",
 	menuname: "m_remeslo",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic63774/last.html"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro3_p1.html"
@@ -298,6 +322,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/13_",
 	menuname: "m_kydesnik",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post2562263"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro13_p1.html"
@@ -326,6 +354,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/9_",
 	menuname: "m_trapper",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post1278128"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro9_p1.html"
@@ -350,6 +382,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/2_",
 	menuname: "m_priest",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post4350534"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro2_p1.html"
@@ -383,6 +419,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/14_",
 	menuname: "m_armourer",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post4267132"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro14_p1.html"
@@ -411,6 +451,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/16_",
 	menuname: "m_geolog",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post6186053"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro16_p1.html"
@@ -427,6 +471,10 @@ var ContextMenus = [{
 	target: "p\\\\/pro\\\\/17_",
 	menuname: "m_juvelir",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic51094/page1.html#post6186054"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/pro17_p1.html"
@@ -443,6 +491,10 @@ var ContextMenus = [{
 	target: "aliens_",
 	menuname: "m_aliens",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic99197/last.html"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/aliens_p1.html"
@@ -463,6 +515,10 @@ var ContextMenus = [{
 	target: "elf_ins",
 	menuname: "m_elfins",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic116208/last.html"
+	},{
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/1.gif",
 		itemlink: "http://order.ereality.ru/articles.php?article_id=345"
@@ -471,6 +527,10 @@ var ContextMenus = [{
 	target: "nec_ins",
 	menuname: "m_necins",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic116208/last.html"
+	},{
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/1.gif",
 		itemlink: "http://order.ereality.ru/articles.php?article_id=383"
@@ -479,6 +539,10 @@ var ContextMenus = [{
 	target: "gob_",
 	menuname: "m_gob",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic33522/page1.html#post2466685"
+	},{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/gobivan/"
@@ -495,6 +559,10 @@ var ContextMenus = [{
 	target: "polemarh",
 	menuname: "m_polemarh",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic33522/page1.html#post687710"
+	},{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/polemarh/"
@@ -507,6 +575,10 @@ var ContextMenus = [{
 	target: "odl",
 	menuname: "m_odl",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic23019/last.html"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/cold_p1.html"
@@ -523,6 +595,10 @@ var ContextMenus = [{
 	target: "cw_st",
 	menuname: "m_cw",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic158829/last.html"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/clans_leagues.html"
@@ -543,6 +619,10 @@ var ContextMenus = [{
 	target: "\\\\/g\\\\/",
 	menuname: "m_g",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic33522/page1.html#post1970654"
+	},{
 		itemdescription: "Калькулятор",
 		itemimg: "http://img.ereality.ru/clan/73.gif",
 		itemlink: "http://sidzoku.ru/kladba/"
@@ -559,6 +639,10 @@ var ContextMenus = [{
 	target: "\\\\/c\\\\/",
 	menuname: "m_c",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic33522/page1.html#post1575805"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/5_p1.html"
@@ -579,6 +663,10 @@ var ContextMenus = [{
 	target: "septrate",
 	menuname: "m_sept",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic142958/last.html"
+	},{
 		itemdescription: "Гайд",
 		itemimg: "http://img.ereality.ru/clan/1.gif",
 		itemlink: "http://order.ereality.ru/articles.php?article_id=88#isk"
@@ -587,6 +675,10 @@ var ContextMenus = [{
 	target: "info_icon",
 	menuname: "m_estate",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic173981/last.html"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/estates_p1.html"
@@ -599,6 +691,10 @@ var ContextMenus = [{
 	target: "rlev\\\\/r",
 	menuname: "m_dp",
 	menuitems: [{
+		itemdescription: "Документация",
+		itemimg: "http://img.ereality.ru/priv/78750.gif",
+		itemlink: "http://forum.ereality.ru/topic142958/last.html"
+	},{
 		itemdescription: "Рейтинг",
 		itemimg: "http://www.ereality.ru/favicon.ico",
 		itemlink: "http://ratings.ereality.ru/6_p1.html"
