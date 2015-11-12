@@ -1057,6 +1057,7 @@ if (myoptions.keyalt) {
 				 $("#autobattle")[0].click();
 			}
 			if (event.keyCode == 27) core.trigger('move')
+			if (event.keyCode == 13) core.isEnterPressed = false;	
 			if (event.altKey) {
 		 	if ((event.keyCode==49)&&(HSets[0]!=undefined)) {inventory.actionUpSet({"setId":HSets[0]})} //1
 		 	if ((event.keyCode==50)&&(HSets[1]!=undefined)) {inventory.actionUpSet({"setId":HSets[1]})} //2
@@ -1068,14 +1069,41 @@ if (myoptions.keyalt) {
 		 	if (event.keyCode==82) {if (main.$("b:contains(Книга призыва монстров)").length==0) {core.modeSwitch('map');frames['main'].location='/summon_book.php';} else core.trigger('move')}	//r	
 		 	if (event.keyCode==69) {if (($("span:contains(Контакты)").length==0)||($("span:contains(Контакты)")[0].parentNode.parentNode.style.display!="block")) core.mod('contacts','open'); else  $("span:contains(Контакты)")[0].nextElementSibling.click()} //e
 
+
 		 }	
 		 var myrezult=zxzx8.apply(core,arguments);
 	     return myrezult}
 	     $(document).unbind('keyup');
 		 $(document).keyup(core.onKeyUp);
+		 $(document).keydown(function(event){
+		 	event = (window.event || event);
+		 	if (event.keyCode == 13) {
+		 		if (!core.isEnterPressed) {
+		 			(battle.bstatus==0) && setTimeout(battle.refresh('user_force2'),1000)
+		 		}
+		 		core.isEnterPressed = true;
+		 	}	
+		 });
 	 }).toString()
 	+ ")();"; 
 }
+
+		// Эффект "залипающего" энтера в бою
+		if (myoptions.pressedEnter) {
+			script += "(" +
+				(function() {
+					var buildPlayersTableOld = battle.buildPlayersTable;
+					battle.buildPlayersTable = function() {
+						buildPlayersTableOld.apply(battle);
+						if (core.isEnterPressed) {
+							battle.make_turn();
+						}
+
+						return;
+					}
+				}).toString() + ")();";
+		}
+
 
 		// По "ё" перемещение в бою в первый ряд
 		if (myoptions.battle_move) {
@@ -1293,6 +1321,12 @@ if (myoptions.keyalt) {
 		if (myoptions.teleport) {
 			script += "(" +
 				(function() {
+					json.old_jsonRecv = json.jsonRecv;
+					json.jsonRecv = function(data) {
+						json.old_jsonRecv.apply(json, [data]);
+						if (data.controller == "inventory" && data.action == "use" && data.response.core.messages[0].search("Вы успешно телепортировались на локацию") > -1) core.trigger("move");
+						return;
+					}
 					fast_teleport = function() {
 						$.each(inventory.items, function(index, value) {
 							if (value.w_id == 3033) {
@@ -1302,16 +1336,16 @@ if (myoptions.keyalt) {
 						})
 					}
 					$("img[src*=m_teleport]").on('click', function() {
-					if ($.isEmptyObject(inventory.items)) {
-						$.post("http://www.ereality.ru/ajax/json.php",
-							'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}},"client":1}',
-							function(response) {
-								heroPanel.updateHeroInv(response.response);
-								fast_teleport();
-							},
-							"json");
-					} else fast_teleport();;
-						
+						if ($.isEmptyObject(inventory.items)) {
+							$.post("http://www.ereality.ru/ajax/json.php",
+								'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}},"client":1}',
+								function(response) {
+									heroPanel.updateHeroInv(response.response);
+									fast_teleport();
+								},
+								"json");
+						} else fast_teleport();;
+
 					});
 
 				}).toString() + ")();";

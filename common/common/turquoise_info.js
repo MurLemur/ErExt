@@ -1,7 +1,11 @@
 var turquoiseInfoClass = function(css, holder) {
 	this.css = css;
 	this.Status = false;
+	this.timers = false;
+	this.timer_island = new Date();
+	this.timer_id ="";
 	var self = this;
+
 
 	this.buildLink = function() {
 		var img = $("<img src=\"" + this.css.turquoiseImg + "\">").on('click', function() {
@@ -15,6 +19,7 @@ var turquoiseInfoClass = function(css, holder) {
 		if (self.Status) {
 			self.Status = false;
 			$(".ext_trade_info").hide();
+			clearInterval(self.timer_id);
 		} else {
 			this.ShowInfo();
 		}
@@ -24,13 +29,27 @@ var turquoiseInfoClass = function(css, holder) {
 	this.ShowInfo = function() {
 		this.getinfo_shop();
 		this.getinfo_pirat();
+		this.refresh_timers();
+		if (self.timers) {
+			$("#mur_arrow").attr("src", kango.io.getResourceUrl("res/arrow_left.gif"));
+			$("#mur_arrow").attr("title", "Скрыть таймеры");
+			$(m_timers_info).show();
+		} else	{
+			$("#mur_arrow").attr("src", kango.io.getResourceUrl("res/arrow_right.gif"));
+			$("#mur_arrow").attr("title", "Показать таймеры");
+			$(m_timers_info).hide();
+		}
 		$(".ext_trade_info").show();
 		self.Status = true;
+		this.timer_id = setInterval(function() { 
+			self.refresh_timers();
+		},40000);	
 	};
 
 	this.init = function() {
 		holder.parent().prepend(this.buildLink());
 		this.initInfo();
+		if (localStorage['turquoise_timers'] == 'true') self.timers = true;
 		if (localStorage['turquoiseInfoStatus'] == 'true') this.ShowInfo();
 	}
 
@@ -42,7 +61,9 @@ var turquoiseInfoClass = function(css, holder) {
 		var html = "" +
 			"<div class=\"ext_trade_info\"> " +
 			"     <img id=\"mur_closeinf\" src=\"" + kango.io.getResourceUrl("res/icon_close.gif") + "\">" +
-			"     <img id=\"mur_update\" src=\"" + kango.io.getResourceUrl("res/updating.gif") + "\">" +
+			"     <img title=\"Обновить\" id=\"mur_update\" src=\"" + kango.io.getResourceUrl("res/updating.gif") + "\">" +
+			" 	  <table>   " + 
+        	"			<tr><td width=\"210\"> " +
 			"     <img title=\"Магазины продают\" src=\"" + kango.io.getResourceUrl("res/sell.gif") + "\">" +
 			"     <img id=\"m_sell_island\" src=\"\">  " +
 			"     <img id=\"m_sell_item\" class=\"m_res\" src=\"\">" +
@@ -55,6 +76,15 @@ var turquoiseInfoClass = function(css, holder) {
 			"        <img title=\"Контрабандист\" src=\"" + kango.io.getResourceUrl("res/Pirate.png") + "\"><img title=\"Торговый Остров\" src=\"" + icon_trade_island + "\">    " +
 			"        <span id=\"m_pirat_text\"></span>" +
 			"        <img  id=\"m_pirat_item\" class=\"m_res\" src=\"\">" +
+			"      	</td>" +
+      		"		<td id=\"m_timers_info\" width=\"65\">" +
+          	"			 <img src=\""+icon_turqouise+"\"><span title=\"До обновления месторождений\" id=\"timer_island\"></span><br>" +
+           	"			 <img src=\""+icon_trade_island+"\"><span title=\"До обновления магазинов\" id=\"timer_trade\"> </span><br>  " +  
+            " 			 <img src=\""+kango.io.getResourceUrl("res/Pirate.png")+"\"><span title=\"До обновления контрабандиста\" id=\"timer_pirat\"></span><br>  " +
+			"       	</td>" +
+      		"		</tr>   " +
+    		"		<img id=\"mur_arrow\" src=\"\">  " +         
+  			"		</table> " +
 			"    </div>" +
 			"</div>";
 
@@ -72,11 +102,10 @@ var turquoiseInfoClass = function(css, holder) {
 			"float": "left",
 			"font": "12px/16px Verdana,Arial,Geneva,Helvetica,sans-serif",
 			"height": "auto",
-			"padding": "6px",
+			"padding": "4px",
 			"position": "absolute",
-			"left": "5px",
-			"top": "-87px",
-			"width": "200px",
+			"left": "3px",
+			"top": "-84px",
 			"z-index": "2"
 		};
 
@@ -95,8 +124,20 @@ var turquoiseInfoClass = function(css, holder) {
 		$("#mur_update").css({
 			position: "absolute",
 			cursor: "pointer",
-			bottom: "5px",
-			right: "5px",
+			bottom: "1px",
+			right: "1px",
+			width:"14px",
+			opacity: 0.5
+		});
+		$("#m_timers_info span").css({
+			"font-weight": "bold",
+			"color": "royalblue"
+		});
+		$("#mur_arrow").css({
+			position: "absolute",
+			cursor: "pointer",
+			top: "33px",
+			right: "-2px",
 			opacity: 0.5
 		});
 		$("#mur_closeinf").hover(function() {
@@ -109,13 +150,32 @@ var turquoiseInfoClass = function(css, holder) {
 		}, function() {
 			$(this).css("opacity", 0.5)
 		});
+		$("#mur_arrow").hover(function() {
+			$(this).css("opacity", 1)
+		}, function() {
+			$(this).css("opacity", 0.5)
+		});
 		$("#mur_closeinf").on("click", function() {
 			self.Status = false;
 			$(".ext_trade_info").hide();
+			clearInterval(self.timer_id);
 			localStorage['turquoiseInfoStatus'] = self.Status;
 		});
 		$("#mur_update").on("click", function() {
 			self.ShowInfo();
+		});
+		$("#mur_arrow").on("click", function() {
+			$("#m_timers_info").toggle();
+			if (self.timers) {
+				$("#mur_arrow").attr("src", kango.io.getResourceUrl("res/arrow_right.gif"));
+				$("#mur_arrow").attr("title", "Показать таймеры");
+				self.timers=false;
+			} else {
+				$("#mur_arrow").attr("src", kango.io.getResourceUrl("res/arrow_left.gif"));
+				$("#mur_arrow").attr("title", "Скрыть таймеры");
+				self.timers=true;
+			}
+			localStorage['turquoise_timers'] = self.timers;
 		});
 
 	}
@@ -219,10 +279,79 @@ var turquoiseInfoClass = function(css, holder) {
 			contentType: 'json'
 		};
 		kango.xhr.send(details, function(data) {
-			$("#m_pirat_item").attr("src", "http://img.ereality.ru/w/" + get_res_pic(data.response.w_id));
-			$("#m_pirat_item").attr("title", get_res_title(data.response.w_id));
-			$("#m_pirat_text").text(" куплю " + ((+data.response.count_max)-(+data.response.count_sold))+ " ед.");
+			if (data.response != null) {
+				$("#m_pirat_item").attr("src", "http://img.ereality.ru/w/" + get_res_pic(data.response.w_id));
+				$("#m_pirat_item").attr("title", get_res_title(data.response.w_id));
+				$("#m_pirat_text").text(" куплю " + ((+data.response.count_max) - (+data.response.count_sold)) + " ед.");
+			} else {
+				$("#m_pirat_item").attr("src", "http://img.ereality.ru/smile/p/825.gif");
+				$("#m_pirat_text").text(" непашет API");
+			}
 		});
 	}
+
+	function format(ttime) {
+		if (+ttime < 10) return "0" + ttime;
+		return ttime;
+	}
+
+	getMyTime = function(time) {
+		function format(ttime) {
+			if (+ttime < 10) return "0" + ttime;
+			return ttime;
+		}
+		var ntime = new Date();
+		hour = parseInt((time - ntime) / 3600000);
+		minutes = parseInt(((time - ntime) - hour * 3600000) / 60000);
+		return hour + ":" + format(minutes);
+	}
+
+	get_time_trade = function() {
+		var minutes = (new Date()).getMinutes();
+		if (minutes > 0) return ("0:" + format(60 - minutes))
+		else {
+			self.getinfo_shop();
+			return ("1:00")
+		}
+	}
+	get_time_contr = function() {
+		var minutes = (new Date()).getMinutes();
+		if (minutes > 0) return ("" + (2 - (new Date()).getHours() % 3) + ":" + format(60 - minutes))
+		else {
+			self.getinfo_pirat();
+			return ("3:00")
+		}
+	}
+	
+	this.refresh_timers = function() {
+		if (self.timer_island < new Date()) {
+			if (new Date().setTime(Date.parse(localStorage["island_time"])) > new Date()) {
+				self.timer_island.setTime(Date.parse(localStorage["island_time"]));
+				$("#timer_island").text(getMyTime(self.timer_island));
+			} else {
+				var details = {
+					url: 'http://api.ereality.ru/geologist_map_update.txt',
+					method: 'GET',
+					contentType: 'json'
+				};
+				kango.xhr.send(details, function(data) {
+					if (data.response != null) {
+						timer = data.response.generation["25"];
+					} else timer = 0;
+					if (timer != 0) {
+						self.timer_island = new Date(timer * 1000);
+						localStorage["island_time"] = self.timer_island;
+						$("#timer_island").text(getMyTime(self.timer_island));
+					} else $("#timer_island").text("0:00");
+				});
+
+			}
+		} else {
+			$("#timer_island").text(getMyTime(self.timer_island));
+		}
+		$("#timer_trade").text(get_time_trade());
+		$("#timer_pirat").text(get_time_contr());
+
+	}	
 
 }

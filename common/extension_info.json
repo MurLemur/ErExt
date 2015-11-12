@@ -61,6 +61,7 @@
     "notifications": true,
     "content_scripts": [
       "http://www.ereality.ru/*",
+      "http://www.api.ereality.ru/*",
       "http://forum.ereality.ru/*",
       "http://gosov.net/lotery.html",
       "http://*.com/efimerka/",
