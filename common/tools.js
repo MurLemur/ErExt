@@ -108,7 +108,7 @@ var defaultConfig = {
         'turquoise_grid': true,
         'turquoise_info':true,
         'estate_services': true,
-        'teleport': true,
+        'teleport': false,
         'pressedEnter': false
 	},
 	

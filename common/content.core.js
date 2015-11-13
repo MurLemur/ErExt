@@ -1078,10 +1078,12 @@ if (myoptions.keyalt) {
 		 $(document).keydown(function(event){
 		 	event = (window.event || event);
 		 	if (event.keyCode == 13) {
-		 		if (!core.isEnterPressed) {
-		 			(battle.bstatus==0) && setTimeout(battle.refresh('user_force2'),1000)
-		 		}
-		 		core.isEnterPressed = true;
+						if (!core.isEnterPressed) {
+							setTimeout(function() {
+								(battle.bstatus == 0) && battle.refresh('user_force2')
+							}, 500)
+						}
+						core.isEnterPressed = true;
 		 	}	
 		 });
 	 }).toString()
@@ -1095,7 +1097,7 @@ if (myoptions.keyalt) {
 					var buildPlayersTableOld = battle.buildPlayersTable;
 					battle.buildPlayersTable = function() {
 						buildPlayersTableOld.apply(battle);
-						if (core.isEnterPressed) {
+						if (core.isEnterPressed && document.getElementById("chat_msg").value == "") {
 							battle.make_turn();
 						}
 
