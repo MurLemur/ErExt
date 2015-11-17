@@ -31,7 +31,7 @@ var battleCounterClass = function( popup, chatMsgSelector, css) {
 
 	this.count = function() {
 		$.post("http://www.ereality.ru/ajax/json.php",
-			'{"controller":"hero","action":"panel","params":{"argv":{}}}',
+			'{"controller":"hero","action":"panel","params":{"argv":{}},"client":1}',
 			function(response) {
 				if (response.response.info != undefined) {
 					$("#mur_battle_trigger", this.view).text(response.response.info.main.counter);
