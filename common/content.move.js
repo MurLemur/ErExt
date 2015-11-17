@@ -51,15 +51,18 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 								"14": "option_to"
 							}
 							var str = options_loc[Map.heroMap];
-							var location_mas = str.split(";");
-							for (var i = 0; i < location_mas.length; i++) {
-								if (location_mas[i].length > 5) {
-									loc = location_mas[i].split(")");
-									sectorId = loc[0].replace("(", "");
-									Map.locations[Map.heroMap][sectorId] = loc[1];
-									$('<option></option>').attr('value', sectorId).text(Map.locations[Map.heroMap][sectorId]).insertAfter($('option[value="0"]')[1]);
-								}
-							}
+
+                            if (typeof str != "undefined") {
+                                var location_mas = str.split(";");
+                                for (var i = 0; i < location_mas.length; i++) {
+                                    if (location_mas[i].length > 5) {
+                                        loc = location_mas[i].split(")");
+                                        sectorId = loc[0].replace("(", "");
+                                        Map.locations[Map.heroMap][sectorId] = loc[1];
+                                        $('<option></option>').attr('value', sectorId).text(Map.locations[Map.heroMap][sectorId]).insertAfter($('option[value="0"]')[1]);
+                                    }
+                                }
+                            }
 				}
 				end_mark
 			}).toString().replace("option_ovl", getStringifyParams(mergedSystemOptions.locatioons_ovl)).replace("option_opp", getStringifyParams(mergedSystemOptions.locatioons_opp)) + ")();";
