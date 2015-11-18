@@ -45,7 +45,7 @@
     "user/active-items/background.user-active-items.js"
   ],
   "homepage_url": "http://forum.ereality.ru/topic176876/page1.html",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "name": "EReality Extension",
   "browser_button": {
     "caption": "Открыть меню",

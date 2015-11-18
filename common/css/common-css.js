@@ -155,7 +155,7 @@ var turquoiseCss = {
         "padding": "4px",
         "position": "absolute",
         "left": "3px",
-        "top": "-84px",
+        "top": "-92px",
         "z-index": "2"
     }
 }

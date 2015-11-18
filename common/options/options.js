@@ -119,14 +119,18 @@ var extensionOptionsExportClass = function() {
 			}));
 		});
 
-	/*	//Снег
-		setTimeout(function() {
-		$("#snow").on("click", function() {
-				if ($(this).prop("checked")) $("#snowflakesCanvas").show();
-				else $("#snowflakesCanvas").hide();
-			});
-		if ($("#snow").prop("checked")) $("#snowflakesCanvas").show();
-	},100); */
+		//Снег
+		var month = (new Date).getMonth();
+		if (month > 10 || month < 2) {
+			setTimeout(function() {
+				$("#opt_snow").show();
+				$("#snow").on("click", function() {
+					if ($(this).prop("checked")) $("#snowflakesCanvas").show();
+					else $("#snowflakesCanvas").hide();
+				});
+				if ($("#snow").prop("checked")) $("#snowflakesCanvas").show();
+			}, 100);
+		}
 	}
 	
 	this._initExportButton = function() {
@@ -367,6 +371,8 @@ KangoAPI.onReady(function() {
         location_bot_info: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/location_bot_info.png",
         expedition_estate: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/expedition_estate.png",
         turquoise_grid: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/turquoise_grid.png",
+        teleport: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/teleport.png",
+        turquoise_info: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/turquoise_info.png",
         timer_jeweler: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/timer_jeweler.png"
     }
 

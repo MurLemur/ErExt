@@ -1047,12 +1047,12 @@ if (myoptions.keyalt) {
 		 }	
 		 var myrezult=zxzx8.apply(core,arguments);
 	     return myrezult}
-
+	     		core.mEnter = false;
 				var zxzx9 = core.onKeyDown;
 				core.onKeyDown = function(event) {
 					event = (window.event || event);
 					if (event.keyCode == 13) {
-						if (!core.isEnterPressed) {
+						if (core.mEnter && !core.isEnterPressed) {
 							setTimeout(function() {
 								(battle.bstatus == 0) && battle.refresh('user_force2')
 							}, 250)
@@ -1072,6 +1072,7 @@ if (myoptions.keyalt) {
 		if (myoptions.pressedEnter) {
 			script += "(" +
 				(function() {
+					core.mEnter = true;
 					var buildPlayersTableOld = battle.buildPlayersTable;
 					battle.buildPlayersTable = function() {
 						buildPlayersTableOld.apply(battle);
