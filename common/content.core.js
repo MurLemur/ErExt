@@ -947,32 +947,6 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 }
 
 
-//При не пустой строке чата не завершать бой энтером и уже пробелом , поидее )
-	if (myoptions.keyenter) {
-		script+=  "(" +
-	(function(){
-	var zxzx6=core.onKeyDown;
-	core.onKeyDown=function(event){
-	event=(window.event||event);
-	if ((event.keyCode==13 || event.keyCode==32)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
-	else
-		{var myrezult=zxzx6.apply(core,arguments);
-	     return myrezult}
-	}
-	var zxzx7=core.onKeyUp;
-	core.onKeyUp=function(event){
-	event=(window.event||event);
-	if ((event.keyCode==13 || event.keyCode==32)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
-	else
-		{var myrezult=zxzx7.apply(core,arguments);
-	     return myrezult}
-	}
-	$(document).unbind('keydown').unbind('keyup');
-	$(document).keydown(core.onKeyDown).keyup(core.onKeyUp);
-	}).toString()
-	+ ")();"; 
-}
-
 		// ПКМ по локации вызывает меню с картами ОВЛ и ОПП
 		if (myoptions.menu_maps) {
 			script += "(" +
@@ -1073,20 +1047,24 @@ if (myoptions.keyalt) {
 		 }	
 		 var myrezult=zxzx8.apply(core,arguments);
 	     return myrezult}
-	     $(document).unbind('keyup');
-		 $(document).keyup(core.onKeyUp);
-		 $(document).keydown(function(event){
-		 	event = (window.event || event);
-		 	if (event.keyCode == 13) {
+
+				var zxzx9 = core.onKeyDown;
+				core.onKeyDown = function(event) {
+					event = (window.event || event);
+					if (event.keyCode == 13) {
 						if (!core.isEnterPressed) {
 							setTimeout(function() {
 								(battle.bstatus == 0) && battle.refresh('user_force2')
-							}, 500)
+							}, 250)
 						}
 						core.isEnterPressed = true;
-		 	}	
-		 });
-	 }).toString()
+					}
+					var myrezult = zxzx9.apply(core, arguments);
+					return myrezult
+				}
+	  $(document).unbind('keydown').unbind('keyup');
+	  $(document).keydown(core.onKeyDown).keyup(core.onKeyUp);
+	  }).toString()
 	+ ")();"; 
 }
 
@@ -1130,6 +1108,32 @@ if (myoptions.keyalt) {
 				$(document).unbind('keyup'); $(document).keyup(core.onKeyUp);
 			}).toString() + ")();";
 	}
+
+	//При не пустой строке чата не завершать бой энтером и уже пробелом , поидее )
+	if (myoptions.keyenter) {
+		script+=  "(" +
+	(function(){
+	var zxzx6=core.onKeyDown;
+	core.onKeyDown=function(event){
+	event=(window.event||event);
+	if ((event.keyCode==13 || event.keyCode==32)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
+	else
+		{var myrezult=zxzx6.apply(core,arguments);
+	     return myrezult}
+	}
+	var zxzx7=core.onKeyUp;
+	core.onKeyUp=function(event){
+	event=(window.event||event);
+	if ((event.keyCode==13 || event.keyCode==32)&&(battle.bstatus==0)&&(document.getElementById("chat_msg").value != "" )) { return}
+	else
+		{var myrezult=zxzx7.apply(core,arguments);
+	     return myrezult}
+	}
+	$(document).unbind('keydown').unbind('keyup');
+	$(document).keydown(core.onKeyDown).keyup(core.onKeyUp);
+	}).toString()
+	+ ")();"; 
+}
 
 		// След
 		if (myoptions.map_trace) {
