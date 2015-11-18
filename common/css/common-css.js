@@ -118,7 +118,46 @@ var turquoiseCss = {
 	link: {
 		"margin-right": "3px",
 		"cursor": "pointer"
-	}
+	},
+    closeButton: {
+        position: "absolute",
+        top: "3px",
+        right: "3px",
+        cursor: "pointer",
+        opacity: 0.5
+    },
+    updateButton: {
+        position: "absolute",
+        cursor: "pointer",
+        bottom: "1px",
+        right: "1px",
+        width:"14px",
+        opacity: 0.5
+    },
+    timersTD: {
+        "font-weight": "bold",
+        "color": "royalblue"
+    },
+    arrowImg: {
+        position: "absolute",
+        cursor: "pointer",
+        top: "33px",
+        right: "-2px",
+        opacity: 0.5
+    },
+    dataHolder: {
+        "border-radius": "6px",
+        "box-shadow": "0 3px 6px rgba(0, 0, 0, 0.45)",
+        "color": "#1e1e1e",
+        "float": "left",
+        "font": "12px/16px Verdana,Arial,Geneva,Helvetica,sans-serif",
+        "height": "auto",
+        "padding": "4px",
+        "position": "absolute",
+        "left": "3px",
+        "top": "-84px",
+        "z-index": "2"
+    }
 }
 
 var teleportCss = {
