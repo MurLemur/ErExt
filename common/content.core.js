@@ -1328,10 +1328,11 @@ if (myoptions.keyalt) {
 		if (myoptions.teleport) {
 			script += "(" +
 				(function() {
-					json.old_jsonRecv = json.jsonRecv;
+					json.old_teleport_jsonRecv = json.jsonRecv;
 					json.jsonRecv = function(data) {
-						json.old_jsonRecv.apply(json, [data]);
-						if (data.controller == "inventory" && data.action == "use" && data.response.core.messages[0].search("Вы успешно телепортировались на локацию") > -1) core.trigger("move");
+						json.old_teleport_jsonRecv.apply(json, [data]);
+						if (data.controller == "inventory" && data.action == "use" && data.response.core!=undefined
+						&& data.response.core.messages[0].search("Вы успешно телепортировались на локацию") > -1) core.trigger("move");
 						return;
 					}
 					fast_teleport = function() {
@@ -1343,9 +1344,9 @@ if (myoptions.keyalt) {
 						})
 					}
 					$("img[src*=m_teleport]").on('click', function() {
-						if ($.isEmptyObject(inventory.items)) {
+						if ($.isEmptyObject(inventory.items) || !(inventory.cache.inputData.inventory.category==0 || inventory.cache.inputData.inventory.category==6)) {
 							$.post("http://www.ereality.ru/ajax/json.php",
-								'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}},"client":1}',
+								'{"controller":"hero","action":"inventoryCategory","params":{"mode":0},"client":1}',
 								function(response) {
 									heroPanel.updateHeroInv(response.response);
 									fast_teleport();
