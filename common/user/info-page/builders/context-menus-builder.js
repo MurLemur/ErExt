@@ -1,4 +1,4 @@
-var ContexMenusBuilderClass = function(ContextMenus) {
+var ContexMenusBuilderClass = function(ContextMenus,UserName) {
 	var self = this;
 	var html = '';
 	var script = '';
@@ -17,6 +17,7 @@ var ContexMenusBuilderClass = function(ContextMenus) {
 				il=il.replace(new RegExp("http://yo-bod.com/", 'g'),"http://www.ereality.ru/goto/yo-bod.com/");
 				il=il.replace(new RegExp("http://gosov.net/", 'g'),"http://www.ereality.ru/goto/gosov.net/");
 				il=il.replace(new RegExp("http://sidzoku.ru/", 'g'),"http://www.ereality.ru/goto/sidzoku.ru/");
+				il=il.replace(new RegExp("username", 'g'),"username="+UserName);
 				html += '' +
 					'<li><a href="' + il + '" target="_blank"><img src="' + item["itemimg"] + '">' + item["itemdescription"] + '</a></li>'
 			});

@@ -54,7 +54,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 
 		// init context menus
 		if (mergedOptions.contextmenus) {
-			new ContexMenusBuilderClass(ContextMenus).init();
+			new ContexMenusBuilderClass(ContextMenus, userName).init();
 		}
 
 		$(document).ready(function() {

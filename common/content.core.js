@@ -224,9 +224,9 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			return false;
 		}
 
-		function filterCT(_text) {
+		function filterCT(_text,_tn) {
 			var now_dt = new Date(new Date().getTime() + (3 + ((new Date()).getTimezoneOffset() / 60)) * 3600 * 1000); // GMT +3
-				if (_text.search("  :102:  КТ !!!") >= 0 && now_dt.getHours() >= erExtSystemOptions.minCTtime && now_dt.getHours() < erExtSystemOptions.maxCTtime) {
+				if (_text.search(":102:  КТ !!!") >= 0 && now_dt.getHours() >= erExtSystemOptions.minCTtime && now_dt.getHours() < erExtSystemOptions.maxCTtime && _tn.search(user.name) != -1) {
 					return true;
 				}
 
@@ -359,7 +359,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			}
 
 			if (_t == CHAT_FLAG_PRIVATE) {
-				if (erExtOptions.CTFilterEnabled && filterCT(_text)) {
+				if (erExtOptions.CTFilterEnabled && filterCT(_text,_tn)) {
 					return;
 				}
 			}
@@ -1331,25 +1331,40 @@ if (myoptions.keyalt) {
 					json.old_teleport_jsonRecv = json.jsonRecv;
 					json.jsonRecv = function(data) {
 						json.old_teleport_jsonRecv.apply(json, [data]);
-						if (data.controller == "inventory" && data.action == "use" && data.response.core!=undefined
-						&& data.response.core.messages[0].search("Вы успешно телепортировались на локацию") > -1) core.trigger("move");
+						if (data.controller == "inventory" && data.action == "use" && data.response.core != undefined && data.response.core.messages[0].search("Вы успешно телепортировались на локацию") > -1) core.trigger("move");
 						return;
 					}
 					fast_teleport = function() {
 						$.each(inventory.items, function(index, value) {
-							if (value.w_id == 3033) {
-								json.jsonSend({"controller": "inventory","action": "use","params": {"uid": value.uid},"client": 1});
+							if (value.w_id == 3033 && value.uid[0] != "g") {
+								json.jsonSend({
+									"controller": "inventory",
+									"action": "use",
+									"params": {
+										"uid": value.uid
+									},
+									"client": 1
+								});
 								return false;
 							}
 						})
 					}
 					$("img[src*=m_teleport]").on('click', function() {
-						if ($.isEmptyObject(inventory.items) || !(inventory.cache.inputData.inventory.category==0 || inventory.cache.inputData.inventory.category==6)) {
+						if ($.isEmptyObject(inventory.items) || !(inventory.cache.inputData.inventory.category == 0 || inventory.cache.inputData.inventory.category == 6)) {
+							var old_category = inventory.cache.inputData.inventory.category;
 							$.post("http://www.ereality.ru/ajax/json.php",
 								'{"controller":"hero","action":"inventoryCategory","params":{"mode":0},"client":1}',
 								function(response) {
 									heroPanel.updateHeroInv(response.response);
 									fast_teleport();
+									if (old_category != inventory.cache.inputData.inventory.category) {
+										$.post("http://www.ereality.ru/ajax/json.php",
+											'{"controller":"hero","action":"inventoryCategory","params":{"mode":' + old_category + '},"client":1}',
+											function(response) {
+												heroPanel.updateHeroInv(response.response);
+											},
+											"json");
+									}
 								},
 								"json");
 						} else fast_teleport();;
