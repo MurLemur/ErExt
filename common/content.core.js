@@ -143,7 +143,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			return  false;
 		}
 		
-		var eliteTournamentStartRegExp = new RegExp('Глашатаи известили о начале Элитного турнира! Деньги, опыт, девочки, картинка в инфу и бессмертная слава ждут тебя!' , 'g');
+		var eliteTournamentStartRegExp = new RegExp('Идет подача заявок на участие в новом Элитном Турнире. Записывайся! Уже слышен звон монет, а элитный опыт так и просится на счет!' , 'g');
 		var eliteTournamentContinueRegExp = new RegExp('Идет подача заявок на участие в Элитном Турнире. Без тебя не начинаем.' , 'g');
 		function filterEliteTournamentNotification(_text) {
 			if(_text.search(eliteTournamentStartRegExp) != -1 || _text.search(eliteTournamentContinueRegExp) != -1) {
@@ -457,6 +457,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			this.erExtSpPanelRez = $('<input id="rez" type="checkbox">').css({"vertical-align": "bottom", "margin": "0px", "margin-left": "3px", "margin-right": "3px"});
 			this.erExtSpPanelGiveLink = $('<button type="button"><span class="ui-button-text">Ссылка</span></button>');
 			this.erExtSpPanelLinkSelect = $('<select><option value="">Выберите ссылку</option></select>');
+            this.erExtSpPanelWarnReasons = $('<select><option value="">Выберите причину</option></select>');
 			this.qreasTimeMap = {};
 			
 			var self = this;
@@ -491,7 +492,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			};
 			
 			this.initSpPanel = function() { 
-				chat.shut_dialog.dialog({height:170});
+				chat.shut_dialog.dialog({height:190, width: 320});
 				self.erExtSpPanel.find('select[name=min]').parent().append($('<label>Рец.</label>').prepend(self.erExtSpPanelRez));			
 				var panelButtonsSet = self.erExtSpPanel.parent().find('.ui-dialog-buttonset').find('.ui-button-text:contains(\'Личные дела\')').parent().parent();
 				
@@ -507,10 +508,41 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				
 				self.initInitLinksRow();
 				self.initQreasTimeMap();
-				
+
+                self.initWarningsRow();
 				self.initSpPanalListeners();
 			};
-			
+
+			this.initWarningsRow = function() {
+                self.erExtSpPanelNameRes.parent().parent()
+                    .after(
+                        $('<tr><td align="right"><b>Предупреждение</b>:&nbsp;</td></tr>')
+                            .append($('<td></td>').append(self.erExtSpPanelWarnReasons))
+                    );
+
+                self.erExtSpPanelNameQreas.children().slice(1).each(function() {
+                    var option = $(this);
+                    self.erExtSpPanelWarnReasons.append(
+                        $('<option></option>').attr('value', chat.$ar_reas[option.attr('value')])
+                            .text(option.text())
+                    );
+                });
+
+                $.each(erExtSystemOptions.sp_shut_up_warnings.split(";"), function() {
+                    if (this.length > 0) {
+                        var data = this.split('|');
+
+                        if (data[1].length > 0 && data[0].length > 0) {
+                            if (data[0].length > 22) {
+                                data[0] = data[0].slice(0, 22) + "..." ;
+                            }
+
+                            self.erExtSpPanelWarnReasons.append($('<option></option>').attr('value', data[1]).text(data[0]));
+                        }
+                    }
+                });
+            }
+
 			this.initInitLinksRow = function() {
 				self.erExtSpPanel.find('[name=fshut] table').append($('<tr><td align="right"><b>Ссылки:&nbsp</b></td></tr>').append($('<td></td>').append(self.erExtSpPanelLinkSelect)));
 			
@@ -568,7 +600,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				
 				self.erExtSpPanelWarnButton.on("click", function() {
 					var userName = self.erExtSpPanelHeroInput.val();
-					var reason = self.erExtSpPanelNameRes.val();
+					var reason = self.erExtSpPanelWarnReasons.val();
 					
 					if (userName == "" || reason == "") {
 						return;
