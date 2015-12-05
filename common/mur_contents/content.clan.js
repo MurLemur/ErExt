@@ -19,7 +19,7 @@ function controller(extOptions) {
 				kt_players.push(val);
 		})
 
-		for (i = 0; i < Math.round(kt_players.length / 10); i++) {
+		for (i = 0; i < Math.ceil(kt_players.length / 10); i++) {
 			$("td:contains(Местоположение)").parent().next().children().append($("<button id='kt'" + i + " style=\"width:35px;cursor:pointer\" >" + i + "</button>"))
 		}
 

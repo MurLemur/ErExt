@@ -16,6 +16,7 @@ var script_inventory = "(" +
 			$.each(inventory.items, function(index, value) {
 				if (value.w_category == 40) mur_items_all.push(value.uid);
 			});
+
 			if (mur_items_all.length == length) {
 				json.jsonRecv = json.old_jsonRecv;
 				return;
@@ -27,7 +28,8 @@ var script_inventory = "(" +
 						"action": "groupItem",
 						"params": {
 							"uid": mitem
-						}
+						},
+						"client":1
 					};
 					json.jsonSend(mur_item_json);
 					return;

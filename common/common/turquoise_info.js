@@ -339,7 +339,7 @@ var turquoiseInfoClass = function(css, holder) {
 	this.getTimeTrade = function() {
 		var minutes = (new Date()).getMinutes();
 		if (minutes > 0) {
-            return self.formatTimeString(0, minutes);
+            return self.formatTimeString(0,60 - minutes);
         }
         else {
 			self.getTradeInfo();
