@@ -93,6 +93,12 @@ var soundsCss = {
 	link: {
 		"margin-right": "3px",
 		"cursor": "pointer"
+	},
+	iconClose: kango.io.getResourceUrl("res/icon_close.gif"),
+	iconCloseHover: kango.io.getResourceUrl("res/icon_close_hover.gif"),
+	table: {
+		"color": "#646464",
+		"font-weight": "bold"
 	}
 }
 

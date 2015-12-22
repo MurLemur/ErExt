@@ -1331,7 +1331,17 @@ if (myoptions.keyalt) {
 					json.old_teleport_jsonRecv = json.jsonRecv;
 					json.jsonRecv = function(data) {
 						json.old_teleport_jsonRecv.apply(json, [data]);
-						if (data.controller == "inventory" && data.action == "use" && data.response.core != undefined && data.response.core.messages[0].search("Вы успешно телепортировались на локацию") > -1) core.trigger("move");
+						if (data.controller == "inventory" && data.action == "use" && data.response.core != undefined && data.response.core.messages[0].search("Вы успешно телепортировались на локацию") > -1) {
+							core.trigger("move");
+							if (core.mur_old_category != inventory.cache.inputData.inventory.category) {
+								$.post("http://www.ereality.ru/ajax/json.php",
+									'{"controller":"hero","action":"inventoryCategory","params":{"mode":' + core.mur_old_category + '},"client":1}',
+									function(response) {
+										heroPanel.updateHeroInv(response.response);
+									},
+									"json");
+							}
+						}
 						return;
 					}
 					fast_teleport = function() {
@@ -1349,26 +1359,29 @@ if (myoptions.keyalt) {
 							}
 						})
 					}
-					$("img[src*=m_teleport]").on('click', function() {
+					inv_teleport = function() {
+						core.mur_old_category = inventory.cache.inputData.inventory.category;
 						if ($.isEmptyObject(inventory.items) || !(inventory.cache.inputData.inventory.category == 0 || inventory.cache.inputData.inventory.category == 6)) {
-							var old_category = inventory.cache.inputData.inventory.category;
 							$.post("http://www.ereality.ru/ajax/json.php",
 								'{"controller":"hero","action":"inventoryCategory","params":{"mode":0},"client":1}',
 								function(response) {
 									heroPanel.updateHeroInv(response.response);
-									fast_teleport();
-									if (old_category != inventory.cache.inputData.inventory.category) {
-										$.post("http://www.ereality.ru/ajax/json.php",
-											'{"controller":"hero","action":"inventoryCategory","params":{"mode":' + old_category + '},"client":1}',
-											function(response) {
-												heroPanel.updateHeroInv(response.response);
-											},
-											"json");
-									}
+									setTimeout(function() {fast_teleport();},200);
 								},
 								"json");
-						} else fast_teleport();;
+						} else fast_teleport();
+					}	
 
+					$("img[src*=m_teleport]").on('click', function() {
+						if (inventory.cache.inputData.inventory==undefined) {
+							$.post("http://www.ereality.ru/ajax/json.php",
+								'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}},"client":1}',
+								function(response) {
+									heroPanel.updateHeroInv(response.response);
+									setTimeout(function() {inv_teleport();},200);
+								},
+								"json");
+						} else inv_teleport();
 					});
 
 				}).toString() + ")();";

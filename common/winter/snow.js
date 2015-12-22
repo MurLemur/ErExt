@@ -10,13 +10,13 @@ function setIdleTimeout(ms){
     if (idleTimer != null) {
 	clearTimeout (idleTimer);
     }
-    idleTimer = setTimeout(makeIdle, ms + 50);
+    idleTimer = setTimeout(function() {makeIdle();}, ms + 50);
 }
  
 function makeIdle(){
     var t = new Date().getTime();
     if (t < idleTimestamp) {
-		idleTimer = setTimeout(makeIdle, idleTimestamp - t + 50);
+		idleTimer = setTimeout(function() {makeIdle();}, idleTimestamp - t + 50);
 		return;
     }
     // console.log('** IDLE **');
@@ -180,7 +180,7 @@ Animation = (function () {
         } else if (window.mozRequestAnimationFrame) {
             return window.mozRequestAnimationFrame(code);
         } else {
-            return setTimeout(code, minInterval);
+            return setTimeout(function() {code();}, minInterval);
         }
     }
 

@@ -39,7 +39,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	function init_info() {
 		var userName = $("#char_frm input[name=echar]").val();
 		if (userName==undefined) {
-			setTimeout(init_info,20);
+			setTimeout(function() {init_info();},20);
 			return;
 		}
 		var serviceRequestSender = new serviceRequestSenderClass();

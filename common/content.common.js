@@ -39,8 +39,6 @@
 //
 // @require common/trace-map/trace-map.js
 //
-// @require common/services/corpses.js
-//
 // @require common/location-info/location-info.js
 // ==/UserScript==
 
@@ -80,7 +78,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 
 	// Отключение/включение звуков в игре
 	if (mergedOptions.sounds_on_off) {
-		var sounds = new soundsClass(soundsCss, holder);
+		var sounds = new soundsClass(soundsCss, holder, popup);
 		sounds.init();
 	}
 

@@ -21,10 +21,10 @@ function controller(extOptions) {
 	if (extOptions.options.estate_services) {
 		setTimeout(lot_replace, 500);
 		$("input[value=Показать]").on("click", function() {
-			setTimeout(lot_replace, 500);
+			setTimeout(function() {lot_replace();}, 500);
 		})
 		$("img[src=\"img/btn_search_char.png\"]").on("click", function() {
-			setTimeout(lot_replace, 500);
+			setTimeout(function() {lot_replace();}, 500);
 		})
 	}
 
