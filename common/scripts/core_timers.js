@@ -284,7 +284,6 @@ core.mur_timer.elit_training = function() {
             "params": {}
         }),
         success: function(jsondata) {
-            console.log(jsondata.response.data);
             core.mur_timer.elit_training_update = false;
 
             if (!jsondata.response.data.campTrain.currentTask) {

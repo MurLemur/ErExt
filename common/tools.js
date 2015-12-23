@@ -96,7 +96,7 @@ var defaultConfig = {
 		'sp_context_link': false,
 		'sp_chat_shut_up': false,
 		'sp_shut_up_panel_background_color': false,
-        'sp_shut_up_panel_links_giver': true,
+        'sp_shut_up_panel_links_giver': false,
         'trade_flooder_active': false,
         'alternative_chat_send': false,
         'forum_ignore': true,

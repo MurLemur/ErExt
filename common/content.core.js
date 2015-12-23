@@ -514,19 +514,11 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			};
 
 			this.initWarningsRow = function() {
-                self.erExtSpPanelNameRes.parent().parent()
+                self.erExtSpPanelMin.parent().parent()
                     .after(
                         $('<tr><td align="right"><b>Предупреждение</b>:&nbsp;</td></tr>')
                             .append($('<td></td>').append(self.erExtSpPanelWarnReasons))
                     );
-
-                self.erExtSpPanelNameQreas.children().slice(1).each(function() {
-                    var option = $(this);
-                    self.erExtSpPanelWarnReasons.append(
-                        $('<option></option>').attr('value', chat.$ar_reas[option.attr('value')])
-                            .text(option.text())
-                    );
-                });
 
                 $.each(erExtSystemOptions.sp_shut_up_warnings.split(";"), function() {
                     if (this.length > 0) {

@@ -2,7 +2,6 @@
 // @name     ErExt_trade_bookmarks
 // @include http://www.ereality.ru/map*n=alltypes
 // @include http://www.ereality.ru/map*e=alltypes
-// @include http://usercp.ereality.ru/services/stock/search*
 // @include http://www.ereality.ru/move/stock*
 // @require tools/jquery.js
 // @require tools.js
