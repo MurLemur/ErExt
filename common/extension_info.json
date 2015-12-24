@@ -15,6 +15,7 @@
     "mur_contents/trade/content.trade-sell.js",
     "mur_contents/trade/content.trade-buy.js",
     "mur_contents/trade/content.trade-bookmarks.js",
+    "mur_contents/trade/content.trade-bookmarks-usercp.js",
     "mur_contents/content.global-event-report.js",
     "mur_contents/content.polyana.js",
     "mur_contents/content.oplot.js",

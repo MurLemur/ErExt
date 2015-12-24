@@ -9,9 +9,11 @@ core.mur_timer.egg = false;
 core.mur_timer.taverna_update = true;
 core.mur_timer.jeweler_update = true;
 core.mur_timer.estate_update = true;
+core.mur_timer.elit_training_update = true;
 core.mur_timer.pet_update = true;
 core.mur_timer.taverna_timer = new Date();
 core.mur_timer.jeweler_timer = new Date();
+core.mur_timer.elit_training_timer = new Date();
 core.mur_timer.pet_timer = new Date();
 core.mur_timer.pet_timer_egg = new Date();
 core.mur_timer.estate_timer = new Date();
@@ -38,6 +40,8 @@ core.mur_timer.init = function() {
 	core.mur_timer.jeweler_getinfo();
 	core.mur_timer.estate_getinfo();
 	core.mur_timer.pet_getinfo();
+    core.mur_timer.elit_training();
+
 	var html = "" +
 		"<div class=\"ext_countdown\">" +
 		"	<img id=\"mur_closepic\" src=\"icon_close.gif\">" +
@@ -58,6 +62,10 @@ core.mur_timer.init = function() {
 		"		<td><span id=\"mur_eggs\" style=\"position:absolute\"></span> Лицензии(<span id=\"pcountm\"></span>): </td>" +
 		"		<td><span id=\"pet_timer\"></span></td>" +
 		"	</tr>" +
+        "	<tr id=\"elite_trining\">" +
+        "		<td>Тренировка: </td>" +
+        "		<td><span id=\"elite_trining_timer\"></span></td>" +
+        "	</tr>" +
 		"	</table>" +
 		"</div>";
 	var htmlcss = {
@@ -89,7 +97,8 @@ core.mur_timer.init = function() {
 		$("#est_timer").text(core.mur_timer.getMyTime(core.mur_timer.estate_timer));
 		$("#pcountm").text(core.mur_timer.pet_cards);
 		$("#pet_timer").text(core.mur_timer.getMyTime(core.mur_timer.pet_timer));
-		$("#pet").on("click", function() {
+        $('#elite_trining_timer').text(core.mur_timer.getMyTime(core.mur_timer.elit_training_timer));
+    	$("#pet").on("click", function() {
 					if (localStorage["pet_id"] != undefined) {
 						function m_jsonResponse(jsondata) {
 							core.mur_timer.pet_cards = jsondata.response.cards;
@@ -265,6 +274,32 @@ core.mur_timer.estate_getinfo = function() {
 	core.mur_timer.estate_update = false;
 }
 
+core.mur_timer.elit_training = function() {
+    $.ajax({
+        type: "POST",
+        url: "/ajax/json.php",
+        data: JSON.stringify({
+            "controller": "tournament",
+            "action": "getCampTrain",
+            "params": {}
+        }),
+        success: function(jsondata) {
+            core.mur_timer.elit_training_update = false;
+
+            if (!jsondata.response.data.campTrain.currentTask) {
+                return;
+            }
+
+            var timer = jsondata.response.data.campTrain.currentTask.timer;
+            var time = new Date();
+            core.mur_timer.elit_training_timer.setTime(time.getTime() + timer * 1000);
+
+
+        },
+        dataType: "json"
+    });
+}
+
 core.mur_timer.main = function() {
 		if (core.mur_timer.taverna) {
 			(core.mur_timer.taverna_update) && core.mur_timer.taverna_getinfo();
@@ -289,6 +324,7 @@ core.mur_timer.main = function() {
 				}
 			}
 		}
+
 	if (core.mur_timer.jeweler) {
 			(core.mur_timer.jeweler_update) && core.mur_timer.jeweler_getinfo();
 
@@ -311,47 +347,65 @@ core.mur_timer.main = function() {
 					});
 				}
 			}
-		}	
-	if (core.mur_timer.estate) {
-			(core.mur_timer.estate_update) && core.mur_timer.estate_getinfo();
-
-			$("#countm").text(core.mur_timer.estate_cards);
-			$("#est_timer").text(core.mur_timer.getMyTime(core.mur_timer.estate_timer));
-			if (core.mur_timer.estate_timer < (new Date()) || (core.mur_timer.estate_cards >= 5)) {
-				core.mur_timer.estate_getinfo();
-			} else $("#est").show();
 		}
-		if (core.mur_timer.pet) {
-			(core.mur_timer.pet_update) && core.mur_timer.pet_getinfo();
 
-			$("#pcountm").text(core.mur_timer.pet_cards);
-			if (core.mur_timer.egg) {
-				if (core.mur_timer.pet_timer_egg < (new Date())) core.mur_timer.pet_getinfo();
-				if ($("#mur_eggs").children().length != core.mur_timer.pet_eggs) {
-					$("#mur_eggs").empty();
-					$("#mur_eggs").css({
-						left: -25 * core.mur_timer.pet_eggs
-					});
-					for (var i = 0; i < core.mur_timer.pet_eggs; i++) {
-						$("#mur_eggs").append($("<img width=\"25px\" src=\"http://img.ereality.ru/-x-/w/egg.png\">"));
-					}
-				}
-			}
-			if (core.mur_timer.pet_cards > 0) {
-				$("#pcountm").parent().css({
-					cursor: "pointer"
-				});
-			} else $("#pcountm").parent().css({
-				cursor: ""
-			});
-			$("#pet_timer").text(core.mur_timer.getMyTime(core.mur_timer.pet_timer));
-			if (core.mur_timer.pet_timer < (new Date()) || ((core.mur_timer.pet_cards == 0) && $("#pet_timer").text() == "0:00")) {
-				$("#pet").hide();
-				core.mur_timer.pet_getinfo();
-			} else $("#pet").show();
+	if (core.mur_timer.estate) {
+        (core.mur_timer.estate_update) && core.mur_timer.estate_getinfo();
+
+        $("#countm").text(core.mur_timer.estate_cards);
+        $("#est_timer").text(core.mur_timer.getMyTime(core.mur_timer.estate_timer));
+        if (core.mur_timer.estate_timer < (new Date()) || (core.mur_timer.estate_cards >= 5)) {
+            core.mur_timer.estate_getinfo();
+        } else $("#est").show();
+    }
+
+    if (core.mur_timer.pet) {
+        (core.mur_timer.pet_update) && core.mur_timer.pet_getinfo();
+
+        $("#pcountm").text(core.mur_timer.pet_cards);
+        if (core.mur_timer.egg) {
+            if (core.mur_timer.pet_timer_egg < (new Date())) core.mur_timer.pet_getinfo();
+            if ($("#mur_eggs").children().length != core.mur_timer.pet_eggs) {
+                $("#mur_eggs").empty();
+                $("#mur_eggs").css({
+                    left: -25 * core.mur_timer.pet_eggs
+                });
+                for (var i = 0; i < core.mur_timer.pet_eggs; i++) {
+                    $("#mur_eggs").append($("<img width=\"25px\" src=\"http://img.ereality.ru/-x-/w/egg.png\">"));
+                }
+            }
+        }
+        if (core.mur_timer.pet_cards > 0) {
+            $("#pcountm").parent().css({
+                cursor: "pointer"
+            });
+        } else $("#pcountm").parent().css({
+            cursor: ""
+        });
+        $("#pet_timer").text(core.mur_timer.getMyTime(core.mur_timer.pet_timer));
+        if (core.mur_timer.pet_timer < (new Date()) || ((core.mur_timer.pet_cards == 0) && $("#pet_timer").text() == "0:00")) {
+            $("#pet").hide();
+            core.mur_timer.pet_getinfo();
+        } else $("#pet").show();
 	}
 
-	if (((core.mur_timer.estate_timer < (new Date())) || (!core.mur_timer.estate)) 
+    if (true) {
+        if (core.mur_timer.elit_training_update) {
+            core.mur_timer.elit_training();
+        }
+
+        $("#elite_trining_timer").text(core.mur_timer.getMyTime(core.mur_timer.elit_training_timer));
+
+        if (user.nowplace == "16:47" || user.nowplace == "tournament") {
+            core.mur_timer.elit_training();
+        }
+
+        if (core.mur_timer.elit_training_timer < (new Date()) || $("#elite_trining_timer").text() == "0:00") {
+            $("#elite_trining").hide();
+        } else $("#elite_trining").show();
+    }
+
+    if (((core.mur_timer.estate_timer < (new Date())) || (!core.mur_timer.estate))
 		&& ((core.mur_timer.taverna_timer < (new Date())) || (!core.mur_timer.taverna)) 
 		&& ((core.mur_timer.jeweler_timer < (new Date())) || (!core.mur_timer.jeweler)) 
 		&& ((core.mur_timer.pet_timer < (new Date())) || (!core.mur_timer.pet))) $(".ext_countdown").hide();
