@@ -62,7 +62,7 @@ var defaultConfig = {
 		'lottery_zk': true,
 		'repeat_kudes': true,
 		'monster_locations': true,
-		'no_flash': false,
+		'no_flash': true,
 		'buttons_holder': false,
 		'kt_in_battle': false,
 		'ok_hide_corpses': true,
@@ -109,7 +109,9 @@ var defaultConfig = {
         'turquoise_info':true,
         'estate_services': true,
         'teleport': false,
-        'pressedEnter': false
+        'pressedEnter': false,
+        'presents2016': true
+        
 	},
 	
 	systemOptions: {

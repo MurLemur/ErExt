@@ -173,3 +173,11 @@ var teleportCss = {
 		"cursor": "pointer"
 	}
 }
+
+var presents2016Css = {
+	presents2016Img: kango.io.getResourceUrl("res/present.png"),
+	link: {
+		"margin-right": "3px",
+		"cursor": "pointer"
+	}
+}

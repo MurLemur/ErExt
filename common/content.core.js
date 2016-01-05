@@ -11,6 +11,7 @@
 // @require     scripts/core_golosovalka.js
 // @require     scripts/core_set_autowear.js
 // @require     scripts/core_turquoise_grid.js
+// @require     scripts/core_presents2016.js
 // @all-frames  false
 // ==/UserScript==
 
@@ -1194,13 +1195,20 @@ if (myoptions.keyalt) {
 			script += script_inventory.replace("inv_union.png", kango.io.getResourceUrl("res/inv_union.png")).replace("inv_union_bg.png", kango.io.getResourceUrl("res/inv_union_bg.png"));
 		}
 
+		// Автосмена комплектов
         if (myoptions.sets_autowear) {
             script += script_set_autowear;
         }
 
+        // Сетка на острове бирюзы
         if (myoptions.turquoise_grid) {
             script += script_turquoise_grid.replace("turquoise_grid", kango.io.getResourceUrl("res/turquoise_grid"));
         }
+
+        // Открывашка новогодних подарков 2016
+		if (myoptions.presents2016) {
+			script += script_presents2016.replace("closeButton_pic", kango.io.getResourceUrl("res/icon_close.gif"));;
+		}
 
 		// Работа со звуковыми оповещениями
 		if (myoptions.no_flash) {

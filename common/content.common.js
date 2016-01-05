@@ -40,6 +40,8 @@
 // @require common/trace-map/trace-map.js
 //
 // @require common/location-info/location-info.js
+//
+// @require common/presents2016.js
 // ==/UserScript==
 
 kango.invokeAsync('kango.storage.getItem', "options", function(options) {
@@ -63,6 +65,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	else $("#div_users").children().first().after("<div class=\"wrap\" style=\"z-index: 95;\"><span id=\"mur_holder\"></span></div>");
 
 	var holder = $('#mur_holder');
+
+	// Открывашка подарков 2016
+	if (mergedOptions.presents2016) {
+		var presents2016 = new presents2016Class(presents2016Css, holder);
+		presents2016.init();
+	}
 
 	// Восстановлениие здоровья персонажа за счет абилок
 	if (mergedOptions.abil_heal) {
