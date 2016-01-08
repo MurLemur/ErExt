@@ -80,15 +80,21 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 	+ ")();"; 
 }
 	var erExtImages = {
-		globalEventImage: kango.io.getResourceUrl("res/global.jpg")	
+		globalEventImage: kango.io.getResourceUrl("res/global.jpg"),	
+		smileMonkey: kango.io.getResourceUrl("res/monkey.gif")
 	};
-	
+
+
 	var formatSmilesString = (function() {	
 		var soundOptions = soundOptionsReplace;
 		var erExtOptions = optionsReplace;
 		var erExtImages = erExtImagesReplace;
 		var erExtSystemOptions = erExtSystemOptionsReplace;
 		
+		function modifySmiles(_text) {
+			return _text.replace(/:m:/ig,'<img src="'+erExtImages.smileMonkey+'">');
+		};
+
 		// @TODO refactor it
 		function modifySectors(_text) {
 			if ((_text.search("опыта")==-1)&&(_text.search("Вы подобрали")==-1)&&(_text.search("http")==-1)&&(_text.search("www.")==-1)&&(_text.search("aliens")==-1)) {
@@ -105,7 +111,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			
 			return _text;
 		};
-	
+		
 		function detectForSound(string, detect, sound) {
 			if ((sound == "nosound")||(detect == "")) {
 				return false;
@@ -367,6 +373,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 
 			if (erExtOptions.chatsectors) {
 				_text = modifySectors(_text);
+				_text = modifySmiles(_text);
 			}
 
 			if (erExtOptions.chatOtherUsersMessageColor && _nick != keeperName && _nick != user.name && _nick != reminderName) {

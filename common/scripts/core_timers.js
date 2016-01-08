@@ -63,7 +63,7 @@ core.mur_timer.init = function() {
 		"		<td><span id=\"pet_timer\"></span></td>" +
 		"	</tr>" +
         "	<tr id=\"elite_trining\">" +
-        "		<td>Тренировка: </td>" +
+        "		<td>Тренировка:</td>" +
         "		<td><span id=\"elite_trining_timer\"></span></td>" +
         "	</tr>" +
 		"	</table>" +
@@ -74,10 +74,9 @@ core.mur_timer.init = function() {
 		"box-shadow": "0 3px 6px rgba(0, 0, 0, 0.45)",
 		"color": "#1e1e1e",
 		"float": "left",
-		"font": "14px/17px Verdana,Arial,Geneva,Helvetica,sans-serif",
+		"font": "12px/15px Verdana,Arial,Geneva,Helvetica,sans-serif",
 		"height": "auto",
-		"padding": "12px",
-		"text-shadow": "0 0 8px #1e1e1e",
+		"padding": "6px",
 		"width": "140px",
 		"position": "absolute",
 		"right": "300px",
@@ -285,15 +284,17 @@ core.mur_timer.elit_training = function() {
         }),
         success: function(jsondata) {
             core.mur_timer.elit_training_update = false;
-
-            if (!jsondata.response.data.campTrain.currentTask) {
-                return;
-            }
+            	if (jsondata.response.data == undefined || !jsondata.response.data.campTrain.currentTask) {
+					if (new Date().setTime(Date.parse(localStorage["elit_training_timer"])) > new Date()) {
+						core.mur_timer.elit_training_timer.setTime(Date.parse(localStorage["elit_training_timer"]));
+					}
+					return;
+				}
 
             var timer = jsondata.response.data.campTrain.currentTask.timer;
             var time = new Date();
             core.mur_timer.elit_training_timer.setTime(time.getTime() + timer * 1000);
-
+            localStorage["elit_training_timer"] = core.mur_timer.elit_training_timer;
 
         },
         dataType: "json"
@@ -427,9 +428,8 @@ core.mur_timer.main = function() {
 			localStorage["timerstylesmall"] = "false";
 			var css = {
 				"border-radius": "6px",
-				"font": "14px/17px Verdana,Arial,Geneva,Helvetica,sans-serif",
-				"padding": "12px",
-				"text-shadow": "0 0 8px #1e1e1e",
+				"font": "12px/15px Verdana,Arial,Geneva,Helvetica,sans-serif",
+				"padding": "6px",
 				"width": "140px",
 			};
 		} else {
@@ -437,8 +437,7 @@ core.mur_timer.main = function() {
 			var css = {
 				"border-radius": "3px",
 				"font": "9px/11px Verdana,Arial,Geneva,Helvetica,sans-serif",
-				"padding": "6px",
-				"text-shadow": "0 0 4px #1e1e1e",
+				"padding": "3px 18px 3px 3px",
 				"width": "100px"
 			};
 		}

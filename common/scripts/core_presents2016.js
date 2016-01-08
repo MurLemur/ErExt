@@ -57,6 +57,12 @@ var script_presents2016 = "(" +
 					p.buttons += '<input type="button" class="invbutt" value="Умелка" onClick="Javascript:getPresent(4, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Звёзды" onClick="Javascript:getPresent(5, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Страница" onClick="Javascript:getPresent(7, ' + p.id + ', this)">';
+					p.buttons += '<input type="button" class="invbutt" value="Ослик 20д." onClick="Javascript:getPresent(6, ' + p.id + ', this,1)">';
+					p.buttons += '<input type="button" class="invbutt" value="Удочка III" onClick="Javascript:getPresent(1, ' + p.id + ', this,13240)">';
+					p.buttons += '<input type="button" class="invbutt" value="Клетка III" onClick="Javascript:getPresent(1, ' + p.id + ', this,13239)">';
+					p.buttons += '<input type="button" class="invbutt" value="Кирка Г. III" onClick="Javascript:getPresent(1, ' + p.id + ', this,1506)">';
+					p.buttons += '<input type="button" class="invbutt" value="Нож III" onClick="Javascript:getPresent(1, ' + p.id + ', this,13252)">';
+			
 				} else if (p.desc == 'Большой Подарок') {
 					p.buttons += '<input type="button" class="invbutt" value="-----" onClick="Javascript:getPresent(-1, -1, this)">';
 					p.buttons += '<input type="button" class="invbutt" value="ЗЗГ" onClick="Javascript:getPresent(1, ' + p.id + ', this)">';
@@ -64,6 +70,11 @@ var script_presents2016 = "(" +
 					p.buttons += '<input type="button" class="invbutt" value="Умелка" onClick="Javascript:getPresent(3, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Звёзды" onClick="Javascript:getPresent(4, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Страница" onClick="Javascript:getPresent(6, ' + p.id + ', this)">';
+					p.buttons += '<input type="button" class="invbutt" value="Ослик 10д." onClick="Javascript:getPresent(5, ' + p.id + ', this,1)">';
+					p.buttons += '<input type="button" class="invbutt" value="Удочка II" onClick="Javascript:getPresent(0, ' + p.id + ', this,13216)">';
+					p.buttons += '<input type="button" class="invbutt" value="Клетка II" onClick="Javascript:getPresent(0, ' + p.id + ', this,13215)">';
+					p.buttons += '<input type="button" class="invbutt" value="Кирка Г. II" onClick="Javascript:getPresent(0, ' + p.id + ', this,1505)">';
+					p.buttons += '<input type="button" class="invbutt" value="Нож II" onClick="Javascript:getPresent(0, ' + p.id + ', this,13228)">';
 				} else if (p.desc == 'Скромный Подарок') {
 					p.buttons += '<input type="button" class="invbutt" value="-----" onClick="Javascript:getPresent(-1, -1, this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Мирка" onClick="Javascript:getPresent(0, ' + p.id + ', this)">';
@@ -71,6 +82,7 @@ var script_presents2016 = "(" +
 					p.buttons += '<input type="button" class="invbutt" value="Звёзды" onClick="Javascript:getPresent(2, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Страница" onClick="Javascript:getPresent(4, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="-----" onClick="Javascript:getPresent(-1, -1, this)">';
+					p.buttons += '<input type="button" class="invbutt" value="Ослик 1д." onClick="Javascript:getPresent(3, ' + p.id + ', this,1)">';
 				} else if (p.desc == 'Средний Подарок') {
 					p.buttons += '<input type="button" class="invbutt" value="-----" onClick="Javascript:getPresent(-1, -1, this)">';
 					p.buttons += '<input type="button" class="invbutt" value="ЗЗГ" onClick="Javascript:getPresent(1, ' + p.id + ', this)">';
@@ -78,6 +90,11 @@ var script_presents2016 = "(" +
 					p.buttons += '<input type="button" class="invbutt" value="Умелка" onClick="Javascript:getPresent(3, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Звёзды" onClick="Javascript:getPresent(4, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Страница" onClick="Javascript:getPresent(6, ' + p.id + ', this)">';
+					p.buttons += '<input type="button" class="invbutt" value="Ослик 5д." onClick="Javascript:getPresent(5, ' + p.id + ', this,1)">';
+					p.buttons += '<input type="button" class="invbutt" value="Удочка I" onClick="Javascript:getPresent(0, ' + p.id + ', this,13192)">';
+					p.buttons += '<input type="button" class="invbutt" value="Клетка I" onClick="Javascript:getPresent(0, ' + p.id + ', this,13191)">';
+					p.buttons += '<input type="button" class="invbutt" value="Кирка Г. I" onClick="Javascript:getPresent(0, ' + p.id + ', this,1504)">';
+					p.buttons += '<input type="button" class="invbutt" value="Нож I" onClick="Javascript:getPresent(0, ' + p.id + ', this,13204)">';
 				} else if (p.desc == 'Малый Подарок') {
 					p.buttons += '<input type="button" class="invbutt" value="-----" onClick="Javascript:getPresent(-1, -1, this)">';
 					p.buttons += '<input type="button" class="invbutt" value="ЗЗГ" onClick="Javascript:getPresent(0, ' + p.id + ', this)">';
@@ -85,6 +102,7 @@ var script_presents2016 = "(" +
 					p.buttons += '<input type="button" class="invbutt" value="Умелка" onClick="Javascript:getPresent(2, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Звёзды" onClick="Javascript:getPresent(3, ' + p.id + ', this)">';
 					p.buttons += '<input type="button" class="invbutt" value="Страница" onClick="Javascript:getPresent(5, ' + p.id + ', this)">';
+					p.buttons += '<input type="button" class="invbutt" value="Ослик 3д." onClick="Javascript:getPresent(4, ' + p.id + ', this,1)">';
 				} else {
 					p.buttons = 'я хз, что в этом подарке [' + p.desc + '], поэтому пусто';
 				}
@@ -94,12 +112,12 @@ var script_presents2016 = "(" +
 				return '<table id="presentTbl' + p.id + '" border="0" cellpadding="1" cellspacing="1" class="textM" width="770" style="margin-top:5px; background-color: #aaaaaa;"><tbody><tr><td align="center" bgcolor="#d7d7d7">&nbsp;<b>' + p.desc + '</b></td><td bgcolor="#d7d7d7">От: <b><i>' + p.name + '</i></b> <a href="/~' + p.name + '" target="_blank"><img align="top" src="http://img.ereality.ru/inf.gif" border="0" alt=""></a> | Получен: ' + p.date + ' </td></tr><tr><td bgcolor="#d7d7d7" width="155" valign="top" align="center">' + (i + 1) + ' из ' + cnt + '</td><td rowspan="2" valign="top" bgcolor="#d7d7d7" height="100%" align="left">' + p.buttons + '</td></tr><tr><td align="center" bgcolor="#d7d7d7" height="10"></td></tr></tbody></table>';
 
 			}
-			getPresent = function(packNum, PresentId, _this) {
+			getPresent = function(packNum, PresentId, _this, itemNum='') {
 				if (packNum < 0) {
 					chat.msgSystem("Плагин", "Подарок #" + PresentId + " скрыт. Остался в подарках. Тупо там нет такой опции, что вы жмякнули =) Новое открытие списка - вернет его в список.");
 					$(_this).parents('table').remove();
 				}
-				var _params = '{"controller":"inventory","action":"openPresent","params":{"presentId":' + PresentId + ',"selectedItems":[],"packNum":"' + packNum + '"},"client":1} ',
+				var _params = '{"controller":"inventory","action":"openPresent","params":{"presentId":' + PresentId + ',"selectedItems":[' + itemNum+ '],"packNum":"' + packNum + '"},"client":1} ',
 					fn = function(data) {
 						var text = "";
 						if ('response' in data) {

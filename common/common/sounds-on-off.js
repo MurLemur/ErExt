@@ -93,7 +93,7 @@ var soundsClass = function(css, holder, popup) {
 	};
 
 	this.getVolumeControl = function() {
-		return $("<tr><td colspan=\"2\" align=\"left\"><input id=\"mur_vol\" type=\"range\" orient=\"vertical\" min=0 max=1 value=1 step=\"0.1\" style=\"height:70px\" /></td></tr>");
+		return $("<tr><td colspan=\"2\" align=\"left\"><input id=\"mur_vol\" type=\"range\"  orient=\"vertical\" min=0 max=1 value=1 step=\"0.1\" style=\"-webkit-appearance: slider-vertical;height:70px;width:20px\" /></td></tr>");
 	};
 
 }
