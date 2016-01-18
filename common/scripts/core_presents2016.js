@@ -109,7 +109,7 @@ var script_presents2016 = "(" +
 
 				i = parseInt(i);
 
-				return '<table id="presentTbl' + p.id + '" border="0" cellpadding="1" cellspacing="1" class="textM" width="770" style="margin-top:5px; background-color: #aaaaaa;"><tbody><tr><td align="center" bgcolor="#d7d7d7">&nbsp;<b>' + p.desc + '</b></td><td bgcolor="#d7d7d7">От: <b><i>' + p.name + '</i></b> <a href="/~' + p.name + '" target="_blank"><img align="top" src="http://img.ereality.ru/inf.gif" border="0" alt=""></a> | Получен: ' + p.date + ' </td></tr><tr><td bgcolor="#d7d7d7" width="155" valign="top" align="center">' + (i + 1) + ' из ' + cnt + '</td><td rowspan="2" valign="top" bgcolor="#d7d7d7" height="100%" align="left">' + p.buttons + '</td></tr><tr><td align="center" bgcolor="#d7d7d7" height="10"></td></tr></tbody></table>';
+				return '<table id="presentTbl' + p.id + '" border="0" cellpadding="1" cellspacing="1" class="textM" width="770" style="margin-top:5px; background-color: #aaaaaa;"><tbody><tr><td align="center" bgcolor="#d7d7d7">&nbsp;<b>' + p.desc + '</b></td><td bgcolor="#d7d7d7">От: <b><i>' + p.name + '</i></b> <a href="/~' + p.name + '" target="_blank"><img align="top" src="https://img.ereality.ru/inf.gif" border="0" alt=""></a> | Получен: ' + p.date + ' </td></tr><tr><td bgcolor="#d7d7d7" width="155" valign="top" align="center">' + (i + 1) + ' из ' + cnt + '</td><td rowspan="2" valign="top" bgcolor="#d7d7d7" height="100%" align="left">' + p.buttons + '</td></tr><tr><td align="center" bgcolor="#d7d7d7" height="10"></td></tr></tbody></table>';
 
 			}
 			getPresent = function(packNum, PresentId, _this, itemNum) {

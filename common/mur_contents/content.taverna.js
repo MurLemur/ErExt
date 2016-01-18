@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        taverna
-// @include     http://www.ereality.ru/map*mode=craft
+// @include     www.ereality.ru/map*mode=craft
 // @require     tools.js
 // @all-frames  true
 // ==/UserScript==

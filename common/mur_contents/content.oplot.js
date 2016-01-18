@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_oplot
-// @include http://www.ereality.ru/map*mode=items_give
+// @include www.ereality.ru/map*mode=items_give
 // @require tools/jquery.js
 // @require tools.js
 // @all-frames  true

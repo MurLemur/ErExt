@@ -26,7 +26,7 @@ var script_golosovalka = "(" +
 	$(document.body.lastChild).after($(htmlmenu));
 	$("#m_golosovalka").contextMenu("m_mur_golosovalka",{});
 	$("#m_golosovalka").on("click",function() {
-		$.get("http://www.ereality.ru/holiday.php?click="+localStorage['golosovalka_id'], function(response) {
+		$.get("https://www.ereality.ru/holiday.php?click="+localStorage['golosovalka_id'], function(response) {
 					if ($("b", response)[0].innerHTML == "Спасибо за голосование!") 
 						top.core.alertMsg($("b", response)[0].innerHTML);
 					else

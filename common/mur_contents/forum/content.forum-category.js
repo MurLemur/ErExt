@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name     ErExt_forum_category
-// @include http://forum.ereality.ru
-// @include http://forum.ereality.ru/category*
-// @exclude http://forum.ereality.ru/forum*
-// @exclude http://forum.ereality.ru/topic*
+// @include forum.ereality.ru
+// @include forum.ereality.ru/category*
+// @exclude forum.ereality.ru/forum*
+// @exclude forum.ereality.ru/topic*
 //
 // @require tools/jquery.js
 // @require tools.js

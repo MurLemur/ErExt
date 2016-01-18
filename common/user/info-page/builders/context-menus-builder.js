@@ -14,9 +14,9 @@ var ContexMenusBuilderClass = function(ContextMenus,UserName) {
 				'<ul class="textM">'
 			$.each(menu["menuitems"], function(id, item) {
 				var il=item["itemlink"];
-				il=il.replace(new RegExp("http://yo-bod.com/", 'g'),"http://www.ereality.ru/goto/yo-bod.com/");
-				il=il.replace(new RegExp("http://gosov.net/", 'g'),"http://www.ereality.ru/goto/gosov.net/");
-				il=il.replace(new RegExp("http://sidzoku.ru/", 'g'),"http://www.ereality.ru/goto/sidzoku.ru/");
+				il=il.replace(new RegExp("http://yo-bod.com/", 'g'),"https://www.ereality.ru/goto/yo-bod.com/");
+				il=il.replace(new RegExp("http://gosov.net/", 'g'),"https://www.ereality.ru/goto/gosov.net/");
+				il=il.replace(new RegExp("http://sidzoku.ru/", 'g'),"https://www.ereality.ru/goto/sidzoku.ru/");
 				il=il.replace(new RegExp("username", 'g'),"username="+UserName);
 				html += '' +
 					'<li><a href="' + il + '" target="_blank"><img src="' + item["itemimg"] + '">' + item["itemdescription"] + '</a></li>'

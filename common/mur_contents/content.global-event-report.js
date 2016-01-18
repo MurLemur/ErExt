@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_Global_Events_Report
-// @include http://www.ereality.ru/event/global/*
+// @include www.ereality.ru/event/global/*
 // @require tools/jquery.js
 // @require tools.js
 //

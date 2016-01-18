@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_forum_all
-// @include http://forum.ereality.ru*
+// @include forum.ereality.ru*
 // @require tools/jquery.js
 // @require tools.js
 // @require css/popup-css.js

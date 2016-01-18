@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name     ErExt_sanctions
-// @include http://www.ereality.ru/map*page=sanctions*
-// @include http://www.ereality.ru/map*action=sanctions*
-// @include http://www.ereality.ru/map*pid=smith2
+// @include www.ereality.ru/map*page=sanctions*
+// @include www.ereality.ru/map*action=sanctions*
+// @include www.ereality.ru/map*pid=smith2
 // @require tools/jquery.js
 // @require tools.js
 // @all-frames  true

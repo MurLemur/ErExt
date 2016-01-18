@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     estate-services
-// @include http://order.ereality.ru/viewpage.php*page_id=43&name*
+// @include order.ereality.ru/viewpage.php*page_id=43&name*
 // @include http://sidzoku.ru/landlord*
 // @require tools/jquery.js
 // @require tools.js

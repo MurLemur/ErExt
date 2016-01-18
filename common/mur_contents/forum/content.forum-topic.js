@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_forum_topic
-// @include http://forum.ereality.ru/topic*
+// @include forum.ereality.ru/topic*
 // @require tools/jquery.js
 // @require tools.js
 //

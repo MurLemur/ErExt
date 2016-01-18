@@ -16,7 +16,7 @@ function view_result(el, fraka) {
     var elements = "";
     $.each(el, function(i) {
         mas = el[i].split("|");
-        elements += "<br><img src='http://img.ereality.ru/a/" + fraka + ".gif'><img title='" + mas[5] + "' src='http://img.ereality.ru/clan/" + mas[4] + ".gif'><b>" + mas[1] + "</b>[" + mas[2] + "]<a target='_blank' href='http://www.ereality.ru/info" + mas[0] + "'><img src='http://img.ereality.ru/inf.gif'></a>";
+        elements += "<br><img src='https://img.ereality.ru/a/" + fraka + ".gif'><img title='" + mas[5] + "' src='https://img.ereality.ru/clan/" + mas[4] + ".gif'><b>" + mas[1] + "</b>[" + mas[2] + "]<a target='_blank' href='https://www.ereality.ru/info" + mas[0] + "'><img src='https://img.ereality.ru/inf.gif'></a>";
     })
     $(elements).appendTo($("#result"));
 }
@@ -38,8 +38,13 @@ function create_mas(data) {
     var mas = data.match(/(.*\s)/g);
     $.each(mas, function(i) {
         var info = mas[i].split("|");
-        if (players[info[9]][info[2]] === undefined) players[info[9]][info[2]] = [];
-        players[info[9]][info[2]].push(mas[i]);
+        try {
+            if (players[info[9]][info[2]] === undefined) players[info[9]][info[2]] = [];
+            players[info[9]][info[2]].push(mas[i]);
+        } catch (e) {
+            if (players[info[10]][info[2]] === undefined) players[info[10]][info[2]] = [];
+            players[info[10]][info[2]].push(mas[i]);
+    }
     });
     return;
 }
@@ -69,23 +74,23 @@ $.ajaxSetup({
     mimeType: "text/html;charset=windows-1251"
 });
 $.ajax({
-    url: "http://ratings.ereality.ru/txt/r6_4.txt",
+    url: "https://ratings.ereality.ru/txt/r6_4.txt",
     success: function(data) {
         create_mas(data);
         $.ajax({
-            url: "http://ratings.ereality.ru/txt/r6_5.txt",
+            url: "https://ratings.ereality.ru/txt/r6_5.txt",
             success: function(data) {
                 create_mas(data);
                 $.ajax({
-                    url: "http://ratings.ereality.ru/txt/r6_6.txt",
+                    url: "https://ratings.ereality.ru/txt/r6_6.txt",
                     success: function(data) {
                         create_mas(data);
                         $.ajax({
-                            url: "http://ratings.ereality.ru/txt/r6_7.txt",
+                            url: "https://ratings.ereality.ru/txt/r6_7.txt",
                             success: function(data) {
                                 create_mas(data);
                                 $.ajax({
-                                    url: "http://ratings.ereality.ru/txt/r6_8.txt",
+                                    url: "https://ratings.ereality.ru/txt/r6_8.txt",
                                     success: function(data) {
                                         create_mas(data);
                                         create_table();
@@ -107,12 +112,12 @@ var fraction_name = {
     5: "Витарра",
     6: "Дримнир"
 }
-$.get("http://ratings.ereality.ru/txt/r6_2.txt", function(data) {
+$.get("https://ratings.ereality.ru/txt/r6_2.txt", function(data) {
     var mas = data.match(/(.*\s)/g);
     $.each(mas, function(i) {
         var info = mas[i].split("|");
         $("#f_" + info[2]).text(fraction_name[info[0]]);
-        $("#f_" + info[2]).prepend($("<img src='http://img.ereality.ru/a/" + info[0] + ".gif'>"));
+        $("#f_" + info[2]).prepend($("<img src='https://img.ereality.ru/a/" + info[0] + ".gif'>"));
         $("#a_" + info[2]).text(info[1]);
     });
     return;
@@ -120,7 +125,7 @@ $.get("http://ratings.ereality.ru/txt/r6_2.txt", function(data) {
 
 
 $.ajax({
-    url: "http://ratings.ereality.ru/txt/r6_1.txt",
+    url: "https://ratings.ereality.ru/txt/r6_1.txt",
     success: function(data) {
         var mas = data.match(/(.*\s)/g);
         $.each(mas, function(i) {
@@ -128,8 +133,8 @@ $.ajax({
             $("#sila_" + i).text(info[1]);
             $("#count_" + i).text(info[2]);
             $("#glava_" + i).text(info[3]);
-            $("#glava_" + i).prepend($("<img src='http://img.ereality.ru/a/" + info[0] + ".gif'>"));
-            $("#glava_" + i).append($("<a target='_blank' href='http://www.ereality.ru/~" + info[3] + "'><img src='http://img.ereality.ru/inf.gif'></a>"));
+            $("#glava_" + i).prepend($("<img src='https://img.ereality.ru/a/" + info[0] + ".gif'>"));
+            $("#glava_" + i).append($("<a target='_blank' href='https://www.ereality.ru/~" + info[3] + "'><img src='https://img.ereality.ru/inf.gif'></a>"));
             $("#aktivka_" + i).text(info[4]);
         });
         var sila_max = parseInt((parseInt($("#sila_0").text()) + parseInt($("#sila_1").text()) + parseInt($("#sila_2").text()) + parseInt($("#sila_3").text()) + parseInt($("#sila_4").text())) / 4.4);

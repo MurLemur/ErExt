@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_clan
-// @include http://www.ereality.ru/clan.php
+// @include www.ereality.ru/clan.php
 // @require tools/jquery.js
 // @require tools.js
 // @all-frames  true

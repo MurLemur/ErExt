@@ -1,11 +1,9 @@
 // ==UserScript==
 // @name        ErExt_main
-// @include     http://www.ereality.ru/core*
-// @include 	http://freedom.erclan.ru/analiz*
-// @include 	http://www.ereality.ru/log*
-// @include		http://www.ereality.ru/map.php*
-// @include		http://www.ereality.ru/move*
-// @include     http://www.ereality.ru/instance*
+// @include     www.ereality.ru/core*
+// @include		www.ereality.ru/map.php*
+// @include		www.ereality.ru/move*
+// @include     www.ereality.ru/instance*
 // @require     tools.js
 // @require		tools/jquery.js
 // @require     tools/messaging-enum.js
@@ -28,7 +26,7 @@ kango.invokeAsync('kango.storage.getItem',"options",function(value) {
 //=====================================================================
 
 if (myoptions.unpaused) {
-	if (location.href.search("http://www.ereality.ru/core") != -1) {
+	if (location.href.search("www.ereality.ru/core") != -1) {
 
 		if (kango.browser.getName() != "firefox") {
 			document.getElementById("span_sort").previousElementSibling.href='javascript: users.load(); document.getElementById("a_users_loc").focus();';
@@ -53,7 +51,7 @@ if (myoptions.unpaused) {
 			return myoptions.no_block_browser_keys;
 		}
 	} 
-	else if ((location.href.search("http://www.ereality.ru/move") != -1)&&(myoptions.chatsectors)) { 
+	else if ((location.href.search("www.ereality.ru/move") != -1)&&(myoptions.chatsectors)) { 
 		document.onkeyup = function (e) {
 			e = e || window.event;
 						
@@ -77,7 +75,7 @@ if (myoptions.unpaused) {
 			}
 		} , 0);
 	}
-	else if (location.href.search("http://www.ereality.ru/instance") != -1) {
+	else if (location.href.search("www.ereality.ru/instance") != -1) {
 		document.onkeyup = function (e) {
 			e = e || window.event;
 			
@@ -88,7 +86,7 @@ if (myoptions.unpaused) {
 			return myoptions.no_block_browser_keys;
 		}
 	}  
-	else if ((location.href.search("http://www.ereality.ru/map.php") != -1) && (location.href.search("rating") == -1)  && (location.href.search("fights") == -1)) {  // Исключая рейтинги на арене,там свой обработчик ников
+	else if ((location.href.search("www.ereality.ru/map.php") != -1) && (location.href.search("rating") == -1)  && (location.href.search("fights") == -1)) {  // Исключая рейтинги на арене,там свой обработчик ников
 		if (location.href.search("action=demands") != -1) {
 			xpathRes = xpath('//a[contains(@href,"/map.php?action=demands")]');
 			
@@ -100,7 +98,7 @@ if (myoptions.unpaused) {
 		if (myoptions.clnick) {   
 			div = document.getElementById("div_bhtml"); // Кликабельные ники
 			if (div!=undefined) {   
-				xpathRes = xpath('//div[@id="div_bhtml"]//img[@src="http://img.ereality.ru/inf.gif"]');
+				xpathRes = xpath('//div[@id="div_bhtml"]//img[contains(@src,"img.ereality.ru/inf.gif")]');
 				
 				if (xpathRes.snapshotLength>0) {
 					for(i=0; i<xpathRes.snapshotLength; i++) {

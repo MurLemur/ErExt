@@ -271,16 +271,16 @@ var turquoiseInfoClass = function(css, holder) {
 
 	this.getInfoPirat = function() {
 		kango.xhr.send({
-            url: 'http://api.ereality.ru/contrabandist.txt',
+            url: 'https://api.ereality.ru/contrabandist.txt',
             method: 'GET',
             contentType: 'json'
         }, function(data) {
 			if (data.response != null) {
-				self.pirateItem.attr("src", "http://img.ereality.ru/w/" + self.getItemImg(data.response.w_id))
+				self.pirateItem.attr("src", "https://img.ereality.ru/w/" + self.getItemImg(data.response.w_id))
                     .attr("title", self.getItemTitle(data.response.w_id));
 				self.pirateText.text(" куплю " + (parseInt(data.response.count_max) - parseInt(data.response.count_sold)) + " ед.");
 			} else {
-				self.pirateItem.attr("src", "http://img.ereality.ru/smile/p/825.gif");
+				self.pirateItem.attr("src", "https://img.ereality.ru/smile/p/825.gif");
 				self.pirateText.text(" не работает API");
 			}
 		});
@@ -369,7 +369,7 @@ var turquoiseInfoClass = function(css, holder) {
                 self.timerIslandSpan.text(self.getUpdateTime(self.timer_island));
 			} else {
                 kango.xhr.send({
-                    url: 'http://api.ereality.ru/geologist_map_update.txt',
+                    url: 'https://api.ereality.ru/geologist_map_update.txt',
                     method: 'GET',
                     contentType: 'json'
                 }, function(data) {

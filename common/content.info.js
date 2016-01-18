@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        ErExt_info
-// @include     http://www.ereality.ru/~*
-// @include     http://www.ereality.ru/info*
+// @include     www.ereality.ru/~*
+// @include     www.ereality.ru/info*
 // @require  	tools/jquery.js
 // @require     tools.js
 // @require 	css/info-buttons-css.js

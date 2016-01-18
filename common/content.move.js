@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name     ErExt_ModifyMove
-// @include	http://www.ereality.ru/move*
-// @include	http://www.ereality.ru/map.php*modeSwitch*
+// @include	www.ereality.ru/move*
+// @include	www.ereality.ru/map.php*modeSwitch*
 // @require     tools.js
 // @all-frames  true
 // ==/UserScript==

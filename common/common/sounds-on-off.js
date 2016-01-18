@@ -74,7 +74,7 @@ var soundsClass = function(css, holder, popup) {
 		$("#mur_vol", self.view).on("change", function() {
 			self.coreAudio.volume = this.value;
 			if (self.soundsStatus) {
-				self.coreAudio.src = "http://www.ereality.ru/mp3/trade.mp3";
+				self.coreAudio.src = "https://www.ereality.ru/mp3/trade.mp3";
 				self.coreAudio.play();
 			}
 			localStorage['soundsVolume']=this.value;

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        trade-transfer
-// @include     http://www.ereality.ru/ldh/*mode=61&*
+// @include     www.ereality.ru/ldh/*mode=61&*
 // @require 	tools/jquery.js
 // @require     tools.js
 // @all-frames  true

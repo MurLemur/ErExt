@@ -65,14 +65,14 @@
 			if (self.mur_sounds && self.mur_sounds[defaultConfig.soundOptions[key].sound] != undefined)
 				src_sound = self.mur_sounds[defaultConfig.soundOptions[key].sound];
 			else
-				src_sound = 'http://www.ereality.ru/mp3/' + defaultConfig.soundOptions[key].sound + '.mp3" type="audio/mp3';
+				src_sound = 'https://www.ereality.ru/mp3/' + defaultConfig.soundOptions[key].sound + '.mp3" type="audio/mp3';
 			$('#' + key).parent().parent().append('<td><audio controls id="s_' + key + '" src="' + src_sound + '" type="audio/mp3" </audio></td>');
 			$('#' + key).val(defaultConfig.soundOptions[key].sound).on("click", function() {
 				defaultConfig.soundOptions[this.id].sound = $(this).val();
 				if (self.mur_sounds && self.mur_sounds[$(this).val()] != undefined)
 					$('#s_' + this.id).attr("src", self.mur_sounds[$(this).val()]);
 				else
-					$('#s_' + this.id).attr("src", 'http://www.ereality.ru/mp3/' + $(this).val() + '.mp3');
+					$('#s_' + this.id).attr("src", 'https://www.ereality.ru/mp3/' + $(this).val() + '.mp3');
 				self.saveOptions("soptions", defaultConfig.soundOptions);
 			});
 			$("#custom_sounds").on("change", function() {

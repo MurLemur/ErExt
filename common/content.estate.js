@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_Estate
-// @include  http://www.ereality.ru/estates.php
+// @include  www.ereality.ru/estates.php
 // @require tools/jquery.js
 // @require tools.js
 // @require css/popup-css.js
@@ -156,7 +156,7 @@ function controller(extOptions) {
 			$("#estateHistoryData b").each(function() {
 				var current = $(this);
 				
-				current.after($(addToVictimListImg.parent().html() + "<a href='http://www.ereality.ru/~" + current.text() + "' target='_blank'><img class=\"inf\" src=\"http://img.ereality.ru/inf.gif\"></a>"));
+				current.after($(addToVictimListImg.parent().html() + "<a href='https://www.ereality.ru/~" + current.text() + "' target='_blank'><img class=\"inf\" src=\"https://img.ereality.ru/inf.gif\"></a>"));
 			});
 		}			
 	}).toString()

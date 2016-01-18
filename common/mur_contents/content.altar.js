@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_Altar
-// @include http://www.ereality.ru/map.php*mode=altar*
+// @include www.ereality.ru/map.php*mode=altar*
 //
 // @require tools/jquery.js
 // @require tools.js

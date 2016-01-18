@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        trade-sell
-// @include     http://www.ereality.ru/map*n=useritems*
-// @include     http://www.ereality.ru/map*e=useritems*
-// @include 	http://www.ereality.ru/map*action=sell
-// @include 	http://www.ereality.ru/map*mode=sell
+// @include     www.ereality.ru/map*n=useritems*
+// @include     www.ereality.ru/map*e=useritems*
+// @include 	www.ereality.ru/map*action=sell
+// @include 	www.ereality.ru/map*mode=sell
 // @require     tools.js
 // @all-frames  true
 // ==/UserScript==
@@ -22,7 +22,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 	// Ссылка на ресурсы в госе
 	if (myoptions.resources_prices) {
-		$("#span_lotmassa").parent().parent().append($("<br><a target=\"_blank\" href=\"http://www.ereality.ru/goto/er-help.ru/s/14.php\">Ресурсы в госе</a>"));
+		$("#span_lotmassa").parent().parent().append($("<br><a target=\"_blank\" href=\"https://www.ereality.ru/goto/er-help.ru/s/14.php\">Ресурсы в госе</a>"));
 	}
 
 	if (myoptions.taverna_filters && (location.href.search("mode=sell") != -1) && top.document.getElementById("span_location").text == "Таверна") {
@@ -54,7 +54,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 			//Выставление лота на биржу
 			top.core.addlot = function(id, price, ltime) {
-				$.post("http://www.ereality.ru/ajax/stock/", '<root type="5" uid="' + id + '" price="' + price + '" stype="0" stime="' + ltime + '" bprice="0" whole="0"></root>', stock_processXML);
+				$.post("https://www.ereality.ru/ajax/stock/", '<root type="5" uid="' + id + '" price="' + price + '" stype="0" stime="' + ltime + '" bprice="0" whole="0"></root>', stock_processXML);
 			}
 
 

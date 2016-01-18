@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        trade-buy
-// @include     http://www.ereality.ru/map*n=alltypes
+// @include     www.ereality.ru/map*n=alltypes
 // @require     tools.js
 // @all-frames  true
 // ==/UserScript==
@@ -14,7 +14,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 	// Ссылка на ресурсы в госе
 	if (myoptions.resources_prices) {
-		$("#span_lotmassa").parent().parent().append($("<br><a target=\"_blank\" href=\"http://www.ereality.ru/goto/er-help.ru/s/14.php\">Ресурсы в госе</a>"));
+		$("#span_lotmassa").parent().parent().append($("<br><a target=\"_blank\" href=\"https://www.ereality.ru/goto/er-help.ru/s/14.php\">Ресурсы в госе</a>"));
 	}
 	if (myoptions.trade_buy_full_lot) {
 		var tradeString = (function() { 

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_ModifyCoreFunc
-// @include     http://www.ereality.ru/core/*
+// @include     www.ereality.ru/core/*
 // @require     tools.js
 // @require     scripts/core_map_trace.js
 // @require     scripts/core_monster_locations.js
@@ -81,7 +81,8 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 }
 	var erExtImages = {
 		globalEventImage: kango.io.getResourceUrl("res/global.jpg"),	
-		smileMonkey: kango.io.getResourceUrl("res/monkey.gif")
+		smileMonkey: kango.io.getResourceUrl("res/monkey.gif"),
+		smilePenguin: kango.io.getResourceUrl("res/penguin.gif")
 	};
 
 
@@ -92,12 +93,14 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		var erExtSystemOptions = erExtSystemOptionsReplace;
 		
 		function modifySmiles(_text) {
-			return _text.replace(/:m:/ig,'<img src="'+erExtImages.smileMonkey+'">');
+			return _text.replace(/:m:/ig,'<img src="'+erExtImages.smileMonkey+'">').replace(/:p:/ig,'<img src="'+erExtImages.smilePenguin+'">');
 		};
 
 		// @TODO refactor it
 		function modifySectors(_text) {
-			if ((_text.search("опыта")==-1)&&(_text.search("Вы подобрали")==-1)&&(_text.search("http")==-1)&&(_text.search("www.")==-1)&&(_text.search("aliens")==-1)) {
+
+			if ((_text.search("опыта")==-1)&&(_text.search("Вы подобрали")==-1)&&(_text.search("http")==-1)&&(_text.search("www.")==-1)&&(_text.search("aliens")==-1)
+			&&(_text.search(/ подарил.? Вам /)==-1)) {
 				if ((_text.search("Ауры")!=-1)||(_text.search("ептикон")!=-1)||(_text.search("за убийство")!=-1)||(_text.search("Людей:")!=-1)) {
 					_text=_text.replace(/(\d{1,3})[: \.](\d{1,3})/ig,"<a class=\"textM\" href=\"javascript:(function(){chat.myshowSec($1,$2);})();\">$&</a>"); 
 					}
@@ -373,8 +376,12 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 
 			if (erExtOptions.chatsectors) {
 				_text = modifySectors(_text);
+			}
+
+			if (erExtOptions.clickablePSmiles) {
 				_text = modifySmiles(_text);
 			}
+
 
 			if (erExtOptions.chatOtherUsersMessageColor && _nick != keeperName && _nick != user.name && _nick != reminderName) {
 				_color = chat.chatMsgColor;
@@ -676,7 +683,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 							return chat.ignorAdd(self.menu_target.text()), !0
 						},
 						"sp_ld": function() {
-							window.open('http://www.ereality.ru/ldh/?h_name=' + self.menu_target.text(), '_blank');
+							window.open('https://www.ereality.ru/ldh/?h_name=' + self.menu_target.text(), '_blank');
 							return true;
 						},
 						'shutup': function() {
@@ -866,7 +873,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		
 		if (erExtOptions.fastex) {
 			var oldTemplatesRender = templates.render;
-			var exitLink = $("<a title=\"Выход из игры\" href=\"http://www.ereality.ru/exit.php\" onfocus=\"this.blur();\">[X]</a>");
+			var exitLink = $("<a title=\"Выход из игры\" href=\"https://www.ereality.ru/exit.php\" onfocus=\"this.blur();\">[X]</a>");
 			
 			$(".NickName center").prepend(exitLink);
 			
@@ -885,7 +892,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 		if (erExtOptions.global_info) {			
 			var globalTd = $("<td></td>").css({width: "20px"})
 				.on("click", function() {
-					$.post("http://www.ereality.ru/ajax/global_event/", '<request action="showNextGlobalEvents" />', function (response) {
+					$.post("https://www.ereality.ru/ajax/global_event/", '<request action="showNextGlobalEvents" />', function (response) {
 						window.chat.msgSystem(keeperName, $("msg", response).text())	
 					});
 				});
@@ -986,12 +993,12 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				var htmlmenu = "" +
 					"<div id=\"m_mur_mapsmenu\" class=\"contextMenu\" style=\"visibility: hidden;position:absolute;\">" +
 					"  <ul class=\"textM\">" +
-					"    <li><a href=\"http://sidzoku.ru/maps/ovl/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОВЛ </a></li>" +
-					"    <li><a href=\"http://sidzoku.ru/maps/opp/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОПП </a></li>" +
-					"    <li><a href=\"http://sidzoku.ru/maps/ok/\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/73.gif\">Карта ОК </a></li>" +
-					"    <li><a href=\"http://er-help.ru/scripts/map_shaxt.php\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/292.gif\">Карта шахт </a></li>" +
-					"    <li><a href=\"http://usercp.ereality.ru/services/islands/map\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/1.gif\">Карта БО</a></li>" +
-					"    <li><a href=\"http://www.ereality.ru/goto/er-help.ru/scripts/map_bzo.php\" target=\"_blank\"><img src=\"http://img.ereality.ru/clan/292.gif\">Карта БО</a></li>" +
+					"    <li><a href=\"http://sidzoku.ru/maps/ovl/\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/73.gif\">Карта ОВЛ </a></li>" +
+					"    <li><a href=\"http://sidzoku.ru/maps/opp/\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/73.gif\">Карта ОПП </a></li>" +
+					"    <li><a href=\"http://sidzoku.ru/maps/ok/\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/73.gif\">Карта ОК </a></li>" +
+					"    <li><a href=\"http://er-help.ru/scripts/map_shaxt.php\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/292.gif\">Карта шахт </a></li>" +
+					"    <li><a href=\"http://usercp.ereality.ru/services/islands/map\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/1.gif\">Карта БО</a></li>" +
+					"    <li><a href=\"http://www.ereality.ru/goto/er-help.ru/scripts/map_bzo.php\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/292.gif\">Карта БО</a></li>" +
 					"  </ul>" +
 					"</div>";
 				$(document.body.lastChild).after($(htmlmenu));
@@ -1039,7 +1046,7 @@ if (myoptions.keyalt) {
 	(function(){
 		var zxzx8=core.onKeyUp;
 		var HSets = []; // Список сохраненных комплектов
-		$.post("http://www.ereality.ru/ajax/json.php",
+		$.post("https://www.ereality.ru/ajax/json.php",
 				'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}},"client":1}',
 				function(response) {
 						for(prop in response.response.sets) if (response.response.sets.hasOwnProperty(prop)) {
@@ -1241,7 +1248,7 @@ if (myoptions.keyalt) {
 					if (mur_sounds && mur_sounds[sound] != undefined)
 						coreAudio.attr("src", mur_sounds[sound]);
 					else
-						coreAudio.attr("src", 'http://www.ereality.ru/mp3/' + sound + '.mp3');
+						coreAudio.attr("src", 'https://www.ereality.ru/mp3/' + sound + '.mp3');
 					coreAudio[0].play();
 					return
 				};
@@ -1259,14 +1266,14 @@ if (myoptions.keyalt) {
 					users.isClanTournament(user.place2) &&
 						users.data.length > 4 &&
 						users.data_pos < 39 &&
-						$.post("http://www.ereality.ru/ajax/fdemands/",
+						$.post("https://www.ereality.ru/ajax/fdemands/",
 							'<?xml version="1.0" encoding="windows-1251"?><request mode="10" />',
 							function(response) {
 								$.each($("d", response), function(index, elem) {
 									var mas_players = ($(elem).attr("n1") + $(elem).attr("n2")).split(":");
 									$.each(mas_players, function(i) {
 										if (mas_players[i] != "") {
-											var link = $('<a href="http://www.ereality.ru/log/#id' + $(elem).attr("id") + '/page999" target="_blank"><img src="http://img.ereality.ru/a/swords.gif" class="i" title="В бою"/></a>')
+											var link = $('<a href="https://www.ereality.ru/log/#id' + $(elem).attr("id") + '/page999" target="_blank"><img src="https://img.ereality.ru/a/swords.gif" class="i" title="В бою"/></a>')
 											$("#div_users1 a:contains(" + mas_players[i] + ")").next().next().after(link);
 										};
 									});
@@ -1351,7 +1358,7 @@ if (myoptions.keyalt) {
 		script += "(" +
 			(function() {
 			$("img[src*=medkit]").on('click', function() {
-				$.get("http://www.ereality.ru/clan.php?action=use_abil&i=18&h=1", function(response) {
+				$.get("https://www.ereality.ru/clan.php?action=use_abil&i=18&h=1", function(response) {
 					if ($("b", response)[0].innerHTML == "Вы успешно использовали восстановление!") {
 						top.core.alertMsg($("b", response)[0].innerHTML);
 						top.user.setHME(top.user.hp, top.user.hp, top.user.hp, top.user.ma, top.user.ma, top.user.ma, top.user.en, top.user.en, top.user.en);
@@ -1373,7 +1380,7 @@ if (myoptions.keyalt) {
 						if (data.controller == "inventory" && data.action == "use" && data.response.core != undefined && data.response.core.messages[0].search("Вы успешно телепортировались на локацию") > -1) {
 							core.trigger("move");
 							if (core.mur_old_category != inventory.cache.inputData.inventory.category) {
-								$.post("http://www.ereality.ru/ajax/json.php",
+								$.post("https://www.ereality.ru/ajax/json.php",
 									'{"controller":"hero","action":"inventoryCategory","params":{"mode":' + core.mur_old_category + '},"client":1}',
 									function(response) {
 										heroPanel.updateHeroInv(response.response);
@@ -1401,7 +1408,7 @@ if (myoptions.keyalt) {
 					inv_teleport = function() {
 						core.mur_old_category = inventory.cache.inputData.inventory.category;
 						if ($.isEmptyObject(inventory.items) || !(inventory.cache.inputData.inventory.category == 0 || inventory.cache.inputData.inventory.category == 6)) {
-							$.post("http://www.ereality.ru/ajax/json.php",
+							$.post("https://www.ereality.ru/ajax/json.php",
 								'{"controller":"hero","action":"inventoryCategory","params":{"mode":0},"client":1}',
 								function(response) {
 									heroPanel.updateHeroInv(response.response);
@@ -1413,7 +1420,7 @@ if (myoptions.keyalt) {
 
 					$("img[src*=m_teleport]").on('click', function() {
 						if (inventory.cache.inputData.inventory==undefined) {
-							$.post("http://www.ereality.ru/ajax/json.php",
+							$.post("https://www.ereality.ru/ajax/json.php",
 								'{"controller":"hero","action":"panel","params":{"argv":{"inventory":true}},"client":1}',
 								function(response) {
 									heroPanel.updateHeroInv(response.response);

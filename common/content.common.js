@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_Common
-// @include http://www.ereality.ru/core/*
+// @include www.ereality.ru/core/*
 // @require tools/jquery.js
 // @require tools.js
 // @require css/popup-css.js

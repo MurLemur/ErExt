@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        lottery
-// @include     http://www.ereality.ru/map.php*action*mytickets
+// @include     www.ereality.ru/map.php*action*mytickets
 // @require     tools/messaging-enum.js
 // @require     tools.js
 // @require 	tools/jquery.js
@@ -24,7 +24,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 					var ticket = $("input[value*=Заполнить]:first", $("b:contains(Серебряный хомяк)").parent());
 					if (ticket.length > 0) {
 						var ticket_id = ticket.attr("onclick").match(/\(1, (\d{1,})/)[1];
-						$.post("http://www.ereality.ru/map.php?action=fill&ltype=2&tid=" + ticket_id + "&y=undefined",
+						$.post("https://www.ereality.ru/map.php?action=fill&ltype=2&tid=" + ticket_id + "&y=undefined",
 							'FieldList=' + mes.join("%2C") + '&y=',
 							function(response) {
 								location.reload()
@@ -36,7 +36,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 					var ticket = $("input[value*=Заполнить]:first", $("b:contains(Золотой бизон)").parent());
 					if (ticket.length > 0) {
 						var ticket_id = ticket.attr("onclick").match(/\(0, (\d{1,})/)[1];
-						$.post("http://www.ereality.ru/map.php?action=fill&ltype=1&tid=" + ticket_id + "&y=undefined",
+						$.post("https://www.ereality.ru/map.php?action=fill&ltype=1&tid=" + ticket_id + "&y=undefined",
 							'FieldList=' + mes.join("%2C") + '&y=',
 							function(response) {
 								location.reload()

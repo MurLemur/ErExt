@@ -12,7 +12,7 @@ var globalEventsClickableNamesClass = function(selector) {
 			var currentElement = $(this);
 			
 			var name = $.trim(currentElement.text());
-			var html = currentElement.html().replace(name, '<a target="_blank" href="http://www.ereality.ru/~' + name +'">' + name + '</a>');
+			var html = currentElement.html().replace(name, '<a target="_blank" href="https://www.ereality.ru/~' + name +'">' + name + '</a>');
 
 			currentElement.html(html); 
 		});

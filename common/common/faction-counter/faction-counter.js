@@ -9,7 +9,7 @@ var factionCounterClass = function(usersCommonSelector, usersHolderSelector, pop
 	this.summTds = {};
 	this.view;	
 	this.hideTimer;	
-	this.factionImgPath = "http://img.ereality.ru/a/";
+	this.factionImgPath = "https://img.ereality.ru/a/";
 	this.copyLinkId = "er-ext-copy-link";
 	this.closeButtonId = "er-ext-close-button";
 	this.factions = {

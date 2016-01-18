@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name     ErExt_trade_bookmarks
-// @include http://www.ereality.ru/map*n=alltypes
-// @include http://www.ereality.ru/map*e=alltypes
-// @include http://www.ereality.ru/move/stock*
+// @include www.ereality.ru/map*n=alltypes
+// @include www.ereality.ru/map*e=alltypes
+// @include www.ereality.ru/move/stock*
 // @require tools/jquery.js
 // @require tools.js
 // @all-frames  true

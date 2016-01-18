@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        ip-search
-// @include     http://www.ereality.ru/ldh/*mode=50&*
+// @include     www.ereality.ru/ldh/*mode=50&*
 // @require 	tools/jquery.js
 // @require     tools.js
 // @all-frames  true

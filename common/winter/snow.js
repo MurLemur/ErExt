@@ -77,7 +77,7 @@ doc.ready(function(){
     document.addEventListener("DOMContentLoaded", function () {
 	
 		snowflakesCanvas = jQuery('<canvas id="snowflakesCanvas" />').css("position","fixed").css("top",0).css('z-index', -1).hide();
-        snowflakesCanvas.css("background","#d7d7d7 url('http://img.ereality.ru/d3/bg_line.png') repeat-x");
+        snowflakesCanvas.css("background","#d7d7d7 url('https://img.ereality.ru/d3/bg_line.png') repeat-x");
 		jQuery('body').prepend( snowflakesCanvas );
 		
 		snowflakesCanvas = document.getElementById("snowflakesCanvas");

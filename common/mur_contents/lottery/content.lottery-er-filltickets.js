@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        lottery
-// @include     http://www.ereality.ru/map.php*action*fill*
+// @include     www.ereality.ru/map.php*action*fill*
 // @require     tools.js
 // @require 	tools/jquery.js
 //

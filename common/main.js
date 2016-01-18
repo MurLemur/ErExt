@@ -36,7 +36,7 @@ try {
 // Проверка наличия новой версии
 var details = {
   method: 'GET',
-  url: 'http://news.ereality.ru/client/ver.txt',
+  url: 'http://usercp.ereality.ru/er-client/version.txt',
   async: true,
   contentType: 'text'
 };
@@ -64,7 +64,7 @@ kango.xhr.send(details, function(data) {
 kango.addMessageListener(messagingEnum.lotteryToBackground, function(event) {
   kango.browser.tabs.getAll(function(tabs) {
     $.each(tabs, function() {
-      if (this.getUrl().search("http://www.ereality.ru/core") != -1) this.dispatchMessage(messagingEnum.lotteryToContent, event.data);
+      if (this.getUrl().search("www.ereality.ru/core") != -1) this.dispatchMessage(messagingEnum.lotteryToContent, event.data);
     });
   });
 });

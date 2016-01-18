@@ -46,7 +46,7 @@
     "user/active-items/background.user-active-items.js"
   ],
   "homepage_url": "http://forum.ereality.ru/topic176876/page1.html",
-  "version": "1.0.19.2",
+  "version": "1.0.19.4",
   "name": "EReality Extension",
   "browser_button": {
     "caption": "Открыть меню",
@@ -61,14 +61,14 @@
   "permissions": {
     "notifications": true,
     "content_scripts": [
-      "http://www.ereality.ru/*",
-      "http://www.api.ereality.ru/*",
-      "http://forum.ereality.ru/*",
+      "*://www.ereality.ru/*",
+      "*://www.api.ereality.ru/*",
+      "*://forum.ereality.ru/*",
       "http://gosov.net/lotery.html",
       "http://*.com/efimerka/",
       "http://sidzoku.ru/landlord/",
-      "http://order.ereality.ru/*",
-      "http://usercp.ereality.ru/*",
+      "*://order.ereality.ru/*",
+      "*://usercp.ereality.ru/*",
       "http://er-help.ru/scripts/map_shaxt*"
     ]
   },

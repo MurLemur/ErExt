@@ -217,8 +217,11 @@ core.mur_timer.taverna_getinfo = function() {
 core.mur_timer.pet_getinfo = function() {
 		function m_jsonResponse(jsondata) {
 			core.mur_timer.pet_cards = jsondata.response.cards;
-			timer = jsondata.response.nextCard;
-			timer_egg = jsondata.response.eggTime;
+			if (jsondata.response.size==0) {
+					core.mur_timer.pet = false;
+			}
+			var timer = jsondata.response.nextCard;
+			var timer_egg = jsondata.response.eggTime;
 			core.mur_timer.pet_eggs = 0;
 			$.each(jsondata.response.pets, function() { if (this.type==0) core.mur_timer.pet_eggs++});
 			var time = new Date();
@@ -372,7 +375,7 @@ core.mur_timer.main = function() {
                     left: -25 * core.mur_timer.pet_eggs
                 });
                 for (var i = 0; i < core.mur_timer.pet_eggs; i++) {
-                    $("#mur_eggs").append($("<img width=\"25px\" src=\"http://img.ereality.ru/-x-/w/egg.png\">"));
+                    $("#mur_eggs").append($("<img width=\"25px\" src=\"https://img.ereality.ru/-x-/w/egg.png\">"));
                 }
             }
         }

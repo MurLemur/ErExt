@@ -26,7 +26,7 @@ var popupClass = function(config) {
 		});	
 
 		$('#changelog').click(function() {
-			kango.browser.tabs.create({url:"http://goo.gl/ZbLyJz"});
+			kango.browser.tabs.create({url:"https://goo.gl/ZbLyJz"});
 			window.close();
 		});	
 
@@ -70,7 +70,7 @@ var popupClass = function(config) {
 			$.each(tabs, function() {
 				var url = this.getUrl();
 				
-				if (url.search("http://www.ereality.ru") != -1) {
+				if (url.search("www.ereality.ru") != -1) {
 					this.navigate(url);
 				}
 			});

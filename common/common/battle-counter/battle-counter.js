@@ -30,7 +30,7 @@ var battleCounterClass = function( popup, chatMsgSelector, css) {
 	};
 
 	this.count = function() {
-		$.post("http://www.ereality.ru/ajax/json.php",
+		$.post("https://www.ereality.ru/ajax/json.php",
 			'{"controller":"hero","action":"panel","params":{"argv":{}},"client":1}',
 			function(response) {
 				if (response.response.info != undefined) {

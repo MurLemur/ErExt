@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     ErExt_forum
-// @include http://forum.ereality.ru*page*.html
+// @include forum.ereality.ru*page*.html
 // @require tools/jquery.js
 // @require tools.js
 // @all-frames  true

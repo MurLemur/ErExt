@@ -13,13 +13,13 @@ var dragonsScheduleClass = function(serviseSender) {
 		
 		self.serviseSender.send({
 			method: "GET",
-			url: "http://api.ereality.ru/dragons_schedule.txt",
+			url: "https://api.ereality.ru/dragons_schedule.txt",
 			headers: {
 				"Accept":	"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
 				"Accept-Encoding":	"gzip, deflate",
 				"Accept-Language":	"ru-ru,ru;q=0.8,en-us;q=0.5,en;q=0.3",
 				"Content-Type": "application/x-www-form-urlencoded;",
-				"Referer": "http://ereality.ru"
+				"Referer": "https://ereality.ru"
 			}
 		}, self.requestCallback);
 	}

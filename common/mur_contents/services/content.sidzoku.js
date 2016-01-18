@@ -14,7 +14,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		return;
 	}
 
-	if ((document.referrer.search("http://www.ereality.ru/info") == -1) && (document.referrer.search("http://www.ereality.ru/~") == -1)) {
+	if ((document.referrer.search("www.ereality.ru/info") == -1) && (document.referrer.search("www.ereality.ru/~") == -1)) {
 		return;
 	}
 

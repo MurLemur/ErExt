@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        uid-search
-// @include     http://www.ereality.ru/ldh/*mode=51&*
+// @include     www.ereality.ru/ldh/*mode=51&*
 // @require 	tools/jquery.js
 // @require     tools.js
 // @all-frames  true

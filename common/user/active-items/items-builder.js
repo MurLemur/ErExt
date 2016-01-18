@@ -1,6 +1,6 @@
 var itemsBuilderClass = function(builderCss) {
 	this.builderCss = builderCss;
-	this.imgStore = "http://img.ereality.ru/34x-/w/";
+	this.imgStore = "https://img.ereality.ru/34x-/w/";
 	this.itemsHolder = $("<table></table>");
 	
 	var self = this;
