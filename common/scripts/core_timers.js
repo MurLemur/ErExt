@@ -219,6 +219,7 @@ core.mur_timer.pet_getinfo = function() {
 			core.mur_timer.pet_cards = jsondata.response.cards;
 			if (jsondata.response.size==0) {
 					core.mur_timer.pet = false;
+					return;
 			}
 			var timer = jsondata.response.nextCard;
 			var timer_egg = jsondata.response.eggTime;

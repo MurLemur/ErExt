@@ -231,7 +231,7 @@ var turquoiseInfoClass = function(css, holder) {
 
                 var html = tradeImg +
                     "<img src=\"" + self.getIslandPic(key) + "\" title=\"" + self.getIslandTitle(key) + "\">  " +
-                    "<img width=\"10%\" src=\"http://img.ereality.ru/w/" + jsondata.response.items[key1][6] + "\" title=\"" + jsondata.response.items[key1][5] + "\">" +
+                    "<img width=\"10%\" src=\"https://img.ereality.ru/w/" + jsondata.response.items[key1][6] + "\" title=\"" + jsondata.response.items[key1][5] + "\">" +
                     "<span>" + text + "</span>";
 
                 tradeHolder.append(html);

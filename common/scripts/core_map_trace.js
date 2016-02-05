@@ -361,7 +361,7 @@ var script_map_trace = "(" +
 						
 			this.footstepsForTeammate = function(mapID) {
 				if (mapID == 'to') {
-					if (self.teamStepsOn) {	
+					if (self.teamStepsOn && main.Map.additionalObjects!=undefined) {		
 						var overlay = self.getOverlay(mapID);
 						
 						$.each(main.Map.additionalObjects, function(key) {
