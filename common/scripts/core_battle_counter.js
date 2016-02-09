@@ -5,7 +5,7 @@
  battle.xmlRecv = function(xml) {
  	Old_xmlRecv.apply(battle, [xml]);
 
- 	if ($("msg", xml).length > 0) {
+ 	if ($("msg", xml).length > 0 && $("msg", xml).text().search("фантом")==-1)  {
  		$.get($("msg", xml).text().match(/(id\d{1,})/)[0].replace(/id/, "/log") + "/page1.xml", function(response) {
  			if ($("start", response).attr("type") == 2) {
  				var hdate = $("start", response).attr("date").match(/\d{1,}-\d{1,}-(\d{1,})/)[1];

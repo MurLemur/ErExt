@@ -4,7 +4,7 @@ var sidzokuEstateClass = function() {
 	var self = this;
 	
 	this.init = function(userName, estateHolder) {
-		self.sidzokuEstateLink.attr("href", 'http://sidzoku.ru/landlord/#' + userName).append(self.sidzokuEstateImg);
+		self.sidzokuEstateLink.attr("href", 'http://sidzoku.ru/landlord/?name=' + userName).append(self.sidzokuEstateImg);
 		estateHolder.append(self.sidzokuEstateLink);	
 	}
 }

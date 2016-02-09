@@ -132,7 +132,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 					var item_name = $(this).text();
 
 					if (item_name != "Сломано") {
-                        var link = $('<a  title="Искать на бирже" target="_blank"><img style="display:inline"  src="http://order.ereality.ru/estate/search.png"></a>')
+                        var link = $('<a  title="Искать на бирже" target="_blank"><img style="display:inline"  src="search.png"></a>')
                             .attr('href', 'http://usercp.ereality.ru/services/stock/search?search=' + encodeURIComponent(item_name.replace("(", "").replace(")", "")));
 
 						$(elem).after(link);
@@ -141,7 +141,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			}).toString() + ")();";
 
 	}
-		(script != "") && inject_global(script);
+		(script != "") && inject_global(script.replace("search.png",kango.io.getResourceUrl("res/yo-bods-search.png")));
 
 
 //=========================end.

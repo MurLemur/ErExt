@@ -90,7 +90,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 				}).toString() + ")();";
 		}
-			inject_global(script);
+			(document.querySelector("head").innerHTML!="") &&  inject_global(script);
 		
 	});
 
@@ -144,7 +144,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 						});
 			}).toString() + ")();";
 
-			inject_global(script1);
+			(document.querySelector("head").innerHTML!="") && inject_global(script1);
 		}
 //=========================end.
 });

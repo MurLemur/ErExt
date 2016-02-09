@@ -10,7 +10,6 @@
     "mur_contents/lottery/content.lottery-zk.js",
     "mur_contents/lottery/content.lottery-er.js",
     "mur_contents/lottery/content.lottery-er-filltickets.js",
-    "mur_contents/services/content.sidzoku.js",
     "mur_contents/services/content.efimerka.js",
     "mur_contents/trade/content.trade-sell.js",
     "mur_contents/trade/content.trade-buy.js",
@@ -46,7 +45,7 @@
     "user/active-items/background.user-active-items.js"
   ],
   "homepage_url": "http://forum.ereality.ru/topic176876/page1.html",
-  "version": "1.0.19.4",
+  "version": "1.0.19",
   "name": "EReality Extension",
   "browser_button": {
     "caption": "Открыть меню",
