@@ -181,3 +181,56 @@ var presents2016Css = {
 		"cursor": "pointer"
 	}
 }
+
+var fisherCss = {
+    openLink: {
+        "margin-right": "3px",
+        "cursor": "pointer"
+    },
+    openLinkImg: kango.io.getResourceUrl("res/fish.png"),
+    openLinkActiveImg: kango.io.getResourceUrl("res/fish_on.png")
+}
+
+var fishCounterCss = {
+    textStyle: {
+        "font-family": "Verdana,Arial,Helvetica,Tahoma,Verdana,sans-serif",
+        "font-size": "10px",
+        "text-align": "center",
+        "cursor": "default",
+        "min-width": "35px"
+    },
+    iconClose: kango.io.getResourceUrl("res/icon_close.gif"),
+    iconCloseHover: kango.io.getResourceUrl("res/icon_close_hover.gif"),
+    copyLink: {
+        "cursor": "pointer",
+        "margin": "0px 5px"
+    },
+    iconCopy: kango.io.getResourceUrl("res/copy.png"),
+    clearLink: {
+        "cursor": "pointer",
+        "margin": "0px 5px"
+    },
+    iconClear: kango.io.getResourceUrl("res/delete_database.png"),
+    runLink: {
+        "cursor": "pointer",
+        "margin": "0px 5px"
+    },
+    iconRun: kango.io.getResourceUrl("res/play_black.png"),
+    iconStop: kango.io.getResourceUrl("res/stop_black.png"),
+    tabHeaderNormal: {
+        "font-weight": "normal"
+    },
+    tabHeaderBold: {
+        "font-weight": "bold"
+    },
+    tabLink: {
+        "cursor": "pointer",
+        "margin": "0px 5px"
+    },
+    iconChatNotice: kango.io.getResourceUrl("res/chat_notise.png"),
+    iconChatNoticeOff: kango.io.getResourceUrl("res/chat_notise_off.png"),
+    chatNoticeLink: {
+        "cursor": "pointer",
+        "margin": "0px 5px"
+    }
+}
