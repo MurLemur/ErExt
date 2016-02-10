@@ -21,6 +21,9 @@
 // @require user/active-items/items-builder.js
 // @require user/active-items/user-list-active-items.js
 //
+// @require common/fisher/fisher-builder.js
+// @require common/fisher/fisher-counter.js
+//
 // @require common/context-blocker/context-blocker.js
 //
 // @require common/OK-hide-corpses.js
@@ -113,7 +116,11 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 		var battleCountBuilder = new battleCountBuilderClass(factionContBuilderCss, factionCounterCss, holder);
 		battleCountBuilder.init();
 	}	
-	
+
+    // init silent fisher
+    if (mergedOptions.fisherEnabled) {
+        new fisherBuilderClass(fisherCss, fishCounterCss, holder).init();
+    }
 	// init user list active items
 	if (mergedOptions.userlistactiveitems) {
 		kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {

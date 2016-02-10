@@ -353,7 +353,92 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				});
 			}
 		}
-		
+
+        var fishRegExp = {
+            'Крабы': new RegExp('(?:<b>)?Вы достали из корзины (?:<b>)?(.+?)<\/b>, получено опыта: <b>(.+?)<\/b>, текущая прочность инструмента: <b>(.+?)<\/b>(?:, )?((?:<b>)?Рыбак: (?:<b>)?.+<\/b> \(.+\)(?:<\/b>)?)?'),
+            'Рыба': new RegExp('(?:<b>)?Вы словили (?:<b>)?(.+?)<\/b>, получено опыта: <b>(.+?)<\/b>, текущая прочность инструмента: <b>(.+?)<\/b>(?:, )?(Рыбак: (?:<b>)?.+<\/b> \(.+\)(?:<\/b>)?)?'),
+            '0': new RegExp('(Рыбка соскочила...)'),
+            '1': new RegExp('(Клетка пуста)')
+        };
+
+		function erExtDetectFish(sys, _t, _id, _time, _nick, _tn, _color, _text) {
+            for (var key in fishRegExp) {
+                var match = _text.match(fishRegExp[key]);
+
+                if (match) {
+                    var fish = match[1];
+                    var exp = 0;
+
+                    if (match[2]) {
+                        exp = parseInt(match[2]);
+                    }
+
+                    var fishes = localStorage['fishes'];
+                    if (typeof fishes != "undefined") {
+
+                        fishes = JSON.parse(fishes);
+                    }
+                    else {
+                        fishes = {};
+                    }
+
+                    if (typeof fishes[fish] != "undefined") {
+                        fishes[fish]++;
+                    }
+                    else {
+                        fishes[fish] = 1;
+                    }
+
+                    if (typeof fishes[key + ' Опыта'] != "undefined") {
+                        fishes[key + ' Опыта'] += exp;
+                        fishes[key + ' Подходов']++;
+                    }
+                    else {
+                        fishes[key + ' Опыта'] = exp;
+                        fishes[key + ' Подходов'] = 1;
+                    }
+
+                    localStorage['fishes'] = JSON.stringify(fishes);
+
+
+                    if (typeof localStorage['fisher_chat_notice'] == 'undefined' || localStorage['fisher_chat_notice'] != 'true') {
+                        return true;
+                    }
+
+                    var msg = '';
+                    if (match[3]) {
+                        var exponent = match[3].length - 2;
+                        var durable = parseInt(match[3]);
+
+                        if (exponent < 1) {
+                            exponent = 1;
+                        }
+
+                        if (durable < 21 || durable % (5 * Math.pow(10, exponent)) == 0) {
+                            msg = 'Прочность инструмента для рыбалки: <b> ' + match[3] + '</b>';
+                        }
+                    }
+
+                    if (match[4]) {
+                        if (msg.length > 0) {
+                            msg += '. ';
+                        }
+
+                        msg += match[4];
+                    }
+
+                    if (msg.length > 0) {
+                        oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, msg]);
+                        chat.scrollDown();
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
 		chat.chatMsgColor = erExtSystemOptions.chatMsgColor.slice(1);
 		
 		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
@@ -405,6 +490,11 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 					if (erExtOptions.damaged_items_notification_filter && filterBrokenItemNotifications(_text)) {
 						return;
 					}
+
+                    if (erExtOptions.fisherEnabled && typeof localStorage['fisherRun'] != 'undefined'
+                        && localStorage['fisherRun'] == 'true' && erExtDetectFish(sys, _t, _id, _time, _nick, _tn, _color, _text)) {
+                        return;
+                    }
 
 					if (erExtOptions.filterEmptyJailNotfication && filterJailEmptyNotification(_text)) {
 						return;

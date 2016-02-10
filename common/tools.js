@@ -110,7 +110,8 @@ var defaultConfig = {
         'estate_services': true,
         'teleport': false,
         'pressedEnter': false,
-        'presents2016': true
+        'presents2016': true,
+        'fisherEnabled': false
         
 	},
 	
