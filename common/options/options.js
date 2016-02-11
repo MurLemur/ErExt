@@ -374,7 +374,7 @@ KangoAPI.onReady(function() {
         teleport: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/teleport.png",
         turquoise_info: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/turquoise_info.png",
         timer_jeweler: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/timer_jeweler.png",
-        fisherEnabled: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/silent_fisher.png"
+        fisherEnabled: "https://raw.githubusercontent.com/MurLemur/ErExt/master/help_images/fisherEnabled.png"
     }
 
 	new extensionOptionsClass(htmlopt).init();
