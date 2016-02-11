@@ -1087,7 +1087,8 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 					"    <li><a href=\"http://sidzoku.ru/maps/opp/\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/73.gif\">Карта ОПП </a></li>" +
 					"    <li><a href=\"http://sidzoku.ru/maps/ok/\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/73.gif\">Карта ОК </a></li>" +
 					"    <li><a href=\"http://er-help.ru/scripts/map_shaxt.php\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/292.gif\">Карта шахт </a></li>" +
-					"    <li><a href=\"http://usercp.ereality.ru/services/islands/map\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/1.gif\">Карта БО</a></li>" +
+					"    <li><a href=\"http://usercp.ereality.ru/services/boat-trips/map/turquoise-island\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/1.gif\">Карта БО</a></li>" +
+					"    <li><a href=\"http://usercp.ereality.ru/services/boat-trips/map/green-island\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/1.gif\">Карта ЗО</a></li>" +
 					"    <li><a href=\"http://www.ereality.ru/goto/er-help.ru/scripts/map_bzo.php\" target=\"_blank\"><img src=\"https://img.ereality.ru/clan/292.gif\">Карта БО</a></li>" +
 					"  </ul>" +
 					"</div>";

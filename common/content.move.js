@@ -18,7 +18,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 // Добавление своих локаций на ОВЛ и ОПП 
 	kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {
 		var mergedSystemOptions = mergeOptions(options, defaultConfig.systemOptions);
-
+	
 		var script = "(" +
 		(function() {
 
@@ -90,7 +90,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 				}).toString() + ")();";
 		}
-			(document.querySelector("head").innerHTML!="") &&  inject_global(script);
+			(document.querySelector("head").innerHTML.search("script")!=-1) &&  inject_global(script);
 		
 	});
 
@@ -144,7 +144,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 						});
 			}).toString() + ")();";
 
-			(document.querySelector("head").innerHTML!="") && inject_global(script1);
+			(document.querySelector("head").innerHTML.search("script")!=-1) && inject_global(script1);
 		}
 //=========================end.
 });

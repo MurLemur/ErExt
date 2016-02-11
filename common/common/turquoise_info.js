@@ -4,6 +4,7 @@ var turquoiseInfoClass = function(css, holder) {
 	this.status = false;
 	this.timers = false;
 	this.timer_island = new Date();
+    this.timer_island_Green = new Date();
 	this.timerId;
 	this.arrowImg;
     this.closeButton;
@@ -11,6 +12,7 @@ var turquoiseInfoClass = function(css, holder) {
     this.dataHolder;
 
     this.timerIslandSpan;
+    this.timerIslandGreenSpan;
     this.timerTradeSpan;
     this.timerPirateSpan;
 
@@ -27,6 +29,8 @@ var turquoiseInfoClass = function(css, holder) {
     this.iconIslandTurqouise = kango.io.getResourceUrl("res/island_turquoise.png");
     this.iconIslandUp = kango.io.getResourceUrl("res/island_up.png");
     this.iconIslandTrade = kango.io.getResourceUrl("res/island-trade.png");
+    this.iconIslandGreen = kango.io.getResourceUrl("res/island-green.png");
+    this.iconIslandTobac = kango.io.getResourceUrl("res/island-tobac.png");
 
     var self = this;
 
@@ -63,6 +67,7 @@ var turquoiseInfoClass = function(css, holder) {
                 .attr("title", "Показать таймеры");
 			self.timersTD.hide();
 		}
+      
 		self.dataHolder.show();
 		self.status = true;
 		self.timerId = setInterval(function() {
@@ -109,11 +114,13 @@ var turquoiseInfoClass = function(css, holder) {
         var infoTD = $("<td width=\"210\"></td>").append(self.sellTrade).append(self.buyTrade).append(pirateTrade);
 
         self.timerIslandSpan = $("<span title=\"До обновления месторождений\" id=\"timer_island\"></span>");
+        self.timerIslandGreenSpan = $("<span title=\"До обновления месторождений\" id=\"timer_island_Green\"></span>");
         self.timerTradeSpan = $("<span title=\"До обновления магазинов\" id=\"timer_trade\"></span>");
         self.timerPirateSpan = $("<span title=\"До обновления контрабандиста\" id=\"timer_pirat\"></span>");
 
         self.timersTD = $("<td width=\"65\">").css(self.css.timersTD)
             .append($("<div><img src=\""+ self.iconIslandTurqouise+"\"></div>").append(self.timerIslandSpan))
+            .append($("<div><img src=\""+ self.iconIslandGreen+"\"></div>").append(self.timerIslandGreenSpan))
             .append($("<div><img src=\""+self.iconIslandTrade+"\"></div>").append(self.timerTradeSpan))
             .append($("<div><img src=\""+kango.io.getResourceUrl("res/Pirate.png")+"\"></div>").append(self.timerPirateSpan));
 
@@ -205,12 +212,14 @@ var turquoiseInfoClass = function(css, holder) {
     this.prepareShopDataResponse = function(jsondata) {
         self.sellTrade.html('');
         self.buyTrade.html('');
+        var deals=0;
 
         for (var key in jsondata.response.data.shopItems) {
             for (var key1 in jsondata.response.data.shopItems[key]) {
                 var tradeImg;
                 var text;
                 var tradeHolder;
+                
 
                 if (jsondata.response.data.shopItems[key][key1].buy == 0) {
                     text = " по " + jsondata.response.data.shopItems[key][key1].sale + " (" +
@@ -232,10 +241,24 @@ var turquoiseInfoClass = function(css, holder) {
                 var html = tradeImg +
                     "<img src=\"" + self.getIslandPic(key) + "\" title=\"" + self.getIslandTitle(key) + "\">  " +
                     "<img width=\"10%\" src=\"https://img.ereality.ru/w/" + jsondata.response.items[key1][6] + "\" title=\"" + jsondata.response.items[key1][5] + "\">" +
-                    "<span>" + text + "</span>";
+                    "<span>" + text + "</span><br>";
 
                 tradeHolder.append(html);
+                deals++;
+                
             }
+        }
+        switch (deals) {
+            case 2:
+                self.dataHolder.css({top: "-92px"});break
+            case 3:
+                self.dataHolder.css({top: "-116px"});break
+            case 4:
+                self.dataHolder.css({top: "-140px"});break
+            case 5:
+                self.dataHolder.css({top: "-164px"});break
+            case 6:
+                self.dataHolder.css({top: "-188px"});break    
         }
     }
 
@@ -251,6 +274,10 @@ var turquoiseInfoClass = function(css, holder) {
                 return self.iconIslandUp;
             case "27":
                 return self.iconIslandTrade;
+            case "28":
+                return self.iconIslandGreen;    
+            case "29":
+                return self.iconIslandTobac;    
         }
 
         return '';
@@ -264,6 +291,10 @@ var turquoiseInfoClass = function(css, holder) {
                 return "Верхний Остров";
             case "27":
                 return "Торговый Остров";
+            case "28":
+                return "Зелёный Остров";
+            case "29":
+                return "Табачный Остров";        
         }
 
         return '';
@@ -362,11 +393,14 @@ var turquoiseInfoClass = function(css, holder) {
 	this.refresh_timers = function() {
         var currentTime = new Date();
         var expectedTime = Date.parse(localStorage["island_time"]);
+        var expectedTimeGreen = Date.parse(localStorage["island_time_green"]);
 
-		if (self.timer_island < currentTime) {
-			if (new Date().setTime(expectedTime) > currentTime) {
+		if (self.timer_island < currentTime || self.timer_island_Green < currentTime) {
+			if ((new Date().setTime(expectedTime) > currentTime) && (new Date().setTime(expectedTimeGreen) > currentTime)) {
 				self.timer_island.setTime(expectedTime);
                 self.timerIslandSpan.text(self.getUpdateTime(self.timer_island));
+                self.timer_island_Green.setTime(expectedTimeGreen);
+                self.timerIslandGreenSpan.text(self.getUpdateTime(self.timer_island_Green));
 			} else {
                 kango.xhr.send({
                     url: 'https://api.ereality.ru/geologist_map_update.txt',
@@ -374,8 +408,10 @@ var turquoiseInfoClass = function(css, holder) {
                     contentType: 'json'
                 }, function(data) {
 					var timer = 0;
+                    var timerGreen = 0;
                     if (data.response != null) {
 						timer = data.response.generation["25"];
+                        timerGreen = data.response.generation["28"];
 					}
 
 					if (timer != 0) {
@@ -385,10 +421,18 @@ var turquoiseInfoClass = function(css, holder) {
 					} else {
                         self.timerIslandSpan.text(self.formatTimeString(0, 0));
                     }
+                    if (timerGreen != 0) {
+                        self.timer_island_Green = new Date(timer * 1000);
+                        localStorage["island_time_green"] = self.timer_island_Green;
+                        self.timerIslandGreenSpan.text(self.getUpdateTime(self.timer_island_Green));
+                    } else {
+                        self.timerIslandGreenSpan.text(self.formatTimeString(0, 0));
+                    }
 				});
 			}
 		} else {
             self.timerIslandSpan.text(self.getUpdateTime(self.timer_island));
+            self.timerIslandGreenSpan.text(self.getUpdateTime(self.timer_island_Green));
 		}
 
 		self.timerTradeSpan.text(self.getTimeTrade());

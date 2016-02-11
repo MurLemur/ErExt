@@ -43,7 +43,7 @@ var details = {
 kango.xhr.send(details, function(data) {
   if (data.status == 200 && data.response != null) {
     var text = data.response;
-    if (+text > 19) {
+    if (+text > 20) {
       kango.ui.browserButton.setIcon('icons/grumpy.png');
       if (opt.startup_update_notification != false) {
         try {
