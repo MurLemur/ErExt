@@ -45,8 +45,6 @@ $(document).ready(function() {
                     self.addBookmark(bookmark);
                     self.checkPopupVisible();
                 });
-
-                self.initPopupListeners();
             }
 
             this.initPopupListeners = function() {
