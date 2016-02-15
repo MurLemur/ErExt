@@ -19,7 +19,10 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 			(function() {
 
 			taverna.my_craft = function(idRecipe, count1, count2, count3, cid1, cid2, cid3) {
-				var xmlText = '<request action="fillQueue"><idRecipe>' + idRecipe +
+				var action = "";
+				if (taverna.timeEndWorkers > taverna.curTime) action="fillQueue" 
+				else action="startCraft";	
+				var xmlText = '<request action="'+action+'"><idRecipe>' + idRecipe +
 				 '</idRecipe><component id="'+cid1+'">'   + count1 +
 				  '</component><component id="'+cid2+'">' + count2 + 
 				  '</component><component id="'+cid3+'">' + count3 + 

@@ -422,7 +422,7 @@ var turquoiseInfoClass = function(css, holder) {
                         self.timerIslandSpan.text(self.formatTimeString(0, 0));
                     }
                     if (timerGreen != 0) {
-                        self.timer_island_Green = new Date(timer * 1000);
+                        self.timer_island_Green = new Date(timerGreen * 1000);
                         localStorage["island_time_green"] = self.timer_island_Green;
                         self.timerIslandGreenSpan.text(self.getUpdateTime(self.timer_island_Green));
                     } else {
