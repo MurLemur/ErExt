@@ -111,8 +111,8 @@ var defaultConfig = {
         'teleport': false,
         'pressedEnter': false,
         'presents2016': true,
-        'fisherEnabled': false
-        
+        'fisherEnabled': false,
+        'geologistEnabled': false
 	},
 	
 	systemOptions: {

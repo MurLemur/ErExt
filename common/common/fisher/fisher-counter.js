@@ -90,7 +90,7 @@ var fishCounterClass = function(popup, chatMsgSelector, openImg, counterCss, bui
             'tab': 'crab'
         },
         'Рыбка соскочила...': {
-            'title': 'Рыбка соскочила...',
+            'title': 'Рыбка соскочила..',
             'tab': 'fish'
         },
         'Клетка пуста': {

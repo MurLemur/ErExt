@@ -24,6 +24,9 @@
 // @require common/fisher/fisher-builder.js
 // @require common/fisher/fisher-counter.js
 //
+// @require common/turquoise/turquoise_flags_builder.js
+// @require common/turquoise/turquoise_flags.js
+
 // @require common/context-blocker/context-blocker.js
 //
 // @require common/OK-hide-corpses.js
@@ -121,6 +124,12 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
     if (mergedOptions.fisherEnabled) {
         new fisherBuilderClass(fisherCss, fishCounterCss, holder).init();
     }
+
+    // init silent geologist
+    if (mergedOptions.geologistEnabled) {
+        new turquoiseFlagsBuilderClass(turquoiseBuilderCss, turquoiseFlagsCss, holder).init();
+    }
+
 	// init user list active items
 	if (mergedOptions.userlistactiveitems) {
 		kango.invokeAsync('kango.storage.getItem', "systemOptions", function(options) {

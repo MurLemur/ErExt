@@ -102,8 +102,110 @@ var script_turquoise_grid = "(" +
                 {x: 19, y: 332},
                 {x: 20, y: 332},
             ]
-        }
+        };
 
+        var malachiteGridConfig = {
+            'sectors': [
+                {x: 45, y: 389},
+                {x: 45, y: 391},
+                {x: 45, y: 393},
+                {x: 45, y: 395},
+                {x: 45, y: 397},
+                {x: 45, y: 399},
+                {x: 45, y: 401},
+                {x: 46, y: 389},
+                {x: 46, y: 390},
+                {x: 46, y: 391},
+                {x: 46, y: 392},
+                {x: 46, y: 393},
+                {x: 46, y: 394},
+                {x: 46, y: 395},
+                {x: 46, y: 396},
+                {x: 46, y: 397},
+                {x: 46, y: 398},
+                {x: 46, y: 399},
+                {x: 46, y: 400},
+                {x: 46, y: 401},
+                {x: 46, y: 402},
+                {x: 47, y: 389},
+                {x: 47, y: 390},
+                {x: 47, y: 391},
+                {x: 47, y: 392},
+                {x: 47, y: 393},
+                {x: 47, y: 394},
+                {x: 47, y: 395},
+                {x: 47, y: 396},
+                {x: 47, y: 397},
+                {x: 47, y: 398},
+                {x: 47, y: 399},
+                {x: 47, y: 400},
+                {x: 47, y: 401},
+                {x: 47, y: 402},
+                {x: 48, y: 389},
+                {x: 48, y: 390},
+                {x: 48, y: 391},
+                {x: 48, y: 392},
+                {x: 48, y: 393},
+                {x: 48, y: 394},
+                {x: 48, y: 395},
+                {x: 48, y: 396},
+                {x: 48, y: 397},
+                {x: 48, y: 398},
+                {x: 48, y: 399},
+                {x: 48, y: 400},
+                {x: 48, y: 401},
+                {x: 48, y: 402},
+                {x: 49, y: 389},
+                {x: 49, y: 390},
+                {x: 49, y: 391},
+                {x: 49, y: 392},
+                {x: 49, y: 393},
+                {x: 49, y: 394},
+                {x: 49, y: 395},
+                {x: 49, y: 396},
+                {x: 49, y: 397},
+                {x: 49, y: 398},
+                {x: 49, y: 399},
+                {x: 49, y: 400},
+                {x: 49, y: 401},
+                {x: 49, y: 402},
+                {x: 50, y: 389},
+                {x: 50, y: 390},
+                {x: 50, y: 391},
+                {x: 50, y: 392},
+                {x: 50, y: 393},
+                {x: 50, y: 394},
+                {x: 50, y: 395},
+                {x: 50, y: 396},
+                {x: 50, y: 397},
+                {x: 50, y: 398},
+                {x: 50, y: 399},
+                {x: 50, y: 400},
+                {x: 50, y: 401},
+                {x: 50, y: 402},
+                {x: 51, y: 389},
+                {x: 51, y: 390},
+                {x: 51, y: 391},
+                {x: 51, y: 392},
+                {x: 51, y: 393},
+                {x: 51, y: 394},
+                {x: 51, y: 395},
+                {x: 51, y: 396},
+                {x: 51, y: 397},
+                {x: 51, y: 398},
+                {x: 51, y: 399},
+                {x: 51, y: 400},
+                {x: 51, y: 401},
+                {x: 51, y: 402},
+                {x: 52, y: 390},
+                {x: 52, y: 392},
+                {x: 52, y: 394},
+                {x: 52, y: 396},
+                {x: 52, y: 398},
+                {x: 52, y: 400},
+                {x: 52, y: 402}
+            ]
+        };
         var turquoiseGridClass = function(mainFrame, config) {
             this.mainFrame = mainFrame;
             this.config = config;
@@ -141,7 +243,7 @@ var script_turquoise_grid = "(" +
 
             this.getOverlay = function(map) {
                 if (!self.overlay) {
-                    self.overlay = $('<div class="overlay"></div>');
+                    self.overlay = $('<div class="sectors_overlay"></div>');
 
                     for (var i in self.config['sectors']) {
                         self.overlay.append(self.getCell(
@@ -176,10 +278,15 @@ var script_turquoise_grid = "(" +
             var erExtMainFraime = $('#main');
 
             var turquoiseGrid = new turquoiseGridClass(erExtMainFraime, turquoiseGridConfig);
+            var malachiteGrid = new turquoiseGridClass(erExtMainFraime, malachiteGridConfig);
 
             erExtMainFraime.on('load', function() {
                 if (user.place2 == 25) {
                     turquoiseGrid.usersMoved();
+                }
+
+                if (user.place2 == 28) {
+                    malachiteGrid.usersMoved();
                 }
             });
         });

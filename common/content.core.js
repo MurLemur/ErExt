@@ -11,6 +11,7 @@
 // @require     scripts/core_golosovalka.js
 // @require     scripts/core_set_autowear.js
 // @require     scripts/core_turquoise_grid.js
+// @require     scripts/core_turquoise_flags.js
 // @require     scripts/core_presents2016.js
 // @all-frames  false
 // ==/UserScript==
@@ -153,10 +154,9 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			return  false;
 		}
 		
-		var eliteTournamentStartRegExp = new RegExp('Идет подача заявок на участие в новом Элитном Турнире. Записывайся! Уже слышен звон монет, а элитный опыт так и просится на счет!' , 'g');
-		var eliteTournamentContinueRegExp = new RegExp('Идет подача заявок на участие в Элитном Турнире. Без тебя не начинаем.' , 'g');
+		var eliteTournamentStartRegExp = new RegExp('.*Элитн.* Турнир.*' , 'g');
 		function filterEliteTournamentNotification(_text) {
-			if(_text.search(eliteTournamentStartRegExp) != -1 || _text.search(eliteTournamentContinueRegExp) != -1) {
+			if(_text.search(eliteTournamentStartRegExp) != -1) {
 				return true;
 			}
 			
@@ -357,7 +357,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
         var fishRegExp = {
             'Крабы': new RegExp('(?:<b>)?Вы достали из корзины (?:<b>)?(.+?)<\/b>, получено опыта: <b>(.+?)<\/b>, текущая прочность инструмента: <b>(.+?)<\/b>(?:, )?((?:<b>)?Рыбак: (?:<b>)?.+<\/b> \(.+\)(?:<\/b>)?)?'),
             'Рыба': new RegExp('(?:<b>)?Вы словили (?:<b>)?(.+?)<\/b>, получено опыта: <b>(.+?)<\/b>, текущая прочность инструмента: <b>(.+?)<\/b>(?:, )?(Рыбак: (?:<b>)?.+<\/b> \(.+\)(?:<\/b>)?)?'),
-            '0': new RegExp('(Рыбка соскочила...)'),
+            '0': new RegExp('(Рыбка соскочила..)'),
             '1': new RegExp('(Клетка пуста)')
         };
 
@@ -375,7 +375,6 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 
                     var fishes = localStorage['fishes'];
                     if (typeof fishes != "undefined") {
-
                         fishes = JSON.parse(fishes);
                     }
                     else {
@@ -439,13 +438,52 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
             return false;
         }
 
+        var turquoiseExploreRegExp = {
+            '1': new RegExp('Вы внесли вклад ([0-9]+)% в разведку сектора (?:([0-9]+):([0-9]+)).*')
+        }
+
+        function erExtTurquoiseExplore(_text) {
+            for (var key in turquoiseExploreRegExp) {
+                var match = _text.match(turquoiseExploreRegExp[key]);
+
+                if (match) {
+                    var percent = parseInt(match[1]);
+                    var positionX = match[2];
+                    var positionY = match[3];
+
+                    var turquoiseFlags = localStorage['turquoise_flags'];
+                    if (typeof turquoiseFlags != "undefined") {
+                        turquoiseFlags = JSON.parse(turquoiseFlags);
+                    }
+                    else {
+                        turquoiseFlags = {};
+                    }
+
+                    if (typeof turquoiseFlags[positionX] == "undefined") {
+                        turquoiseFlags[positionX] = {};
+                    }
+
+                    if (typeof turquoiseFlags[positionX][positionY] == "undefined") {
+                        turquoiseFlags[positionX][positionY] = 0;
+                    }
+
+                    turquoiseFlags[positionX][positionY] += percent;
+
+                    localStorage['turquoise_flags'] = JSON.stringify(turquoiseFlags);
+                    localStorage['turquoise_flags_update'] = true;
+
+                    return typeof localStorage['turquoise_flags_chat_notice'] == 'undefined'
+                        || localStorage['turquoise_flags_chat_notice'] != 'true';
+                }
+            }
+
+            return false;
+        }
+
 		chat.chatMsgColor = erExtSystemOptions.chatMsgColor.slice(1);
 		
 		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
 			//console.log(sys, _t, _id, _time, _nick, _tn, _color, _text);
-			if (erExtOptions.clickablePSmiles) {
-				_text = modifyPrivateSmiles(_text);
-			}
 
 			if (_t == CHAT_FLAG_ALIGN) {
 				if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
@@ -458,15 +496,6 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 					return;
 				}
 			}
-
-			if (erExtOptions.chatsectors) {
-				_text = modifySectors(_text);
-			}
-
-			if (erExtOptions.clickablePSmiles) {
-				_text = modifySmiles(_text);
-			}
-
 
 			if (erExtOptions.chatOtherUsersMessageColor && _nick != keeperName && _nick != user.name && _nick != reminderName) {
 				_color = chat.chatMsgColor;
@@ -493,6 +522,11 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 
                     if (erExtOptions.fisherEnabled && typeof localStorage['fisherRun'] != 'undefined'
                         && localStorage['fisherRun'] == 'true' && erExtDetectFish(sys, _t, _id, _time, _nick, _tn, _color, _text)) {
+                        return;
+                    }
+
+                    if (erExtOptions.geologistEnabled && typeof localStorage['turquoise_flags_run'] != 'undefined'
+                        && localStorage['turquoise_flags_run'] == 'true'  && erExtTurquoiseExplore(_text)) {
                         return;
                     }
 
@@ -535,6 +569,18 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			if (erExtOptions.forumgoto) {
 				_text = modifyForumLink(_text);
 			}
+
+            if (erExtOptions.chatsectors) {
+                _text = modifySectors(_text);
+            }
+
+            if (erExtOptions.clickablePSmiles) {
+                _text = modifyPrivateSmiles(_text);
+            }
+
+            if (erExtOptions.clickablePSmiles) {
+                _text = modifySmiles(_text);
+            }
 
 			oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
 			if (erExtOptions.chatLightMessage && mid && mid != 0) $("#n_" + mid).css("background-color", erExtSystemOptions.chatBgColor);
@@ -1308,6 +1354,11 @@ if (myoptions.keyalt) {
         // Сетка на острове бирюзы
         if (myoptions.turquoise_grid) {
             script += script_turquoise_grid.replace("turquoise_grid", kango.io.getResourceUrl("res/turquoise_grid"));
+        }
+
+        // Процент разведки секторов на бирюзе
+        if (myoptions.geologistEnabled) {
+            script += script_turquoise_flags;
         }
 
         // Открывашка новогодних подарков 2016
