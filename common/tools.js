@@ -118,8 +118,6 @@ var defaultConfig = {
 	systemOptions: {
 		"background_scripts_host": "gosov.net/murlemur",
 		"trace_img_src": "",
-		"locatioons_ovl": "",
-		"locatioons_opp": "",
 		"custom_sounds": "",
 		"estateVictims" : {
 			"popupPositionX" : -1,

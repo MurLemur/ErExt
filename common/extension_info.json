@@ -6,6 +6,7 @@
     "content.core.js",
     "content.move.js",
     "content.common.js",
+    "content.map.draw.js",
     "mur_contents/content.taverna.js",
     "mur_contents/lottery/content.lottery-zk.js",
     "mur_contents/lottery/content.lottery-er.js",

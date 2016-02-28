@@ -279,33 +279,35 @@
 </section>
 
  <section class="tab" id="tab5">
-   <form>
-       <p><input type="text" id="background_scripts_host"> Адрес фоновых скриптов</p>
-        <p><input type="text" id="trace_img_src"> Своя картинка для следа</p>
-         <p>Свои локации ОВЛ:</p>
-        <p><textarea id="locatioons_ovl"  cols=60 rows=5>
-    </textarea><span></span></p>
-    <p>Свои локации ОПП:</p>
-        <p><textarea id="locatioons_opp"  cols=60 rows=5>
-    </textarea><span></span>
-    <p style="color:#A4A4A4">Данные вводить в таком виде:<br>(11:22) Моя Локация;(33:44) Любимая Шахта;</p>
-    
-	<p>Торговый автофлудер: <input type="checkbox" id="trade_flooder_active"></p>
-	<p><textarea id="trade_flooder_phrases"  cols=60 rows=5>
-    </textarea><span></span>
-    <p style="color:#A4A4A4">Данные вводить в таком виде:<br> Куплю порох | Продам руны | </p>
+    <form>
+        <p>
+            <input type="text" id="background_scripts_host"> Адрес фоновых скриптов
+        </p>
+        <p>
+            <input type="text" id="trace_img_src"> Своя картинка для следа
+        </p>
 
-       <p>Кем заменять персонажей в форумном игноре:</p>
-       <select id="forum_ignore_user_replace">
-           <option value="gusid">Гусид</option>
-           <option value="sasha">Саша</option>
-           <option value="invis">Анонимус</option>
-           <option value="glad">Гладиатор</option>
-           <option value="fisher">Рыбак</option>
-           <option value="miner">Шахтер</option>
-       </select>
-       <p></p>
-   </form>
+        <p>
+            Торговый автофлудер: <input type="checkbox" id="trade_flooder_active">
+        </p>
+        <p>
+            <textarea id="trade_flooder_phrases"  cols=60 rows=5></textarea>
+            <span></span>
+        </p>
+        <p style="color:#A4A4A4">Данные вводить в таком виде:<br> Куплю порох | Продам руны | </p>
+
+        <p>Кем заменять персонажей в форумном игноре:</p>
+        <select id="forum_ignore_user_replace">
+            <option value="gusid">Гусид</option>
+            <option value="sasha">Саша</option>
+            <option value="invis">Анонимус</option>
+            <option value="glad">Гладиатор</option>
+            <option value="fisher">Рыбак</option>
+            <option value="miner">Шахтер</option>
+        </select>
+        <p></p>
+    </form>
+
 	<label class="buttonclass">	
 		<div class="button" id="exportButton">Экспорт настроек в файл</div>
 	</label>
@@ -330,7 +332,7 @@
 		<tr>
 			<td><input type="checkbox" id="sp_context_warn"><label for="sp_context_warn">Предупредить в контекстном меню</label></td>
 		</tr>
-				<tr>
+        <tr>
 			<td><input type="checkbox" id="sp_context_link"><label for="sp_context_link">Ссылка в контекстном меню</label></td>
 		</tr>
 		<tr>

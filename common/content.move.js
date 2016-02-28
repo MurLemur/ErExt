@@ -21,10 +21,11 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 	
 		var script = "(" +
 		(function() {
+                Map.OldDrawCaution = Map.drawCaution;
+                
+                Map.drawCaution = function() {
+                    Map.OldDrawCaution();
 
-				var Old_drawCaution = Map.drawCaution;
-				Map.drawCaution = function() {
-					Old_drawCaution.apply(Map);
 					if (top.core.caution) {
 						if (top.core.caution < 25 && top.main.Map.caution.percent >= 25 && top.core.mur_soundOptions["sound_25"].sound != "nosound") {
 							top.core.playSwfSound(top.core.mur_soundOptions["sound_25"].sound);
@@ -42,37 +43,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 					top.core.caution = top.main.Map.caution.percent;
 					return;
 				}
-
-				begin_mark
-				if (document.getElementsByClassName("SearchPlace").length > 0) {	
-							options_loc = {
-								"1":  "option_ovl",
-								"3":  "option_opp",
-								"14": "option_to"
-							}
-							var str = options_loc[Map.heroMap];
-
-                            if (typeof str != "undefined") {
-                                var location_mas = str.split(";");
-                                for (var i = 0; i < location_mas.length; i++) {
-                                    if (location_mas[i].length > 5) {
-                                        loc = location_mas[i].split(")");
-                                        sectorId = loc[0].replace("(", "");
-                                        Map.locations[Map.heroMap][sectorId] = loc[1];
-                                        $('<option></option>').attr('value', sectorId).text(Map.locations[Map.heroMap][sectorId]).insertAfter($('option[value="0"]')[1]);
-                                    }
-                                }
-                            }
-				}
-				end_mark
-			}).toString().replace("option_ovl", getStringifyParams(mergedSystemOptions.locatioons_ovl)).replace("option_opp", getStringifyParams(mergedSystemOptions.locatioons_opp)) + ")();";
-
-		if (location.href.search("modeSwitch")!=-1) {
-			script=script.replace("begin_mark","var old_MapDraw = Map.draw;Map.draw = function() {old_MapDraw.apply(Map);top.$('#main').trigger('load');");
-			script=script.replace("end_mark","return;}");
-		} else {
-			script=script.replace("end_mark","").replace("begin_mark","");
-		}
+			}).toString() + ")();";
 
 		//копирование инфы о ботах на секторе в чат по пкм
 		if (myoptions.location_bot_info) {

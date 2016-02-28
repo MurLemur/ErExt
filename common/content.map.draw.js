@@ -1,8 +1,18 @@
-// function(cellX,cellY){return{x:cellX*this.cellWidth+this.cellWidth/2*(cellY%2),y:cellY*this.cellHeight/2}}
-//
+// ==UserScript==
+// @name     ErExt_MapDraw
+// @include     www.ereality.ru/core/*
+// @require     tools.js
+// @all-frames  false
+// ==/UserScript==
 
-var script_turquoise_grid = "(" +
+var pluginOptions = mergeOptions(kango.storage.getItem('options'), defaultConfig.myoptions);
+var pluginSystemOptions =  mergeOptions(kango.storage.getItem('systemOptions'), defaultConfig.systemOptions);
+
+var contentMapDraw = "(" +
     (function() {
+        var pluginOptions = pluginOptionsReplace;
+        var pluginSystemOptions = pluginSystemOptionsReplace;
+
         var turquoiseGridConfig = {
             'sectors': [
                 {x: 12, y: 321},
@@ -103,7 +113,6 @@ var script_turquoise_grid = "(" +
                 {x: 20, y: 332},
             ]
         };
-
         var malachiteGridConfig = {
             'sectors': [
                 {x: 45, y: 389},
@@ -206,6 +215,7 @@ var script_turquoise_grid = "(" +
                 {x: 52, y: 402}
             ]
         };
+
         var turquoiseGridClass = function(mainFrame, config) {
             this.mainFrame = mainFrame;
             this.config = config;
@@ -213,13 +223,7 @@ var script_turquoise_grid = "(" +
 
             var self = this;
 
-            this.usersMoved = function() {
-                var map = self.mainFrame.contents().find('div#container #mapContent');
-
-                if (map.length == 0) {
-                    return;
-                }
-
+            this.usersMoved = function(map) {
                 var overlay = self.getOverlay(map);
                 self.moveCellsToPosition(overlay);
 
@@ -269,25 +273,215 @@ var script_turquoise_grid = "(" +
                     opacity: '0.6',
                     color: '#222',
                     textShadow: '0 0 5px #eee',
-                    'background-image': 'url(turquoise_grid.png)'
+                    'background-image': 'url(turquoiseGridImgReplace.png)'
                 });
+            }
+        }
+        var turquoiseFlagsClass = function(mainFrame) {
+            this.mainFrame = mainFrame;
+            this.overlay = null;
+
+            this.flags = {};
+
+            var self = this;
+
+            this.init = function() {
+                self.getOverlay();
+
+                self.loadFlags();
+                self.updateFlags();
+
+                return self;
+            }
+
+            this.usersMoved = function(map) {
+                var overlay = self.getOverlay();
+
+                if (typeof localStorage['turquoise_flags_update'] == 'undefined' ||
+                    localStorage['turquoise_flags_update'] == 'true') {
+
+                    localStorage['turquoise_flags_update'] = false;
+
+                    self.loadFlags();
+                    self.updateFlags();
+                }
+
+                if (typeof localStorage['turquoise_flags_cleared'] != 'undefined' &&
+                    localStorage['turquoise_flags_cleared'] == 'true' ) {
+                    localStorage['turquoise_flags_cleared'] = false;
+
+                    self.clear();
+                }
+
+                self.moveCellsToPosition();
+                self.moveCellsToPosition(overlay);
+
+                map.append(self.overlay);
+            }
+
+            this.clear = function() {
+                self.flags = {};
+                self.overlay = null;
+            }
+
+            this.moveCellsToPosition = function() {
+                for (var x in self.flags) {
+                    for (var y in self.flags[x]) {
+                        var currentFlag = self.flags[x][y];
+
+                        var sectorPositions = main.Map.globalCoordsToRelative(
+                            main.Map.getCellGlobalCoords(x, y)
+                        );
+
+                        currentFlag['block'].css({
+                            left: sectorPositions.x + "px",
+                            top: sectorPositions.y + "px"
+                        })
+                    }
+                }
+            }
+
+            this.loadFlags = function() {
+                var turquoiseFlags = localStorage['turquoise_flags'];
+                if (typeof turquoiseFlags != "undefined") {
+                    turquoiseFlags = JSON.parse(turquoiseFlags);
+                }
+                else {
+                    turquoiseFlags = {};
+                }
+
+                for (var x in turquoiseFlags) {
+                    for (var y in turquoiseFlags[x]) {
+                        if (typeof self.flags[x] == 'undefined') {
+                            self.flags[x] = {};
+                        }
+
+                        if (typeof self.flags[x][y] == 'undefined') {
+                            self.flags[x][y] = {
+                                'block': null
+                            };
+                        }
+
+                        self.flags[x][y]['percents'] = turquoiseFlags[x][y];
+                    }
+                }
+            }
+
+            this.updateFlags = function() {
+                for (var x in self.flags) {
+                    for (var y in self.flags[x]) {
+                        var currentFlag = self.flags[x][y];
+
+                        if (!currentFlag['block']) {
+                            var flag = self.getCell();
+                            currentFlag['block'] = flag;
+
+                            self.overlay.append(flag);
+                        }
+
+                        currentFlag['block'].find('p').text(currentFlag['percents'] + '%');
+                    }
+                }
+            }
+
+            this.getOverlay = function() {
+                if (!self.overlay) {
+                    self.overlay = $('<div class="flags_overlay"></div>');
+                }
+
+                return self.overlay;
+            }
+
+            this.getCell = function() {
+                return $('<div></div>').css({
+                    position: 'absolute',
+                    height: '32px',
+                    width: '64px',
+                    lineHeight: '32px',
+                    textAlign: 'center',
+                    zIndex: '41',
+                    fontWeight: 'bold',
+                    'font-size': '8px',
+                    'color': '#d7d7d7',
+                    'font-weight': '600',
+                    textShadow: '0 0 5px #eee'
+                }).append(
+                    $('<p></p>').css({
+                        'margin-top': '5px'
+                    })
+                );
             }
         }
 
         $(document).ready(function() {
             var erExtMainFraime = $('#main');
 
-            var turquoiseGrid = new turquoiseGridClass(erExtMainFraime, turquoiseGridConfig);
-            var malachiteGrid = new turquoiseGridClass(erExtMainFraime, malachiteGridConfig);
+            if (pluginOptions.turquoise_grid) {
+                var turquoiseGrid = new turquoiseGridClass(erExtMainFraime, turquoiseGridConfig);
+                var malachiteGrid = new turquoiseGridClass(erExtMainFraime, malachiteGridConfig);
+            }
+
+            if (pluginOptions.geologistEnabled) {
+                var turquoiseFlags = new turquoiseFlagsClass(erExtMainFraime).init();
+                var malachiteFlags = new turquoiseFlagsClass(erExtMainFraime).init();
+            }
 
             erExtMainFraime.on('load', function() {
-                if (user.place2 == 25) {
-                    turquoiseGrid.usersMoved();
+                var drawed = false;
+                var turquoiseGridEnabled = pluginOptions.turquoise_grid;
+                var turqoiseFlagsEnabled = pluginOptions.geologistEnabled
+                    && typeof localStorage['turquoise_flags_run'] != 'undefined'
+                    && localStorage['turquoise_flags_run'] == 'true';
+
+                window.frames.main.Map.drawOld = window.frames.main.Map.draw;
+
+                window.frames.main.Map.extensionDraw = function(mainFrame) {
+                    if (drawed) {
+                        return;
+                    }
+
+                    var map = mainFrame.contents().find('#mapContent');
+
+                    if (map.length == 0) {
+                        return;
+                    }
+
+                    drawed = true;
+
+                    if (user.place2 == 25) {
+                        if (turquoiseGridEnabled) {
+                            turquoiseGrid.usersMoved(map);
+                        }
+
+                        if (turqoiseFlagsEnabled) {
+                            turquoiseFlags.usersMoved(map);
+                        }
+                    }
+
+                    if (user.place2 == 28) {
+                        if (turquoiseGridEnabled) {
+                            malachiteGrid.usersMoved(map);
+                        }
+
+                        if (turqoiseFlagsEnabled) {
+                            malachiteFlags.usersMoved(map);
+                        }
+                    }
                 }
 
-                if (user.place2 == 28) {
-                    malachiteGrid.usersMoved();
+                window.frames.main.Map.draw = function() {
+                    window.frames.main.Map.drawOld();
+
+                    window.frames.main.Map.extensionDraw(erExtMainFraime);
                 }
+
+                window.frames.main.Map.extensionDraw(erExtMainFraime);
             });
         });
     }).toString() + ")();";
+
+contentMapDraw = contentMapDraw.replace('pluginOptionsReplace', JSON.stringify(pluginOptions))
+    .replace('pluginSystemOptionsReplace', JSON.stringify(pluginSystemOptions))
+    .replace("turquoiseGridImgReplace", kango.io.getResourceUrl("res/turquoise_grid"));
+
+inject_global(contentMapDraw);

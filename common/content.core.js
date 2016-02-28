@@ -10,8 +10,6 @@
 // @require     scripts/core_inventory.js
 // @require     scripts/core_golosovalka.js
 // @require     scripts/core_set_autowear.js
-// @require     scripts/core_turquoise_grid.js
-// @require     scripts/core_turquoise_flags.js
 // @require     scripts/core_presents2016.js
 // @all-frames  false
 // ==/UserScript==
@@ -1349,16 +1347,6 @@ if (myoptions.keyalt) {
 		// Автосмена комплектов
         if (myoptions.sets_autowear) {
             script += script_set_autowear;
-        }
-
-        // Сетка на острове бирюзы
-        if (myoptions.turquoise_grid) {
-            script += script_turquoise_grid.replace("turquoise_grid", kango.io.getResourceUrl("res/turquoise_grid"));
-        }
-
-        // Процент разведки секторов на бирюзе
-        if (myoptions.geologistEnabled) {
-            script += script_turquoise_flags;
         }
 
         // Открывашка новогодних подарков 2016

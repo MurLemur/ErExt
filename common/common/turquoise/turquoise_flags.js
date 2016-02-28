@@ -36,6 +36,7 @@ var turquoiseFlagsClass = function(popup, chatMsgSelector, openImg, flagsCss, bu
         this.view = $("<table></table>");
         this.view.append(this.getExitButton());
 
+        this.view.append($('<tr><td align=\"center\"><hr></td></tr>'));
         this.view.append(this.getBottomPanel());
     };
 
