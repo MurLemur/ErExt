@@ -362,7 +362,8 @@ var contentMapDraw = "(" +
                             };
                         }
 
-                        self.flags[x][y]['percents'] = turquoiseFlags[x][y];
+                        self.flags[x][y]['percent'] = turquoiseFlags[x][y]['percent'];
+                        self.flags[x][y]['totalPercent'] = turquoiseFlags[x][y]['totalPercent'];
                     }
                 }
             }
@@ -379,7 +380,7 @@ var contentMapDraw = "(" +
                             self.overlay.append(flag);
                         }
 
-                        currentFlag['block'].find('p').text(currentFlag['percents'] + '%');
+                        currentFlag['block'].find('p').text(currentFlag['percent'] + '(' + currentFlag['totalPercent'] + ')%');
                     }
                 }
             }
@@ -402,12 +403,11 @@ var contentMapDraw = "(" +
                     zIndex: '41',
                     fontWeight: 'bold',
                     'font-size': '8px',
-                    'color': '#d7d7d7',
-                    'font-weight': '600',
-                    textShadow: '0 0 5px #eee'
+                    'color': 'white',
+                    'font-weight': '400'
                 }).append(
                     $('<p></p>').css({
-                        'margin-top': '5px'
+                        'margin-top': '9px'
                     })
                 );
             }

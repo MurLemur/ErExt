@@ -437,7 +437,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
         }
 
         var turquoiseExploreRegExp = {
-            '1': new RegExp('Вы внесли вклад ([0-9]+)% в разведку сектора (?:([0-9]+):([0-9]+)).*')
+            '1': new RegExp('Вы внесли вклад ([0-9]+)% в разведку сектора (?:([0-9]+):([0-9]+)).* Ваш вклад: [0-9]*%, текущий прогресс разведки: ([0-9]+)%')
         }
 
         function erExtTurquoiseExplore(_text) {
@@ -448,6 +448,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
                     var percent = parseInt(match[1]);
                     var positionX = match[2];
                     var positionY = match[3];
+                    var totalPercent = match[4];
 
                     var turquoiseFlags = localStorage['turquoise_flags'];
                     if (typeof turquoiseFlags != "undefined") {
@@ -462,10 +463,14 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
                     }
 
                     if (typeof turquoiseFlags[positionX][positionY] == "undefined") {
-                        turquoiseFlags[positionX][positionY] = 0;
+                        turquoiseFlags[positionX][positionY] = {
+                            'percent': 0,
+                            'totalPercent': 0
+                        };
                     }
 
-                    turquoiseFlags[positionX][positionY] += percent;
+                    turquoiseFlags[positionX][positionY]['percent'] += percent;
+                    turquoiseFlags[positionX][positionY]['totalPercent'] = totalPercent;
 
                     localStorage['turquoise_flags'] = JSON.stringify(turquoiseFlags);
                     localStorage['turquoise_flags_update'] = true;

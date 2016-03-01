@@ -145,7 +145,7 @@ var turquoiseFlagsClass = function(popup, chatMsgSelector, openImg, flagsCss, bu
 
             for (var x in flags) {
                 for (var y in flags[x]) {
-                    chatMsg += x + ":" + y + " - " + flags[x][y] + "% ";
+                    chatMsg += x + ":" + y + " - " + flags[x][y]['percent'] + "% ";
                 }
             }
         }
