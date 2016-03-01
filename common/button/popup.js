@@ -26,7 +26,7 @@ var popupClass = function(config) {
 		});	
 
 		$('#changelog').click(function() {
-			kango.browser.tabs.create({url:"https://goo.gl/ZbLyJz"});
+			kango.browser.tabs.create({url:"https://github.com/igorez/ErExt/blob/master/change-list.txt"});
 			window.close();
 		});	
 
