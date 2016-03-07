@@ -152,7 +152,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			return  false;
 		}
 		
-		var eliteTournamentStartRegExp = new RegExp('.*Элитн.* Турнир.*' , 'g');
+		var eliteTournamentStartRegExp = new RegExp('.*(?:Э|э)литн.* (?:Т|т)урнир.*' , 'g');
 		function filterEliteTournamentNotification(_text) {
 			if(_text.search(eliteTournamentStartRegExp) != -1) {
 				return true;

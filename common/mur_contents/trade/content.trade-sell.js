@@ -30,7 +30,7 @@ kango.invokeAsync('kango.storage.getItem', "options", function(value) {
 
 
 		top.main.$("#div_bhtml").before($("<center><b>Фильтры:</b></center>"))
-		container = ($("<center></center>"))
+		var container = ($("<center></center>"))
 		$.each(m_filters, function(index, val) {
 			var htmlelements = $("<input class=\"butt1\" type=\"button\" value=\"" + val + "\">").on("click", function() {
 				top.main.$("table").filter(".textM").hide();
