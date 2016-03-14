@@ -20,7 +20,7 @@
 </head>
 <body>
 <header>
-	<h1>Настройки дополнения для игры "Грани Реальности"  (дата последнего обновления 07.03.2016)    <a href="http://www.ereality.ru" title="www.ereality.ru">www.ereality.ru</a></h1>
+	<h1>Настройки дополнения для игры "Грани Реальности"  (дата последнего обновления 14.03.2016)    <a href="http://www.ereality.ru" title="www.ereality.ru">www.ereality.ru</a></h1>
 	
 </header>
 
@@ -64,93 +64,418 @@
  </section>
 
 <section class="tab" id="tab2">
-<table >
-    <tr><td><input type="checkbox" id="fastex"><label for="fastex">Ссылка на быстрый выход</label>
-    </td><td><input type="checkbox" id="okcount"><label for="okcount">Подсчет игроков на локации</label>
-    <tr><td><input type="checkbox" id="cemetry"><label for="cemetry">Нападение по «Enter» на кладбище</label>
-    </td><td><input type="checkbox" id="numfight"><label for="numfight">Возможность использования «Num - клавиатуры» в бою</label>
-    </td></tr><tr><td><input type="checkbox" id="numcapcha"><label for="numcapcha">Возможность использования «Num - клавиатуры» при вводе капчи</label>
-    </td><td><input type="checkbox" id="kbdinst"><label for="kbdinst">Возможность передвижения по инстансу стрелочками или кнопками WASD на клавиатуре</label>
-    </td></tr><tr><td><input type="checkbox" id="chatsectors"><label for="chatsectors">Возможность поиска секторов по клику из чата (работает на ОВЛ,ОПП,КТ,ОК,ОДЛ,Поднебесной)</label>
-     </td><td><input type="checkbox" id="dragon_time"><label for="dragon_time">При клике справа от колбы с кровью показывать во сколько Остров Драконов открывается</label>
-    </td></tr><tr><td><input type="checkbox" id="location_info"><label for="location_info">При клике на локацию печатать сектор и кол-во людей на нем в чат</label>
-    </td><td><input type="checkbox" id="block_cmenu"><label for="block_cmenu">Возможность управлять блокировкой контестного меню браузера</label>
-    </td></tr><tr><td><input type="checkbox" id="lotereya"><label for="lotereya">Возможность заполнения лотереи случайным образом по кнопке</label>
-    </td><td><input type="checkbox" id="esc_move"><label for="esc_move">Возможность кнопкой ESC отменять маршрут (ОВЛ,ОПП)</label>
-    </td></tr><tr><td><input type="checkbox" id="tab_refresh"><label for="tab_refresh">При отключении/включении плагина автоматически обновлять табы с гранями</label>
-    </td><td><input type="checkbox" id="kbdunderground"><label for="kbdunderground">Возможность передвижения в шахте кнопками QEZC на клавиатуре</label>
-    </td></tr><tr><td><input type="checkbox" id="estatenamelink"><label for="estatenamelink">Кликабельные ники игроков в поместье(логи и случайные нападения)</label>
-    </td><td><input type="checkbox" id="forumgoto"><label for="forumgoto">Ссылки на форум из чата игры и личных сообщений при отображении корректируются так, что бы при переходе по ним автоматом логиниться и заходить в тему.</label>
-    </td></tr><tr><td><input type="checkbox" id="questsectors"><label for="questsectors">Кликабельные сектора в «Дневнике квестов»</label>
-    </td><td><input type="checkbox" id="aliensmy"><label for="aliensmy">Интерфейс голосования на альенах по ЛеМурски</label>
-    </td></tr><tr><td><input type="checkbox" id="clnick"><label for="clnick">Кликабельные ники на поляне кудесников и в кузнице</label>
-    </td><td><input type="checkbox" id="keyenter"><label for="keyenter">При не пустой строке чата не завершать бой энтером</label>
-    </td></tr><tr><td><input type="checkbox" id="keyalt"><label for="keyalt">Горячие клавиши с ALT(q,w,e,r)(Дневник квестов,Сообщения,Контакты,Книга призыва) </label>
-    </td><td><input type="checkbox" id="userlistactiveitems"><label for="userlistactiveitems">Быстрый просмотр активных вещей персонажа в локации и в бою</label>
-    </td></tr><tr><td><input type="checkbox" id="damaged_items_notification_filter"><label for="damaged_items_notification_filter">Показывать однотипные сообщения о поломке вещей не чаще раза в пять минут</label>
-    </td><td><input type="checkbox" id="clickable_nicks_on_clan_tournament"><label for="clickable_nicks_on_clan_tournament">Кликабельные ники в сообщениях смотрителя на клановом турнире</label>
-    </td></tr><tr><td><input type="checkbox" id="stockmy"><label for="stockmy">Механизм быстрого выставления однотипных лотов для биржи</label>
-    </td><td><input type="checkbox" id="trade_buy_full_lot"><label for="trade_buy_full_lot">Покупка лота целиком на бирже</label>
-    </td></tr><tr><td><input type="checkbox" id="map_trace"><label for="map_trace">Возможность включать след на острове крови,альенах,ОВЛ,ОПП,ОДЛ</label>
-    </td><td><input type="checkbox" id="teammate_trace"><label for="teammate_trace">След для сокомандников на Темном Острове</label>
-    </td></tr><tr><td><input type="checkbox" id="global_info"><label for="global_info">Информация о предстоящих глобальных событиях</label>
-    </td><td><input type="checkbox" id="startup_update_notification"><label for="startup_update_notification">Оповещение при выходе новой версии плагина</label>    
-    </td></tr><tr><td><input type="checkbox" id="taverna_fast_click"><label for="taverna_fast_click">Создание супов по одному клику на рыбках и крабах в таверне.</label>
-    </td><td><input type="checkbox" id="timer_taverna"><label for="timer_taverna">Таймер рабов в таверне.</label>
-    </td></tr><tr><td><input type="checkbox" id="timer_estate"><label for="timer_estate">Таймер поместья.</label>
-     </td><td><input type="checkbox" id="stock_sell_offline_find"><label for="stock_sell_offline_find">Быстрый поиск вещей на оффлайн бирже при выставлении их на продажу.</label>
-    </td></tr><tr><td><input type="checkbox" id="clickablePSmiles" /><label for="clickablePSmiles">Кликабельные личные смайлы.</label>
-    </td><td><input type="checkbox" id="clickbaleNamesInGlobalEventReports" /><label for="clickbaleNamesInGlobalEventReports">Кликабельные ники в отчетах о глобальных событиях.</label>
-    </td></tr><tr><td><input type="checkbox" id="battleInfo"><label for="battleInfo">Информация о бое (ауры,урон,убийства).</label>
-    </td><td><input type="checkbox" id="menu_maps"><label for="menu_maps">Контестное меню с картами на локации</label>
-    </td></tr><tr><td><input type="checkbox" id="battleCounter"><label for="battleCounter">Подсчет прибыли хаотических и групповых боев</label>
-    </td><td><input type="checkbox" id="lottery_zk"><label for="lottery_zk">Заполнение лотереии с помощью сервиса клана «Золотой Клуб»</label>
-    </td></tr><tr><td><input type="checkbox" id="repeat_kudes"><label for="repeat_kudes">Кнопка повторного кудеса на полянке кудесников</label>
-    </td><td><input type="checkbox" id="monster_locations"><label for="monster_locations">Возможность подсветки ареалов монстров</label>
-    </td></tr><tr><td><input type="checkbox" id="buttons_holder"><label for="buttons_holder">Вертикальное расположение кнопок дополнения (след,ареалы,стата фрак ...)</label> </td>
-    <td><input type="checkbox" id="kt_in_battle"><label for="kt_in_battle">На КТ показывать кто в бою (увы, не работает если ваш перс находится в бою)</label> </td></tr>
-    <tr><td><input type="checkbox" id="biggest_buttons"><label for="biggest_buttons">Увеличенные кнопки дополнения (след,ареалы,стата фрак ...)</label></td>
-    <td><input type="checkbox" id="ok_hide_corpses"><label for="ok_hide_corpses">Кнопка для фильтрации мертвых на секторе(для Острова Крови)</label></td></tr>
-    <tr><td><input type="checkbox" id="freeze_chat"><label for="freeze_chat">Кнопка заморозки чата</label></td>
-    <td><input type="checkbox" id="abil_heal"><label for="abil_heal">Кнопка восстановлениия здоровья персонажа за счет абилок</label></td></tr>
-    <tr><td><input type="checkbox" id="sounds_on_off"><label for="sounds_on_off">Кнопка выключения/включения звуков в игре</label></td>
-    <td><input type="checkbox" id="battle_move"><label for="battle_move">В бою перемещение по кнопке "ё" в первый ряд</label></td></tr>
-    <tr><td><input type="checkbox" id="oplot_button"><label for="oplot_button">Кнопка "Выбрать все вещи" в последнем оплоте.</label></td>
-    <td><input type="checkbox" id="forum_pages"><label for="forum_pages">Кнопки перехода на следующую/предыдущую страницу на форуме.</label></td></tr>
-    <tr><td><input type="checkbox" id="clan_ct_buttons"><label for="clan_ct_buttons">Кнопки для зазывания сокланов на клановый турнир.</label></td>
-    <td><input type="checkbox" id="inventory"><label for="inventory">Кнопка для объединения всех ресурсов в инвентаре.</label></td></tr>
-     <tr><td><input type="checkbox" id="timer_pet"><label for="timer_pet">Таймер лицензий для питомцев</label></td>
-    <td><input type="checkbox" id="no_block_browser_keys"><label for="no_block_browser_keys">Не блокировать хоткеи браузера</label></td></tr>
-     <tr><td><input type="checkbox" id="timer_egg"><label for="timer_egg">Отображать яйца, если они есть в питомнике.</label></td>
-    <td><input type="checkbox" id="golosovalka"><label for="golosovalka">Кнопка голосовалки за проф праздники.</label></td></tr>
-    <tr><td><input type="checkbox" id="sledopit"><label for="sledopit">Нападение по энтеру в палатке Следопыта. (Номер кучки : </label><input type="number" maxlength="1" max="9" min="1" style="width: 3em" title="Введите номер кучки (число 1-9)" id="sledopit_index">)</td>
-    <td><input type="checkbox" id="resources_prices"><label for="resources_prices">Ссылка на гос цены ресов на бирже(при поиске и выставлении на продажу).</label></td></tr>
-    <tr><td><input type="checkbox" id="sanctions"><label for="sanctions">"Компактный вид" при покупке чертежей ремесленника в мастерской.</label></td>
-    <td><input type="checkbox" id="taverna_filters"><label for="taverna_filters">Фильтры при продаже супов в таверне.</label></td></tr>
-    <tr><td><input type="checkbox" id="forum_ignore"><label for="forum_ignore">Форумный игнор.</label></td>
-        <td><input type="checkbox" id="alternative_chat_send"><label for="alternative_chat_send">Альтернативная отсылка сообщений в чат.</label></td></tr>
-    <tr><td><input type="checkbox" id="sets_autowear"><label for="sets_autowear">Автосмена комплекта.</label></td>
-        <td><input type="checkbox" id="location_bot_info"><label for="location_bot_info">По ПКМ копировать информацию о ботах на секторе в чат,подобно механизму на альенах.</label></td></tr>
-        <tr><td><input type="checkbox" id="trade_bookmarks"><label for="trade_bookmarks">Закладки на бирже для быстрого поиска.</label></td>
-        <td><input type="checkbox" id="expedition_estate"><label for="expedition_estate">Информация об экспедициях в поместье в перевернутом виде (видно к-во экспедиций и кого возвращаем).</label></td></tr>
-         <tr><td><input type="checkbox" id="underground_map"><label for="underground_map">Автоматическое центрирование на карте шахт Отступников, при перемещении персонажа.</label></td>
-        <td><input type="checkbox" id="turquoise_grid"><label for="turquoise_grid">Сетка с доступными для раскопки секторами на Бирюзовом и Малахитовом островах .</label></td></tr>
-        <tr><td><input type="checkbox" id="timer_jeweler"><label for="timer_jeweler">Таймер для рабов в Ювелирке.</label></td>
-        <td><input type="checkbox" id="estate_services"><label for="estate_services">Подмена ссылок в сервисах поместий биржу из ЛК.</label></td>
-        </tr>
-        <tr><td><input type="checkbox" id="turquoise_info"><label for="turquoise_info">Кнопка информации о товарах на островах.</label></td>
-        <td><input type="checkbox" id="teleport"><label for="teleport">Кнопка телепорта малым свитком.</label></td>
-        </tr>
-        <tr><td><input type="checkbox" id="pressedEnter"><label for="pressedEnter">Эффект "Залипающего" энтера в бою.</label></td>
-        <td><input type="checkbox" id="presents2016"><label for="presents2016">Кнопка альтернативной распаковки НГ подарков (2016)</label></td>
-        </tr>
-        <tr>
-            <td><input type="checkbox" id="fisherEnabled"><label for="fisherEnabled">Тихая рыбалка</label></td>
-            <td>
-                <input type="checkbox" id="geologistEnabled"><label for="geologistEnabled">Тихая разведка</label>
-            </td>
-        </tr>
-    </table>
+
+
+<table>
+    <tr>
+        <td>
+            <h2>Мирка</h2>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="clnick"><label for="clnick">Кликабельные ники на поляне кудесников и в кузнице</label>
+        </td>
+        <td>
+            <input type="checkbox" id="turquoise_info"><label for="turquoise_info">Кнопка информации о товарах на островах.</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="taverna_fast_click"><label for="taverna_fast_click">Создание супов по одному клику на рыбках и крабах в таверне.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="sanctions"><label for="sanctions">"Компактный вид" при покупке чертежей ремесленника в мастерской.</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="repeat_kudes"><label for="repeat_kudes">Кнопка повторного кудеса на полянке кудесников</label>
+        </td>
+        <td>
+            <input type="checkbox" id="golosovalka"><label for="golosovalka">Кнопка голосовалки за проф праздники.</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="turquoise_grid"><label for="turquoise_grid">Сетка с доступными для раскопки секторами на Бирюзовом и Малахитовом островах .</label>
+        </td>
+        <td>
+            <input type="checkbox" id="taverna_filters"><label for="taverna_filters">Фильтры при продаже супов в таверне.</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="fisherEnabled"><label for="fisherEnabled">Тихая рыбалка</label>
+        </td>
+        <td>
+            <input type="checkbox" id="geologistEnabled"><label for="geologistEnabled">Тихая разведка</label>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <h2>
+                Бои
+            </h2>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="cemetry"><label for="cemetry">Нападение по «Enter» на кладбище</label>
+        </td>
+        <td>
+            <input type="checkbox" id="numfight"><label for="numfight">Возможность использования «Num - клавиатуры» в бою</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="aliensmy"><label for="aliensmy">Интерфейс голосования на альенах по ЛеМурски</label>
+        </td>
+        <td>
+            <input type="checkbox" id="userlistactiveitems"><label for="userlistactiveitems">Быстрый просмотр активных вещей персонажа в локации и в бою</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="battleInfo"><label for="battleInfo">Информация о бое (ауры,урон,убийства).</label>
+        </td>
+        <td>
+            <input type="checkbox" id="battleCounter"><label for="battleCounter">Подсчет прибыли хаотических и групповых боев</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="monster_locations"><label for="monster_locations">Возможность подсветки ареалов монстров</label>
+        </td>
+        <td>
+            <input type="checkbox" id="kt_in_battle"><label for="kt_in_battle">На КТ показывать кто в бою (увы, не работает если ваш перс находится в бою)</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="ok_hide_corpses"><label for="ok_hide_corpses">Кнопка для фильтрации мертвых на секторе(для Острова Крови)</label>
+        </td>
+        <td>
+            <input type="checkbox" id="abil_heal"><label for="abil_heal">Кнопка восстановлениия здоровья персонажа за счет абилок</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="battle_move"><label for="battle_move">В бою перемещение по кнопке "ё" в первый ряд</label>
+        </td>
+        <td>
+            <input type="checkbox" id="pressedEnter"><label for="pressedEnter">Эффект "Залипающего" энтера в бою.</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="sledopit"><label for="sledopit">Нападение по энтеру в палатке Следопыта. (Номер кучки : </label><input type="number" maxlength="1" max="9" min="1" style="width: 3em" title="Введите номер кучки (число 1-9)" id="sledopit_index">)
+        </td>
+        <td>
+            <input type="checkbox" id="location_bot_info"><label for="location_bot_info">По ПКМ копировать информацию о ботах на секторе в чат,подобно механизму на альенах.</label>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <h2>Чат</h2>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="chatsectors"><label for="chatsectors">Возможность поиска секторов по клику из чата (работает на ОВЛ,ОПП,КТ,ОК,ОДЛ,Поднебесной)</label>
+        </td>
+        <td>
+            <input type="checkbox" id="location_info"><label for="location_info">При клике на локацию печатать сектор и кол-во людей на нем в чат</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="forumgoto"><label for="forumgoto">Ссылки на форум из чата игры и личных сообщений при отображении корректируются так, что бы при переходе по ним автоматом логиниться и заходить в тему.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="keyenter"><label for="keyenter">При не пустой строке чата не завершать бой энтером</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="damaged_items_notification_filter"><label for="damaged_items_notification_filter">Показывать однотипные сообщения о поломке вещей не чаще раза в пять минут</label>
+        </td>
+        <td>
+            <input type="checkbox" id="clickable_nicks_on_clan_tournament"><label for="clickable_nicks_on_clan_tournament">Кликабельные ники в сообщениях смотрителя на клановом турнире</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="clickablePSmiles" /><label for="clickablePSmiles">Кликабельные личные смайлы.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="freeze_chat"><label for="freeze_chat">Кнопка заморозки чата</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="alternative_chat_send"><label for="alternative_chat_send">Альтернативная отсылка сообщений в чат.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="messagesRecorder"><label for="messagesRecorder">Логгер ЛЧ</label>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <h2>Таймеры</h2>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="timer_estate"><label for="timer_estate">Таймер поместья.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="timer_jeweler"><label for="timer_jeweler">Таймер для рабов в Ювелирке.</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="timer_pet"><label for="timer_pet">Таймер лицензий для питомцев</label>
+        </td>
+        <td>
+            <input type="checkbox" id="timer_egg"><label for="timer_egg">Отображать яйца, если они есть в питомнике.</label>
+       </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="timer_taverna"><label for="timer_taverna">Таймер рабов в таверне.</label>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            <h2>Биржа</h2>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="stockmy"><label for="stockmy">Механизм быстрого выставления однотипных лотов для биржи</label>
+        </td>
+        <td>
+            <input type="checkbox" id="trade_buy_full_lot"><label for="trade_buy_full_lot">Покупка лота целиком на бирже</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="stock_sell_offline_find"><label for="stock_sell_offline_find">Быстрый поиск вещей на оффлайн бирже при выставлении их на продажу.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="resources_prices"><label for="resources_prices">Ссылка на гос цены ресов на бирже(при поиске и выставлении на продажу).</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="trade_bookmarks"><label for="trade_bookmarks">Закладки на бирже для быстрого поиска.</label>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <h2>Клавиатура</h2>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="numcapcha"><label for="numcapcha">Возможность использования «Num - клавиатуры» при вводе капчи</label>
+        </td>
+        <td>
+            <input type="checkbox" id="kbdinst"><label for="kbdinst">Возможность передвижения по инстансу стрелочками или кнопками WASD на клавиатуре</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="esc_move"><label for="esc_move">Возможность кнопкой ESC отменять маршрут (ОВЛ,ОПП)</label>
+        </td>
+        <td>
+            <input type="checkbox" id="kbdunderground"><label for="kbdunderground">Возможность передвижения в шахте кнопками QEZC на клавиатуре</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="keyalt"><label for="keyalt">Горячие клавиши с ALT(q,w,e,r)(Дневник квестов,Сообщения,Контакты,Книга призыва) </label>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <h2>Форум</h2>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="forum_pages"><label for="forum_pages">Кнопки перехода на следующую/предыдущую страницу на форуме.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="forum_ignore"><label for="forum_ignore">Форумный игнор.</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="elenkator3000"><label for="elenkator3000">Еленкатор3000(Замена Еленкиных многоточий на дык)</label>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            <h2>Разное</h2>
+        </td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="fastex"><label for="fastex">Ссылка на быстрый выход</label>
+        </td>
+        <td>
+            <input type="checkbox" id="okcount"><label for="okcount">Подсчет игроков на локации</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="dragon_time"><label for="dragon_time">При клике справа от колбы с кровью показывать во сколько Остров Драконов открывается</label>
+        </td>
+        <td>
+            <input type="checkbox" id="block_cmenu"><label for="block_cmenu">Возможность управлять блокировкой контестного меню браузера</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="lotereya"><label for="lotereya">Возможность заполнения лотереи случайным образом по кнопке</label>
+        </td>
+        <td>
+            <input type="checkbox" id="tab_refresh"><label for="tab_refresh">При отключении/включении плагина автоматически обновлять табы с гранями</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="estatenamelink"><label for="estatenamelink">Кликабельные ники игроков в поместье(логи и случайные нападения)</label>
+        </td>
+        <td>
+            <input type="checkbox" id="questsectors"><label for="questsectors">Кликабельные сектора в «Дневнике квестов»</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="map_trace"><label for="map_trace">Возможность включать след на острове крови,альенах,ОВЛ,ОПП,ОДЛ</label>
+        </td>
+        <td>
+            <input type="checkbox" id="teammate_trace"><label for="teammate_trace">След для сокомандников на Темном Острове</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="global_info"><label for="global_info">Информация о предстоящих глобальных событиях</label>
+        </td>
+        <td>
+            <input type="checkbox" id="startup_update_notification"><label for="startup_update_notification">Оповещение при выходе новой версии плагина</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="clickbaleNamesInGlobalEventReports" /><label for="clickbaleNamesInGlobalEventReports">Кликабельные ники в отчетах о глобальных событиях.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="menu_maps"><label for="menu_maps">Контестное меню с картами на локации</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="lottery_zk"><label for="lottery_zk">Заполнение лотереи с помощью сервиса клана «Золотой Клуб»</label>
+        </td>
+        <td>
+            <input type="checkbox" id="buttons_holder"><label for="buttons_holder">Вертикальное расположение кнопок дополнения (след,ареалы,стата фрак ...)</label> </td>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="biggest_buttons"><label for="biggest_buttons">Увеличенные кнопки дополнения (след,ареалы,стата фрак ...)</label></td>
+        </td>
+        <td>
+            <input type="checkbox" id="sounds_on_off"><label for="sounds_on_off">Кнопка выключения/включения звуков в игре</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="oplot_button"><label for="oplot_button">Кнопка "Выбрать все вещи" в последнем оплоте.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="clan_ct_buttons"><label for="clan_ct_buttons">Кнопки для зазывания сокланов на клановый турнир.</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="inventory"><label for="inventory">Кнопка для объединения всех ресурсов в инвентаре.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="no_block_browser_keys"><label for="no_block_browser_keys">Не блокировать хоткеи браузера</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="sets_autowear"><label for="sets_autowear">Автосмена комплекта.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="expedition_estate"><label for="expedition_estate">Информация об экспедициях в поместье в перевернутом виде (видно к-во экспедиций и кого возвращаем).</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="underground_map"><label for="underground_map">Автоматическое центрирование на карте шахт Отступников, при перемещении персонажа.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="estate_services"><label for="estate_services">Подмена ссылок в сервисах поместий биржу из ЛК.</label>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="checkbox" id="teleport"><label for="teleport">Кнопка телепорта малым свитком.</label>
+        </td>
+        <td>
+            <input type="checkbox" id="presents2016"><label for="presents2016">Кнопка альтернативной распаковки НГ подарков (2016)</label>
+        </td>
+    </tr>
+</table>
 </section>
 
 <section class="tab" id="tab3">
@@ -204,7 +529,7 @@
             <td><select id = "sound_full_wagon"></select></td>
         </tr>
         <tr>
-            <td><p>Звуковое оповещение при достижении лимита веса :</p></td>
+            <td><p>Звуковое при перегрузе :</p></td>
             <td><select id = "sound_full_weight"></select></td>
         </tr>
          <tr>
@@ -242,6 +567,10 @@
         <tr>
             <td><p>Звуковое оповещение при пропуске хода в бою :</p></td>
             <td><select id = "sound_battle_skip_turn"></select></td>
+        </tr>
+        <tr>
+            <td><p>Звуковое оповещение при завершении хода в бою автоходом:</p></td>
+            <td><select id = "sound_battle_auto_end_turn"></select></td>
         </tr>
         <tr>
             <td><p>Звуковое оповещение при атаке на ТО (работает при в групповом чате)</p></td>
@@ -305,7 +634,12 @@
             <option value="fisher">Рыбак</option>
             <option value="miner">Шахтер</option>
         </select>
-        <p></p>
+        <p>
+           <input style="width: 30px" type="text" id="private_chat_logger_width"> X
+            <input style="width: 30px" type="text" id="private_chat_logger_height">  Ширина и Высота логгера ЛЧ
+            <br/>
+            <input style="width: 30px" type="text" id="private_chat_logger_max_messages">Максимальное количество сообщений в логгере ЛЧ
+        </p>
     </form>
 
 	<label class="buttonclass">	

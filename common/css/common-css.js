@@ -287,3 +287,34 @@ var turquoiseFlagsCss = {
         "margin": "0px 5px"
     }
 }
+
+var messageRecorderBuilderCss = {
+    openLink: {
+        "margin-right": "3px",
+        "cursor": "pointer"
+    },
+    openLinkImg: kango.io.getResourceUrl("res/mailbox.png"),
+    openLinkActiveImg: kango.io.getResourceUrl("res/mailbox_on.png")
+}
+
+var messageRecorderCss = {
+    textStyle: {
+        "font-family": "Verdana,Arial,Helvetica,Tahoma,Verdana,sans-serif;",
+        "font-size": "11px",
+        "cursor": "default",
+        "min-width": "35px"
+    },
+    iconClose: kango.io.getResourceUrl("res/icon_close.gif"),
+    iconCloseHover: kango.io.getResourceUrl("res/icon_close_hover.gif"),
+    clearLink: {
+        "cursor": "pointer",
+        "margin": "0px 5px"
+    },
+    iconClear: kango.io.getResourceUrl("res/delete_database.png"),
+    runLink: {
+        "cursor": "pointer",
+        "margin": "0px 5px"
+    },
+    iconRun: kango.io.getResourceUrl("res/play_black.png"),
+    iconStop: kango.io.getResourceUrl("res/stop_black.png"),
+}

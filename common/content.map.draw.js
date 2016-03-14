@@ -433,6 +433,11 @@ var contentMapDraw = "(" +
                     && typeof localStorage['turquoise_flags_run'] != 'undefined'
                     && localStorage['turquoise_flags_run'] == 'true';
 
+                if (typeof window.frames.main.Map == 'undefined' ||
+                    typeof window.frames.main.Map.draw == 'undefined') {
+                    return;
+                }
+
                 window.frames.main.Map.drawOld = window.frames.main.Map.draw;
 
                 window.frames.main.Map.extensionDraw = function(mainFrame) {

@@ -14,7 +14,7 @@
 
 		this.loadExtentionOption("soptions", defaultConfig.soundOptions, function() {
 			self.prepareSoundOptionsButtons(this.soundSelectOptions);
-		});	
+		});
 	};
 	
 	this.saveOptions = function(optionKey, optionValue) {
@@ -375,7 +375,8 @@ KangoAPI.onReady(function() {
         turquoise_info: "https://raw.githubusercontent.com/igorez/ErExt/master/help_images/turquoise_info.png",
         timer_jeweler: "https://raw.githubusercontent.com/igorez/ErExt/master/help_images/timer_jeweler.png",
         fisherEnabled: "https://raw.githubusercontent.com/igorez/ErExt/master/help_images/fisherEnabled.png",
-        geologistEnabled: "https://raw.githubusercontent.com/igorez/ErExt/master/help_images/geologistEnabled.png"
+        geologistEnabled: "https://raw.githubusercontent.com/igorez/ErExt/master/help_images/geologistEnabled.png",
+        messagesRecorder: "https://raw.githubusercontent.com/igorez/ErExt/master/help_images/messagesRecorder.png"
     }
 
 	new extensionOptionsClass(htmlopt).init();

@@ -137,8 +137,6 @@ var script_presents2016 = "(" +
 					};
 				mAj(_params, fn);
 				$(_this).parents('table').remove();
-				console.log(packNum, PresentId);
-
 			}
 
 			ClearPV = function() {

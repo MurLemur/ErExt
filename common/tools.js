@@ -112,7 +112,9 @@ var defaultConfig = {
         'pressedEnter': false,
         'presents2016': true,
         'fisherEnabled': false,
-        'geologistEnabled': false
+        'geologistEnabled': false,
+        'messagesRecorder': false,
+        'elenkator3000': false
 	},
 	
 	systemOptions: {
@@ -181,7 +183,10 @@ var defaultConfig = {
             "Реклама услуг|4.4.4 Реклама вне торгового чата. Реклама профессиональных услуг допустима только в торговом чате!;" +
             "Поиск услуг|4.4.4 Реклама вне торгового чата. Поиск профессиональных услуг допустим только в торговом чате!",
 		"trade_flooder_phrases": "",
-        "forum_ignore_user_replace": "glad"
+        "forum_ignore_user_replace": "glad",
+        "private_chat_logger_width": 900,
+        "private_chat_logger_height": 400,
+        "private_chat_logger_max_messages": 100
 	},
 
 	soundOptions: {
@@ -278,6 +283,10 @@ var defaultConfig = {
 			detect: "Вы переместились на .+ потрачено"	
 		},
         "sound_battle_skip_turn": {
+            sound: "nosound",
+            detect: ""
+        },
+        "sound_battle_auto_end_turn": {
             sound: "nosound",
             detect: ""
         }

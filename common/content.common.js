@@ -26,7 +26,10 @@
 //
 // @require common/turquoise/turquoise_flags_builder.js
 // @require common/turquoise/turquoise_flags.js
-
+//
+// @require common/message-recorder/message-recorder-builder.js
+// @require common/message-recorder/message-recorder.js
+//
 // @require common/context-blocker/context-blocker.js
 //
 // @require common/OK-hide-corpses.js
@@ -53,6 +56,8 @@
 kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	var mergedOptions = mergeOptions(options, defaultConfig.myoptions);
 
+    var mergedSystemOptions = mergeOptions(kango.storage.getItem('kango.storage.getItem'), defaultConfig.systemOptions);
+
 	// check if plug-in on pause
 	if (!mergedOptions.unpaused) {
 		return;
@@ -67,10 +72,24 @@ kango.invokeAsync('kango.storage.getItem', "options", function(options) {
 	};
 
 
-	if (mergedOptions.buttons_holder) button_holder_init();
-	else $("#div_users").children().first().after("<div class=\"wrap\" style=\"z-index: 95;\"><span id=\"mur_holder\"></span></div>");
+	if (mergedOptions.buttons_holder) {
+        button_holder_init();
+    }
+	else {
+        $("#div_users").children().first().after("<div class=\"wrap\" style=\"z-index: 95;\"><span id=\"mur_holder\"></span></div>");
+    }
 
 	var holder = $('#mur_holder');
+
+    // Запись сообщений
+    if (mergedOptions.messagesRecorder) {
+        var messageRecorder = new messageRecorderBuilderClass(messageRecorderBuilderCss, messageRecorderCss, holder, {
+            width: mergedSystemOptions.private_chat_logger_width,
+            height: mergedSystemOptions.private_chat_logger_height
+        });
+
+        messageRecorder.init();
+    }
 
 	// Открывашка подарков 2016
 	if (mergedOptions.presents2016) {

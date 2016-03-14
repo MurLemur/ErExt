@@ -507,7 +507,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			if (_nick == keeperName) {
 				if (_t == CHAT_FLAG_CLAN) {
 					if (erExtOptions.sp_chat_shut_up && _text.match(/<u><b color="#AA0000">(.*?)<\/b><\/u>/g)) {
-						exp = /<u><b color="#AA0000">(.*?)<\/b><\/u>/ig;
+						var exp = /<u><b color="#AA0000">(.*?)<\/b><\/u>/ig;
 						_text = _text.replace(exp, '<a href="javascript:$(\'#div_sp_panel input[name=h_name]\').val(\'$1\');chat.showShutPanel();">[Зашить $1]</a>');
 					}
 				}
@@ -563,12 +563,54 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 						}
 					});
 				}
-			} else if (erExtOptions.chatLightMessage && _nick == user.name) var mid = _id
-				else if (erExtOptions.chatLightMessage && _tn.search(user.name) != -1) {
-					_text = "<span style=\"background-color: " + erExtSystemOptions.chatBgColor + "\">" + _text + "</span>";
-					var mid = 0;
-				}
-			
+			} else {
+                if (erExtOptions.chatLightMessage) {
+                    if (_nick == user.name) {
+                        var mid = _id;
+                    }
+                    else if (_tn.search(user.name) != -1) {
+                        _text = "<span style=\"background-color: " + erExtSystemOptions.chatBgColor + "\">" + _text + "</span>";
+                        var mid = 0;
+                    }
+                }
+
+                if (_t == CHAT_FLAG_PRIVATE) {
+                    if (typeof localStorage['message_recorder_run'] != 'undefined' && localStorage['message_recorder_run'] == 'true'
+                        && _nick != user.name && _nick != 'Напоминание') {
+                        var recordedMessages = localStorage['recordedMessages'];
+
+                        if (typeof recordedMessages != "undefined") {
+                            recordedMessages = JSON.parse(recordedMessages);
+                        }
+                        else {
+                            recordedMessages = [];
+                        }
+
+                        _text = _text.replace(/"%PS%/gi,'"' + img_path + "smile/p/");
+
+                        recordedMessages.push({
+                            time: _time,
+                            author: _nick,
+                            toNames: _tn,
+                            message: chat.formatSmilies(_text, 3),
+                            color: _color,
+                            isReaded: false
+                        });
+
+                        var maxMessages = parseInt(erExtSystemOptions.private_chat_logger_max_messages);
+                        if (maxMessages > 300) {
+                            maxMessages = 300;
+                        }
+
+                        if (recordedMessages.length > maxMessages) {
+                            recordedMessages.shift();
+                        }
+
+                        localStorage['recordedMessages'] = JSON.stringify(recordedMessages);
+                    }
+                }
+            }
+
 			if (erExtOptions.forumgoto) {
 				_text = modifyForumLink(_text);
 			}
@@ -1072,30 +1114,42 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			}
 		}
 
-        if (core.mur_soundOptions['sound_battle_skip_turn']['sound'] != 'nosound') {
-            var OldBattleXmlProc = battle.xmlProc;
 
-            battle.xmlProc = function (XML) {
-                OldBattleXmlProc.apply(battle, [XML]);
+        var OldBattleXmlProc = battle.xmlProc;
 
-                try {
-                    var responseLogs = $(XML.getElementsByTagName("response")).find('logs');
-                    if (responseLogs.attr('uid') == battle.round) {
-                        responseLogs.find('skip').each(function () {
-                            var p1 = $(this).attr('p1').split(';');
+        battle.xmlProc = function (XML) {
+            OldBattleXmlProc.apply(battle, [XML]);
 
-                            if (p1[0] == user.name) {
-                                core.playSwfSound(core.mur_soundOptions['sound_battle_skip_turn']['sound']);
-                            }
-                        });
-                    }
-                } catch (e) {
+            try {
+                var responseLogs = $(XML.getElementsByTagName("response")).find('logs');
+
+                if (responseLogs.attr('uid') == battle.round) {
+                    responseLogs.find('skip').each(function () {
+                        var p1 = $(this).attr('p1').split(';');
+
+                        if (p1[0] == user.name && core.mur_soundOptions['sound_battle_skip_turn']['sound'] != 'nosound') {
+                            core.playSwfSound(core.mur_soundOptions['sound_battle_skip_turn']['sound']);
+                        }
+                    });
+
+                    responseLogs.find('idle').each(function() {
+                        var p1 = $(this).attr('p1').split(';');
+
+                        if (p1[0] == user.name) {
+                            responseLogs.find('auto').each(function() {
+                                var p1 = $(this).attr('p1').split(';');
+
+                                if (p1[0] == user.name && core.mur_soundOptions['sound_battle_auto_end_turn']['sound'] != 'nosound') {
+                                    core.playSwfSound(core.mur_soundOptions['sound_battle_auto_end_turn']['sound']);
+                                }
+                            });
+                        }
+                    })
                 }
-
+            } catch (e) {
             }
+
         }
-
-
 		
 	}).toString();
 	
