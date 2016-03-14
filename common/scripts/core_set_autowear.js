@@ -280,9 +280,9 @@ var script_set_autowear = "(" +
                 } else if (self.user.place2 == 14) {
                     mapID = 'to';
                 }
-                else if (self.user.place2 >= 25 && self.user.place2 <= 27) {
+                else if (self.user.place2 >= 25 && self.user.place2 <= 29) {
                     mapID = 'seatrip';
-                } else if (self.user.place2 > 199 && self.user.place2 <= 310) {
+                } else if (self.user.place2 >= 201 && self.user.place2 <= 340) {
                     mapID = 'aliens';
                 } else if (self.user.place2 == 0) {
                     mapID = 'fogcity';

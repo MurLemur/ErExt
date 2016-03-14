@@ -6,6 +6,7 @@
     "content.core.js",
     "content.move.js",
     "content.common.js",
+    "content.map.draw.js",
     "mur_contents/content.taverna.js",
     "mur_contents/lottery/content.lottery-zk.js",
     "mur_contents/lottery/content.lottery-er.js",
@@ -36,7 +37,7 @@
     "mur_contents/forum/content.forum-all.js"
   ],
   "description": "Extension for EReality.ru",
-  "creator": "MurLemur",
+  "creator": "MurLemur/Норб",
   "background_scripts": [
     "tools/jquery.js",
     "user/active-items/active-items.js",
@@ -44,8 +45,8 @@
     "main.js",
     "user/active-items/background.user-active-items.js"
   ],
-  "homepage_url": "http://forum.ereality.ru/topic176876/page1.html",
-  "version": "1.0.20",
+  "homepage_url": "http://forum.ereality.ru/topic199422/page1.html",
+  "version": "1.0.22",
   "name": "EReality Extension",
   "browser_button": {
     "caption": "Открыть меню",

@@ -75,12 +75,11 @@ var detectorsClass = function(keyMaps, pluginOptions) {
 		if (self.isBattleScreenActive() || self.isMessengerFormActive() || !self.isChatStringEmpty()) { 
 			return;
 		}
-		if ((typeof self.keyMap.attackEnterKeyMap[code] !== 'undefined') && top.frames.main.document.getElementsByClassName(self.keyMap.attackEnterKeyMap[code]).length>0) { 
+		if ((typeof self.keyMap.attackEnterKeyMap[code] !== 'undefined') && top.frames.main.document.getElementsByClassName(self.keyMap.attackEnterKeyMap[code]).length>0) {
 			try {
-				//top.frames.main.document.getElementsByClassName(self.keyMap.attackEnterKeyMap[code])[0].ondblclick(); // В вебкитах не пашет ибо не находится в контексте плагина
-				var o = document.createEvent('UIEvents');
-				o.initUIEvent('dblclick', true, true, window, 1);
-				top.frames.main.document.getElementsByClassName("monster")[self.pluginOptions.sledopit_index-1].dispatchEvent(o);
+                var event = new UIEvent('dblclick');
+
+                $('.monster', top.frames.main.document).eq(self.pluginOptions.sledopit_index - 1).children().first()[0].dispatchEvent(event);
 			}
 			catch(e) {}
 		}

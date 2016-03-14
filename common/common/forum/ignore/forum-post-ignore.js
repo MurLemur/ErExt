@@ -1,8 +1,9 @@
-var forumPostIgnoreClass = function (tools, preset) {
+var forumPostIgnoreClass = function (tools, preset, elenkatorActive) {
     this.preset = preset;
     this.tools = tools;
     this.tablePost = $('.TablePost');
     this.replace;
+    this.elenktoActive = elenkatorActive;
 
     var self = this;
 
@@ -25,6 +26,14 @@ var forumPostIgnoreClass = function (tools, preset) {
                 new forumPostReplaceClass(td, self.replace).init();
             }
             else {
+                if (self.elenktoActive && nick == "-Еленка-") {
+                    var td = td.parent().next().find('.PostText');
+
+                    td.html(
+                        td.html().replace(/(\.{2,})/g, '. Дык ')
+                    );
+                }
+
                 td.parent().find('.AdditInfo')
                     .append('<br/>')
                     .append(

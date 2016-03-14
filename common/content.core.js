@@ -10,7 +10,6 @@
 // @require     scripts/core_inventory.js
 // @require     scripts/core_golosovalka.js
 // @require     scripts/core_set_autowear.js
-// @require     scripts/core_turquoise_grid.js
 // @require     scripts/core_presents2016.js
 // @all-frames  false
 // ==/UserScript==
@@ -153,10 +152,9 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			return  false;
 		}
 		
-		var eliteTournamentStartRegExp = new RegExp('Идет подача заявок на участие в новом Элитном Турнире. Записывайся! Уже слышен звон монет, а элитный опыт так и просится на счет!' , 'g');
-		var eliteTournamentContinueRegExp = new RegExp('Идет подача заявок на участие в Элитном Турнире. Без тебя не начинаем.' , 'g');
+		var eliteTournamentStartRegExp = new RegExp('.*(?:Э|э)литн.* (?:Т|т)урнир.*' , 'g');
 		function filterEliteTournamentNotification(_text) {
-			if(_text.search(eliteTournamentStartRegExp) != -1 || _text.search(eliteTournamentContinueRegExp) != -1) {
+			if(_text.search(eliteTournamentStartRegExp) != -1) {
 				return true;
 			}
 			
@@ -357,7 +355,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
         var fishRegExp = {
             'Крабы': new RegExp('(?:<b>)?Вы достали из корзины (?:<b>)?(.+?)<\/b>, получено опыта: <b>(.+?)<\/b>, текущая прочность инструмента: <b>(.+?)<\/b>(?:, )?((?:<b>)?Рыбак: (?:<b>)?.+<\/b> \(.+\)(?:<\/b>)?)?'),
             'Рыба': new RegExp('(?:<b>)?Вы словили (?:<b>)?(.+?)<\/b>, получено опыта: <b>(.+?)<\/b>, текущая прочность инструмента: <b>(.+?)<\/b>(?:, )?(Рыбак: (?:<b>)?.+<\/b> \(.+\)(?:<\/b>)?)?'),
-            '0': new RegExp('(Рыбка соскочила...)'),
+            '0': new RegExp('(Рыбка соскочила..)'),
             '1': new RegExp('(Клетка пуста)')
         };
 
@@ -375,7 +373,6 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 
                     var fishes = localStorage['fishes'];
                     if (typeof fishes != "undefined") {
-
                         fishes = JSON.parse(fishes);
                     }
                     else {
@@ -439,13 +436,57 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
             return false;
         }
 
+        var turquoiseExploreRegExp = {
+            '1': new RegExp('Вы внесли вклад ([0-9]+)% в разведку сектора (?:([0-9]+):([0-9]+)).* Ваш вклад: [0-9]*%, текущий прогресс разведки: ([0-9]+)%')
+        }
+
+        function erExtTurquoiseExplore(_text) {
+            for (var key in turquoiseExploreRegExp) {
+                var match = _text.match(turquoiseExploreRegExp[key]);
+
+                if (match) {
+                    var percent = parseInt(match[1]);
+                    var positionX = match[2];
+                    var positionY = match[3];
+                    var totalPercent = match[4];
+
+                    var turquoiseFlags = localStorage['turquoise_flags'];
+                    if (typeof turquoiseFlags != "undefined") {
+                        turquoiseFlags = JSON.parse(turquoiseFlags);
+                    }
+                    else {
+                        turquoiseFlags = {};
+                    }
+
+                    if (typeof turquoiseFlags[positionX] == "undefined") {
+                        turquoiseFlags[positionX] = {};
+                    }
+
+                    if (typeof turquoiseFlags[positionX][positionY] == "undefined") {
+                        turquoiseFlags[positionX][positionY] = {
+                            'percent': 0,
+                            'totalPercent': 0
+                        };
+                    }
+
+                    turquoiseFlags[positionX][positionY]['percent'] += percent;
+                    turquoiseFlags[positionX][positionY]['totalPercent'] = totalPercent;
+
+                    localStorage['turquoise_flags'] = JSON.stringify(turquoiseFlags);
+                    localStorage['turquoise_flags_update'] = true;
+
+                    return typeof localStorage['turquoise_flags_chat_notice'] == 'undefined'
+                        || localStorage['turquoise_flags_chat_notice'] != 'true';
+                }
+            }
+
+            return false;
+        }
+
 		chat.chatMsgColor = erExtSystemOptions.chatMsgColor.slice(1);
 		
 		chat.html = function(sys, _t, _id, _time, _nick, _tn, _color, _text) {
 			//console.log(sys, _t, _id, _time, _nick, _tn, _color, _text);
-			if (erExtOptions.clickablePSmiles) {
-				_text = modifyPrivateSmiles(_text);
-			}
 
 			if (_t == CHAT_FLAG_ALIGN) {
 				if (erExtOptions.okHelpMessageFilterEnabled && filterOkHelpMessage(_text)) {
@@ -459,15 +500,6 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 				}
 			}
 
-			if (erExtOptions.chatsectors) {
-				_text = modifySectors(_text);
-			}
-
-			if (erExtOptions.clickablePSmiles) {
-				_text = modifySmiles(_text);
-			}
-
-
 			if (erExtOptions.chatOtherUsersMessageColor && _nick != keeperName && _nick != user.name && _nick != reminderName) {
 				_color = chat.chatMsgColor;
 			}
@@ -475,7 +507,7 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			if (_nick == keeperName) {
 				if (_t == CHAT_FLAG_CLAN) {
 					if (erExtOptions.sp_chat_shut_up && _text.match(/<u><b color="#AA0000">(.*?)<\/b><\/u>/g)) {
-						exp = /<u><b color="#AA0000">(.*?)<\/b><\/u>/ig;
+						var exp = /<u><b color="#AA0000">(.*?)<\/b><\/u>/ig;
 						_text = _text.replace(exp, '<a href="javascript:$(\'#div_sp_panel input[name=h_name]\').val(\'$1\');chat.showShutPanel();">[Зашить $1]</a>');
 					}
 				}
@@ -493,6 +525,11 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 
                     if (erExtOptions.fisherEnabled && typeof localStorage['fisherRun'] != 'undefined'
                         && localStorage['fisherRun'] == 'true' && erExtDetectFish(sys, _t, _id, _time, _nick, _tn, _color, _text)) {
+                        return;
+                    }
+
+                    if (erExtOptions.geologistEnabled && typeof localStorage['turquoise_flags_run'] != 'undefined'
+                        && localStorage['turquoise_flags_run'] == 'true'  && erExtTurquoiseExplore(_text)) {
                         return;
                     }
 
@@ -526,15 +563,69 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 						}
 					});
 				}
-			} else if (erExtOptions.chatLightMessage && _nick == user.name) var mid = _id
-				else if (erExtOptions.chatLightMessage && _tn.search(user.name) != -1) {
-					_text = "<span style=\"background-color: " + erExtSystemOptions.chatBgColor + "\">" + _text + "</span>";
-					var mid = 0;
-				}
-			
+			} else {
+                if (erExtOptions.chatLightMessage) {
+                    if (_nick == user.name) {
+                        var mid = _id;
+                    }
+                    else if (_tn.search(user.name) != -1) {
+                        _text = "<span style=\"background-color: " + erExtSystemOptions.chatBgColor + "\">" + _text + "</span>";
+                        var mid = 0;
+                    }
+                }
+
+                if (_t == CHAT_FLAG_PRIVATE) {
+                    if (typeof localStorage['message_recorder_run'] != 'undefined' && localStorage['message_recorder_run'] == 'true'
+                        && _nick != user.name && _nick != 'Напоминание') {
+                        var recordedMessages = localStorage['recordedMessages'];
+
+                        if (typeof recordedMessages != "undefined") {
+                            recordedMessages = JSON.parse(recordedMessages);
+                        }
+                        else {
+                            recordedMessages = [];
+                        }
+
+                        _text = _text.replace(/"%PS%/gi,'"' + img_path + "smile/p/");
+
+                        recordedMessages.push({
+                            time: _time,
+                            author: _nick,
+                            toNames: _tn,
+                            message: chat.formatSmilies(_text, 3),
+                            color: _color,
+                            isReaded: false
+                        });
+
+                        var maxMessages = parseInt(erExtSystemOptions.private_chat_logger_max_messages);
+                        if (maxMessages > 300) {
+                            maxMessages = 300;
+                        }
+
+                        if (recordedMessages.length > maxMessages) {
+                            recordedMessages.shift();
+                        }
+
+                        localStorage['recordedMessages'] = JSON.stringify(recordedMessages);
+                    }
+                }
+            }
+
 			if (erExtOptions.forumgoto) {
 				_text = modifyForumLink(_text);
 			}
+
+            if (erExtOptions.chatsectors) {
+                _text = modifySectors(_text);
+            }
+
+            if (erExtOptions.clickablePSmiles) {
+                _text = modifyPrivateSmiles(_text);
+            }
+
+            if (erExtOptions.clickablePSmiles) {
+                _text = modifySmiles(_text);
+            }
 
 			oldChatHTML.apply(chat, [sys, _t, _id, _time, _nick, _tn, _color, _text]);
 			if (erExtOptions.chatLightMessage && mid && mid != 0) $("#n_" + mid).css("background-color", erExtSystemOptions.chatBgColor);
@@ -1023,30 +1114,42 @@ script = script.replace("soundOptionsReplace", '(' + JSON.stringify(defaultConfi
 			}
 		}
 
-        if (core.mur_soundOptions['sound_battle_skip_turn']['sound'] != 'nosound') {
-            var OldBattleXmlProc = battle.xmlProc;
 
-            battle.xmlProc = function (XML) {
-                OldBattleXmlProc.apply(battle, [XML]);
+        var OldBattleXmlProc = battle.xmlProc;
 
-                try {
-                    var responseLogs = $(XML.getElementsByTagName("response")).find('logs');
-                    if (responseLogs.attr('uid') == battle.round) {
-                        responseLogs.find('skip').each(function () {
-                            var p1 = $(this).attr('p1').split(';');
+        battle.xmlProc = function (XML) {
+            OldBattleXmlProc.apply(battle, [XML]);
 
-                            if (p1[0] == user.name) {
-                                core.playSwfSound(core.mur_soundOptions['sound_battle_skip_turn']['sound']);
-                            }
-                        });
-                    }
-                } catch (e) {
+            try {
+                var responseLogs = $(XML.getElementsByTagName("response")).find('logs');
+
+                if (responseLogs.attr('uid') == battle.round) {
+                    responseLogs.find('skip').each(function () {
+                        var p1 = $(this).attr('p1').split(';');
+
+                        if (p1[0] == user.name && core.mur_soundOptions['sound_battle_skip_turn']['sound'] != 'nosound') {
+                            core.playSwfSound(core.mur_soundOptions['sound_battle_skip_turn']['sound']);
+                        }
+                    });
+
+                    responseLogs.find('idle').each(function() {
+                        var p1 = $(this).attr('p1').split(';');
+
+                        if (p1[0] == user.name) {
+                            responseLogs.find('auto').each(function() {
+                                var p1 = $(this).attr('p1').split(';');
+
+                                if (p1[0] == user.name && core.mur_soundOptions['sound_battle_auto_end_turn']['sound'] != 'nosound') {
+                                    core.playSwfSound(core.mur_soundOptions['sound_battle_auto_end_turn']['sound']);
+                                }
+                            });
+                        }
+                    })
                 }
-
+            } catch (e) {
             }
+
         }
-
-
 		
 	}).toString();
 	
@@ -1303,11 +1406,6 @@ if (myoptions.keyalt) {
 		// Автосмена комплектов
         if (myoptions.sets_autowear) {
             script += script_set_autowear;
-        }
-
-        // Сетка на острове бирюзы
-        if (myoptions.turquoise_grid) {
-            script += script_turquoise_grid.replace("turquoise_grid", kango.io.getResourceUrl("res/turquoise_grid"));
         }
 
         // Открывашка новогодних подарков 2016

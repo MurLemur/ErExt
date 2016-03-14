@@ -308,7 +308,7 @@ var script_map_trace = "(" +
 					mapID = 'opp';
 				} else if (self.user.place2 == 14) {
 					mapID = 'to';
-				} else if ((self.user.place2 > 19 && self.user.place2 < 100)  || (self.user.place2 > 199 && self.user.place2 < 310)) {
+				} else if (self.user.place2 >= 201 && self.user.place2 <= 340) {
 					mapID = 'aliens';
 				}
 				

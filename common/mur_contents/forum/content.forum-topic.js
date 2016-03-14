@@ -20,7 +20,8 @@ $(document).ready(function () {
         if (extOptions.options.forum_ignore) {
             new forumPostIgnoreClass(
                 new IgnoreToolsClass(extOptions.forumIgnore).init(),
-                extOptions.systemOptions.forum_ignore_user_replace
+                extOptions.systemOptions.forum_ignore_user_replace,
+                extOptions.options.elenkator3000
             ).init();
         }
     }
